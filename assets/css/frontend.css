@@ -1,0 +1,355 @@
+/**
+ * Signa OTP Frontend Styles (RTL & Responsive)
+ */
+
+.signa-otp-wrapper {
+	--signa-primary: #2563eb;
+	--signa-primary-hover: #1d4ed8;
+	--signa-bg: #ffffff;
+	--signa-text: #111827;
+	--signa-muted: #6b7280;
+	--signa-border: #d1d5db;
+	--signa-radius: 16px;
+	direction: rtl;
+	text-align: right;
+	font-family: inherit;
+	max-width: 420px;
+	margin: 24px auto;
+	box-sizing: border-box;
+}
+
+.signa-otp-wrapper *,
+.signa-otp-wrapper *::before,
+.signa-otp-wrapper *::after {
+	box-sizing: border-box;
+}
+
+.signa-otp-card {
+	background: var(--signa-bg);
+	border: 1px solid #e5e7eb;
+	border-radius: var(--signa-radius);
+	padding: 32px 28px;
+	box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
+}
+
+.signa-otp-header {
+	text-align: center;
+	margin-bottom: 24px;
+}
+
+.signa-otp-icon-badge {
+	width: 54px;
+	height: 54px;
+	border-radius: 14px;
+	background: rgba(37, 99, 235, 0.1);
+	color: var(--signa-primary);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 14px;
+}
+
+.signa-otp-title {
+	margin: 0 0 8px 0;
+	font-size: 20px;
+	font-weight: 700;
+	color: var(--signa-text);
+}
+
+.signa-otp-subtitle {
+	margin: 0;
+	font-size: 13.5px;
+	line-height: 1.7;
+	color: var(--signa-muted);
+}
+
+.signa-otp-alert {
+	padding: 12px 14px;
+	border-radius: 10px;
+	font-size: 13px;
+	line-height: 1.6;
+	margin-bottom: 18px;
+}
+
+.signa-otp-alert.is-error {
+	background-color: #fef2f2;
+	border: 1px solid #fecaca;
+	color: #b91c1c;
+}
+
+.signa-otp-alert.is-success {
+	background-color: #f0fdf4;
+	border: 1px solid #bbf7d0;
+	color: #15803d;
+}
+
+.signa-otp-alert.is-info {
+	background-color: #eff6ff;
+	border: 1px solid #bfdbfe;
+	color: #1e40af;
+}
+
+.signa-field-group {
+	margin-bottom: 20px;
+}
+
+.signa-label {
+	display: block;
+	font-size: 13.5px;
+	font-weight: 600;
+	color: #374151;
+	margin-bottom: 8px;
+}
+
+.signa-input {
+	width: 100%;
+	height: 48px;
+	padding: 0 16px;
+	font-size: 15px;
+	border: 1.5px solid var(--signa-border);
+	border-radius: 11px;
+	background-color: #f9fafb;
+	color: var(--signa-text);
+	transition: all 0.2s ease;
+	outline: none;
+	text-align: left;
+}
+
+.signa-input:focus {
+	background-color: #ffffff;
+	border-color: var(--signa-primary);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+.signa-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	height: 48px;
+	padding: 0 20px;
+	font-size: 15px;
+	font-weight: 600;
+	border-radius: 11px;
+	border: none;
+	cursor: pointer;
+	transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+	text-decoration: none;
+}
+
+.signa-btn-primary {
+	background-color: var(--signa-primary);
+	color: #ffffff !important;
+	box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+}
+
+.signa-btn-primary:hover {
+	opacity: 0.94;
+}
+
+.signa-btn-primary:disabled {
+	opacity: 0.65;
+	cursor: not-allowed;
+}
+
+.signa-btn-outline {
+	background: transparent;
+	border: 1.5px solid var(--signa-border);
+	color: var(--signa-text);
+}
+
+.signa-btn-sm {
+	width: auto;
+	height: 38px;
+	font-size: 13px;
+	padding: 0 14px;
+	background-color: var(--signa-primary);
+	color: #ffffff;
+}
+
+/* Recipient display bar in Step 2 */
+.signa-recipient-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #f3f4f6;
+	padding: 10px 14px;
+	border-radius: 10px;
+	margin-bottom: 18px;
+	font-size: 13.5px;
+}
+
+.signa-recipient-display {
+	font-weight: 600;
+	color: #1f2937;
+}
+
+.signa-btn-link {
+	background: none;
+	border: none;
+	padding: 0;
+	color: var(--signa-primary);
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.signa-btn-link:hover {
+	text-decoration: underline;
+}
+
+/* Segmented OTP Digit Boxes */
+.signa-otp-digits {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	direction: ltr;
+}
+
+.signa-digit-box {
+	width: 48px;
+	height: 54px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: 700;
+	border: 1.5px solid var(--signa-border);
+	border-radius: 11px;
+	background-color: #f9fafb;
+	color: var(--signa-text);
+	transition: all 0.18s ease;
+	outline: none;
+	padding: 0;
+}
+
+.signa-digit-box:focus {
+	background-color: #ffffff;
+	border-color: var(--signa-primary);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
+	transform: translateY(-1px);
+}
+
+/* Resend & Countdown Row */
+.signa-resend-row {
+	margin-top: 18px;
+	text-align: center;
+	font-size: 13px;
+	color: var(--signa-muted);
+}
+
+/* Loading Spinner */
+.signa-spinner {
+	width: 18px;
+	height: 18px;
+	border: 2.5px solid rgba(255, 255, 255, 0.35);
+	border-top-color: #ffffff;
+	border-radius: 50%;
+	display: inline-block;
+	animation: signaSpin 0.7s linear infinite;
+}
+
+@keyframes signaSpin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Trigger Button */
+.signa-trigger-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 9px 18px;
+	border-radius: 9px;
+	background-color: var(--signa-primary, #2563eb);
+	color: #ffffff !important;
+	font-size: 14px;
+	font-weight: 600;
+	border: none;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+/* Global Modal Overlay */
+.signa-modal-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(17, 24, 39, 0.6);
+	backdrop-filter: blur(3px);
+	z-index: 999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+}
+
+.signa-modal-dialog {
+	position: relative;
+	width: 100%;
+	max-width: 420px;
+}
+
+.signa-modal-dialog .signa-otp-wrapper {
+	margin: 0;
+}
+
+.signa-modal-close {
+	position: absolute;
+	top: 14px;
+	left: 14px;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	border: none;
+	background: #f3f4f6;
+	color: #4b5563;
+	font-size: 20px;
+	line-height: 1;
+	cursor: pointer;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.signa-modal-close:hover {
+	background: #e5e7eb;
+	color: #111827;
+}
+
+/* WooCommerce Checkout Banner */
+.signa-wc-checkout-banner {
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	margin-bottom: 24px;
+}
+
+.signa-wc-checkout-notice {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+	font-size: 14px;
+}
+
+.signa-logged-actions {
+	display: flex;
+	gap: 10px;
+	margin-top: 16px;
+}
+
+@media (max-width: 480px) {
+	.signa-otp-card {
+		padding: 24px 18px;
+	}
+	.signa-digit-box {
+		width: 42px;
+		height: 48px;
+		font-size: 18px;
+	}
+}

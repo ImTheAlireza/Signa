@@ -1,0 +1,218 @@
+/**
+ * Signa OTP Admin Dashboard Styles (RTL)
+ */
+
+.signa-admin-wrap {
+	max-width: 1120px;
+	margin-top: 20px;
+}
+
+.signa-admin-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: #ffffff;
+	padding: 20px 24px;
+	border-radius: 12px;
+	border: 1px solid #e5e7eb;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.signa-admin-header h1 {
+	margin: 0 0 6px 0;
+	padding: 0;
+	font-size: 20px;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+}
+
+.signa-admin-subtitle {
+	margin: 0;
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.signa-version-badge {
+	background: #eff6ff;
+	color: #2563eb;
+	font-size: 12px;
+	padding: 3px 10px;
+	border-radius: 99px;
+	margin-right: 10px;
+	font-weight: 600;
+}
+
+/* Stats Cards */
+.signa-stats-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+	gap: 14px;
+	margin-bottom: 20px;
+}
+
+.signa-stat-card {
+	background: #ffffff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	padding: 16px 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.signa-stat-label {
+	font-size: 12.5px;
+	color: #6b7280;
+}
+
+.signa-stat-value {
+	font-size: 24px;
+	font-weight: 700;
+	color: #111827;
+}
+
+/* Tabs Navigation */
+.signa-tabs-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 18px;
+	border-bottom: 1px solid #d1d5db;
+	padding-bottom: 12px;
+}
+
+.signa-tab-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 10px 16px;
+	border-radius: 9px;
+	border: 1px solid #e5e7eb;
+	background: #ffffff;
+	color: #374151;
+	font-size: 13.5px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.15s ease;
+}
+
+.signa-tab-btn:hover {
+	background: #f9fafb;
+	border-color: #cbd5e1;
+}
+
+.signa-tab-btn.active {
+	background: #2563eb;
+	border-color: #2563eb;
+	color: #ffffff;
+}
+
+.signa-tab-panel {
+	display: none;
+}
+
+.signa-tab-panel.active {
+	display: block;
+}
+
+.signa-panel-card {
+	background: #ffffff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	padding: 24px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.signa-panel-card h2 {
+	margin-top: 0;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #f3f4f6;
+	font-size: 16px;
+}
+
+.signa-gateway-box {
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	padding: 18px 22px;
+	margin-top: 16px;
+	display: none;
+}
+
+.signa-gateway-box h3 {
+	margin-top: 0;
+	color: #1e40af;
+}
+
+.signa-shortcode-guide code {
+	display: inline-block;
+	padding: 6px 12px;
+	background: #f1f5f9;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	font-size: 13px;
+	margin: 4px 0;
+}
+
+/* Logs Table Toolbar & Badges */
+.signa-logs-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-bottom: 14px;
+}
+
+.signa-logs-filter-form {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.signa-badge {
+	display: inline-block;
+	padding: 3px 10px;
+	border-radius: 99px;
+	font-size: 11.5px;
+	font-weight: 600;
+}
+
+.signa-badge-success {
+	background: #dcfce7;
+	color: #15803d;
+}
+
+.signa-badge-info {
+	background: #dbeafe;
+	color: #1d4ed8;
+}
+
+.signa-badge-danger {
+	background: #fee2e2;
+	color: #b91c1c;
+}
+
+.signa-badge-muted {
+	background: #f3f4f6;
+	color: #4b5563;
+}
+
+.signa-channel-pill {
+	display: inline-block;
+	font-weight: 700;
+	font-size: 11px;
+	color: #1e293b;
+}
+
+.signa-otp-code-pill {
+	background: #eff6ff;
+	color: #1d4ed8;
+	font-weight: 700;
+	padding: 3px 8px;
+	border-radius: 6px;
+	font-size: 13px;
+}
