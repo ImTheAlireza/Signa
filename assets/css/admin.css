@@ -54,8 +54,17 @@
 
 #signa-app-shell.signa-app-shell *,
 #signa-app-shell.signa-app-shell *::before,
-#signa-app-shell.signa-app-shell *::after {
+#signa-app-shell.signa-app-shell *::after,
+#signa-app-shell.signa-app-shell button,
+#signa-app-shell.signa-app-shell input,
+#signa-app-shell.signa-app-shell select,
+#signa-app-shell.signa-app-shell textarea {
 	box-sizing: border-box;
+	font-family: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+#signa-app-shell .dashicons {
+	font-family: dashicons !important;
 }
 
 /* Floating Toast */
@@ -826,7 +835,7 @@
 	border-color: #475569 !important;
 }
 
-/* Live Preview Input - Isolated from Admin Dark Mode */
+/* Live Preview Input - Isolated from Admin Dark Mode & Right-Aligned */
 #signa-app-shell #signa-live-preview-card input.signa-prev-input {
 	width: 100% !important;
 	height: 44px !important;
@@ -834,11 +843,12 @@
 	border: 1.5px solid #cbd5e1 !important;
 	border-radius: 10px !important;
 	margin-bottom: 16px !important;
-	text-align: left !important;
+	text-align: right !important;
+	direction: rtl !important;
 	background-color: #f8fafc !important;
 	color: #0f172a !important;
 	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
-	font-size: 14px !important;
+	font-size: 13.5px !important;
 	box-shadow: none !important;
 }
 

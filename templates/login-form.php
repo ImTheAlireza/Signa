@@ -36,12 +36,12 @@ if ( 'phone_only' === $login_mode ) {
 	$input_mode        = 'tel';
 } elseif ( 'email_only' === $login_mode ) {
 	$input_label       = 'آدرس ایمیل';
-	$input_placeholder = 'name@example.com';
+	$input_placeholder = 'مثلاً: info@example.com';
 	$input_type        = 'email';
 	$input_mode        = 'email';
 } else {
 	$input_label       = 'شماره موبایل یا ایمیل';
-	$input_placeholder = '09123456789 یا ایمیل';
+	$input_placeholder = 'شماره موبایل (0912...) یا ایمیل';
 	$input_type        = 'text';
 	$input_mode        = 'text';
 }
@@ -96,7 +96,7 @@ $inline_vars = sprintf(
 						name="identifier"
 						class="signa-input signa-identifier-input"
 						placeholder="<?php echo esc_attr( $input_placeholder ); ?>"
-						dir="ltr"
+						dir="rtl"
 						autocomplete="username"
 						required
 					/>
@@ -106,7 +106,7 @@ $inline_vars = sprintf(
 			<?php if ( 'math' === $captcha_type && $math_captcha ) : ?>
 				<div class="signa-field-group signa-captcha-box">
 					<label class="signa-label signa-captcha-question"><?php echo esc_html( $math_captcha['question'] ); ?></label>
-					<input type="text" inputmode="numeric" name="captcha_answer" class="signa-input signa-captcha-answer" placeholder="پاسخ عدد..." dir="ltr" required />
+					<input type="text" inputmode="numeric" name="captcha_answer" class="signa-input signa-captcha-answer" placeholder="پاسخ عدد را وارد کنید..." dir="rtl" required />
 					<input type="hidden" name="captcha_token" class="signa-captcha-token" value="<?php echo esc_attr( $math_captcha['token'] ); ?>" />
 				</div>
 			<?php elseif ( 'arcaptcha' === $captcha_type && ! empty( $captcha_site_key ) ) : ?>
@@ -205,11 +205,11 @@ $inline_vars = sprintf(
 			<form class="signa-otp-form signa-step-password" style="display:none;" novalidate>
 				<div class="signa-field-group">
 					<label class="signa-label">شماره موبایل، ایمیل یا نام کاربری</label>
-					<input type="text" name="pw_identifier" class="signa-input signa-pw-identifier" placeholder="09123456789 یا نام کاربری" dir="ltr" required />
+					<input type="text" name="pw_identifier" class="signa-input signa-pw-identifier" placeholder="شماره موبایل یا نام کاربری" dir="rtl" required />
 				</div>
 				<div class="signa-field-group">
 					<label class="signa-label">رمز عبور</label>
-					<input type="password" name="password" class="signa-input signa-pw-input" placeholder="••••••••" dir="ltr" required />
+					<input type="password" name="password" class="signa-input signa-pw-input" placeholder="رمز عبور خود را وارد کنید" dir="rtl" required />
 				</div>
 				<button type="submit" class="signa-btn signa-btn-primary signa-submit-password">
 					<span class="signa-btn-text">ورود به حساب</span>

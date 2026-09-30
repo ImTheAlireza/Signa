@@ -1002,8 +1002,8 @@ $openssl_active  = extension_loaded( 'openssl' );
 										<!-- Preview Step 1 -->
 										<div id="signa-prev-step-1">
 											<label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:inherit;">شماره موبایل یا ایمیل</label>
-											<input type="text" class="signa-prev-input" value="09123456789" dir="ltr" readonly />
-											<button type="button" id="signa-prev-btn-1" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:600;font-size:14px;cursor:default;">
+											<input type="text" class="signa-prev-input" placeholder="شماره موبایل (0912...) یا ایمیل" dir="rtl" readonly />
+											<button type="button" id="signa-prev-btn-1" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:700;font-size:14px;cursor:default;">
 												<?php echo esc_html( $settings['button_text'] ); ?>
 											</button>
 										</div>
