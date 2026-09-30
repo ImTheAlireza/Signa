@@ -1,6 +1,6 @@
 <?php
 /**
- * Gateway Manager & Multi-Channel Dispatcher
+ * Gateway Manager, Failover Engine & Multi-Channel Dispatcher
  *
  * @package Signa_OTP
  */
@@ -46,14 +46,88 @@ class Signa_Gateway_Manager {
 	}
 
 	/**
+	 * Get backup SMS gateway instance if configured
+	 *
+	 * @return Signa_Gateway_Interface|null
+	 */
+	public static function get_backup_sms_gateway() {
+		$gateways  = self::get_sms_gateways();
+		$active_id = Signa_Helper::get_option( 'active_sms_gateway', 'sandbox' );
+		$backup_id = Signa_Helper::get_option( 'backup_sms_gateway', 'none' );
+
+		if ( 'none' !== $backup_id && $backup_id !== $active_id && isset( $gateways[ $backup_id ] ) ) {
+			return $gateways[ $backup_id ];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Send SMS via primary gateway with automatic failover to backup gateway
+	 *
+	 * @param string $recipient         Normalized phone.
+	 * @param string $code              OTP code.
+	 * @param string $forced_gateway_id Optional specific gateway ID to test.
+	 * @return array { result: true|WP_Error, gateway_id: string, message: string }
+	 */
+	public static function send_sms_with_failover( $recipient, $code, $forced_gateway_id = '' ) {
+		$gateways = self::get_sms_gateways();
+
+		if ( ! empty( $forced_gateway_id ) && isset( $gateways[ $forced_gateway_id ] ) ) {
+			$gw  = $gateways[ $forced_gateway_id ];
+			$res = $gw->send( $recipient, $code );
+			return array(
+				'result'     => $res,
+				'gateway_id' => $gw->get_id(),
+				'message'    => is_wp_error( $res ) ? $res->get_error_message() : 'ارسال موفق از طریق ' . $gw->get_title(),
+			);
+		}
+
+		$primary_gw  = self::get_active_sms_gateway();
+		$primary_res = $primary_gw->send( $recipient, $code );
+
+		if ( ! is_wp_error( $primary_res ) ) {
+			return array(
+				'result'     => true,
+				'gateway_id' => $primary_gw->get_id(),
+				'message'    => 'ارسال موفق از طریق ' . $primary_gw->get_title(),
+			);
+		}
+
+		// Try Backup Failover SMS Gateway if configured
+		$backup_gw = self::get_backup_sms_gateway();
+		if ( $backup_gw ) {
+			$backup_res = $backup_gw->send( $recipient, $code );
+			if ( ! is_wp_error( $backup_res ) ) {
+				return array(
+					'result'     => true,
+					'gateway_id' => $backup_gw->get_id(),
+					'message'    => sprintf(
+						'ارسال از طریق درگاه پشتیبان (%s) پس از خطای درگاه اصلی (%s)',
+						$backup_gw->get_title(),
+						$primary_res->get_error_message()
+					),
+				);
+			}
+		}
+
+		return array(
+			'result'     => $primary_res,
+			'gateway_id' => $primary_gw->get_id(),
+			'message'    => $primary_res->get_error_message(),
+		);
+	}
+
+	/**
 	 * Dispatch OTP code to recipient and log result
 	 *
-	 * @param string $recipient       Normalized phone or email.
-	 * @param string $identifier_type 'phone' or 'email'.
-	 * @param string $forced_channel  Optional forced channel ('sms', 'bale', 'email') for admin testing.
+	 * @param string $recipient         Normalized phone or email.
+	 * @param string $identifier_type   'phone' or 'email'.
+	 * @param string $forced_channel    Optional forced channel ('sms', 'bale', 'email').
+	 * @param string $forced_gateway_id Optional forced SMS gateway ID for testing.
 	 * @return array|WP_Error { code: string, channel: string, gateway: string, log_id: int }
 	 */
-	public static function dispatch_otp( $recipient, $identifier_type = 'phone', $forced_channel = '' ) {
+	public static function dispatch_otp( $recipient, $identifier_type = 'phone', $forced_channel = '', $forced_gateway_id = '' ) {
 		$length   = absint( Signa_Helper::get_option( 'otp_length', 5 ) );
 		$code     = Signa_Helper::generate_otp_code( $length );
 		$otp_hash = wp_hash_password( $code );
@@ -76,7 +150,6 @@ class Signa_Gateway_Manager {
 				? $forced_channel
 				: Signa_Helper::get_option( 'mobile_delivery_channel', 'sms' );
 
-			$sms_gw  = self::get_active_sms_gateway();
 			$bale_gw = new Signa_Gateway_Bale();
 
 			switch ( $delivery_strategy ) {
@@ -97,55 +170,55 @@ class Signa_Gateway_Manager {
 						$send_result  = true;
 						$response_msg = 'ارسال موفق از طریق پیام‌رسان بله';
 					} else {
+						$sms_attempt  = self::send_sms_with_failover( $recipient, $code, $forced_gateway_id );
 						$channel_used = 'sms';
-						$gateway_used = $sms_gw->get_id();
-						$send_result  = $sms_gw->send( $recipient, $code );
+						$gateway_used = $sms_attempt['gateway_id'];
+						$send_result  = $sms_attempt['result'];
 						if ( ! is_wp_error( $send_result ) ) {
-							$response_msg = sprintf( 'ارسال از طریق پیامک (%s) پس از عدم موفقیت بله (%s)', $sms_gw->get_title(), $bale_res->get_error_message() );
+							$response_msg = sprintf( 'ارسال از طریق پیامک (%s) پس از عدم موفقیت بله', $gateway_used );
 						}
 					}
 					break;
 
 				case 'sms_fallback_bale':
-					$sms_res = $sms_gw->send( $recipient, $code );
-					if ( ! is_wp_error( $sms_res ) ) {
+					$sms_attempt = self::send_sms_with_failover( $recipient, $code, $forced_gateway_id );
+					if ( ! is_wp_error( $sms_attempt['result'] ) ) {
 						$channel_used = 'sms';
-						$gateway_used = $sms_gw->get_id();
+						$gateway_used = $sms_attempt['gateway_id'];
 						$send_result  = true;
-						$response_msg = 'ارسال موفق از طریق ' . $sms_gw->get_title();
+						$response_msg = $sms_attempt['message'];
 					} else {
 						$channel_used = 'bale';
 						$gateway_used = 'bale';
 						$send_result  = $bale_gw->send( $recipient, $code );
 						if ( ! is_wp_error( $send_result ) ) {
-							$response_msg = 'ارسال از طریق بله پس از خطای پیامک: ' . $sms_res->get_error_message();
+							$response_msg = 'ارسال از طریق بله پس از خطای پیامک: ' . $sms_attempt['message'];
 						}
 					}
 					break;
 
 				case 'both':
-					$sms_res  = $sms_gw->send( $recipient, $code );
-					$bale_res = $bale_gw->send( $recipient, $code );
-					if ( ! is_wp_error( $sms_res ) || ! is_wp_error( $bale_res ) ) {
+					$sms_attempt = self::send_sms_with_failover( $recipient, $code, $forced_gateway_id );
+					$bale_res    = $bale_gw->send( $recipient, $code );
+					if ( ! is_wp_error( $sms_attempt['result'] ) || ! is_wp_error( $bale_res ) ) {
 						$channel_used = 'sms+bale';
-						$gateway_used = $sms_gw->get_id() . '+bale';
+						$gateway_used = $sms_attempt['gateway_id'] . '+bale';
 						$send_result  = true;
 						$response_msg = 'ارسال همزمان پیامک و بله';
 					} else {
 						$channel_used = 'sms+bale';
-						$gateway_used = $sms_gw->get_id() . '+bale';
-						$send_result  = $sms_res;
+						$gateway_used = $sms_attempt['gateway_id'] . '+bale';
+						$send_result  = $sms_attempt['result'];
 					}
 					break;
 
 				case 'sms':
 				default:
+					$sms_attempt  = self::send_sms_with_failover( $recipient, $code, $forced_gateway_id );
 					$channel_used = 'sms';
-					$gateway_used = $sms_gw->get_id();
-					$send_result  = $sms_gw->send( $recipient, $code );
-					if ( ! is_wp_error( $send_result ) ) {
-						$response_msg = 'ارسال موفق از طریق ' . $sms_gw->get_title();
-					}
+					$gateway_used = $sms_attempt['gateway_id'];
+					$send_result  = $sms_attempt['result'];
+					$response_msg = $sms_attempt['message'];
 					break;
 			}
 		}

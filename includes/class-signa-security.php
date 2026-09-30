@@ -1,6 +1,6 @@
 <?php
 /**
- * Security, Rate Limiting & OTP Verification Engine
+ * Security, Firewall, Captcha, Rate Limiting & OTP Verification Engine
  *
  * @package Signa_OTP
  */
@@ -12,6 +12,152 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Signa_Security {
 
 	/**
+	 * Check if a recipient or IP is whitelisted
+	 *
+	 * @param string $recipient Normalized phone or email.
+	 * @param string $ip        Client IP.
+	 * @return bool
+	 */
+	public static function is_whitelisted( $recipient, $ip = '' ) {
+		if ( empty( $ip ) ) {
+			$ip = Signa_Helper::get_client_ip();
+		}
+		$whitelist = Signa_Helper::parse_list( Signa_Helper::get_option( 'whitelisted_identifiers', '' ) );
+		if ( empty( $whitelist ) ) {
+			return false;
+		}
+		return in_array( $recipient, $whitelist, true ) || in_array( $ip, $whitelist, true );
+	}
+
+	/**
+	 * Check if recipient or IP is blacklisted in Firewall
+	 *
+	 * @param string $recipient Normalized phone or email.
+	 * @param string $ip        Client IP.
+	 * @return true|WP_Error
+	 */
+	public static function check_blacklist( $recipient, $ip = '' ) {
+		if ( empty( $ip ) ) {
+			$ip = Signa_Helper::get_client_ip();
+		}
+
+		// Check IP Blacklist
+		$blocked_ips = Signa_Helper::parse_list( Signa_Helper::get_option( 'blocked_ips', '' ) );
+		foreach ( $blocked_ips as $rule_ip ) {
+			if ( $ip === $rule_ip || ( strpos( $rule_ip, '*' ) !== false && fnmatch( $rule_ip, $ip ) ) ) {
+				return new WP_Error( 'signa_blocked_ip', 'دسترسی آی‌پی شما توسط دیوار آتش سایت مسدود شده است.' );
+			}
+		}
+
+		// Check Phone / Identifier Blacklist
+		$blocked_phones = Signa_Helper::parse_list( Signa_Helper::get_option( 'blocked_phones', '' ) );
+		foreach ( $blocked_phones as $rule ) {
+			if ( $recipient === $rule || ( strpos( $rule, '*' ) !== false && fnmatch( $rule, $recipient ) ) || strpos( $recipient, $rule ) === 0 ) {
+				return new WP_Error( 'signa_blocked_recipient', 'امکان ارسال کد به این شماره/شناسه وجود ندارد (مسدود شده).' );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Generate a stateless HMAC Math Captcha challenge
+	 *
+	 * @return array { label: string, token: string }
+	 */
+	public static function generate_math_captcha() {
+		$a      = wp_rand( 2, 9 );
+		$b      = wp_rand( 1, 9 );
+		$answer = (string) ( $a + $b );
+		$ts     = time();
+		$sig    = hash_hmac( 'sha256', $answer . '|' . $ts, wp_salt( 'auth' ) );
+
+		return array(
+			'question' => sprintf( 'حاصل جمع %d + %d چند می‌شود؟', $a, $b ),
+			'token'    => base64_encode( $ts . '|' . $sig ),
+		);
+	}
+
+	/**
+	 * Verify Captcha (Math / reCAPTCHA v3 / Cloudflare Turnstile)
+	 *
+	 * @param array $post_data Submitted POST data.
+	 * @return true|WP_Error
+	 */
+	public static function verify_captcha( $post_data ) {
+		$captcha_type = Signa_Helper::get_option( 'captcha_type', 'none' );
+		if ( 'none' === $captcha_type || empty( $captcha_type ) ) {
+			return true;
+		}
+
+		// 1. Internal Math Captcha
+		if ( 'math' === $captcha_type ) {
+			$answer = isset( $post_data['captcha_answer'] ) ? Signa_Helper::convert_digits( sanitize_text_field( $post_data['captcha_answer'] ) ) : '';
+			$token  = isset( $post_data['captcha_token'] ) ? sanitize_text_field( $post_data['captcha_token'] ) : '';
+
+			if ( '' === $answer || empty( $token ) ) {
+				return new WP_Error( 'signa_captcha_empty', 'لطفاً به سوال امنیتی (کپچا) پاسخ دهید.' );
+			}
+
+			$decoded = base64_decode( $token, true );
+			if ( ! $decoded || strpos( $decoded, '|' ) === false ) {
+				return new WP_Error( 'signa_captcha_invalid', 'توکن امنیتی کپچا نامعتبر است.' );
+			}
+
+			list( $ts, $sig ) = explode( '|', $decoded, 2 );
+			if ( time() - (int) $ts > 900 ) {
+				return new WP_Error( 'signa_captcha_expired', 'سوال امنیتی منقضی شده است. لطفاً صفحه را رفرش کنید.' );
+			}
+
+			$expected_sig = hash_hmac( 'sha256', $answer . '|' . $ts, wp_salt( 'auth' ) );
+			if ( ! hash_equals( $expected_sig, $sig ) ) {
+				return new WP_Error( 'signa_captcha_wrong', 'پاسخ سوال امنیتی (کپچا) اشتباه است.' );
+			}
+
+			return true;
+		}
+
+		// 2. Google reCAPTCHA v3 or Cloudflare Turnstile
+		$secret_key = trim( (string) Signa_Helper::get_option( 'captcha_secret_key', '' ) );
+		$user_token = isset( $post_data['captcha_token'] ) ? sanitize_text_field( $post_data['captcha_token'] ) : '';
+
+		if ( empty( $secret_key ) ) {
+			return true; // Skip if admin hasn't entered secret key yet
+		}
+
+		if ( empty( $user_token ) ) {
+			return new WP_Error( 'signa_captcha_missing', 'تاییدیه امنیتی کپچا دریافت نشد. لطفاً مجدداً تلاش کنید.' );
+		}
+
+		$verify_url = 'turnstile' === $captcha_type
+			? 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
+			: 'https://www.google.com/recaptcha/api/siteverify';
+
+		$response = wp_remote_post(
+			$verify_url,
+			array(
+				'timeout' => 10,
+				'body'    => array(
+					'secret'   => $secret_key,
+					'response' => $user_token,
+					'remoteip' => Signa_Helper::get_client_ip(),
+				),
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return true; // Fail open on network outage so site isn't locked
+		}
+
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+		if ( empty( $body['success'] ) ) {
+			return new WP_Error( 'signa_captcha_failed', 'تایید امنیتی ضد ربات ناموفق بود.' );
+		}
+
+		return true;
+	}
+
+	/**
 	 * Check if a recipient or IP can request a new OTP
 	 *
 	 * @param string $recipient Normalized phone or email.
@@ -20,7 +166,19 @@ class Signa_Security {
 	public static function can_request_otp( $recipient ) {
 		global $wpdb;
 
-		$ip             = Signa_Helper::get_client_ip();
+		$ip = Signa_Helper::get_client_ip();
+
+		// Check blacklist first
+		$blacklist = self::check_blacklist( $recipient, $ip );
+		if ( is_wp_error( $blacklist ) ) {
+			return $blacklist;
+		}
+
+		// Whitelisted identifiers bypass rate limits & lockouts
+		if ( self::is_whitelisted( $recipient, $ip ) ) {
+			return true;
+		}
+
 		$lockout_status = self::check_lockout( $recipient, $ip );
 		if ( is_wp_error( $lockout_status ) ) {
 			return $lockout_status;
@@ -114,13 +272,17 @@ class Signa_Security {
 			$ip = Signa_Helper::get_client_ip();
 		}
 
+		if ( self::is_whitelisted( $recipient, $ip ) ) {
+			return true;
+		}
+
 		$recipient_lock = get_transient( 'signa_lock_' . md5( $recipient ) );
 		$ip_lock        = get_transient( 'signa_lock_ip_' . md5( $ip ) );
 
 		if ( $recipient_lock || $ip_lock ) {
 			return new WP_Error(
 				'signa_locked_out',
-				'به دلیل تلاش‌های ناموفق متعدد، دسترسی شما به صورت موقت مسدود شده است. لطفاً ۱۵ دقیقه دیگر تلاش کنید.'
+				'به دلیل تلاش‌های ناموفق متعدد، دسترسی شما به صورت موقت مسدود شده است. لطفاً کمی بعد تلاش کنید.'
 			);
 		}
 
@@ -128,7 +290,7 @@ class Signa_Security {
 	}
 
 	/**
-	 * Lock out a recipient and IP temporarily
+	 * Lock out a recipient and IP temporarily and register in active lockouts list
 	 *
 	 * @param string $recipient Recipient.
 	 */
@@ -138,6 +300,74 @@ class Signa_Security {
 
 		set_transient( 'signa_lock_' . md5( $recipient ), 1, $duration );
 		set_transient( 'signa_lock_ip_' . md5( $ip ), 1, $duration );
+
+		$lockouts = get_option( 'signa_active_lockouts', array() );
+		if ( ! is_array( $lockouts ) ) {
+			$lockouts = array();
+		}
+
+		$now_ts                 = time();
+		$lockouts[ $recipient ] = array(
+			'target'     => $recipient,
+			'ip'         => $ip,
+			'locked_at'  => current_time( 'mysql' ),
+			'expires_ts' => $now_ts + $duration,
+		);
+
+		update_option( 'signa_active_lockouts', $lockouts, false );
+	}
+
+	/**
+	 * Get all currently active lockouts for Admin Firewall table
+	 *
+	 * @return array
+	 */
+	public static function get_active_lockouts() {
+		$lockouts = get_option( 'signa_active_lockouts', array() );
+		if ( ! is_array( $lockouts ) || empty( $lockouts ) ) {
+			return array();
+		}
+
+		$now     = time();
+		$active  = array();
+		$changed = false;
+
+		foreach ( $lockouts as $key => $info ) {
+			if ( isset( $info['expires_ts'] ) && $info['expires_ts'] > $now ) {
+				$info['remaining_sec'] = $info['expires_ts'] - $now;
+				$active[ $key ]        = $info;
+			} else {
+				$changed = true;
+			}
+		}
+
+		if ( $changed ) {
+			update_option( 'signa_active_lockouts', $active, false );
+		}
+
+		return $active;
+	}
+
+	/**
+	 * Unlock a specific target and its associated IP immediately
+	 *
+	 * @param string $target Recipient or key.
+	 * @return bool
+	 */
+	public static function unlock_target( $target ) {
+		$lockouts = get_option( 'signa_active_lockouts', array() );
+		if ( ! is_array( $lockouts ) ) {
+			$lockouts = array();
+		}
+
+		delete_transient( 'signa_lock_' . md5( $target ) );
+		if ( isset( $lockouts[ $target ]['ip'] ) ) {
+			delete_transient( 'signa_lock_ip_' . md5( $lockouts[ $target ]['ip'] ) );
+		}
+
+		unset( $lockouts[ $target ] );
+		update_option( 'signa_active_lockouts', $lockouts, false );
+		return true;
 	}
 
 	/**
@@ -218,7 +448,7 @@ class Signa_Security {
 			array(
 				'status'      => 'verified',
 				'verified_at' => current_time( 'mysql' ),
-				'otp_code'    => '****', // Clear plain code once verified for extra security
+				'otp_code'    => '****',
 			)
 		);
 

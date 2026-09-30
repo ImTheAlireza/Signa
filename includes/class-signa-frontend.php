@@ -57,6 +57,11 @@ class Signa_Frontend {
 			SIGNA_OTP_VERSION
 		);
 
+		$custom_css = trim( (string) Signa_Helper::get_option( 'custom_css', '' ) );
+		if ( ! empty( $custom_css ) ) {
+			wp_add_inline_style( 'signa-otp-frontend', wp_strip_all_tags( $custom_css ) );
+		}
+
 		wp_enqueue_script(
 			'signa-otp-frontend',
 			SIGNA_OTP_URL . 'assets/js/frontend.js',

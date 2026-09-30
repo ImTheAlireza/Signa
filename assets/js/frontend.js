@@ -1,15 +1,9 @@
 /**
- * Signa OTP Frontend Controller
+ * Signa OTP Frontend Controller (v2.0)
  */
 (function ($) {
 	'use strict';
 
-	/**
-	 * Convert Persian and Arabic numerals to English numerals
-	 *
-	 * @param {string} str
-	 * @return {string}
-	 */
 	function toEnglishDigits(str) {
 		if (!str) {
 			return '';
@@ -23,12 +17,6 @@
 		return result;
 	}
 
-	/**
-	 * Format seconds into MM:SS
-	 *
-	 * @param {number} seconds
-	 * @return {string}
-	 */
 	function formatCountdown(seconds) {
 		var s = Math.max(0, parseInt(seconds, 10) || 0);
 		var mins = Math.floor(s / 60);
@@ -36,11 +24,6 @@
 		return (mins < 10 ? '0' + mins : mins) + ':' + (secs < 10 ? '0' + secs : secs);
 	}
 
-	/**
-	 * Initialize a single .signa-otp-wrapper instance
-	 *
-	 * @param {jQuery} $wrapper
-	 */
 	function initOtpWrapper($wrapper) {
 		if ($wrapper.data('signa-initialized')) {
 			return;
@@ -49,6 +32,7 @@
 
 		var $stepRequest = $wrapper.find('.signa-step-request');
 		var $stepVerify = $wrapper.find('.signa-step-verify');
+		var $stepPassword = $wrapper.find('.signa-step-password');
 		var $identifierInput = $wrapper.find('.signa-identifier-input');
 		var $digitBoxes = $wrapper.find('.signa-digit-box');
 		var $hiddenCode = $wrapper.find('.signa-otp-hidden-code');
@@ -58,10 +42,14 @@
 		var $timerCountdown = $wrapper.find('.signa-timer-countdown');
 		var $resendBtn = $wrapper.find('.signa-resend-btn');
 		var $changeBtn = $wrapper.find('.signa-change-identifier');
+		var $newUserBox = $wrapper.find('.signa-new-user-fields');
+		var $regNameGroup = $wrapper.find('.signa-reg-name-group');
+		var $regEmailGroup = $wrapper.find('.signa-reg-email-group');
 
 		var otpLength = parseInt($wrapper.attr('data-otp-length'), 10) || 5;
 		var redirectTo = $wrapper.attr('data-redirect') || '';
 		var currentIdentifier = '';
+		var hasRequiredExtraFields = false;
 		var timerInterval = null;
 
 		function showAlert(message, type) {
@@ -120,7 +108,6 @@
 			$hiddenCode.val('');
 		}
 
-		// Convert Persian/Arabic digits live on identifier input
 		$identifierInput.on('input', function () {
 			var converted = toEnglishDigits($(this).val());
 			if (converted !== $(this).val()) {
@@ -128,7 +115,6 @@
 			}
 		});
 
-		// Handle Segmented OTP Digit Boxes
 		$digitBoxes.on('input', function () {
 			var $this = $(this);
 			var val = toEnglishDigits($this.val()).replace(/[^0-9]/g, '');
@@ -141,7 +127,8 @@
 				$digitBoxes.eq(idx + 1).trigger('focus').trigger('select');
 			}
 
-			if (fullCode.length === otpLength) {
+			// Auto-submit when all digits entered (unless required new user name/email is still empty)
+			if (fullCode.length === otpLength && !hasRequiredExtraFields) {
 				$stepVerify.trigger('submit');
 			}
 		});
@@ -160,7 +147,6 @@
 			}
 		});
 
-		// Support pasting full OTP code into any digit box
 		$digitBoxes.on('paste', function (e) {
 			var clipboardData = (e.originalEvent || e).clipboardData;
 			if (!clipboardData) {
@@ -173,13 +159,12 @@
 					$digitBoxes.eq(i).val(pasted.charAt(i) || '');
 				}
 				var code = syncDigitsToHidden();
-				if (code.length === otpLength) {
+				if (code.length === otpLength && !hasRequiredExtraFields) {
 					$stepVerify.trigger('submit');
 				}
 			}
 		});
 
-		// Try WebOTP API for mobile browsers
 		function listenForWebOTP() {
 			if ('OTPCredential' in window && navigator.credentials) {
 				var ac = new AbortController();
@@ -194,14 +179,12 @@
 							for (var i = 0; i < otpLength; i++) {
 								$digitBoxes.eq(i).val(clean.charAt(i) || '');
 							}
-							if (syncDigitsToHidden().length === otpLength) {
+							if (syncDigitsToHidden().length === otpLength && !hasRequiredExtraFields) {
 								$stepVerify.trigger('submit');
 							}
 						}
 					})
-					.catch(function () {
-						// Ignore abort or unsupported
-					});
+					.catch(function () {});
 			}
 		}
 
@@ -211,21 +194,61 @@
 			hideAlert();
 			setLoading($submitBtn, true);
 
+			var payload = {
+				action: 'signa_request_otp',
+				nonce: signaOtpParams.nonce,
+				identifier: identifier
+			};
+
+			var $captchaAns = $stepRequest.find('.signa-captcha-answer');
+			var $captchaTok = $stepRequest.find('.signa-captcha-token');
+			if ($captchaAns.length) {
+				payload.captcha_answer = toEnglishDigits($captchaAns.val());
+				payload.captcha_token = $captchaTok.val();
+			}
+
 			$.ajax({
 				url: signaOtpParams.ajaxUrl,
 				type: 'POST',
 				dataType: 'json',
-				data: {
-					action: 'signa_request_otp',
-					nonce: signaOtpParams.nonce,
-					identifier: identifier
-				}
+				data: payload
 			})
 				.done(function (res) {
 					if (res && res.success) {
 						currentIdentifier = res.data.identifier;
 						$recipientDisplay.text(res.data.masked || currentIdentifier);
 						$stepRequest.hide();
+						$stepPassword.hide();
+
+						// Configure extra registration fields if user is new
+						hasRequiredExtraFields = false;
+						$regNameGroup.hide();
+						$regEmailGroup.hide();
+						$newUserBox.hide();
+
+						if (res.data.is_new_user) {
+							var showBox = false;
+							if (res.data.require_name && res.data.require_name !== 'disabled') {
+								showBox = true;
+								$regNameGroup.show();
+								$regNameGroup.find('.signa-req-badge').text(res.data.require_name === 'required' ? '(الزامی)' : '(اختیاری)');
+								if (res.data.require_name === 'required') {
+									hasRequiredExtraFields = true;
+								}
+							}
+							if (res.data.require_email && res.data.require_email !== 'disabled') {
+								showBox = true;
+								$regEmailGroup.show();
+								$regEmailGroup.find('.signa-req-badge').text(res.data.require_email === 'required' ? '(الزامی)' : '(اختیاری)');
+								if (res.data.require_email === 'required') {
+									hasRequiredExtraFields = true;
+								}
+							}
+							if (showBox) {
+								$newUserBox.show();
+							}
+						}
+
 						$stepVerify.fadeIn(200);
 						clearDigits();
 
@@ -236,10 +259,19 @@
 						showAlert(msg, 'success');
 						startCountdown(res.data.cooldown || 60);
 						setTimeout(function () {
-							$digitBoxes.eq(0).trigger('focus');
+							if (hasRequiredExtraFields && $regNameGroup.is(':visible')) {
+								$regNameGroup.find('input').trigger('focus');
+							} else {
+								$digitBoxes.eq(0).trigger('focus');
+							}
 						}, 220);
 						listenForWebOTP();
 					} else {
+						if (res && res.data && res.data.new_captcha) {
+							$stepRequest.find('.signa-captcha-question').text(res.data.new_captcha.question);
+							$stepRequest.find('.signa-captcha-token').val(res.data.new_captcha.token);
+							$stepRequest.find('.signa-captcha-answer').val('');
+						}
 						var errMsg = res && res.data && res.data.message ? res.data.message : signaOtpParams.i18n.networkError;
 						showAlert(errMsg, 'error');
 					}
@@ -263,18 +295,17 @@
 			requestOtp(val);
 		});
 
-		// Change identifier button (Go back to Step 1)
 		$changeBtn.on('click', function () {
 			if (timerInterval) {
 				clearInterval(timerInterval);
 			}
 			hideAlert();
 			$stepVerify.hide();
+			$stepPassword.hide();
 			$stepRequest.fadeIn(180);
 			$identifierInput.trigger('focus').trigger('select');
 		});
 
-		// Resend button
 		$resendBtn.on('click', function () {
 			if (currentIdentifier) {
 				requestOtp(currentIdentifier);
@@ -303,6 +334,8 @@
 					nonce: signaOtpParams.nonce,
 					identifier: currentIdentifier,
 					code: code,
+					full_name: $stepVerify.find('.signa-reg-fullname').val() || '',
+					user_email: $stepVerify.find('.signa-reg-email').val() || '',
 					redirect_to: redirectTo
 				}
 			})
@@ -327,15 +360,78 @@
 					setLoading($verifyBtn, false);
 				});
 		});
+
+		// Password Fallback Toggle & Submit
+		$wrapper.find('.signa-switch-to-password').on('click', function () {
+			hideAlert();
+			$stepRequest.hide();
+			$stepVerify.hide();
+			var currentVal = $identifierInput.val();
+			if (currentVal) {
+				$stepPassword.find('.signa-pw-identifier').val(currentVal);
+			}
+			$stepPassword.fadeIn(180);
+		});
+
+		$wrapper.find('.signa-switch-to-otp').on('click', function () {
+			hideAlert();
+			$stepPassword.hide();
+			$stepRequest.fadeIn(180);
+		});
+
+		$stepPassword.on('submit', function (e) {
+			e.preventDefault();
+			var idVal = toEnglishDigits($stepPassword.find('.signa-pw-identifier').val()).trim();
+			var pwVal = $stepPassword.find('.signa-pw-input').val();
+			if (!idVal || !pwVal) {
+				showAlert('لطفاً شناسه کاربری و رمز عبور خود را وارد کنید.', 'error');
+				return;
+			}
+
+			var $pwBtn = $stepPassword.find('.signa-submit-password');
+			hideAlert();
+			setLoading($pwBtn, true);
+
+			$.ajax({
+				url: signaOtpParams.ajaxUrl,
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					action: 'signa_password_login',
+					nonce: signaOtpParams.nonce,
+					identifier: idVal,
+					password: pwVal,
+					redirect_to: redirectTo
+				}
+			})
+				.done(function (res) {
+					if (res && res.success) {
+						showAlert(res.data.message, 'success');
+						setTimeout(function () {
+							if (res.data.redirect_to) {
+								window.location.href = res.data.redirect_to;
+							} else {
+								window.location.reload();
+							}
+						}, 600);
+					} else {
+						var err = res && res.data && res.data.message ? res.data.message : signaOtpParams.i18n.networkError;
+						showAlert(err, 'error');
+						setLoading($pwBtn, false);
+					}
+				})
+				.fail(function () {
+					showAlert(signaOtpParams.i18n.networkError, 'error');
+					setLoading($pwBtn, false);
+				});
+		});
 	}
 
 	$(function () {
-		// Initialize all OTP forms on page
 		$('.signa-otp-wrapper').each(function () {
 			initOtpWrapper($(this));
 		});
 
-		// Global Modal Open / Close
 		var $modal = $('#signa-otp-modal');
 		$(document).on('click', '.signa-open-modal, a[href="#signa-login-modal"]', function (e) {
 			if ($modal.length) {
@@ -361,7 +457,6 @@
 			}
 		});
 
-		// WooCommerce Checkout OTP Toggle
 		$(document).on('click', '.signa-toggle-checkout-otp', function () {
 			$('.signa-wc-checkout-form-holder').slideToggle(200);
 		});

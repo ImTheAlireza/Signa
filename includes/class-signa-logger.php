@@ -1,6 +1,6 @@
 <?php
 /**
- * OTP Logger & Log Table Repository
+ * OTP Logger, Analytics & Log Table Repository
  *
  * @package Signa_OTP
  */
@@ -90,7 +90,7 @@ class Signa_Logger {
 		global $wpdb;
 		$table = self::table_name();
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query(
 			$wpdb->prepare(
 				"UPDATE {$table} SET status = 'expired' WHERE recipient = %s AND status = 'sent'",
@@ -126,7 +126,7 @@ class Signa_Logger {
 		global $wpdb;
 		$table = self::table_name();
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return $wpdb->get_row(
 			$wpdb->prepare(
 				"SELECT * FROM {$table} WHERE recipient = %s ORDER BY id DESC LIMIT 1",
@@ -216,14 +216,79 @@ class Signa_Logger {
 		$today_count    = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE created_at >= %s", $today ) );
 		$verified_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table} WHERE status = 'verified'" );
 		$failed_count   = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table} WHERE status = 'failed'" );
+		$otp_users      = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->usermeta} WHERE meta_key = 'signa_registered_via_otp'" );
 		// phpcs:enable
 
+		$conversion_rate = $total_all > 0 ? round( ( $verified_count / $total_all ) * 100, 1 ) : 0;
+
 		return array(
-			'total'    => $total_all,
-			'today'    => $today_count,
-			'verified' => $verified_count,
-			'failed'   => $failed_count,
+			'total'           => $total_all,
+			'today'           => $today_count,
+			'verified'        => $verified_count,
+			'failed'          => $failed_count,
+			'otp_users'       => $otp_users,
+			'conversion_rate' => $conversion_rate,
 		);
+	}
+
+	/**
+	 * Get 7-day chart analytics data
+	 *
+	 * @param int $days Number of days.
+	 * @return array
+	 */
+	public static function get_daily_chart_data( $days = 7 ) {
+		global $wpdb;
+		$table    = self::table_name();
+		$now_ts   = strtotime( current_time( 'mysql' ) );
+		$start_dt = gmdate( 'Y-m-d 00:00:00', $now_ts - ( ( $days - 1 ) * DAY_IN_SECONDS ) );
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT DATE(created_at) as day_date,
+				        COUNT(*) as total_count,
+				        SUM(CASE WHEN status = 'verified' THEN 1 ELSE 0 END) as verified_count,
+				        SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed_count
+				 FROM {$table}
+				 WHERE created_at >= %s
+				 GROUP BY DATE(created_at)
+				 ORDER BY day_date ASC",
+				$start_dt
+			),
+			OBJECT_K
+		);
+
+		$chart   = array();
+		$max_val = 1;
+
+		for ( $i = $days - 1; $i >= 0; $i-- ) {
+			$day_ts  = $now_ts - ( $i * DAY_IN_SECONDS );
+			$day_key = gmdate( 'Y-m-d', $day_ts );
+			$label   = date_i18n( 'j F', $day_ts );
+
+			$total    = isset( $rows[ $day_key ] ) ? (int) $rows[ $day_key ]->total_count : 0;
+			$verified = isset( $rows[ $day_key ] ) ? (int) $rows[ $day_key ]->verified_count : 0;
+			$failed   = isset( $rows[ $day_key ] ) ? (int) $rows[ $day_key ]->failed_count : 0;
+
+			if ( $total > $max_val ) {
+				$max_val = $total;
+			}
+
+			$chart[] = array(
+				'date'     => $day_key,
+				'label'    => $label,
+				'total'    => $total,
+				'verified' => $verified,
+				'failed'   => $failed,
+			);
+		}
+
+		foreach ( $chart as &$point ) {
+			$point['height_pct'] = $point['total'] > 0 ? max( 10, round( ( $point['total'] / $max_val ) * 100 ) ) : 4;
+		}
+
+		return $chart;
 	}
 
 	/**

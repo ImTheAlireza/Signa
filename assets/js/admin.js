@@ -1,72 +1,305 @@
 /**
- * Signa OTP Admin Dashboard Scripts
+ * Signa OTP v2.0 - Enterprise SaaS Admin Dashboard Controller
  */
 (function ($) {
 	'use strict';
 
 	$(function () {
-		// 1. Tab Switching with sessionStorage persistence
-		var $tabBtns = $('.signa-tab-btn');
-		var $tabPanels = $('.signa-tab-panel');
+		var $shell = $('#signa-app-shell');
+		var $toast = $('#signa-toast');
+		var toastTimer = null;
+
+		function showToast(msg, isError) {
+			if (toastTimer) {
+				clearTimeout(toastTimer);
+			}
+			$toast
+				.toggleClass('is-error', !!isError)
+				.find('.signa-toast-text')
+				.text(msg);
+			$toast.fadeIn(180);
+			toastTimer = setTimeout(function () {
+				$toast.fadeOut(220);
+			}, 3400);
+		}
+
+		// 1. Dark Mode Toggle with localStorage persistence
+		function applyDarkMode(isDark) {
+			$shell.toggleClass('is-dark', isDark);
+			$('.signa-dark-icon').text(isDark ? '☀️' : '🌙');
+		}
+
+		try {
+			var savedDark = localStorage.getItem('signa_admin_dark_mode') === '1';
+			applyDarkMode(savedDark);
+		} catch (e) {}
+
+		$('#signa-theme-toggle').on('click', function () {
+			var nextDark = !$shell.hasClass('is-dark');
+			applyDarkMode(nextDark);
+			try {
+				localStorage.setItem('signa_admin_dark_mode', nextDark ? '1' : '0');
+			} catch (e) {}
+		});
+
+		// 2. Sidebar Navigation Tabs
+		var $navItems = $('.signa-nav-item');
+		var $panels = $('.signa-panel');
 
 		function activateTab(tabId) {
 			if (!tabId || !$('#signa-tab-' + tabId).length) {
 				return;
 			}
-			$tabBtns.removeClass('active');
-			$tabBtns.filter('[data-tab="' + tabId + '"]').addClass('active');
+			$navItems.removeClass('active');
+			$navItems.filter('[data-tab="' + tabId + '"]').addClass('active');
 
-			$tabPanels.removeClass('active');
+			$panels.removeClass('active');
 			$('#signa-tab-' + tabId).addClass('active');
 
 			try {
-				sessionStorage.setItem('signa_active_admin_tab', tabId);
+				sessionStorage.setItem('signa_v2_active_tab', tabId);
 			} catch (e) {}
 		}
 
-		$tabBtns.on('click', function () {
+		$navItems.on('click', function () {
 			activateTab($(this).attr('data-tab'));
 		});
 
 		try {
-			var savedTab = sessionStorage.getItem('signa_active_admin_tab');
-			if (savedTab) {
-				activateTab(savedTab);
+			var lastTab = sessionStorage.getItem('signa_v2_active_tab');
+			if (lastTab) {
+				activateTab(lastTab);
 			}
 		} catch (e) {}
 
-		// 2. Active SMS Gateway Box Toggle
-		var $gatewaySelect = $('#active_sms_gateway');
-		var $gatewayBoxes = $('.signa-gateway-box');
+		// 3. Visual Radio Choice Cards
+		$(document).on('change', '.signa-choice-card input[type="radio"]', function () {
+			var name = $(this).attr('name');
+			$('input[type="radio"][name="' + name + '"]')
+				.closest('.signa-choice-card')
+				.removeClass('selected');
+			$(this).closest('.signa-choice-card').addClass('selected');
+		});
 
-		function updateGatewayBox() {
-			var selected = $gatewaySelect.val();
-			$gatewayBoxes.hide();
-			$gatewayBoxes.filter('[data-gateway="' + selected + '"]').fadeIn(150);
+		// 4. SMS Gateway Inspector Pills & Select Sync
+		var $gwSelect = $('#active_sms_gateway');
+		var $gwPills = $('.signa-gw-pill');
+		var $gwBoxes = $('.signa-gateway-box');
+
+		function showGatewayConfigBox(gwId) {
+			$gwPills.removeClass('active');
+			$gwPills.filter('[data-gw="' + gwId + '"]').addClass('active');
+			$gwBoxes.hide();
+			$gwBoxes.filter('[data-gateway="' + gwId + '"]').fadeIn(160);
 		}
 
-		if ($gatewaySelect.length) {
-			updateGatewayBox();
-			$gatewaySelect.on('change', updateGatewayBox);
+		if ($gwSelect.length) {
+			showGatewayConfigBox($gwSelect.val());
+			$gwSelect.on('change', function () {
+				var val = $(this).val();
+				var label = $(this).find('option:selected').text();
+				$('#signa-topbar-gw-name').text(label);
+				showGatewayConfigBox(val);
+			});
 		}
 
-		// 3. Live Gateway Tester AJAX
+		$gwPills.on('click', function () {
+			showGatewayConfigBox($(this).attr('data-gw'));
+		});
+
+		// 5. Interactive Appearance Studio & Live Preview
+		function refreshLivePreview() {
+			var primary = $('#primary_color').val() || '#2563eb';
+			var bg = $('#card_bg_color').val() || '#ffffff';
+			var text = $('#text_color').val() || '#111827';
+			var radius = $('#border_radius').val() || 16;
+			var digitStyle = $('#digit_box_style').val() || 'box';
+			var logoUrl = ($('#logo_url').val() || '').trim();
+			var title = $('#form_title').val() || 'ورود / ثبت‌نام';
+			var subtitle = $('#form_subtitle').val() || '';
+			var btn1 = $('#button_text').val() || 'دریافت کد تایید';
+			var btn2 = $('#verify_button_text').val() || 'تایید و ورود به حساب';
+
+			$('#primary_color_hex').text(primary);
+			$('#card_bg_color_hex').text(bg);
+			$('#text_color_hex').text(text);
+			$('#radius_val_label').text(radius + 'px');
+
+			var $card = $('#signa-live-preview-card');
+			$card.css({
+				background: bg,
+				color: text,
+				borderRadius: radius + 'px'
+			});
+
+			$('#signa-prev-badge-icon').css('color', primary);
+			$('#signa-prev-title').text(title);
+			$('#signa-prev-subtitle').text(subtitle);
+			$('#signa-prev-btn-1').text(btn1).css({
+				background: primary,
+				borderRadius: Math.round(radius * 0.68) + 'px'
+			});
+			$('#signa-prev-btn-2').text(btn2).css({
+				background: primary,
+				borderRadius: Math.round(radius * 0.68) + 'px'
+			});
+
+			if (logoUrl) {
+				$('#signa-prev-logo-img').attr('src', logoUrl);
+				$('#signa-prev-logo-wrap').show();
+				$('#signa-prev-badge-icon').hide();
+			} else {
+				$('#signa-prev-logo-wrap').hide();
+				$('#signa-prev-badge-icon').css('display', 'inline-flex');
+			}
+
+			var $digits = $('.signa-prev-digit');
+			if (digitStyle === 'underline') {
+				$digits.css({
+					border: 'none',
+					borderBottom: '2.5px solid ' + primary,
+					borderRadius: '0',
+					background: 'transparent',
+					color: text
+				});
+			} else if (digitStyle === 'pill') {
+				$digits.css({
+					border: '1.5px solid #cbd5e1',
+					borderRadius: '99px',
+					background: '#f8fafc',
+					color: '#0f172a'
+				});
+			} else {
+				$digits.css({
+					border: '1.5px solid #cbd5e1',
+					borderRadius: '9px',
+					background: '#f8fafc',
+					color: '#0f172a'
+				});
+			}
+		}
+
+		$('#primary_color, #card_bg_color, #text_color, #border_radius, #digit_box_style, #logo_url, #form_title, #form_subtitle, #button_text, #verify_button_text').on(
+			'input change',
+			refreshLivePreview
+		);
+
+		$('.signa-preset-btn').on('click', function () {
+			var $btn = $(this);
+			$('#primary_color').val($btn.attr('data-primary'));
+			$('#card_bg_color').val($btn.attr('data-bg'));
+			$('#text_color').val($btn.attr('data-text'));
+			$('#border_radius').val($btn.attr('data-radius'));
+			refreshLivePreview();
+			showToast('پالت رنگی روی پیش‌نمایش اعمال شد!');
+		});
+
+		$('.signa-prev-step-btn').on('click', function () {
+			var step = $(this).attr('data-step');
+			$('.signa-prev-step-btn').removeClass('active');
+			$(this).addClass('active');
+			if (step === '2') {
+				$('#signa-prev-step-1').hide();
+				$('#signa-prev-step-2').fadeIn(150);
+			} else {
+				$('#signa-prev-step-2').hide();
+				$('#signa-prev-step-1').fadeIn(150);
+			}
+		});
+
+		// WordPress Media Uploader for Logo
+		$('#signa_upload_logo_btn').on('click', function (e) {
+			e.preventDefault();
+			if (typeof wp === 'undefined' || !wp.media) {
+				showToast('کتابخانه رسانه وردپرس در دسترس نیست.', true);
+				return;
+			}
+			var frame = wp.media({
+				title: 'انتخاب لوگوی فرم ورود',
+				button: { text: 'استفاده از این تصویر' },
+				multiple: false
+			});
+			frame.on('select', function () {
+				var attachment = frame.state().get('selection').first().toJSON();
+				if (attachment && attachment.url) {
+					$('#logo_url').val(attachment.url).trigger('change');
+				}
+			});
+			frame.open();
+		});
+
+		// 6. AJAX Save Settings & Ctrl+S Shortcut
+		var $settingsForm = $('#signa-settings-form');
+		var $saveBtn = $('#signa-ajax-save-btn');
+
+		$settingsForm.on('submit', function (e) {
+			e.preventDefault();
+			var formData = $settingsForm.serializeArray();
+			formData.push({ name: 'action', value: 'signa_admin_save_settings' });
+			formData.push({ name: 'nonce', value: signaAdminParams.nonce });
+
+			$saveBtn.prop('disabled', true);
+			$saveBtn.find('.signa-save-label').text('در حال ذخیره...');
+
+			$.ajax({
+				url: signaAdminParams.ajaxUrl,
+				type: 'POST',
+				dataType: 'json',
+				data: $.param(formData)
+			})
+				.done(function (res) {
+					if (res && res.success) {
+						showToast('✅ ' + res.data.message, false);
+						if (res.data.settings) {
+							$('#signa_export_json_box').val(JSON.stringify(res.data.settings));
+						}
+					} else {
+						showToast('❌ خطا در ذخیره تنظیمات', true);
+					}
+				})
+				.fail(function () {
+					showToast('❌ خطا در ارتباط با سرور وردپرس', true);
+				})
+				.always(function () {
+					$saveBtn.prop('disabled', false);
+					$saveBtn.find('.signa-save-label').text('ذخیره تغییرات');
+				});
+		});
+
+		$(document).on('keydown', function (e) {
+			if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+				if ($settingsForm.length) {
+					e.preventDefault();
+					$settingsForm.trigger('submit');
+				}
+			}
+		});
+
+		// 7. Copy to Clipboard Buttons
+		$(document).on('click', '.signa-copy-btn', function () {
+			var text = $(this).attr('data-copy');
+			if (navigator.clipboard && text) {
+				navigator.clipboard.writeText(text).then(function () {
+					showToast('📋 در کلیپ‌بورد کپی شد!');
+				});
+			}
+		});
+
+		// 8. Live Gateway Tester
 		var $testBtn = $('#signa_run_test_btn');
 		var $testResult = $('#signa_test_result');
 
 		$testBtn.on('click', function () {
-			var recipient = $('#signa_test_recipient').val().trim();
+			var recipient = ($('#signa_test_recipient').val() || '').trim();
 			var channel = $('#signa_test_channel').val();
+			var gatewayId = $('#signa_test_gateway_id').val();
 
 			if (!recipient) {
-				$testResult
-					.css({ background: '#fef2f2', color: '#b91c1c', border: '1px solid #fecaca' })
-					.text('لطفاً شماره موبایل یا ایمیل گیرنده تست را وارد کنید.')
-					.slideDown(150);
+				showToast('لطفاً شماره موبایل یا ایمیل گیرنده تست را وارد کنید.', true);
 				return;
 			}
 
-			$testBtn.prop('disabled', true).text('در حال ارسال...');
+			$testBtn.prop('disabled', true).text('در حال ارسال کد آزمایشی...');
 			$testResult.hide();
 
 			$.ajax({
@@ -77,7 +310,8 @@
 					action: 'signa_admin_test_gateway',
 					nonce: signaAdminParams.nonce,
 					recipient: recipient,
-					channel: channel
+					channel: channel,
+					gateway_id: gatewayId
 				}
 			})
 				.done(function (res) {
@@ -95,14 +329,86 @@
 					}
 				})
 				.fail(function () {
-					$testResult
-						.css({ background: '#fef2f2', color: '#b91c1c', border: '1px solid #fecaca' })
-						.text('خطا در ارتباط با سرور وردپرس.')
-						.slideDown(150);
+					showToast('خطا در برقراری ارتباط با سرور', true);
 				})
 				.always(function () {
-					$testBtn.prop('disabled', false).text('ارسال کد آزمایشی');
+					$testBtn.prop('disabled', false).html('<span class="dashicons dashicons-controls-play"></span> ارسال کد آزمایشی همین الان');
 				});
+		});
+
+		// 9. Unlock Active Lockout Button
+		$(document).on('click', '.signa-unlock-btn', function () {
+			var $btn = $(this);
+			var target = $btn.attr('data-target');
+			$btn.prop('disabled', true).text('در حال بازگشایی...');
+
+			$.ajax({
+				url: signaAdminParams.ajaxUrl,
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					action: 'signa_admin_unlock_target',
+					nonce: signaAdminParams.nonce,
+					target: target
+				}
+			}).done(function (res) {
+				if (res && res.success) {
+					$btn.closest('tr').fadeOut(200);
+					showToast('✅ مسدودی شماره/IP برطرف شد.');
+				} else {
+					$btn.prop('disabled', false).text('رفع مسدودی آنی (Unlock)');
+				}
+			});
+		});
+
+		// 10. Import JSON & Reset Settings
+		$('#signa_import_settings_btn').on('click', function () {
+			var jsonText = ($('#signa_import_json_box').val() || '').trim();
+			if (!jsonText) {
+				showToast('لطفاً ابتدا کد JSON تنظیمات را وارد کنید.', true);
+				return;
+			}
+			$.ajax({
+				url: signaAdminParams.ajaxUrl,
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					action: 'signa_admin_import_settings',
+					nonce: signaAdminParams.nonce,
+					json_data: jsonText
+				}
+			}).done(function (res) {
+				if (res && res.success) {
+					showToast('✅ ' + res.data.message);
+					setTimeout(function () {
+						window.location.reload();
+					}, 900);
+				} else {
+					showToast('❌ ' + (res && res.data ? res.data.message : 'خطا در درون‌ریزی'), true);
+				}
+			});
+		});
+
+		$('#signa_reset_defaults_btn').on('click', function () {
+			if (!window.confirm('آیا مطمئن هستید که می‌خواهید تمام تنظیمات را به حالت پیش‌فرض بازنشانی کنید؟')) {
+				return;
+			}
+			$.ajax({
+				url: signaAdminParams.ajaxUrl,
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					action: 'signa_admin_reset_settings',
+					nonce: signaAdminParams.nonce
+				}
+			}).done(function (res) {
+				if (res && res.success) {
+					showToast('✅ ' + res.data.message);
+					setTimeout(function () {
+						window.location.reload();
+					}, 800);
+				}
+			});
 		});
 	});
 })(jQuery);
