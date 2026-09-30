@@ -202,7 +202,7 @@ class Signa_Admin {
 	 * Handle form submissions (Fallback POST Save, Clear Logs, Export CSV)
 	 */
 	public function handle_actions() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( wp_doing_ajax() || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
@@ -268,14 +268,21 @@ class Signa_Admin {
 		check_ajax_referer( 'signa_admin_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
+			if ( ob_get_length() ) {
+				ob_clean();
+			}
 			wp_send_json_error( array( 'message' => 'دسترسی غیرمجاز.' ) );
 		}
 
-		$raw = isset( $_POST['signa'] ) && is_array( $_POST['signa'] ) ? wp_unslash( $_POST['signa'] ) : array();
+		$raw   = isset( $_POST['signa'] ) && is_array( $_POST['signa'] ) ? wp_unslash( $_POST['signa'] ) : array();
 		$clean = $this->sanitize_settings_payload( $raw );
 
 		update_option( 'signa_otp_settings', $clean );
 		delete_transient( 'signa_bale_safir_token' );
+
+		if ( ob_get_length() ) {
+			ob_clean();
+		}
 
 		wp_send_json_success(
 			array(

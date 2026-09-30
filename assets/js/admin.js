@@ -234,7 +234,13 @@
 
 		$settingsForm.on('submit', function (e) {
 			e.preventDefault();
-			var formData = $settingsForm.serializeArray();
+			var rawArray = $settingsForm.serializeArray();
+			var formData = [];
+			for (var i = 0; i < rawArray.length; i++) {
+				if (rawArray[i].name !== 'signa_save_settings' && rawArray[i].name !== 'signa_settings_nonce') {
+					formData.push(rawArray[i]);
+				}
+			}
 			formData.push({ name: 'action', value: 'signa_admin_save_settings' });
 			formData.push({ name: 'nonce', value: signaAdminParams.nonce });
 
