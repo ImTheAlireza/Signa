@@ -77,61 +77,41 @@ $openssl_active  = extension_loaded( 'openssl' );
 		<div class="signa-app-body">
 			<!-- VERTICAL SIDEBAR -->
 			<aside class="signa-sidebar">
+				<div class="signa-sidebar-group-title">منوی مدیریت افزونه</div>
 				<nav class="signa-nav">
 					<button type="button" class="signa-nav-item active" data-tab="dashboard">
-						<span class="dashicons dashicons-chart-area"></span>
-						<div class="signa-nav-text">
-							<strong>پیشخوان و آمار</strong>
-							<small>گزارش ۷ روزه و وضعیت</small>
-						</div>
+						<span class="dashicons dashicons-chart-bar"></span>
+						<span class="signa-nav-label">پیشخوان و آمار</span>
 					</button>
 
 					<button type="button" class="signa-nav-item" data-tab="auth_flow">
 						<span class="dashicons dashicons-admin-users"></span>
-						<div class="signa-nav-text">
-							<strong>سناریوی ورود و عضویت</strong>
-							<small>فیلدهای ثبت‌نام و ریدایرکت</small>
-						</div>
+						<span class="signa-nav-label">سناریوی ورود و عضویت</span>
 					</button>
 
 					<button type="button" class="signa-nav-item" data-tab="sms_gateways">
 						<span class="dashicons dashicons-smartphone"></span>
-						<div class="signa-nav-text">
-							<strong>درگاه‌های پیامک و پشتیبان</strong>
-							<small>۵ درگاه ایرانی + Failover</small>
-						</div>
+						<span class="signa-nav-label">درگاه‌های پیامک و پشتیبان</span>
 					</button>
 
 					<button type="button" class="signa-nav-item" data-tab="bale_email">
 						<span class="dashicons dashicons-format-chat"></span>
-						<div class="signa-nav-text">
-							<strong>پیام‌رسان بله و ایمیل</strong>
-							<small>سفیر بله، ربات و قالب ایمیل</small>
-						</div>
+						<span class="signa-nav-label">پیام‌رسان بله و ایمیل</span>
 					</button>
 
 					<button type="button" class="signa-nav-item" data-tab="appearance_studio">
 						<span class="dashicons dashicons-art"></span>
-						<div class="signa-nav-text">
-							<strong>استودیو طراحی ظاهر</strong>
-							<small>پیش‌نمایش زنده و تم‌ها</small>
-						</div>
+						<span class="signa-nav-label">استودیو طراحی ظاهر</span>
 					</button>
 
 					<button type="button" class="signa-nav-item" data-tab="woocommerce">
 						<span class="dashicons dashicons-cart"></span>
-						<div class="signa-nav-text">
-							<strong>ووکامرس و شورت‌کدها</strong>
-							<small>My Account، تسویه‌حساب و مودال</small>
-						</div>
+						<span class="signa-nav-label">ووکامرس و شورت‌کدها</span>
 					</button>
 
 					<button type="button" class="signa-nav-item" data-tab="security_firewall">
 						<span class="dashicons dashicons-shield-alt"></span>
-						<div class="signa-nav-text">
-							<strong>امنیت، فایروال و کپچا</strong>
-							<small>Rate Limit، لیست سیاه و قفل‌ها</small>
-						</div>
+						<span class="signa-nav-label">امنیت، فایروال و کپچا</span>
 						<?php if ( count( $active_lockouts ) > 0 ) : ?>
 							<span class="signa-nav-counter"><?php echo esc_html( (string) count( $active_lockouts ) ); ?></span>
 						<?php endif; ?>
@@ -139,16 +119,13 @@ $openssl_active  = extension_loaded( 'openssl' );
 
 					<button type="button" class="signa-nav-item" data-tab="tools_backup">
 						<span class="dashicons dashicons-admin-tools"></span>
-						<div class="signa-nav-text">
-							<strong>تست زنده و پشتیبان‌گیری</strong>
-							<small>آزمایش ارسال و خروجی JSON</small>
-						</div>
+						<span class="signa-nav-label">تست زنده و پشتیبان‌گیری</span>
 					</button>
 				</nav>
 
 				<div class="signa-sidebar-footer">
-					<p>طراحی‌شده برای وردپرس فارسی</p>
-					<small>پشتیبانی از WebOTP و خطوط خدماتی</small>
+					<p>Signa OTP v<?php echo esc_html( SIGNA_OTP_VERSION ); ?></p>
+					<small>احراز هویت یکپارچه وردپرس</small>
 				</div>
 			</aside>
 
@@ -1003,52 +980,54 @@ $openssl_active  = extension_loaded( 'openssl' );
 						<div class="signa-card-head">
 							<div>
 								<h2>یکپارچگی با ووکامرس و وردپرس</h2>
-								<p>جایگزینی خودکار فرم‌های پیش‌فرض با سیستم ورود یکبارمصرف</p>
+								<p>جایگزینی خودکار فرم‌های پیش‌فرض وردپرس و ووکامرس با فرم ورود یکبارمصرف Signa</p>
 							</div>
 						</div>
 
-						<div class="signa-switch-row">
-							<div>
-								<strong>جایگزینی فرم حساب کاربری ووکامرس (My Account)</strong>
-								<p>فرم ورود و عضویت پیش‌فرض ووکامرس در برگه حساب کاربری با فرم OTP جایگزین شود.</p>
+						<div class="signa-switches-grid">
+							<div class="signa-switch-row">
+								<div class="signa-switch-text">
+									<strong>جایگزینی فرم حساب کاربری ووکامرس (My Account)</strong>
+									<p>فرم ورود و عضویت پیش‌فرض ووکامرس با فرم OTP جایگزین شود.</p>
+								</div>
+								<label class="signa-switch">
+									<input type="checkbox" name="signa[wc_replace_myaccount]" value="1" <?php checked( $settings['wc_replace_myaccount'], 1 ); ?> />
+									<span class="signa-slider"></span>
+								</label>
 							</div>
-							<label class="signa-switch">
-								<input type="checkbox" name="signa[wc_replace_myaccount]" value="1" <?php checked( $settings['wc_replace_myaccount'], 1 ); ?> />
-								<span class="signa-slider"></span>
-							</label>
-						</div>
 
-						<div class="signa-switch-row">
-							<div>
-								<strong>نوار ورود سریع در صفحه تسویه‌حساب ووکامرس (Checkout)</strong>
-								<p>نمایش باکس بازشونده ورود با کد یکبارمصرف بالای صفحه تسویه‌حساب برای مشتریان مهمان.</p>
+							<div class="signa-switch-row">
+								<div class="signa-switch-text">
+									<strong>نوار ورود سریع در تسویه‌حساب (Checkout)</strong>
+									<p>نمایش باکس ورود سریع با کد تایید بالای صفحه تسویه‌حساب برای مهمانان.</p>
+								</div>
+								<label class="signa-switch">
+									<input type="checkbox" name="signa[wc_checkout_otp_box]" value="1" <?php checked( $settings['wc_checkout_otp_box'], 1 ); ?> />
+									<span class="signa-slider"></span>
+								</label>
 							</div>
-							<label class="signa-switch">
-								<input type="checkbox" name="signa[wc_checkout_otp_box]" value="1" <?php checked( $settings['wc_checkout_otp_box'], 1 ); ?> />
-								<span class="signa-slider"></span>
-							</label>
-						</div>
 
-						<div class="signa-switch-row">
-							<div>
-								<strong>مودال پاپ‌آپ سراسری (Global Popup Modal)</strong>
-								<p>قرارگیری خودکار پنجره پاپ‌آپ ورود در فوتر سایت برای باز شدن با شورت‌کد دکمه یا کلاس CSS.</p>
+							<div class="signa-switch-row">
+								<div class="signa-switch-text">
+									<strong>مودال پاپ‌آپ سراسری (Global Modal)</strong>
+									<p>بارگذاری پنجره پاپ‌آپ ورود در فوتر سایت برای شورت‌کد دکمه و کلاس CSS.</p>
+								</div>
+								<label class="signa-switch">
+									<input type="checkbox" name="signa[enable_global_modal]" value="1" <?php checked( $settings['enable_global_modal'], 1 ); ?> />
+									<span class="signa-slider"></span>
+								</label>
 							</div>
-							<label class="signa-switch">
-								<input type="checkbox" name="signa[enable_global_modal]" value="1" <?php checked( $settings['enable_global_modal'], 1 ); ?> />
-								<span class="signa-slider"></span>
-							</label>
-						</div>
 
-						<div class="signa-switch-row">
-							<div>
-								<strong>افزودن به صفحه ورود پیش‌فرض وردپرس (wp-login.php)</strong>
-								<p>نمایش فرم ورود با کد یکبارمصرف در صفحه <code>wp-login.php</code> وردپرس.</p>
+							<div class="signa-switch-row">
+								<div class="signa-switch-text">
+									<strong>جایگزینی کامل صفحه ورود وردپرس (wp-login.php)</strong>
+									<p>حذف فرم قدیمی وردپرس در <code>wp-login.php</code> و نمایش صفحه اختصاصی Signa OTP.</p>
+								</div>
+								<label class="signa-switch">
+									<input type="checkbox" name="signa[wp_login_integration]" value="1" <?php checked( $settings['wp_login_integration'], 1 ); ?> />
+									<span class="signa-slider"></span>
+								</label>
 							</div>
-							<label class="signa-switch">
-								<input type="checkbox" name="signa[wp_login_integration]" value="1" <?php checked( $settings['wp_login_integration'], 1 ); ?> />
-								<span class="signa-slider"></span>
-							</label>
 						</div>
 					</div>
 

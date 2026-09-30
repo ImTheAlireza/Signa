@@ -1,48 +1,60 @@
 /**
- * Signa OTP v2.0 - Enterprise SaaS Admin Dashboard Stylesheet (RTL + Dark Mode)
+ * Signa OTP v2.1 - Refined Enterprise SaaS Admin Dashboard Stylesheet (RTL + High-Contrast Dark Mode)
  */
 
-.signa-app-shell {
+#signa-app-shell.signa-app-shell {
 	--s-bg-app: #f1f5f9;
 	--s-bg-surface: #ffffff;
 	--s-bg-subtle: #f8fafc;
+	--s-bg-input: #ffffff;
+	--s-bg-hover: #eff6ff;
 	--s-border: #e2e8f0;
+	--s-border-input: #cbd5e1;
 	--s-text: #0f172a;
+	--s-text-secondary: #334155;
 	--s-text-muted: #64748b;
 	--s-primary: #2563eb;
 	--s-primary-hover: #1d4ed8;
 	--s-primary-soft: rgba(37, 99, 235, 0.1);
-	--s-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+	--s-shadow: 0 4px 24px -4px rgba(15, 23, 42, 0.06);
 
+	color-scheme: light;
 	font-family: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif;
 	background: var(--s-bg-app);
 	color: var(--s-text);
-	margin: 16px 2px 24px 16px;
+	margin: 20px 2px 28px 18px;
 	border-radius: 18px;
 	border: 1px solid var(--s-border);
-	overflow: hidden;
 	box-shadow: var(--s-shadow);
 	direction: rtl;
 	text-align: right;
+	position: relative;
 }
 
-/* Dark Mode Theme */
-.signa-app-shell.is-dark {
-	--s-bg-app: #0f172a;
-	--s-bg-surface: #1e293b;
-	--s-bg-subtle: #0f172a;
-	--s-border: #334155;
+/* High-Contrast Dark Mode Theme */
+#signa-app-shell.signa-app-shell.is-dark {
+	--s-bg-app: #0b1120;
+	--s-bg-surface: #151f32;
+	--s-bg-subtle: #1e293b;
+	--s-bg-input: #0f172a;
+	--s-bg-hover: #26354d;
+	--s-border: #2dd4bf1a;
+	--s-border-input: #475569;
 	--s-text: #f8fafc;
+	--s-text-secondary: #e2e8f0;
 	--s-text-muted: #94a3b8;
 	--s-primary: #3b82f6;
-	--s-primary-hover: #2563eb;
+	--s-primary-hover: #60a5fa;
 	--s-primary-soft: rgba(59, 130, 246, 0.18);
-	--s-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+	--s-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+
+	color-scheme: dark;
+	border-color: #334155;
 }
 
-.signa-app-shell *,
-.signa-app-shell *::before,
-.signa-app-shell *::after {
+#signa-app-shell.signa-app-shell *,
+#signa-app-shell.signa-app-shell *::before,
+#signa-app-shell.signa-app-shell *::after {
 	box-sizing: border-box;
 }
 
@@ -58,7 +70,7 @@
 	border-radius: 12px;
 	font-size: 13.5px;
 	font-weight: 600;
-	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 	display: flex;
 	align-items: center;
 	gap: 10px;
@@ -69,19 +81,25 @@
 	border-right-color: #ef4444;
 }
 
-/* TOPBAR */
-.signa-topbar {
+/* ==========================================
+   TOPBAR (Non-overlapping Clean Header)
+   ========================================== */
+#signa-app-shell .signa-topbar {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	flex-wrap: wrap;
 	gap: 16px;
 	background: var(--s-bg-surface);
-	border-bottom: 1px solid var(--s-border);
-	padding: 16px 26px;
-	position: sticky;
-	top: 32px;
-	z-index: 50;
+	border-bottom: 1px solid #33415526;
+	border-radius: 18px 18px 0 0;
+	padding: 20px 28px;
+	position: relative;
+	z-index: 10;
+}
+
+#signa-app-shell.is-dark .signa-topbar {
+	border-bottom: 1px solid #334155;
 }
 
 .signa-topbar-brand {
@@ -91,15 +109,16 @@
 }
 
 .signa-brand-logo {
-	width: 46px;
-	height: 46px;
-	border-radius: 13px;
+	width: 48px;
+	height: 48px;
+	border-radius: 14px;
 	background: linear-gradient(135deg, #2563eb, #4f46e5);
 	color: #ffffff;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+	box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+	flex-shrink: 0;
 }
 
 .signa-brand-title-row {
@@ -108,12 +127,13 @@
 	gap: 10px;
 }
 
-.signa-brand-title-row h1 {
+#signa-app-shell .signa-brand-title-row h1 {
 	margin: 0;
 	padding: 0;
-	font-size: 19px;
+	font-size: 20px;
 	font-weight: 800;
 	color: var(--s-text);
+	line-height: 1.2;
 }
 
 .signa-badge-ver {
@@ -121,12 +141,12 @@
 	color: var(--s-primary);
 	font-size: 11.5px;
 	font-weight: 700;
-	padding: 2px 10px;
+	padding: 3px 10px;
 	border-radius: 99px;
 }
 
 .signa-topbar-brand p {
-	margin: 3px 0 0 0;
+	margin: 4px 0 0 0;
 	font-size: 12.5px;
 	color: var(--s-text-muted);
 }
@@ -143,8 +163,8 @@
 	align-items: center;
 	gap: 8px;
 	background: var(--s-bg-subtle);
-	border: 1px solid var(--s-border);
-	padding: 7px 14px;
+	border: 1px solid var(--s-border-input);
+	padding: 8px 15px;
 	border-radius: 99px;
 	font-size: 12.5px;
 	color: var(--s-text);
@@ -159,19 +179,19 @@
 
 .signa-status-dot.is-online {
 	background: #10b981;
-	box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+	box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
 }
 
 .signa-status-dot.is-warning {
 	background: #f59e0b;
-	box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+	box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.22);
 }
 
-.signa-icon-btn {
-	width: 38px;
-	height: 38px;
+#signa-app-shell .signa-icon-btn {
+	width: 40px;
+	height: 40px;
 	border-radius: 10px;
-	border: 1px solid var(--s-border);
+	border: 1px solid var(--s-border-input);
 	background: var(--s-bg-subtle);
 	color: var(--s-text);
 	cursor: pointer;
@@ -179,32 +199,43 @@
 	align-items: center;
 	justify-content: center;
 	font-size: 16px;
+	outline: none !important;
+	box-shadow: none !important;
+	transition: all 0.15s ease;
 }
 
-.signa-btn-secondary {
+#signa-app-shell .signa-icon-btn:hover {
+	background: var(--s-bg-hover);
+	border-color: var(--s-primary);
+}
+
+#signa-app-shell .signa-btn-secondary {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	height: 38px;
-	padding: 0 15px;
+	height: 40px;
+	padding: 0 16px;
 	border-radius: 10px;
-	border: 1px solid var(--s-border);
-	background: var(--s-bg-surface);
+	border: 1px solid var(--s-border-input);
+	background: var(--s-bg-subtle);
 	color: var(--s-text) !important;
 	font-family: inherit;
 	font-size: 13px;
 	font-weight: 600;
 	cursor: pointer;
 	text-decoration: none;
+	outline: none !important;
+	box-shadow: none !important;
 	transition: all 0.15s ease;
 }
 
-.signa-btn-secondary:hover {
+#signa-app-shell .signa-btn-secondary:hover {
+	background: var(--s-bg-hover);
 	border-color: var(--s-primary);
 	color: var(--s-primary) !important;
 }
 
-.signa-btn-save {
+#signa-app-shell .signa-btn-save {
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
@@ -218,109 +249,127 @@
 	font-size: 13.5px;
 	font-weight: 700;
 	cursor: pointer;
+	outline: none !important;
 	box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
-	transition: transform 0.15s ease, opacity 0.15s ease;
+	transition: opacity 0.15s ease;
 }
 
-.signa-btn-save:hover {
-	opacity: 0.94;
+#signa-app-shell .signa-btn-save:hover {
+	opacity: 0.92;
 }
 
-.signa-btn-danger {
+#signa-app-shell .signa-btn-danger {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
 	height: 38px;
 	padding: 0 15px;
 	border-radius: 10px;
-	border: 1px solid #fecaca;
-	background: #fef2f2;
-	color: #dc2626;
+	border: 1px solid rgba(239, 68, 68, 0.4);
+	background: rgba(239, 68, 68, 0.1);
+	color: #ef4444;
 	font-family: inherit;
 	font-size: 13px;
 	font-weight: 600;
 	cursor: pointer;
+	outline: none !important;
+}
+
+#signa-app-shell .signa-btn-danger:hover {
+	background: #ef4444;
+	color: #ffffff;
 }
 
 .signa-kbd {
-	background: rgba(255, 255, 255, 0.2);
+	background: rgba(255, 255, 255, 0.22);
 	padding: 2px 6px;
 	border-radius: 5px;
 	font-size: 10.5px;
 	font-family: monospace;
 }
 
-/* APP BODY (2-Column Shell) */
+/* ==========================================
+   APP BODY & CLEAN SIDEBAR MENU
+   ========================================== */
 .signa-app-body {
 	display: grid;
-	grid-template-columns: 265px 1fr;
-	min-height: 720px;
+	grid-template-columns: 250px 1fr;
+	min-height: 700px;
 }
 
-/* SIDEBAR */
-.signa-sidebar {
+#signa-app-shell .signa-sidebar {
 	background: var(--s-bg-surface);
-	border-left: 1px solid var(--s-border);
-	padding: 18px 14px;
+	border-left: 1px solid #33415522;
+	padding: 24px 14px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+}
+
+#signa-app-shell.is-dark .signa-sidebar {
+	border-left: 1px solid #334155;
+}
+
+.signa-sidebar-group-title {
+	font-size: 11px;
+	font-weight: 700;
+	color: var(--s-text-muted);
+	padding: 0 12px 10px 12px;
+	letter-spacing: 0.2px;
 }
 
 .signa-nav {
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
+	gap: 5px;
 }
 
-.signa-nav-item {
+#signa-app-shell .signa-nav-item {
 	display: flex;
 	align-items: center;
-	gap: 12px;
+	gap: 11px;
 	width: 100%;
-	padding: 12px 14px;
-	border-radius: 12px;
-	border: 1px solid transparent;
+	height: 44px;
+	padding: 0 14px;
+	border-radius: 10px;
+	border: none !important;
 	background: transparent;
-	color: var(--s-text);
+	color: var(--s-text-secondary);
 	font-family: inherit;
+	font-size: 13.5px;
+	font-weight: 600;
 	text-align: right;
 	cursor: pointer;
-	transition: all 0.16s ease;
+	outline: none !important;
+	box-shadow: none !important;
+	transition: background 0.15s ease, color 0.15s ease;
 	position: relative;
 }
 
-.signa-nav-item:hover {
-	background: var(--s-bg-subtle);
-}
-
-.signa-nav-item.active {
-	background: var(--s-primary-soft);
-	border-color: rgba(37, 99, 235, 0.25);
+#signa-app-shell .signa-nav-item:hover {
+	background: var(--s-bg-hover);
 	color: var(--s-primary);
 }
 
-.signa-nav-item .dashicons {
-	font-size: 20px;
-	width: 20px;
-	height: 20px;
-	opacity: 0.85;
-}
-
-.signa-nav-text {
-	display: flex;
-	flex-direction: column;
-	gap: 2px;
-}
-
-.signa-nav-text strong {
-	font-size: 13.5px;
+#signa-app-shell .signa-nav-item.active {
+	background: var(--s-primary);
+	color: #ffffff !important;
 	font-weight: 700;
+	box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
 }
 
-.signa-nav-text small {
-	font-size: 11px;
-	color: var(--s-text-muted);
+#signa-app-shell .signa-nav-item .dashicons {
+	font-size: 19px;
+	width: 19px;
+	height: 19px;
+	line-height: 19px;
+	color: inherit;
+	opacity: 0.9;
+}
+
+.signa-nav-label {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .signa-nav-counter {
@@ -334,26 +383,30 @@
 }
 
 .signa-sidebar-footer {
-	padding: 14px;
-	border-top: 1px solid var(--s-border);
+	margin-top: auto;
+	padding: 16px 12px 4px 12px;
+	border-top: 1px solid #33415522;
 	text-align: center;
 	color: var(--s-text-muted);
 	font-size: 11.5px;
 }
 
 .signa-sidebar-footer p {
-	margin: 0 0 4px 0;
-	font-weight: 600;
+	margin: 0 0 2px 0;
+	font-weight: 700;
+	color: var(--s-text-secondary);
 }
 
-/* MAIN AREA */
-.signa-main {
-	padding: 24px 28px;
+/* ==========================================
+   MAIN CONTENT AREA
+   ========================================== */
+#signa-app-shell .signa-main {
+	padding: 28px 30px;
 }
 
 .signa-panel {
 	display: none;
-	animation: signaFadeIn 0.2s ease;
+	animation: signaFadeIn 0.18s ease;
 }
 
 .signa-panel.active {
@@ -363,7 +416,7 @@
 @keyframes signaFadeIn {
 	from {
 		opacity: 0;
-		transform: translateY(4px);
+		transform: translateY(3px);
 	}
 	to {
 		opacity: 1;
@@ -374,19 +427,23 @@
 /* KPI CARDS */
 .signa-kpi-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
 	gap: 16px;
-	margin-bottom: 20px;
+	margin-bottom: 22px;
 }
 
 .signa-kpi-card {
 	background: var(--s-bg-surface);
-	border: 1px solid var(--s-border);
+	border: 1px solid #33415522;
 	border-radius: 14px;
-	padding: 18px;
+	padding: 18px 20px;
 	display: flex;
 	align-items: center;
 	gap: 14px;
+}
+
+#signa-app-shell.is-dark .signa-kpi-card {
+	border-color: #334155;
 }
 
 .signa-kpi-icon {
@@ -400,28 +457,29 @@
 }
 
 .signa-kpi-icon.is-blue {
-	background: rgba(59, 130, 246, 0.12);
-	color: #2563eb;
+	background: rgba(59, 130, 246, 0.14);
+	color: #3b82f6;
 }
 
 .signa-kpi-icon.is-green {
-	background: rgba(16, 185, 129, 0.12);
+	background: rgba(16, 185, 129, 0.14);
 	color: #10b981;
 }
 
 .signa-kpi-icon.is-purple {
-	background: rgba(139, 92, 246, 0.12);
+	background: rgba(139, 92, 246, 0.14);
 	color: #8b5cf6;
 }
 
 .signa-kpi-icon.is-red {
-	background: rgba(239, 68, 68, 0.12);
+	background: rgba(239, 68, 68, 0.14);
 	color: #ef4444;
 }
 
 .signa-kpi-info {
 	display: flex;
 	flex-direction: column;
+	gap: 2px;
 }
 
 .signa-kpi-info span {
@@ -433,7 +491,7 @@
 	font-size: 22px;
 	font-weight: 800;
 	color: var(--s-text);
-	line-height: 1.3;
+	line-height: 1.25;
 }
 
 .signa-kpi-info small {
@@ -460,11 +518,15 @@
 	grid-column: span 6;
 }
 
-.signa-card {
+#signa-app-shell .signa-card {
 	background: var(--s-bg-surface);
-	border: 1px solid var(--s-border);
+	border: 1px solid #33415522;
 	border-radius: 16px;
-	padding: 22px 24px;
+	padding: 24px 26px;
+}
+
+#signa-app-shell.is-dark .signa-card {
+	border-color: #334155;
 }
 
 .signa-card-head {
@@ -473,11 +535,15 @@
 	justify-content: space-between;
 	gap: 12px;
 	padding-bottom: 16px;
-	margin-bottom: 18px;
-	border-bottom: 1px solid var(--s-border);
+	margin-bottom: 20px;
+	border-bottom: 1px solid #33415522;
 }
 
-.signa-card-head h2 {
+#signa-app-shell.is-dark .signa-card-head {
+	border-bottom-color: #334155;
+}
+
+#signa-app-shell .signa-card-head h2 {
 	margin: 0 0 4px 0;
 	font-size: 16px;
 	font-weight: 700;
@@ -575,7 +641,8 @@
 	justify-content: space-between;
 	font-size: 13px;
 	padding-bottom: 10px;
-	border-bottom: 1px dashed var(--s-border);
+	border-bottom: 1px dashed #33415533;
+	color: var(--s-text-secondary);
 }
 
 .signa-health-list li:last-child {
@@ -593,47 +660,49 @@
 }
 
 .signa-pill.is-ok {
-	background: rgba(16, 185, 129, 0.15);
+	background: rgba(16, 185, 129, 0.16);
 	color: #10b981;
 }
 
 .signa-pill.is-warn {
-	background: rgba(245, 158, 11, 0.16);
-	color: #d97706;
+	background: rgba(245, 158, 11, 0.18);
+	color: #f59e0b;
 }
 
 .signa-pill.is-err {
-	background: rgba(239, 68, 68, 0.15);
+	background: rgba(239, 68, 68, 0.16);
 	color: #ef4444;
 }
 
 .signa-pill.is-info {
-	background: rgba(59, 130, 246, 0.15);
+	background: rgba(59, 130, 246, 0.16);
 	color: #3b82f6;
 }
 
 .signa-pill.is-muted {
 	background: var(--s-bg-subtle);
-	color: var(--s-text-muted);
-	border: 1px solid var(--s-border);
+	color: var(--s-text-secondary);
+	border: 1px solid var(--s-border-input);
 }
 
-/* RADIO CHOICE CARDS */
+/* ==========================================
+   RADIO CHOICE CARDS
+   ========================================== */
 .signa-section-label {
 	display: block;
 	font-size: 13.5px;
 	font-weight: 700;
-	margin-bottom: 10px;
+	margin-bottom: 12px;
 	color: var(--s-text);
 }
 
 .signa-choice-grid {
 	display: grid;
-	gap: 12px;
+	gap: 14px;
 }
 
 .signa-cols-3 {
-	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
 }
 
 .signa-cols-2 {
@@ -641,31 +710,37 @@
 }
 
 .signa-cols-4 {
-	grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
 }
 
-.signa-choice-card {
+#signa-app-shell .signa-choice-card {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
-	padding: 16px;
+	padding: 16px 18px;
 	border-radius: 12px;
-	border: 1.5px solid var(--s-border);
+	border: 1.5px solid var(--s-border-input);
 	background: var(--s-bg-subtle);
 	cursor: pointer;
 	transition: all 0.15s ease;
 	position: relative;
 }
 
-.signa-choice-card input[type="radio"] {
+#signa-app-shell .signa-choice-card:hover {
+	border-color: var(--s-primary);
+	background: var(--s-bg-hover);
+}
+
+#signa-app-shell .signa-choice-card input[type="radio"] {
 	position: absolute;
 	opacity: 0;
 	pointer-events: none;
 }
 
-.signa-choice-card.selected {
+#signa-app-shell .signa-choice-card.selected {
 	border-color: var(--s-primary);
 	background: var(--s-primary-soft);
+	box-shadow: 0 0 0 1px var(--s-primary);
 }
 
 .signa-choice-card .dashicons {
@@ -681,21 +756,23 @@
 }
 
 .signa-choice-card small {
-	font-size: 11.5px;
+	font-size: 12px;
 	color: var(--s-text-muted);
-	line-height: 1.5;
+	line-height: 1.55;
 }
 
-/* FIELDS GRID */
+/* ==========================================
+   FORM INPUTS, SELECTS & DARK MODE FIX
+   ========================================== */
 .signa-fields-grid {
 	display: grid;
-	gap: 16px;
+	gap: 18px;
 }
 
 .signa-field {
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
+	gap: 7px;
 }
 
 .signa-field label {
@@ -704,29 +781,61 @@
 	color: var(--s-text);
 }
 
-.signa-field input[type="text"],
-.signa-field input[type="url"],
-.signa-field input[type="email"],
-.signa-field input[type="password"],
-.signa-field input[type="number"],
-.signa-field select,
-.signa-field textarea {
+#signa-app-shell input[type="text"],
+#signa-app-shell input[type="url"],
+#signa-app-shell input[type="email"],
+#signa-app-shell input[type="password"],
+#signa-app-shell input[type="number"],
+#signa-app-shell input[type="search"],
+#signa-app-shell select,
+#signa-app-shell textarea {
 	width: 100%;
-	padding: 9px 12px;
-	border-radius: 10px;
-	border: 1px solid var(--s-border);
-	background: var(--s-bg-subtle);
-	color: var(--s-text);
-	font-family: inherit;
-	font-size: 13.5px;
-	outline: none;
+	max-width: 100%;
+	min-height: 42px;
+	padding: 8px 13px !important;
+	border-radius: 10px !important;
+	border: 1.5px solid var(--s-border-input) !important;
+	background-color: var(--s-bg-input) !important;
+	color: var(--s-text) !important;
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 13.5px !important;
+	line-height: 1.5 !important;
+	outline: none !important;
+	box-shadow: none !important;
 }
 
-.signa-field input:focus,
-.signa-field select:focus,
-.signa-field textarea:focus {
-	border-color: var(--s-primary);
-	box-shadow: 0 0 0 3px var(--s-primary-soft);
+/* Crucial Fix for Select Option Dropdown Readability in Light & Dark Mode */
+#signa-app-shell select option {
+	background-color: #ffffff !important;
+	color: #0f172a !important;
+	font-family: 'Vazirmatn', Tahoma, sans-serif;
+	font-size: 13.5px;
+	padding: 8px;
+}
+
+#signa-app-shell.is-dark select,
+#signa-app-shell.is-dark input[type="text"],
+#signa-app-shell.is-dark input[type="url"],
+#signa-app-shell.is-dark input[type="email"],
+#signa-app-shell.is-dark input[type="password"],
+#signa-app-shell.is-dark input[type="number"],
+#signa-app-shell.is-dark input[type="search"],
+#signa-app-shell.is-dark textarea {
+	background-color: #0f172a !important;
+	color: #f8fafc !important;
+	border-color: #475569 !important;
+}
+
+#signa-app-shell.is-dark select option {
+	background-color: #1e293b !important;
+	color: #f8fafc !important;
+}
+
+#signa-app-shell input:focus,
+#signa-app-shell select:focus,
+#signa-app-shell textarea:focus {
+	border-color: var(--s-primary) !important;
+	box-shadow: 0 0 0 3px var(--s-primary-soft) !important;
 }
 
 .signa-field small {
@@ -734,52 +843,77 @@
 	color: var(--s-text-muted);
 }
 
-/* iOS TOGGLE SWITCH */
+/* ==========================================
+   SWITCHES GRID & FIXED iOS TOGGLE GEOMETRY
+   ========================================== */
+.signa-switches-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+	gap: 14px;
+}
+
 .signa-switch-row {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 16px;
-	padding: 14px 16px;
+	padding: 16px 18px;
 	border-radius: 12px;
 	background: var(--s-bg-subtle);
-	border: 1px solid var(--s-border);
+	border: 1px solid var(--s-border-input);
 	margin-bottom: 10px;
+	transition: border-color 0.15s ease;
+}
+
+.signa-switches-grid .signa-switch-row {
+	margin-bottom: 0;
+}
+
+.signa-switch-row:hover {
+	border-color: var(--s-primary);
 }
 
 .signa-switch-row strong {
 	display: block;
 	font-size: 13.5px;
+	font-weight: 700;
 	color: var(--s-text);
-	margin-bottom: 3px;
+	margin-bottom: 4px;
 }
 
 .signa-switch-row p {
 	margin: 0;
 	font-size: 12px;
+	line-height: 1.55;
 	color: var(--s-text-muted);
 }
 
+/* Force LTR inside switch so knob math is identical in RTL & LTR */
 .signa-switch {
 	position: relative;
 	display: inline-block;
-	width: 48px;
-	height: 26px;
+	width: 50px;
+	height: 28px;
 	flex-shrink: 0;
+	direction: ltr !important;
 }
 
 .signa-switch input {
 	opacity: 0;
 	width: 0;
 	height: 0;
+	position: absolute;
 }
 
 .signa-slider {
 	position: absolute;
 	cursor: pointer;
-	inset: 0;
-	background-color: #cbd5e1;
-	transition: 0.22s;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #94a3b8;
+	transition: background-color 0.22s ease;
 	border-radius: 99px;
 }
 
@@ -788,12 +922,12 @@
 	content: "";
 	height: 20px;
 	width: 20px;
-	left: 3px;
-	bottom: 3px;
+	left: 4px;
+	top: 4px;
 	background-color: #ffffff;
-	transition: 0.22s;
+	transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 	border-radius: 50%;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .signa-switch input:checked + .signa-slider {
@@ -804,48 +938,57 @@
 	transform: translateX(22px);
 }
 
-/* GATEWAY TABS & BOXES */
+/* ==========================================
+   GATEWAY TABS & BOXES
+   ========================================== */
 .signa-gw-tabs-bar {
-	margin-top: 20px;
-	padding-top: 16px;
-	border-top: 1px solid var(--s-border);
+	margin-top: 22px;
+	padding-top: 18px;
+	border-top: 1px solid #33415522;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	gap: 10px;
+	gap: 12px;
 }
 
 .signa-gw-pills {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 6px;
+	gap: 8px;
 }
 
-.signa-gw-pill {
-	padding: 7px 14px;
+#signa-app-shell .signa-gw-pill {
+	padding: 8px 16px;
 	border-radius: 99px;
-	border: 1px solid var(--s-border);
+	border: 1.5px solid var(--s-border-input);
 	background: var(--s-bg-subtle);
 	color: var(--s-text);
 	font-family: inherit;
 	font-size: 12.5px;
 	font-weight: 600;
 	cursor: pointer;
+	outline: none !important;
+	transition: all 0.15s ease;
 }
 
-.signa-gw-pill.active {
+#signa-app-shell .signa-gw-pill:hover {
+	border-color: var(--s-primary);
+	background: var(--s-bg-hover);
+}
+
+#signa-app-shell .signa-gw-pill.active {
 	background: var(--s-primary);
 	border-color: var(--s-primary);
-	color: #ffffff;
+	color: #ffffff !important;
 }
 
 .signa-gateway-box {
-	margin-top: 16px;
-	padding: 20px;
+	margin-top: 18px;
+	padding: 22px;
 	border-radius: 14px;
 	background: var(--s-bg-subtle);
-	border: 1px solid var(--s-border);
+	border: 1px solid var(--s-border-input);
 	display: none;
 }
 
@@ -853,7 +996,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 14px;
+	margin-bottom: 16px;
 }
 
 .signa-gw-box-head h3 {
@@ -862,7 +1005,9 @@
 	color: var(--s-text);
 }
 
-/* APPEARANCE STUDIO & LIVE PREVIEW */
+/* ==========================================
+   APPEARANCE STUDIO & LIVE PREVIEW
+   ========================================== */
 .signa-studio-layout {
 	display: grid;
 	grid-template-columns: 1fr 370px;
@@ -876,23 +1021,25 @@
 	gap: 10px;
 }
 
-.signa-preset-btn {
+#signa-app-shell .signa-preset-btn {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 	padding: 10px 12px;
 	border-radius: 10px;
-	border: 1px solid var(--s-border);
+	border: 1.5px solid var(--s-border-input);
 	background: var(--s-bg-subtle);
 	color: var(--s-text);
 	font-family: inherit;
 	font-size: 12.5px;
 	font-weight: 600;
 	cursor: pointer;
+	outline: none !important;
 }
 
-.signa-preset-btn:hover {
+#signa-app-shell .signa-preset-btn:hover {
 	border-color: var(--s-primary);
+	background: var(--s-bg-hover);
 }
 
 .signa-swatch {
@@ -907,8 +1054,8 @@
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	background: var(--s-bg-subtle);
-	border: 1px solid var(--s-border);
+	background: var(--s-bg-input);
+	border: 1.5px solid var(--s-border-input);
 	padding: 5px 10px;
 	border-radius: 10px;
 }
@@ -924,12 +1071,12 @@
 
 .signa-studio-preview-col {
 	position: sticky;
-	top: 100px;
+	top: 48px;
 }
 
 .signa-preview-box {
 	background: var(--s-bg-surface);
-	border: 1px solid var(--s-border);
+	border: 1px solid var(--s-border-input);
 	border-radius: 16px;
 	overflow: hidden;
 }
@@ -940,7 +1087,7 @@
 	justify-content: space-between;
 	padding: 12px 16px;
 	background: var(--s-bg-subtle);
-	border-bottom: 1px solid var(--s-border);
+	border-bottom: 1px solid var(--s-border-input);
 	font-size: 12.5px;
 	font-weight: 700;
 }
@@ -950,18 +1097,19 @@
 	gap: 4px;
 }
 
-.signa-prev-step-btn {
-	padding: 4px 10px;
+#signa-app-shell .signa-prev-step-btn {
+	padding: 5px 10px;
 	border-radius: 6px;
-	border: 1px solid var(--s-border);
+	border: 1px solid var(--s-border-input);
 	background: var(--s-bg-surface);
 	color: var(--s-text);
 	font-family: inherit;
 	font-size: 11px;
 	cursor: pointer;
+	outline: none !important;
 }
 
-.signa-prev-step-btn.active {
+#signa-app-shell .signa-prev-step-btn.active {
 	background: var(--s-primary);
 	border-color: var(--s-primary);
 	color: #fff;
@@ -974,7 +1122,7 @@
 
 .signa-prev-card {
 	padding: 24px 20px;
-	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 	border: 1px solid rgba(148, 163, 184, 0.25);
 	transition: all 0.2s ease;
 }
@@ -1002,7 +1150,7 @@
 
 .signa-copy-card {
 	background: var(--s-bg-subtle);
-	border: 1px solid var(--s-border);
+	border: 1px solid var(--s-border-input);
 	border-radius: 12px;
 	padding: 16px;
 	display: flex;
@@ -1013,17 +1161,18 @@
 .signa-copy-card code {
 	padding: 8px 10px;
 	border-radius: 8px;
-	background: var(--s-bg-surface);
-	border: 1px dashed var(--s-border);
+	background: var(--s-bg-input);
+	color: var(--s-text);
+	border: 1px dashed var(--s-border-input);
 	font-size: 12.5px;
 	text-align: left;
 }
 
-.signa-copy-btn {
+#signa-app-shell .signa-copy-btn {
 	align-self: flex-start;
 	padding: 6px 12px;
 	border-radius: 8px;
-	border: 1px solid var(--s-border);
+	border: 1px solid var(--s-border-input);
 	background: var(--s-bg-surface);
 	color: var(--s-primary);
 	font-family: inherit;
@@ -1043,14 +1192,14 @@
 	background: var(--s-bg-subtle);
 	color: var(--s-text-muted);
 	font-weight: 700;
-	padding: 12px 14px;
+	padding: 13px 16px;
 	text-align: right;
-	border-bottom: 1px solid var(--s-border);
+	border-bottom: 1px solid var(--s-border-input);
 }
 
 .signa-modern-table td {
-	padding: 12px 14px;
-	border-bottom: 1px solid var(--s-border);
+	padding: 13px 16px;
+	border-bottom: 1px solid #33415522;
 	color: var(--s-text);
 }
 
@@ -1077,23 +1226,13 @@
 	flex-wrap: wrap;
 }
 
-.signa-logs-filter-form input,
-.signa-logs-filter-form select {
-	height: 38px;
-	border-radius: 9px;
-	border: 1px solid var(--s-border);
-	background: var(--s-bg-subtle);
-	color: var(--s-text);
-	padding: 0 10px;
-}
-
 @media (max-width: 1024px) {
 	.signa-app-body {
 		grid-template-columns: 1fr;
 	}
-	.signa-sidebar {
+	#signa-app-shell .signa-sidebar {
 		border-left: none;
-		border-bottom: 1px solid var(--s-border);
+		border-bottom: 1px solid var(--s-border-input);
 	}
 	.signa-nav {
 		flex-direction: row;
