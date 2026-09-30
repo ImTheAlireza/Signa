@@ -117,17 +117,53 @@ class Signa_Security {
 			return true;
 		}
 
-		// 2. Google reCAPTCHA v3 or Cloudflare Turnstile
+		// 2. Arcaptcha (آرکپچا - arcaptcha.ir)
+		$site_key   = trim( (string) Signa_Helper::get_option( 'captcha_site_key', '' ) );
 		$secret_key = trim( (string) Signa_Helper::get_option( 'captcha_secret_key', '' ) );
 		$user_token = isset( $post_data['captcha_token'] ) ? sanitize_text_field( $post_data['captcha_token'] ) : '';
+		if ( empty( $user_token ) && isset( $post_data['arcaptcha-token'] ) ) {
+			$user_token = sanitize_text_field( $post_data['arcaptcha-token'] );
+		}
 
 		if ( empty( $secret_key ) ) {
 			return true; // Skip if admin hasn't entered secret key yet
 		}
 
 		if ( empty( $user_token ) ) {
-			return new WP_Error( 'signa_captcha_missing', 'تاییدیه امنیتی کپچا دریافت نشد. لطفاً مجدداً تلاش کنید.' );
+			return new WP_Error( 'signa_captcha_missing', 'لطفاً تیک امنیتی کپچا (من ربات نیستم) را تکمیل کنید.' );
 		}
+
+		if ( 'arcaptcha' === $captcha_type ) {
+			$response = wp_remote_post(
+				'https://api.arcaptcha.ir/arcaptcha/api/verify',
+				array(
+					'timeout' => 10,
+					'headers' => array(
+						'Content-Type' => 'application/json',
+					),
+					'body'    => wp_json_encode(
+						array(
+							'challenge_id' => $user_token,
+							'site_key'     => $site_key,
+							'secret_key'   => $secret_key,
+						)
+					),
+				)
+			);
+
+			if ( is_wp_error( $response ) ) {
+				return true;
+			}
+
+			$body = json_decode( wp_remote_retrieve_body( $response ), true );
+			if ( empty( $body['success'] ) ) {
+				return new WP_Error( 'signa_arcaptcha_failed', 'تایید امنیتی آرکپچا ناموفق بود. لطفاً دوباره تلاش کنید.' );
+			}
+
+			return true;
+		}
+
+		// 3. Google reCAPTCHA v3 or Cloudflare Turnstile
 
 		$verify_url = 'turnstile' === $captcha_type
 			? 'https://challenges.cloudflare.com/turnstile/v0/siteverify'

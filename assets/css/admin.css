@@ -781,7 +781,7 @@
 	color: var(--s-text);
 }
 
-#signa-app-shell input[type="text"],
+#signa-app-shell input[type="text"]:not(.signa-prev-input),
 #signa-app-shell input[type="url"],
 #signa-app-shell input[type="email"],
 #signa-app-shell input[type="password"],
@@ -814,7 +814,7 @@
 }
 
 #signa-app-shell.is-dark select,
-#signa-app-shell.is-dark input[type="text"],
+#signa-app-shell.is-dark input[type="text"]:not(.signa-prev-input),
 #signa-app-shell.is-dark input[type="url"],
 #signa-app-shell.is-dark input[type="email"],
 #signa-app-shell.is-dark input[type="password"],
@@ -824,6 +824,22 @@
 	background-color: #0f172a !important;
 	color: #f8fafc !important;
 	border-color: #475569 !important;
+}
+
+/* Live Preview Input - Isolated from Admin Dark Mode */
+#signa-app-shell #signa-live-preview-card input.signa-prev-input {
+	width: 100% !important;
+	height: 44px !important;
+	padding: 0 14px !important;
+	border: 1.5px solid #cbd5e1 !important;
+	border-radius: 10px !important;
+	margin-bottom: 16px !important;
+	text-align: left !important;
+	background-color: #f8fafc !important;
+	color: #0f172a !important;
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 14px !important;
+	box-shadow: none !important;
 }
 
 #signa-app-shell.is-dark select option {
@@ -939,10 +955,113 @@
 }
 
 /* ==========================================
-   GATEWAY TABS & BOXES
+   GATEWAY SELECTOR CARDS, LOGOS & PILLS
    ========================================== */
+.signa-gw-selector-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+	gap: 12px;
+}
+
+#signa-app-shell .signa-gw-select-card {
+	display: flex;
+	align-items: center;
+	gap: 11px;
+	padding: 13px 15px;
+	border-radius: 12px;
+	border: 1.5px solid var(--s-border-input);
+	background: var(--s-bg-subtle);
+	color: var(--s-text);
+	font-family: inherit;
+	font-size: 13px;
+	font-weight: 700;
+	cursor: pointer;
+	text-align: right;
+	outline: none !important;
+	transition: all 0.15s ease;
+	position: relative;
+}
+
+#signa-app-shell .signa-gw-select-card:hover {
+	border-color: var(--s-primary);
+	background: var(--s-bg-hover);
+}
+
+#signa-app-shell .signa-gw-select-card.selected {
+	border-color: var(--s-primary);
+	background: var(--s-primary-soft);
+	box-shadow: 0 0 0 1px var(--s-primary);
+}
+
+.signa-gw-check-badge {
+	display: none;
+	margin-right: auto;
+	background: var(--s-primary);
+	color: #fff;
+	font-size: 10.5px;
+	font-weight: 700;
+	padding: 2px 8px;
+	border-radius: 99px;
+}
+
+.signa-gw-select-card.selected .signa-gw-check-badge {
+	display: inline-block;
+}
+
+/* Gateway Brand Logo Badges */
+.signa-gw-logo {
+	width: 32px;
+	height: 32px;
+	border-radius: 9px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.signa-gw-pill .signa-gw-logo {
+	width: 24px;
+	height: 24px;
+	border-radius: 6px;
+}
+
+.signa-gw-logo.is-sandbox {
+	background: rgba(245, 158, 11, 0.16);
+	color: #f59e0b;
+}
+
+.signa-gw-logo.is-smsir {
+	background: rgba(14, 165, 233, 0.16);
+	color: #0ea5e9;
+}
+
+.signa-gw-logo.is-kavenegar {
+	background: rgba(139, 92, 246, 0.16);
+	color: #8b5cf6;
+}
+
+.signa-gw-logo.is-melipayamak {
+	background: rgba(37, 99, 235, 0.16);
+	color: #3b82f6;
+}
+
+.signa-gw-logo.is-farazsms {
+	background: rgba(239, 68, 68, 0.16);
+	color: #ef4444;
+}
+
+.signa-gw-logo.is-ippanel {
+	background: rgba(16, 185, 129, 0.16);
+	color: #10b981;
+}
+
+.signa-gw-pill.active .signa-gw-logo {
+	background: rgba(255, 255, 255, 0.22);
+	color: #ffffff;
+}
+
 .signa-gw-tabs-bar {
-	margin-top: 22px;
+	margin-top: 24px;
 	padding-top: 18px;
 	border-top: 1px solid #33415522;
 	display: flex;
@@ -959,7 +1078,10 @@
 }
 
 #signa-app-shell .signa-gw-pill {
-	padding: 8px 16px;
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	padding: 7px 14px;
 	border-radius: 99px;
 	border: 1.5px solid var(--s-border-input);
 	background: var(--s-bg-subtle);
@@ -1116,8 +1238,10 @@
 }
 
 .signa-preview-canvas {
-	padding: 24px 18px;
-	background: repeating-linear-gradient(45deg, rgba(148, 163, 184, 0.06), rgba(148, 163, 184, 0.06) 10px, transparent 10px, transparent 20px);
+	padding: 28px 20px;
+	background-color: #f1f5f9;
+	background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+	background-size: 16px 16px;
 }
 
 .signa-prev-card {

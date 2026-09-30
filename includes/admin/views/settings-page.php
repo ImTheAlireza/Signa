@@ -229,9 +229,16 @@ $openssl_active  = extension_loaded( 'openssl' );
 									</span>
 								</li>
 								<li>
-									<span>درگاه پیامک پشتیبان (Failover)</span>
-									<span class="signa-pill <?php echo 'none' === $settings['backup_sms_gateway'] ? 'is-muted' : 'is-ok'; ?>">
-										<?php echo 'none' === $settings['backup_sms_gateway'] ? 'غیرفعال' : esc_html( $settings['backup_sms_gateway'] ); ?>
+									<span>درگاه‌های پیامک پشتیبان (Failover)</span>
+									<?php
+									$active_backups = Signa_Gateway_Manager::get_backup_sms_gateways();
+									$backup_names   = array();
+									foreach ( $active_backups as $bgw ) {
+										$backup_names[] = $bgw->get_id();
+									}
+									?>
+									<span class="signa-pill <?php echo empty( $backup_names ) ? 'is-muted' : 'is-ok'; ?>">
+										<?php echo empty( $backup_names ) ? 'غیرفعال' : esc_html( implode( ' ← ', $backup_names ) ); ?>
 									</span>
 								</li>
 							</ul>
@@ -507,55 +514,108 @@ $openssl_active  = extension_loaded( 'openssl' );
 				</section>
 
 				<!-- ==========================================
-				     PANEL 3: SMS GATEWAYS & FAILOVER
+				     PANEL 3: SMS GATEWAYS & 3-STEP FAILOVER
 				     ========================================== -->
 				<section class="signa-panel" id="signa-tab-sms_gateways">
+					<?php
+					$gw_logos = array(
+						'sandbox'     => '<span class="signa-gw-logo is-sandbox"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6m-5 0v5.172a2 2 0 0 1-.586 1.414l-4.828 4.828A2 2 0 0 0 4 15.828V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3.172a2 2 0 0 0-.586-1.414l-4.828-4.828A2 2 0 0 1 14 8.172V3"/></svg></span>',
+						'smsir'       => '<span class="signa-gw-logo is-smsir"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><path d="M8 11h8m-8 4h5"/></svg></span>',
+						'kavenegar'   => '<span class="signa-gw-logo is-kavenegar"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></span>',
+						'melipayamak' => '<span class="signa-gw-logo is-melipayamak"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>',
+						'farazsms'    => '<span class="signa-gw-logo is-farazsms"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>',
+						'ippanel'     => '<span class="signa-gw-logo is-ippanel"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>',
+					);
+					$b1_selected = ! empty( $settings['backup_sms_gateway_1'] ) && 'none' !== $settings['backup_sms_gateway_1']
+						? $settings['backup_sms_gateway_1']
+						: $settings['backup_sms_gateway'];
+					?>
 					<div class="signa-card">
 						<div class="signa-card-head">
 							<div>
-								<h2>درگاه پیامک اصلی و پشتیبان خودکار (Failover)</h2>
-								<p>درگاه اصلی را انتخاب کنید و در صورت تمایل یک درگاه دوم به عنوان پشتیبان زمان قطعی تعیین نمایید</p>
+								<h2>انتخاب سامانه پیامک اصلی و ۳ درگاه پشتیبان خودکار (Failover)</h2>
+								<p>درگاه اصلی را انتخاب کنید و تا ۳ سامانه پشتیبان به ترتیب اولویت برای مواقع قطعی یا اتمام شارژ تعیین نمایید</p>
 							</div>
 						</div>
 
-						<div class="signa-fields-grid signa-cols-2">
-							<div class="signa-field">
-								<label for="active_sms_gateway">درگاه پیامک اصلی (Primary SMS Gateway)</label>
-								<select name="signa[active_sms_gateway]" id="active_sms_gateway">
-									<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
-										<option value="<?php echo esc_attr( $gw_id ); ?>" <?php selected( $settings['active_sms_gateway'], $gw_id ); ?>>
-											<?php echo esc_html( $gw_obj->get_title() ); ?>
-										</option>
-									<?php endforeach; ?>
-								</select>
-							</div>
+						<!-- Primary SMS Gateway Visual Selector Cards with Logos -->
+						<label class="signa-section-label">۱. انتخاب سامانه پیامک اصلی (Primary Gateway)</label>
+						<input type="hidden" name="signa[active_sms_gateway]" id="active_sms_gateway" value="<?php echo esc_attr( $settings['active_sms_gateway'] ); ?>" />
+						<div class="signa-gw-selector-grid">
+							<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
+								<button type="button" class="signa-gw-select-card <?php echo $settings['active_sms_gateway'] === $gw_id ? 'selected' : ''; ?>" data-gw-id="<?php echo esc_attr( $gw_id ); ?>" data-gw-title="<?php echo esc_attr( $gw_obj->get_title() ); ?>">
+									<?php
+									// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									echo isset( $gw_logos[ $gw_id ] ) ? $gw_logos[ $gw_id ] : '';
+									?>
+									<span class="signa-gw-card-title"><?php echo esc_html( $gw_obj->get_title() ); ?></span>
+									<span class="signa-gw-check-badge">فعال</span>
+								</button>
+							<?php endforeach; ?>
+						</div>
 
+						<!-- 3 Prioritized Backup Gateways -->
+						<label class="signa-section-label" style="margin-top:24px;">۲. زنجیره ۳ درگاه پشتیبان خودکار (Failover Chain)</label>
+						<div class="signa-fields-grid signa-cols-3">
 							<div class="signa-field">
-								<label for="backup_sms_gateway">درگاه پیامک پشتیبان خودکار (Failover Gateway)</label>
-								<select name="signa[backup_sms_gateway]" id="backup_sms_gateway">
-									<option value="none" <?php selected( $settings['backup_sms_gateway'], 'none' ); ?>>غیرفعال (بدون درگاه پشتیبان)</option>
+								<label for="backup_sms_gateway_1">پشتیبان اول (اولویت ۱)</label>
+								<select name="signa[backup_sms_gateway_1]" id="backup_sms_gateway_1">
+									<option value="none" <?php selected( $b1_selected, 'none' ); ?>>غیرفعال (بدون پشتیبان اول)</option>
 									<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
 										<?php if ( 'sandbox' !== $gw_id ) : ?>
-											<option value="<?php echo esc_attr( $gw_id ); ?>" <?php selected( $settings['backup_sms_gateway'], $gw_id ); ?>>
+											<option value="<?php echo esc_attr( $gw_id ); ?>" <?php selected( $b1_selected, $gw_id ); ?>>
 												<?php echo esc_html( $gw_obj->get_title() ); ?>
 											</option>
 										<?php endif; ?>
 									<?php endforeach; ?>
 								</select>
-								<small>در صورت خطا یا اتمام شارژ درگاه اصلی، کد بلافاصله از این درگاه ارسال می‌شود.</small>
+								<small>در صورت خطای درگاه اصلی، ابتدا از این سامانه ارسال می‌شود.</small>
+							</div>
+
+							<div class="signa-field">
+								<label for="backup_sms_gateway_2">پشتیبان دوم (اولویت ۲)</label>
+								<select name="signa[backup_sms_gateway_2]" id="backup_sms_gateway_2">
+									<option value="none" <?php selected( $settings['backup_sms_gateway_2'], 'none' ); ?>>غیرفعال (بدون پشتیبان دوم)</option>
+									<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
+										<?php if ( 'sandbox' !== $gw_id ) : ?>
+											<option value="<?php echo esc_attr( $gw_id ); ?>" <?php selected( $settings['backup_sms_gateway_2'], $gw_id ); ?>>
+												<?php echo esc_html( $gw_obj->get_title() ); ?>
+											</option>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								</select>
+								<small>در صورت عدم موفقیت پشتیبان اول، نوبت این درگاه است.</small>
+							</div>
+
+							<div class="signa-field">
+								<label for="backup_sms_gateway_3">پشتیبان سوم (اولویت ۳)</label>
+								<select name="signa[backup_sms_gateway_3]" id="backup_sms_gateway_3">
+									<option value="none" <?php selected( $settings['backup_sms_gateway_3'], 'none' ); ?>>غیرفعال (بدون پشتیبان سوم)</option>
+									<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
+										<?php if ( 'sandbox' !== $gw_id ) : ?>
+											<option value="<?php echo esc_attr( $gw_id ); ?>" <?php selected( $settings['backup_sms_gateway_3'], $gw_id ); ?>>
+												<?php echo esc_html( $gw_obj->get_title() ); ?>
+											</option>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								</select>
+								<small>آخرین حلقه پشتیبان برای تضمین ۱۰۰٪ تحویل پیامک.</small>
 							</div>
 						</div>
 
-						<!-- Gateway Switcher Pills to Inspect/Edit Any Gateway -->
+						<!-- Gateway Switcher Pills with Logos to Inspect/Edit Any Gateway -->
 						<div class="signa-gw-tabs-bar">
-							<span>مشاهده و ویرایش تنظیمات درگاه:</span>
+							<span class="signa-section-label" style="margin:0;">۳. مشاهده و ویرایش اطلاعات اتصال هر سامانه:</span>
 							<div class="signa-gw-pills">
-								<button type="button" class="signa-gw-pill" data-gw="sandbox">🧪 حالت تست (Sandbox)</button>
-								<button type="button" class="signa-gw-pill" data-gw="smsir">💬 SMS.ir</button>
-								<button type="button" class="signa-gw-pill" data-gw="kavenegar">📨 کاوه‌نگار</button>
-								<button type="button" class="signa-gw-pill" data-gw="melipayamak">📱 ملی‌پیامک</button>
-								<button type="button" class="signa-gw-pill" data-gw="farazsms">🚀 فراز اس‌ام‌اس</button>
-								<button type="button" class="signa-gw-pill" data-gw="ippanel">🌐 آی‌پی‌پنل (IPPanel)</button>
+								<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
+									<button type="button" class="signa-gw-pill" data-gw="<?php echo esc_attr( $gw_id ); ?>">
+										<?php
+										// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+										echo isset( $gw_logos[ $gw_id ] ) ? $gw_logos[ $gw_id ] : '';
+										?>
+										<span><?php echo esc_html( $gw_obj->get_title() ); ?></span>
+									</button>
+								<?php endforeach; ?>
 							</div>
 						</div>
 
@@ -941,8 +1001,8 @@ $openssl_active  = extension_loaded( 'openssl' );
 
 										<!-- Preview Step 1 -->
 										<div id="signa-prev-step-1">
-											<label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;">شماره موبایل یا ایمیل</label>
-											<input type="text" value="09123456789" dir="ltr" readonly style="width:100%;height:44px;padding:0 12px;border:1.5px solid #d1d5db;border-radius:10px;margin-bottom:16px;text-align:left;background:#f9fafb;color:#111827;" />
+											<label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:inherit;">شماره موبایل یا ایمیل</label>
+											<input type="text" class="signa-prev-input" value="09123456789" dir="ltr" readonly />
 											<button type="button" id="signa-prev-btn-1" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:600;font-size:14px;cursor:default;">
 												<?php echo esc_html( $settings['button_text'] ); ?>
 											</button>
@@ -1104,17 +1164,18 @@ $openssl_active  = extension_loaded( 'openssl' );
 								<label for="captcha_type">نوع کپچای امنیتی</label>
 								<select name="signa[captcha_type]" id="captcha_type">
 									<option value="none" <?php selected( $settings['captcha_type'], 'none' ); ?>>غیرفعال (بدون کپچا)</option>
+									<option value="arcaptcha" <?php selected( $settings['captcha_type'], 'arcaptcha' ); ?>>آرکپچا - Arcaptcha.ir (کپچای بومی ایرانی)</option>
 									<option value="math" <?php selected( $settings['captcha_type'], 'math' ); ?>>کپچای ریاضی هوشمند داخلی (بدون نیاز به کلید)</option>
 									<option value="recaptcha_v3" <?php selected( $settings['captcha_type'], 'recaptcha_v3' ); ?>>Google reCAPTCHA v3</option>
 									<option value="turnstile" <?php selected( $settings['captcha_type'], 'turnstile' ); ?>>Cloudflare Turnstile</option>
 								</select>
 							</div>
 							<div class="signa-field">
-								<label for="captcha_site_key">کلید سایت (Site Key - برای گوگل/کلودفلر)</label>
+								<label for="captcha_site_key">کلید سایت (Site Key - آرکپچا / گوگل / کلودفلر)</label>
 								<input type="text" name="signa[captcha_site_key]" id="captcha_site_key" value="<?php echo esc_attr( $settings['captcha_site_key'] ); ?>" dir="ltr" />
 							</div>
 							<div class="signa-field">
-								<label for="captcha_secret_key">کلید مخفی (Secret Key - برای گوگل/کلودفلر)</label>
+								<label for="captcha_secret_key">کلید مخفی (Secret Key - آرکپچا / گوگل / کلودفلر)</label>
 								<input type="password" name="signa[captcha_secret_key]" id="captcha_secret_key" value="<?php echo esc_attr( $settings['captcha_secret_key'] ); ?>" dir="ltr" />
 							</div>
 						</div>

@@ -46,24 +46,34 @@ class Signa_Gateway_Manager {
 	}
 
 	/**
-	 * Get backup SMS gateway instance if configured
+	 * Get ordered list of configured backup SMS gateway instances (up to 3 priorities)
 	 *
-	 * @return Signa_Gateway_Interface|null
+	 * @return array<int, Signa_Gateway_Interface>
 	 */
-	public static function get_backup_sms_gateway() {
+	public static function get_backup_sms_gateways() {
 		$gateways  = self::get_sms_gateways();
 		$active_id = Signa_Helper::get_option( 'active_sms_gateway', 'sandbox' );
-		$backup_id = Signa_Helper::get_option( 'backup_sms_gateway', 'none' );
 
-		if ( 'none' !== $backup_id && $backup_id !== $active_id && isset( $gateways[ $backup_id ] ) ) {
-			return $gateways[ $backup_id ];
+		$b1 = Signa_Helper::get_option( 'backup_sms_gateway_1', Signa_Helper::get_option( 'backup_sms_gateway', 'none' ) );
+		$b2 = Signa_Helper::get_option( 'backup_sms_gateway_2', 'none' );
+		$b3 = Signa_Helper::get_option( 'backup_sms_gateway_3', 'none' );
+
+		$candidates = array( $b1, $b2, $b3 );
+		$backups    = array();
+		$seen       = array( $active_id => true );
+
+		foreach ( $candidates as $gw_id ) {
+			if ( ! empty( $gw_id ) && 'none' !== $gw_id && empty( $seen[ $gw_id ] ) && isset( $gateways[ $gw_id ] ) ) {
+				$backups[]      = $gateways[ $gw_id ];
+				$seen[ $gw_id ] = true;
+			}
 		}
 
-		return null;
+		return $backups;
 	}
 
 	/**
-	 * Send SMS via primary gateway with automatic failover to backup gateway
+	 * Send SMS via primary gateway with automatic failover chain across up to 3 backup gateways
 	 *
 	 * @param string $recipient         Normalized phone.
 	 * @param string $code              OTP code.
@@ -94,16 +104,20 @@ class Signa_Gateway_Manager {
 			);
 		}
 
-		// Try Backup Failover SMS Gateway if configured
-		$backup_gw = self::get_backup_sms_gateway();
-		if ( $backup_gw ) {
+		// Try Backup Failover Chain (Priority 1 -> Priority 2 -> Priority 3)
+		$backups         = self::get_backup_sms_gateways();
+		$priority_labels = array( 'اول', 'دوم', 'سوم' );
+
+		foreach ( $backups as $idx => $backup_gw ) {
 			$backup_res = $backup_gw->send( $recipient, $code );
 			if ( ! is_wp_error( $backup_res ) ) {
+				$p_label = isset( $priority_labels[ $idx ] ) ? $priority_labels[ $idx ] : (string) ( $idx + 1 );
 				return array(
 					'result'     => true,
 					'gateway_id' => $backup_gw->get_id(),
 					'message'    => sprintf(
-						'ارسال از طریق درگاه پشتیبان (%s) پس از خطای درگاه اصلی (%s)',
+						'ارسال از طریق پشتیبان %s (%s) پس از خطای درگاه اصلی (%s)',
+						$p_label,
 						$backup_gw->get_title(),
 						$primary_res->get_error_message()
 					),

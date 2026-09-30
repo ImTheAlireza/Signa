@@ -68,6 +68,17 @@ class Signa_Frontend {
 			wp_add_inline_style( 'signa-otp-frontend', wp_strip_all_tags( $custom_css ) );
 		}
 
+		$captcha_type = Signa_Helper::get_option( 'captcha_type', 'none' );
+		$site_key     = trim( (string) Signa_Helper::get_option( 'captcha_site_key', '' ) );
+
+		if ( 'arcaptcha' === $captcha_type && ! empty( $site_key ) ) {
+			wp_enqueue_script( 'signa-arcaptcha', 'https://widget.arcaptcha.ir/1/api.js', array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		} elseif ( 'turnstile' === $captcha_type && ! empty( $site_key ) ) {
+			wp_enqueue_script( 'signa-turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js', array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		} elseif ( 'recaptcha_v3' === $captcha_type && ! empty( $site_key ) ) {
+			wp_enqueue_script( 'signa-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . rawurlencode( $site_key ), array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		}
+
 		wp_enqueue_script(
 			'signa-otp-frontend',
 			SIGNA_OTP_URL . 'assets/js/frontend.js',
@@ -174,7 +185,7 @@ class Signa_Frontend {
 			<div class="signa-back-to-site">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">&rarr; بازگشت به <?php echo esc_html( get_bloginfo( 'name' ) ); ?></a>
 			</div>
-			<?php wp_print_scripts( array( 'jquery', 'signa-otp-frontend' ) ); ?>
+			<?php wp_print_scripts( array( 'jquery', 'signa-arcaptcha', 'signa-turnstile', 'signa-recaptcha', 'signa-otp-frontend' ) ); ?>
 		</body>
 		</html>
 		<?php

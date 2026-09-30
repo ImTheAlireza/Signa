@@ -81,8 +81,9 @@
 			$(this).closest('.signa-choice-card').addClass('selected');
 		});
 
-		// 4. SMS Gateway Inspector Pills & Select Sync
-		var $gwSelect = $('#active_sms_gateway');
+		// 4. SMS Gateway Selector Cards & Inspector Pills
+		var $gwHiddenInput = $('#active_sms_gateway');
+		var $gwCards = $('.signa-gw-select-card');
 		var $gwPills = $('.signa-gw-pill');
 		var $gwBoxes = $('.signa-gateway-box');
 
@@ -93,15 +94,21 @@
 			$gwBoxes.filter('[data-gateway="' + gwId + '"]').fadeIn(160);
 		}
 
-		if ($gwSelect.length) {
-			showGatewayConfigBox($gwSelect.val());
-			$gwSelect.on('change', function () {
-				var val = $(this).val();
-				var label = $(this).find('option:selected').text();
-				$('#signa-topbar-gw-name').text(label);
-				showGatewayConfigBox(val);
-			});
+		if ($gwHiddenInput.length) {
+			showGatewayConfigBox($gwHiddenInput.val());
 		}
+
+		$gwCards.on('click', function () {
+			var $card = $(this);
+			var gwId = $card.attr('data-gw-id');
+			var gwTitle = $card.attr('data-gw-title');
+
+			$gwCards.removeClass('selected');
+			$card.addClass('selected');
+			$gwHiddenInput.val(gwId);
+			$('#signa-topbar-gw-name').text(gwTitle);
+			showGatewayConfigBox(gwId);
+		});
 
 		$gwPills.on('click', function () {
 			showGatewayConfigBox($(this).attr('data-gw'));

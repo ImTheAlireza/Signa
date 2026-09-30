@@ -40,9 +40,12 @@ class Signa_Helper {
 			'welcome_message_text'      => 'به {site_name} خوش آمدید! حساب کاربری شما با موفقیت ایجاد شد.',
 			'show_debug_code_in_toast'  => 0,
 
-			// 2. Active & Backup SMS Gateways
+			// 2. Active & 3 Backup SMS Gateways (Failover Chain)
 			'active_sms_gateway'        => 'sandbox',         // sandbox | smsir | kavenegar | melipayamak | farazsms | ippanel
-			'backup_sms_gateway'        => 'none',            // none | sandbox | smsir | kavenegar | melipayamak | farazsms | ippanel
+			'backup_sms_gateway'        => 'none',            // legacy alias
+			'backup_sms_gateway_1'      => 'none',            // 1st priority failover
+			'backup_sms_gateway_2'      => 'none',            // 2nd priority failover
+			'backup_sms_gateway_3'      => 'none',            // 3rd priority failover
 
 			// SMS.ir Settings
 			'smsir_api_key'             => '',

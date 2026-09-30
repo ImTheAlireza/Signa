@@ -202,9 +202,16 @@
 
 			var $captchaAns = $stepRequest.find('.signa-captcha-answer');
 			var $captchaTok = $stepRequest.find('.signa-captcha-token');
+			var $arcaptchaTok = $stepRequest.find('[name="arcaptcha-token"]');
+			var $turnstileTok = $stepRequest.find('[name="cf-turnstile-response"]');
+
 			if ($captchaAns.length) {
 				payload.captcha_answer = toEnglishDigits($captchaAns.val());
 				payload.captcha_token = $captchaTok.val();
+			} else if ($arcaptchaTok.length) {
+				payload.captcha_token = $arcaptchaTok.val();
+			} else if ($turnstileTok.length) {
+				payload.captcha_token = $turnstileTok.val();
 			}
 
 			$.ajax({
@@ -271,6 +278,11 @@
 							$stepRequest.find('.signa-captcha-question').text(res.data.new_captcha.question);
 							$stepRequest.find('.signa-captcha-token').val(res.data.new_captcha.token);
 							$stepRequest.find('.signa-captcha-answer').val('');
+						}
+						if (window.arcaptcha && typeof window.arcaptcha.reset === 'function') {
+							try {
+								window.arcaptcha.reset();
+							} catch (e) {}
 						}
 						var errMsg = res && res.data && res.data.message ? res.data.message : signaOtpParams.i18n.networkError;
 						showAlert(errMsg, 'error');

@@ -26,6 +26,7 @@ $show_terms          = (bool) Signa_Helper::get_option( 'show_terms_checkbox', 0
 $terms_text          = Signa_Helper::get_option( 'terms_text', 'ورود و ثبت‌نام شما به معنای پذیرش قوانین و مقررات سایت است.' );
 $terms_url           = trim( (string) Signa_Helper::get_option( 'terms_url', '' ) );
 $captcha_type        = Signa_Helper::get_option( 'captcha_type', 'none' );
+$captcha_site_key    = trim( (string) Signa_Helper::get_option( 'captcha_site_key', '' ) );
 $math_captcha        = 'math' === $captcha_type ? Signa_Security::generate_math_captcha() : null;
 
 if ( 'phone_only' === $login_mode ) {
@@ -107,6 +108,14 @@ $inline_vars = sprintf(
 					<label class="signa-label signa-captcha-question"><?php echo esc_html( $math_captcha['question'] ); ?></label>
 					<input type="text" inputmode="numeric" name="captcha_answer" class="signa-input signa-captcha-answer" placeholder="پاسخ عدد..." dir="ltr" required />
 					<input type="hidden" name="captcha_token" class="signa-captcha-token" value="<?php echo esc_attr( $math_captcha['token'] ); ?>" />
+				</div>
+			<?php elseif ( 'arcaptcha' === $captcha_type && ! empty( $captcha_site_key ) ) : ?>
+				<div class="signa-field-group signa-captcha-box" style="display:flex;justify-content:center;">
+					<div class="arcaptcha" data-site-key="<?php echo esc_attr( $captcha_site_key ); ?>" data-lang="fa"></div>
+				</div>
+			<?php elseif ( 'turnstile' === $captcha_type && ! empty( $captcha_site_key ) ) : ?>
+				<div class="signa-field-group signa-captcha-box" style="display:flex;justify-content:center;">
+					<div class="cf-turnstile" data-sitekey="<?php echo esc_attr( $captcha_site_key ); ?>"></div>
 				</div>
 			<?php endif; ?>
 
