@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Settings Partial: tab-dashboard.php (Vector Icons + Bento Grid)
+ * Admin Settings Partial: tab-dashboard.php (Polished Top Cards, Left-Aligned KPI Numbers & Vector Icons)
  *
  * @package Signa_OTP
  */
@@ -14,6 +14,7 @@ $backup_names   = array();
 foreach ( $active_backups as $bgw ) {
 	$backup_names[] = $bgw->get_id();
 }
+
 $captcha_labels = array(
 	'none'         => 'غیرفعال',
 	'arcaptcha'    => 'آرکپچا (Arcaptcha)',
@@ -22,6 +23,17 @@ $captcha_labels = array(
 	'turnstile'    => 'Cloudflare Turnstile',
 );
 $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? $captcha_labels[ $settings['captcha_type'] ] : 'غیرفعال';
+
+$strategy_labels = array(
+	'sms'               => 'فقط پیامک (SMS)',
+	'bale_fallback_sms' => 'اول بله ← سپس پیامک',
+	'sms_fallback_bale' => 'اول پیامک ← سپس بله',
+	'bale'              => 'فقط پیام‌رسان بله',
+	'both'              => 'ارسال همزمان (پیامک + بله)',
+);
+$active_strategy_label = isset( $strategy_labels[ $settings['mobile_delivery_channel'] ] )
+	? $strategy_labels[ $settings['mobile_delivery_channel'] ]
+	: $settings['mobile_delivery_channel'];
 ?>
 				<section class="signa-panel active" id="signa-tab-dashboard">
 					<!-- Quick Configuration & Jump Bar -->
@@ -33,17 +45,31 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 								</span>
 								<button type="button" class="signa-jump-tab" data-target-tab="sms_gateways">تنظیم درگاه &larr;</button>
 							</div>
-							<strong>سامانه پیامک: <?php echo esc_html( $active_gw_title ); ?></strong>
-							<small><?php echo empty( $backup_names ) ? 'بدون درگاه پشتیبان (Failover)' : sprintf( '%d درگاه پشتیبان فعال (%s)', count( $backup_names ), implode( '، ', $backup_names ) ); ?></small>
+							<div class="signa-quick-body">
+								<span class="signa-quick-icon is-blue">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+								</span>
+								<div class="signa-quick-text">
+									<strong><?php echo esc_html( $active_gw_title ); ?></strong>
+									<small><?php echo empty( $backup_names ) ? 'بدون درگاه پشتیبان (Failover)' : sprintf( '%d پشتیبان فعال (%s)', count( $backup_names ), implode( '، ', $backup_names ) ); ?></small>
+								</div>
+							</div>
 						</div>
 
 						<div class="signa-quick-item">
 							<div class="signa-quick-head">
-								<span class="signa-pill is-info">کانال ارسال</span>
+								<span class="signa-pill is-info">استراتژی ارسال</span>
 								<button type="button" class="signa-jump-tab" data-target-tab="auth_flow">تغییر سناریو &larr;</button>
 							</div>
-							<strong>استراتژی: <?php echo esc_html( $settings['mobile_delivery_channel'] ); ?></strong>
-							<small>ثبت‌نام خودکار: <?php echo ! empty( $settings['auto_register'] ) ? 'فعال' : 'غیرفعال'; ?> | کد <?php echo esc_html( (string) $settings['otp_length'] ); ?> رقمی</small>
+							<div class="signa-quick-body">
+								<span class="signa-quick-icon is-purple">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+								</span>
+								<div class="signa-quick-text">
+									<strong><?php echo esc_html( $active_strategy_label ); ?></strong>
+									<small>عضویت خودکار: <?php echo ! empty( $settings['auto_register'] ) ? 'فعال' : 'غیرفعال'; ?> • کد <?php echo esc_html( (string) $settings['otp_length'] ); ?> رقمی</small>
+								</div>
+							</div>
 						</div>
 
 						<div class="signa-quick-item">
@@ -53,8 +79,15 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 								</span>
 								<button type="button" class="signa-jump-tab" data-target-tab="security_firewall">تنظیمات امنیت &larr;</button>
 							</div>
-							<strong>کپچا: <?php echo esc_html( $active_captcha_label ); ?></strong>
-							<small>سقف مجاز: <?php echo esc_html( (string) $settings['max_requests_per_hour'] ); ?> بار در ساعت برای هر شماره</small>
+							<div class="signa-quick-body">
+								<span class="signa-quick-icon is-amber">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+								</span>
+								<div class="signa-quick-text">
+									<strong>کپچا: <?php echo esc_html( $active_captcha_label ); ?></strong>
+									<small>سقف مجاز: <?php echo esc_html( (string) $settings['max_requests_per_hour'] ); ?> بار در ساعت برای هر شماره</small>
+								</div>
+							</div>
 						</div>
 
 						<div class="signa-quick-item">
@@ -62,54 +95,77 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 								<span class="signa-pill is-ok">المنتور و شورت‌کد</span>
 								<button type="button" class="signa-jump-tab" data-target-tab="woocommerce">مشاهده ابزارها &larr;</button>
 							</div>
-							<strong>یکپارچگی قالب و صفحه‌ساز</strong>
-							<small>۲ ویجت بومی المنتور + شورت‌کد + مودال سراسری</small>
+							<div class="signa-quick-body">
+								<span class="signa-quick-icon is-green">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+								</span>
+								<div class="signa-quick-text">
+									<strong>یکپارچگی قالب و صفحه‌ساز</strong>
+									<small>۲ ویجت بومی المنتور + سازگار با دیجیتز</small>
+								</div>
+							</div>
 						</div>
 					</div>
 
-					<!-- KPI Summary Cards with SVG Vector Icons -->
+					<!-- KPI Summary Cards (Numbers cleanly positioned on the LEFT side of each card) -->
 					<div class="signa-kpi-grid">
 						<div class="signa-kpi-card">
-							<div class="signa-kpi-icon is-blue">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+							<div class="signa-kpi-main">
+								<div class="signa-kpi-icon is-blue">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+								</div>
+								<div class="signa-kpi-info">
+									<span>کل کدهای ارسال‌شده</span>
+									<small><?php echo esc_html( number_format_i18n( $stats['today'] ) ); ?> ارسال در امروز</small>
+								</div>
 							</div>
-							<div class="signa-kpi-info">
-								<span>کل کدهای ارسال‌شده</span>
+							<div class="signa-kpi-number-box is-blue">
 								<strong><?php echo esc_html( number_format_i18n( $stats['total'] ) ); ?></strong>
-								<small><?php echo esc_html( number_format_i18n( $stats['today'] ) ); ?> ارسال در امروز</small>
 							</div>
 						</div>
 
 						<div class="signa-kpi-card">
-							<div class="signa-kpi-icon is-green">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+							<div class="signa-kpi-main">
+								<div class="signa-kpi-icon is-green">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+								</div>
+								<div class="signa-kpi-info">
+									<span>ورودهای موفق (Verified)</span>
+									<small>نرخ تبدیل: %<?php echo esc_html( (string) $stats['conversion_rate'] ); ?></small>
+								</div>
 							</div>
-							<div class="signa-kpi-info">
-								<span>ورودهای موفق (Verified)</span>
+							<div class="signa-kpi-number-box is-green">
 								<strong><?php echo esc_html( number_format_i18n( $stats['verified'] ) ); ?></strong>
-								<small>نرخ تبدیل: %<?php echo esc_html( (string) $stats['conversion_rate'] ); ?></small>
 							</div>
 						</div>
 
 						<div class="signa-kpi-card">
-							<div class="signa-kpi-icon is-purple">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+							<div class="signa-kpi-main">
+								<div class="signa-kpi-icon is-purple">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+								</div>
+								<div class="signa-kpi-info">
+									<span>کاربران ثبت‌نامی با OTP</span>
+									<small>ثبت‌نام خودکار یکپارچه</small>
+								</div>
 							</div>
-							<div class="signa-kpi-info">
-								<span>کاربران ثبت‌نامی با OTP</span>
+							<div class="signa-kpi-number-box is-purple">
 								<strong><?php echo esc_html( number_format_i18n( $stats['otp_users'] ) ); ?></strong>
-								<small>ثبت‌نام خودکار یکپارچه</small>
 							</div>
 						</div>
 
 						<div class="signa-kpi-card">
-							<div class="signa-kpi-icon is-red">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+							<div class="signa-kpi-main">
+								<div class="signa-kpi-icon is-red">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+								</div>
+								<div class="signa-kpi-info">
+									<span>ارسال‌های ناموفق / خطا</span>
+									<small><?php echo esc_html( (string) count( $active_lockouts ) ); ?> مسدودی امنیتی فعال</small>
+								</div>
 							</div>
-							<div class="signa-kpi-info">
-								<span>ارسال‌های ناموفق / خطا</span>
+							<div class="signa-kpi-number-box is-red">
 								<strong><?php echo esc_html( number_format_i18n( $stats['failed'] ) ); ?></strong>
-								<small><?php echo esc_html( (string) count( $active_lockouts ) ); ?> مسدودی امنیتی فعال</small>
 							</div>
 						</div>
 					</div>
@@ -177,10 +233,8 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 									<span class="signa-pill <?php echo $elementor_active ? 'is-ok' : 'is-muted'; ?>"><?php echo $elementor_active ? 'فعال (۲ ویجت)' : 'المنتور نصب نیست'; ?></span>
 								</li>
 								<li>
-									<span>درگاه‌های پیامک پشتیبان (Failover)</span>
-									<span class="signa-pill <?php echo empty( $backup_names ) ? 'is-muted' : 'is-ok'; ?>">
-										<?php echo empty( $backup_names ) ? 'غیرفعال' : esc_html( implode( ' ← ', $backup_names ) ); ?>
-									</span>
+									<span>سازگاری متای دیجیتز (Digits)</span>
+									<span class="signa-pill is-ok">فعال (دوطرفه)</span>
 								</li>
 							</ul>
 						</div>

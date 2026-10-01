@@ -33,7 +33,7 @@ class Signa_Helper {
 			'resend_cooldown'           => 60,                // seconds
 			'auto_register'             => 1,
 			'default_user_role'         => 'customer',        // falls back to subscriber if WooCommerce not active
-			'username_prefix'           => 'u_',
+			'username_prefix'           => '',
 			'require_name_on_register'  => 'optional',        // disabled | optional | required
 			'require_email_on_register' => 'disabled',        // disabled | optional | required
 			'allow_password_login'      => 0,

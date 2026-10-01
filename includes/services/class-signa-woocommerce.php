@@ -139,6 +139,9 @@ class Signa_WooCommerce {
 			if ( empty( $phone ) ) {
 				$phone = get_user_meta( $user_id, 'billing_phone', true );
 			}
+			if ( empty( $phone ) ) {
+				$phone = get_user_meta( $user_id, 'digits_phone', true );
+			}
 			return ! empty( $phone ) ? '<code dir="ltr">' . esc_html( $phone ) . '</code>' : '—';
 		}
 		return $output;
@@ -150,7 +153,13 @@ class Signa_WooCommerce {
 	 * @param WP_User $user User object.
 	 */
 	public function render_user_profile_fields( $user ) {
-		$phone        = get_user_meta( $user->ID, 'signa_phone', true );
+		$phone = get_user_meta( $user->ID, 'signa_phone', true );
+		if ( empty( $phone ) ) {
+			$phone = get_user_meta( $user->ID, 'billing_phone', true );
+		}
+		if ( empty( $phone ) ) {
+			$phone = get_user_meta( $user->ID, 'digits_phone', true );
+		}
 		$bale_chat_id = get_user_meta( $user->ID, 'signa_bale_chat_id', true );
 		?>
 		<h2>اطلاعات ورود یکبارمصرف (Signa OTP)</h2>
@@ -187,9 +196,10 @@ class Signa_WooCommerce {
 		if ( isset( $_POST['signa_phone'] ) ) {
 			$raw_phone  = sanitize_text_field( wp_unslash( $_POST['signa_phone'] ) );
 			$normalized = ! empty( $raw_phone ) ? Signa_Helper::normalize_phone( $raw_phone ) : '';
-			update_user_meta( $user_id, 'signa_phone', $normalized );
 			if ( ! empty( $normalized ) ) {
-				update_user_meta( $user_id, 'billing_phone', $normalized );
+				Signa_Auth::sync_user_phone_meta( $user_id, $normalized );
+			} else {
+				update_user_meta( $user_id, 'signa_phone', '' );
 			}
 		}
 

@@ -3,7 +3,7 @@
  * Plugin Name:       Signa - ورود و ثبت‌نام با کد یکبارمصرف (OTP)
  * Plugin URI:        https://github.com/ImTheAlireza/Signa
  * Description:       پلاگین جامع ورود و ثبت‌نام یکپارچه با کد یکبارمصرف (OTP) از طریق پیامک (SMS.ir، فراز اس‌ام‌اس، ملی‌پیامک، کاوه‌نگار، آی‌پی‌پنل)، پیام‌رسان بله و ایمیل همراه با یکپارچگی کامل ووکامرس و ویجت اختصاصی المنتور.
- * Version:           2.4.1
+ * Version:           2.4.2
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Signa Team
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SIGNA_OTP_VERSION', '2.4.1' );
+define( 'SIGNA_OTP_VERSION', '2.4.2' );
 define( 'SIGNA_OTP_FILE', __FILE__ );
 define( 'SIGNA_OTP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SIGNA_OTP_URL', plugin_dir_url( __FILE__ ) );

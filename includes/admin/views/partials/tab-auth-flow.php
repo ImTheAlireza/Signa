@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Settings Partial: tab-auth-flow.php (Bento Side-by-Side Layout + Vector Icons)
+ * Admin Settings Partial: tab-auth-flow.php (Modern Choice Cards with Vector Icons, Radio Checkmarks & Clear Username Format)
  *
  * @package Signa_OTP
  */
@@ -10,12 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 				<section class="signa-panel" id="signa-tab-auth_flow">
-					<!-- TOP CARD: Login Identifier Mode & Delivery Strategy with Vector Icons -->
+					<!-- TOP CARD: Login Identifier Mode & Delivery Strategy with Modern Vector Choice Cards -->
 					<div class="signa-card">
 						<div class="signa-card-head">
 							<div class="signa-card-head-title">
 								<span class="signa-card-icon is-blue">
-									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
 								</span>
 								<div>
 									<h2>روش شناسایی کاربر و استراتژی کانال ارسال کد</h2>
@@ -28,77 +28,117 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<div class="signa-choice-grid signa-cols-3">
 							<label class="signa-choice-card <?php echo 'phone_and_email' === $settings['login_mode'] ? 'selected' : ''; ?>">
 								<input type="radio" name="signa[login_mode]" value="phone_and_email" <?php checked( $settings['login_mode'], 'phone_and_email' ); ?> />
-								<span class="signa-choice-icon-svg">
-									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+								<span class="signa-choice-icon-svg is-blue">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 7h6"/><path d="M9 11h6"/><circle cx="12" cy="17" r="1"/></svg>
 								</span>
-								<strong>موبایل و ایمیل (هوشمند)</strong>
-								<small>تشخیص خودکار شماره موبایل یا آدرس ایمیل در یک فیلد واحد</small>
+								<div class="signa-choice-body">
+									<strong>موبایل و ایمیل (هوشمند)</strong>
+									<small>تشخیص خودکار شماره موبایل یا آدرس ایمیل در یک فیلد واحد</small>
+								</div>
+								<span class="signa-choice-check">
+									<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+								</span>
 							</label>
 
 							<label class="signa-choice-card <?php echo 'phone_only' === $settings['login_mode'] ? 'selected' : ''; ?>">
 								<input type="radio" name="signa[login_mode]" value="phone_only" <?php checked( $settings['login_mode'], 'phone_only' ); ?> />
-								<span class="signa-choice-icon-svg">
-									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+								<span class="signa-choice-icon-svg is-green">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
 								</span>
-								<strong>فقط شماره موبایل</strong>
-								<small>مختص سایت‌های ایرانی با احراز هویت پیامکی / بله</small>
+								<div class="signa-choice-body">
+									<strong>فقط شماره موبایل</strong>
+									<small>مختص سایت‌های ایرانی با احراز هویت پیامکی / بله</small>
+								</div>
+								<span class="signa-choice-check">
+									<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+								</span>
 							</label>
 
 							<label class="signa-choice-card <?php echo 'email_only' === $settings['login_mode'] ? 'selected' : ''; ?>">
 								<input type="radio" name="signa[login_mode]" value="email_only" <?php checked( $settings['login_mode'], 'email_only' ); ?> />
-								<span class="signa-choice-icon-svg">
-									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+								<span class="signa-choice-icon-svg is-purple">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
 								</span>
-								<strong>فقط آدرس ایمیل</strong>
-								<small>ارسال کد یکبارمصرف فقط از طریق ایمیل وردپرس</small>
+								<div class="signa-choice-body">
+									<strong>فقط آدرس ایمیل</strong>
+									<small>ارسال کد یکبارمصرف فقط از طریق ایمیل وردپرس</small>
+								</div>
+								<span class="signa-choice-check">
+									<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+								</span>
 							</label>
 						</div>
 
-						<label class="signa-section-label" style="margin-top:22px;">۲. استراتژی ارسال کد به شماره‌های موبایل</label>
-						<div class="signa-choice-grid signa-cols-3">
+						<label class="signa-section-label" style="margin-top:24px;">۲. استراتژی ارسال کد به شماره‌های موبایل</label>
+						<div class="signa-choice-grid signa-cols-strategy">
 							<label class="signa-choice-card <?php echo 'sms' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 								<input type="radio" name="signa[mobile_delivery_channel]" value="sms" <?php checked( $settings['mobile_delivery_channel'], 'sms' ); ?> />
-								<span class="signa-choice-icon-svg">
-									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+								<span class="signa-choice-icon-svg is-blue">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
 								</span>
-								<strong>فقط پیامک (SMS)</strong>
-								<small>ارسال مستقیم از طریق درگاه پیامک فعال (و پشتیبان‌ها)</small>
+								<div class="signa-choice-body">
+									<strong>فقط پیامک (SMS)</strong>
+									<small>ارسال مستقیم از طریق درگاه پیامک فعال (و پشتیبان‌ها)</small>
+								</div>
+								<span class="signa-choice-check">
+									<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+								</span>
 							</label>
 
 							<label class="signa-choice-card <?php echo 'bale_fallback_sms' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 								<input type="radio" name="signa[mobile_delivery_channel]" value="bale_fallback_sms" <?php checked( $settings['mobile_delivery_channel'], 'bale_fallback_sms' ); ?> />
-								<span class="signa-choice-icon-svg">
-									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+								<span class="signa-choice-icon-svg is-green">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
 								</span>
-								<strong>هوشمند: اول بله ← سپس پیامک</strong>
-								<small>کاهش شدید هزینه! اگر کاربر بله نداشت خودکار پیامک می‌شود</small>
+								<div class="signa-choice-body">
+									<strong>هوشمند: اول بله ← سپس پیامک</strong>
+									<small>کاهش شدید هزینه! اگر کاربر بله نداشت خودکار پیامک می‌شود</small>
+								</div>
+								<span class="signa-choice-check">
+									<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+								</span>
 							</label>
 
 							<label class="signa-choice-card <?php echo 'sms_fallback_bale' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 								<input type="radio" name="signa[mobile_delivery_channel]" value="sms_fallback_bale" <?php checked( $settings['mobile_delivery_channel'], 'sms_fallback_bale' ); ?> />
-								<span class="signa-choice-icon-svg">
-									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+								<span class="signa-choice-icon-svg is-amber">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
 								</span>
-								<strong>هوشمند: اول پیامک ← سپس بله</strong>
-								<small>در صورت اختلال درگاه پیامک، از طریق بله ارسال می‌شود</small>
+								<div class="signa-choice-body">
+									<strong>هوشمند: اول پیامک ← سپس بله</strong>
+									<small>در صورت اختلال درگاه پیامک، از طریق بله ارسال می‌شود</small>
+								</div>
+								<span class="signa-choice-check">
+									<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+								</span>
 							</label>
 
 							<label class="signa-choice-card <?php echo 'bale' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 								<input type="radio" name="signa[mobile_delivery_channel]" value="bale" <?php checked( $settings['mobile_delivery_channel'], 'bale' ); ?> />
-								<span class="signa-choice-icon-svg">
-									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+								<span class="signa-choice-icon-svg is-cyan">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
 								</span>
-								<strong>فقط پیام‌رسان بله</strong>
-								<small>ارسال صرفاً از طریق سرویس سفیر یا ربات بله</small>
+								<div class="signa-choice-body">
+									<strong>فقط پیام‌رسان بله</strong>
+									<small>ارسال صرفاً از طریق سرویس سفیر یا ربات بله</small>
+								</div>
+								<span class="signa-choice-check">
+									<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+								</span>
 							</label>
 
 							<label class="signa-choice-card <?php echo 'both' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 								<input type="radio" name="signa[mobile_delivery_channel]" value="both" <?php checked( $settings['mobile_delivery_channel'], 'both' ); ?> />
-								<span class="signa-choice-icon-svg">
-									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+								<span class="signa-choice-icon-svg is-purple">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
 								</span>
-								<strong>ارسال همزمان (پیامک + بله)</strong>
-								<small>ارسال همزمان کد در هر دو کانال برای اطمینان حداکثری</small>
+								<div class="signa-choice-body">
+									<strong>ارسال همزمان (پیامک + بله)</strong>
+									<small>ارسال همزمان کد در هر دو کانال برای اطمینان حداکثری</small>
+								</div>
+								<span class="signa-choice-check">
+									<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+								</span>
 							</label>
 						</div>
 					</div>
@@ -113,8 +153,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
 									</span>
 									<div>
-										<h2>ثبت‌نام کاربران جدید و فیلدهای تکمیلی</h2>
-										<p>مدیریت عضویت خودکار و اطلاعات دریافتی از کاربران بار اول</p>
+										<h2>ثبت‌نام کاربران جدید و سازگاری با دیجیتز</h2>
+										<p>مدیریت عضویت خودکار و نحوه ذخیره نام کاربری و شماره موبایل در دیتابیس وردپرس</p>
 									</div>
 								</div>
 							</div>
@@ -158,12 +198,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</div>
 
 								<div class="signa-field">
-									<label for="username_prefix">پیشوند نام کاربری (Username Prefix)</label>
-									<input type="text" name="signa[username_prefix]" id="username_prefix" value="<?php echo esc_attr( $settings['username_prefix'] ); ?>" dir="ltr" />
+									<label for="username_prefix">نحوه ساخت نام کاربری وردپرس (Username)</label>
+									<select name="signa[username_prefix]" id="username_prefix">
+										<option value="" <?php selected( $settings['username_prefix'], '' ); ?>>خودِ شماره موبایل بدون پیشوند (مثلاً 09123456789 — مشابه دیجیتز)</option>
+										<option value="u_" <?php selected( $settings['username_prefix'], 'u_' ); ?>>دارای پیشوند u_ قبل از شماره (مثلاً u_09123456789)</option>
+										<option value="user_" <?php selected( $settings['username_prefix'], 'user_' ); ?>>دارای پیشوند user_ قبل از شماره (مثلاً user_09123456789)</option>
+									</select>
+									<small>مشخص می‌کند هنگام ثبت‌نام با موبایل، ستون نام کاربری (Username) در جدول کاربران وردپرس چه فرمتی داشته باشد.</small>
 								</div>
 							</div>
 
-							<div class="signa-switch-row" style="margin-top:16px;">
+							<div class="signa-info-note" style="margin-top:14px;">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" style="flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+								<span><strong>سازگاری ۱۰۰٪ دوطرفه با دیجیتز و ووکامرس:</strong> سیگنا شماره موبایل کاربران را همزمان در متاهای استاندارد <code>billing_phone</code>، <code>digits_phone</code>، <code>digits_phone_no</code> و <code>signa_phone</code> ذخیره و شناسایی می‌کند.</span>
+							</div>
+
+							<div class="signa-switch-row" style="margin-top:14px;">
 								<div class="signa-switch-text">
 									<strong>امکان ورود با رمز عبور ثابت (Password Fallback)</strong>
 									<p>نمایش دکمه «ورود با رمز عبور ثابت» زیر فرم برای کاربران دارای رمز.</p>

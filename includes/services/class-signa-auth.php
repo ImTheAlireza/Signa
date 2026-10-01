@@ -240,10 +240,7 @@ class Signa_Auth {
 			$is_new_user = true;
 		} else {
 			if ( 'phone' === $type ) {
-				update_user_meta( $user->ID, 'signa_phone', $identifier );
-				if ( ! get_user_meta( $user->ID, 'billing_phone', true ) ) {
-					update_user_meta( $user->ID, 'billing_phone', $identifier );
-				}
+				self::sync_user_phone_meta( $user->ID, $identifier );
 			}
 		}
 
@@ -314,8 +311,9 @@ class Signa_Auth {
 
 	/**
 	 * Find existing WordPress user by normalized phone or email
+	 * Supports users registered via Signa, Digits, WooCommerce, MihanPanel, or standard WP login
 	 *
-	 * @param string $identifier Normalized phone or email.
+	 * @param string $identifier Normalized phone (09XXXXXXXXX) or email.
 	 * @param string $type       'phone' or 'email'.
 	 * @return WP_User|false
 	 */
@@ -324,7 +322,7 @@ class Signa_Auth {
 			return get_user_by( 'email', $identifier );
 		}
 
-		// 1. Check by signa_phone meta
+		// 1. Fast check by signa_phone meta
 		$users = get_users(
 			array(
 				'meta_key'   => 'signa_phone',
@@ -336,51 +334,89 @@ class Signa_Auth {
 			return $users[0];
 		}
 
-		// 2. Check by WooCommerce billing_phone meta
-		$intl_plus = Signa_Helper::to_international_phone( $identifier, true );
-		$intl_raw  = Signa_Helper::to_international_phone( $identifier, false );
+		// 2. Check across WooCommerce, Digits, and other OTP plugin meta keys in all phone formats
+		$intl_plus = Signa_Helper::to_international_phone( $identifier, true );  // +989123456789
+		$intl_raw  = Signa_Helper::to_international_phone( $identifier, false ); // 989123456789
+		$no_zero   = ltrim( $identifier, '0' );                                  // 9123456789
 
-		$wc_users = get_users(
+		$compat_users = get_users(
 			array(
 				'meta_query' => array(
 					'relation' => 'OR',
 					array(
-						'key'   => 'billing_phone',
-						'value' => $identifier,
+						'key'     => 'billing_phone',
+						'value'   => array( $identifier, $intl_plus, $intl_raw, $no_zero ),
+						'compare' => 'IN',
 					),
 					array(
-						'key'   => 'billing_phone',
-						'value' => $intl_plus,
+						'key'     => 'digits_phone',
+						'value'   => array( $intl_plus, $intl_raw, $identifier, $no_zero ),
+						'compare' => 'IN',
 					),
 					array(
-						'key'   => 'billing_phone',
-						'value' => $intl_raw,
+						'key'     => 'digits_phone_no',
+						'value'   => array( $no_zero, $identifier ),
+						'compare' => 'IN',
 					),
 					array(
-						'key'   => 'digits_phone',
-						'value' => $intl_plus,
+						'key'     => 'mobile',
+						'value'   => array( $identifier, $intl_plus, $no_zero ),
+						'compare' => 'IN',
 					),
 				),
 				'number'     => 1,
 			)
 		);
-		if ( ! empty( $wc_users ) ) {
-			return $wc_users[0];
+		if ( ! empty( $compat_users ) ) {
+			return $compat_users[0];
 		}
 
-		// 3. Check by user_login matching phone number
-		$user_by_login = get_user_by( 'login', $identifier );
-		if ( $user_by_login ) {
-			return $user_by_login;
+		// 3. Check by user_login matching common phone formats (0912..., 98912..., +98912..., 912..., or prefixed)
+		$login_candidates = array( $identifier, $intl_raw, $intl_plus, $no_zero, 'u_' . $identifier );
+		$custom_prefix    = sanitize_key( Signa_Helper::get_option( 'username_prefix', '' ) );
+		if ( ! empty( $custom_prefix ) ) {
+			$login_candidates[] = $custom_prefix . $identifier;
 		}
 
-		$prefix         = Signa_Helper::get_option( 'username_prefix', 'u_' );
-		$prefixed_login = get_user_by( 'login', $prefix . $identifier );
-		if ( $prefixed_login ) {
-			return $prefixed_login;
+		foreach ( array_unique( $login_candidates ) as $candidate_login ) {
+			$user_by_login = get_user_by( 'login', $candidate_login );
+			if ( $user_by_login ) {
+				return $user_by_login;
+			}
 		}
 
 		return false;
+	}
+
+	/**
+	 * Synchronize user phone number across Signa, WooCommerce, and Digits meta keys
+	 * Ensures 100% forward & backward compatibility even if plugins are switched in the future
+	 *
+	 * @param int    $user_id    WordPress User ID.
+	 * @param string $identifier Normalized phone (09XXXXXXXXX).
+	 */
+	public static function sync_user_phone_meta( $user_id, $identifier ) {
+		$intl_plus = Signa_Helper::to_international_phone( $identifier, true ); // +989123456789
+		$no_zero   = ltrim( $identifier, '0' );                                 // 9123456789
+
+		// 1. Signa native meta
+		update_user_meta( $user_id, 'signa_phone', $identifier );
+
+		// 2. WooCommerce native billing_phone
+		if ( ! get_user_meta( $user_id, 'billing_phone', true ) ) {
+			update_user_meta( $user_id, 'billing_phone', $identifier );
+		}
+
+		// 3. Digits native meta keys (for seamless cross-plugin compatibility)
+		if ( ! get_user_meta( $user_id, 'digits_phone', true ) ) {
+			update_user_meta( $user_id, 'digits_phone', $intl_plus );
+		}
+		if ( ! get_user_meta( $user_id, 'digits_phone_no', true ) ) {
+			update_user_meta( $user_id, 'digits_phone_no', $no_zero );
+		}
+		if ( ! get_user_meta( $user_id, 'digt_countrycode', true ) ) {
+			update_user_meta( $user_id, 'digt_countrycode', '+98' );
+		}
 	}
 
 	/**
@@ -392,13 +428,13 @@ class Signa_Auth {
 	 * @return WP_User|WP_Error
 	 */
 	public static function register_user( $identifier, $type = 'phone', $extra = array() ) {
-		$prefix = sanitize_key( Signa_Helper::get_option( 'username_prefix', 'u_' ) );
+		$prefix = sanitize_key( Signa_Helper::get_option( 'username_prefix', '' ) );
 
 		if ( 'email' === $type ) {
 			$email_local = explode( '@', $identifier )[0];
 			$base_login  = sanitize_user( $email_local, true );
 			if ( empty( $base_login ) ) {
-				$base_login = $prefix . wp_rand( 10000, 99999 );
+				$base_login = ( ! empty( $prefix ) ? $prefix : 'user_' ) . wp_rand( 10000, 99999 );
 			}
 			$user_login = $base_login;
 			$suffix     = 1;
@@ -408,7 +444,7 @@ class Signa_Auth {
 			}
 			$user_email = $identifier;
 		} else {
-			$user_login = $prefix . $identifier;
+			$user_login = ! empty( $prefix ) ? ( $prefix . $identifier ) : $identifier;
 			if ( username_exists( $user_login ) ) {
 				$user_login = $identifier . '_' . wp_rand( 100, 999 );
 			}
@@ -450,8 +486,7 @@ class Signa_Auth {
 		}
 
 		if ( 'phone' === $type ) {
-			update_user_meta( $user_id, 'signa_phone', $identifier );
-			update_user_meta( $user_id, 'billing_phone', $identifier );
+			self::sync_user_phone_meta( $user_id, $identifier );
 		}
 
 		if ( ! empty( $first_name ) ) {
