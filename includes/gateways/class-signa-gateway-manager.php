@@ -12,18 +12,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Signa_Gateway_Manager {
 
 	/**
+	 * Custom registered SMS gateways
+	 *
+	 * @var array<string, Signa_Gateway_Interface>
+	 */
+	private static $custom_gateways = array();
+
+	/**
+	 * Register a custom SMS gateway driver programmatically
+	 *
+	 * @param Signa_Gateway_Interface $gateway Gateway instance.
+	 */
+	public static function register_gateway( Signa_Gateway_Interface $gateway ) {
+		self::$custom_gateways[ $gateway->get_id() ] = $gateway;
+	}
+
+	/**
 	 * Get all available SMS gateways
 	 *
 	 * @return array<string, Signa_Gateway_Interface>
 	 */
 	public static function get_sms_gateways() {
-		$gateways = array(
-			'sandbox'     => new Signa_Gateway_Sandbox(),
-			'smsir'       => new Signa_Gateway_Smsir(),
-			'kavenegar'   => new Signa_Gateway_Kavenegar(),
-			'melipayamak' => new Signa_Gateway_Melipayamak(),
-			'farazsms'    => new Signa_Gateway_Farazsms(),
-			'ippanel'     => new Signa_Gateway_Ippanel(),
+		$gateways = array_merge(
+			array(
+				'sandbox'     => new Signa_Gateway_Sandbox(),
+				'smsir'       => new Signa_Gateway_Smsir(),
+				'kavenegar'   => new Signa_Gateway_Kavenegar(),
+				'melipayamak' => new Signa_Gateway_Melipayamak(),
+				'farazsms'    => new Signa_Gateway_Farazsms(),
+				'ippanel'     => new Signa_Gateway_Ippanel(),
+			),
+			self::$custom_gateways
 		);
 
 		return apply_filters( 'signa_otp_sms_gateways', $gateways );

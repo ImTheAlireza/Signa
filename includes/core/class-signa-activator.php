@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Activator & Database Schema Manager
+ * Plugin Activator, Deactivator & Database Schema Manager
  *
  * @package Signa_OTP
  */
@@ -14,7 +14,7 @@ class Signa_Activator {
 	/**
 	 * Database schema version
 	 */
-	const DB_VERSION = '1.0.0';
+	const DB_VERSION = '2.3.0';
 
 	/**
 	 * Run on plugin activation
@@ -26,16 +26,33 @@ class Signa_Activator {
 			update_option( 'signa_otp_settings', Signa_Helper::default_settings() );
 		}
 
+		if ( ! wp_next_scheduled( 'signa_otp_daily_cleanup' ) ) {
+			wp_schedule_event( time() + HOUR_IN_SECONDS, 'daily', 'signa_otp_daily_cleanup' );
+		}
+
 		update_option( 'signa_otp_db_version', self::DB_VERSION );
 	}
 
 	/**
-	 * Check and run DB upgrade if needed
+	 * Run on plugin deactivation
+	 */
+	public static function deactivate() {
+		$timestamp = wp_next_scheduled( 'signa_otp_daily_cleanup' );
+		if ( $timestamp ) {
+			wp_unschedule_event( $timestamp, 'signa_otp_daily_cleanup' );
+		}
+	}
+
+	/**
+	 * Check and run DB upgrade & cron registration if needed
 	 */
 	public static function maybe_upgrade() {
 		$installed_version = get_option( 'signa_otp_db_version' );
 		if ( self::DB_VERSION !== $installed_version ) {
 			self::create_tables();
+			if ( ! wp_next_scheduled( 'signa_otp_daily_cleanup' ) ) {
+				wp_schedule_event( time() + HOUR_IN_SECONDS, 'daily', 'signa_otp_daily_cleanup' );
+			}
 			update_option( 'signa_otp_db_version', self::DB_VERSION );
 		}
 	}

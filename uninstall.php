@@ -9,6 +9,8 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
+wp_clear_scheduled_hook( 'signa_otp_daily_cleanup' );
+
 $settings = get_option( 'signa_otp_settings', array() );
 
 if ( ! empty( $settings['delete_data_on_uninstall'] ) ) {
@@ -20,4 +22,6 @@ if ( ! empty( $settings['delete_data_on_uninstall'] ) ) {
 
 	delete_option( 'signa_otp_settings' );
 	delete_option( 'signa_otp_db_version' );
+	delete_option( 'signa_active_lockouts' );
+	delete_transient( 'signa_bale_safir_token' );
 }

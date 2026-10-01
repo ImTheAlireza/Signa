@@ -91,10 +91,12 @@ class Signa_Frontend {
 			'signa-otp-frontend',
 			'signaOtpParams',
 			array(
-				'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
-				'nonce'     => wp_create_nonce( 'signa_otp_nonce' ),
-				'otpLength' => absint( Signa_Helper::get_option( 'otp_length', 5 ) ),
-				'i18n'      => array(
+				'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
+				'nonce'          => wp_create_nonce( 'signa_otp_nonce' ),
+				'otpLength'      => absint( Signa_Helper::get_option( 'otp_length', 5 ) ),
+				'captchaType'    => $captcha_type,
+				'captchaSiteKey' => $site_key,
+				'i18n'           => array(
 					'networkError' => 'خطا در برقراری ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.',
 					'sending'      => 'در حال ارسال...',
 					'verifying'    => 'در حال بررسی...',
@@ -110,13 +112,11 @@ class Signa_Frontend {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : 'login';
 
-		// Allow logout, lostpassword, resetpass, postpass, confirmaction, or interim-login to use native handler
 		$passthrough_actions = array( 'logout', 'lostpassword', 'retrievepassword', 'resetpass', 'rp', 'postpass', 'confirmaction', 'confirm_admin_email' );
 		if ( in_array( $action, $passthrough_actions, true ) || isset( $_REQUEST['interim-login'] ) ) {
 			return;
 		}
 
-		// If user is already logged in and visiting wp-login.php, redirect them
 		if ( is_user_logged_in() ) {
 			$redirect_to = isset( $_REQUEST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_REQUEST['redirect_to'] ) ) : admin_url();
 			wp_safe_redirect( $redirect_to );

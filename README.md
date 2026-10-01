@@ -1,99 +1,82 @@
-# پلاگین ورود و ثبت‌نام یکبارمصرف وردپرس (Signa OTP)
+# پلاگین ورود و ثبت‌نام یکبارمصرف وردپرس (Signa OTP v2.3.0)
 
-**Signa OTP** یک افزونه جامع، سبک و ماژولار برای **ورود و ثبت‌نام یکپارچه کاربران با کد یکبارمصرف (OTP)** در وردپرس و ووکامرس است.
+**Signa OTP** یک افزونه جامع، سازمانی (Enterprise) و کاملاً ماژولار برای **ورود و ثبت‌نام یکپارچه کاربران با کد یکبارمصرف (OTP)** در وردپرس و ووکامرس است.
 
 ---
 
-## امکانات کلیدی نسخه ۱.۰.۰
+## امکانات کلیدی نسخه ۲.۳.۰
 
-### ۱. پشتیبانی از کانال‌ها و درگاه‌های متنوع (معماری Driver-Based)
+### ۱. پشتیبانی از کانال‌ها و درگاه‌های متنوع + ۳ درگاه پشتیبان (Multi-Gateway Failover)
 - **درگاه‌های پیامکی ایرانی (ارسال سریع خدماتی / پترن):**
   - **SMS.ir** (وب‌سرویس جدید REST v1 - `api.sms.ir/v1/send/verify`)
   - **فراز اس‌ام‌اس (FarazSMS)** (پشتیبانی از هر دو روش `API Key` و `نام کاربری / رمز عبور`)
   - **ملی‌پیامک (Melipayamak)** (وب‌سرویس خدماتی `BaseServiceNumber`)
   - **کاوه‌نگار (Kavenegar)** (وب‌سرویس اعتبارسنجی `verify/lookup.json`)
   - **آی‌پی‌پنل (IPPanel)** (پشتیبانی از وب‌سرویس جدید `Edge API`، `API Key` و کلاسیک)
+  - **زنجیره ۳ درگاه پشتیبان خودکار (Failover Chain):** تعریف تا ۳ درگاه پشتیبان به ترتیب اولویت برای ارسال خودکار در صورت قطعی یا اتمام شارژ درگاه اصلی
 - **پیام‌رسان بله (Bale Messenger):**
-  - پشتیبانی از **وب‌سرویس رسمی سفیر بله (Safir OTP API)** برای ارسال مستقیم کد تایید به شماره موبایل کاربر در پیام‌رسان بله با دریافت خودکار توکن OAuth2
-  - پشتیبانی از **ربات بله (Bale Bot API)**
-  - قابلیت **ارسال هوشمند ترکیبی (Fallback)**: مثلاً اول ارسال در پیام‌رسان بله (با تعرفه بسیار ارزان‌تر) و در صورت عدم عضویت کاربر در بله، ارسال خودکار از طریق پیامک!
-- **ایمیل (`wp_mail`):**
-  - ارسال کد تایید با قالب HTML فارسی و ریسپانسیو
-- **حالت تست / آزمایشی (Sandbox):**
-  - امکان تست کامل فرآیند ورود و ثبت‌نام در محیط لوکال یا سایت بدون نیاز به پنل پیامک (مشاهده کدها در جدول لاگ یا در کادر پیام فرم)
+  - پشتیبانی از **وب‌سرویس رسمی سفیر بله (Safir OTP API)** و **ربات بله (Bale Bot API)**
+  - قابلیت **ارسال هوشمند ترکیبی (Fallback)**: اول ارسال در بله و در صورت عدم عضویت کاربر، ارسال خودکار از طریق پیامک
+- **ایمیل (`wp_mail`):** ارسال کد تایید با قالب HTML فارسی و ریسپانسیو
+- **حالت تست / آزمایشی (Sandbox):** تست کامل فرآیند در محیط لوکال بدون نیاز به پنل پیامک
 
-### ۲. ورود و ثبت‌نام یکپارچه خودکار (Unified Auth Flow)
-- تشخیص هوشمند شماره موبایل یا آدرس ایمیل در یک فیلد واحد
-- تبدیل خودکار اعداد فارسی (`۰-۹`) و عربی (`٠-٩`) به انگلیسی و نرمال‌سازی فرمت‌های مختلف موبایل (`0912...`, `+98912...`, `98912...` به `09xxxxxxxxx`)
-- جستجوی هوشمند کاربر بر اساس متای `signa_phone`، متای ووکامرس `billing_phone`، نام کاربری یا ایمیل
-- ساخت خودکار حساب کاربری (با نقش مشتری ووکامرس `customer` یا مشترک `subscriber`) برای شماره‌ها/ایمیل‌های جدید و ورود آنی بدون نیاز به رمز عبور
+### ۲. داشبورد مدرن SaaS + استودیو طراحی زنده (Live Preview Studio)
+- پنل مدیریت مدرن با منوی عمودی، حالت تاریک/روشن (Dark Mode) و ذخیره آنی AJAX (`Ctrl+S`)
+- نمودار تحلیلی ۷ روزه، نرخ تبدیل (Conversion Rate) و بررسی سلامت سیستم
+- استودیو طراحی ظاهر با پیش‌نمایش زنده ایزوله (Live Preview)، ۴ قالب آماده، انتخابگر رنگ و CSS سفارشی
 
-### ۳. یکپارچگی کامل با ووکامرس + شورت‌کد و مودال
-- **صفحه حساب کاربری ووکامرس (My Account):** جایگزینی خودکار فرم ورود/عضویت ووکامرس با فرم مدرن OTP
-- **صفحه تسویه‌حساب (Checkout):** نمایش نوار ورود سریع با کد یکبارمصرف برای مهمانان در صفحه تسویه‌حساب + پر کردن خودکار فیلد `billing_phone`
-- **مودال پاپ‌آپ سراسری:** باز شدن پنجره پاپ‌آپ ورود با کلیک روی هر دکمه یا لینک دارای کلاس `signa-open-modal`
-- **باکس کد تایید مدرن:** باکس‌های تفکیک‌شده ارقام با حرکت خودکار، قابلیت Paste کامل کد، ارسال خودکار پس از وارد کردن آخرین رقم و پشتیبانی از **WebOTP API** مرورگرهای موبایل برای خواندن خودکار پیامک
-
-### ۴. امنیت، Rate Limit و جدول لاگ در پیشخوان وردپرس
-- هش شدن کدهای OTP در دیتابیس با `wp_hash_password`
-- محدودیت تعداد درخواست کد در ساعت برای هر شماره/ایمیل و هر آدرس IP
-- محدودیت تعداد تلاش اشتباه برای وارد کردن کد و قفل موقت ضد حملات Brute-Force
-- **جدول گزارش و لاگ کامل** در پنل مدیریت وردپرس به همراه فیلتر، جستجو و ابزار **تست زنده ارسال درگاه‌ها**
+### ۳. امنیت، فایروال و کپچای بومی و جهانی
+- پشتیبانی از **آرکپچا (Arcaptcha.ir)**، **کپچای ریاضی داخلی**، **Cloudflare Turnstile** و **Google reCAPTCHA v3**
+- محافظت Brute-Force روی کدهای OTP و رمز عبور ثابت + جدول قفل‌های امنیتی فعال با قابلیت رفع مسدودی آنی (Unlock)
+- لیست سیاه (Blacklist) و لیست سفید (Whitelist) با پشتیبانی از الگوی `*` و تشخیص هوشمند IP پشت کلودفلر/ابرآروان
+- پاکسازی خودکار روزانه لاگ‌های قدیمی با زمان‌بند استاندارد وردپرس (`WP-Cron`)
 
 ---
 
-## شورت‌کدها (Shortcodes)
-
-### ۱. نمایش فرم ورود در برگه‌ها یا المنتور
-```text
-[signa_otp_login]
-```
-پارامترهای اختیاری:
-```text
-[signa_otp_login title="ورود به حساب کاربری" subtitle="شماره موبایل خود را وارد کنید" redirect="https://example.com/dashboard"]
-```
-
-### ۲. دکمه بازکننده مودال پاپ‌آپ (مناسب هدر سایت)
-```text
-[signa_otp_button text="ورود / ثبت‌نام" logged_in_text="حساب کاربری"]
-```
-همچنین می‌توانید به هر دکمه یا آیتم منو در قالب خود کلاس CSS زیر را بدهید تا مودال ورود باز شود:
-```text
-signa-open-modal
-```
-
----
-
-## ساختار فایل‌های افزونه
+## معماری ماژولار و توسعه‌پذیر (Clean Architecture v2.3)
 
 ```text
 Signa/
-├── signa.php                                      # فایل اصلی پلاگین وردپرس
-├── uninstall.php                                  # پاکسازی هنگام حذف افزونه
+├── signa.php                                      # فایل بوت‌استرپ سبک پلاگین
+├── uninstall.php                                  # پاکسازی کامل دیتابیس و کرون‌ها هنگام حذف
 ├── includes/
-│   ├── class-signa-activator.php                  # ساخت جدول دیتابیس wp_signa_otp_logs
-│   ├── class-signa-helper.php                     # توابع کمکی، نرمال‌سازی موبایل و تنظیمات
-│   ├── class-signa-security.php                   # مدیریت Rate Limit، قفل امنیتی و تایید OTP
-│   ├── class-signa-logger.php                     # مدیریت لاگ‌ها و آمار
-│   ├── class-signa-auth.php                       # منطق ورود/ثبت‌نام یکپارچه و درخواست‌های AJAX
-│   ├── class-signa-frontend.php                   # شورت‌کدها، مودال پاپ‌آپ و بارگذاری فایل‌های CSS/JS
-│   ├── class-signa-woocommerce.php                # یکپارچگی با ووکامرس و پروفایل کاربران وردپرس
-│   ├── admin/
-│   │   ├── class-signa-admin.php                  # کنترلر پنل مدیریت و تست زنده درگاه
-│   │   └── views/
-│   │       ├── settings-page.php                  # صفحه تنظیمات ۵ تبه در پیشخوان
-│   │       └── logs-page.php                      # صفحه جدول گزارش و لاگ پیامک‌ها
-│   └── gateways/
-│       ├── interface-signa-gateway.php            # اینترفیس استاندارد درگاه‌ها
-│       ├── class-signa-gateway-manager.php        # مسیردهی هوشمند ارسال (SMS / بله / ایمیل)
-│       ├── class-signa-gateway-sandbox.php        # درگاه آزمایشی (Sandbox)
-│       ├── class-signa-gateway-smsir.php          # درگاه SMS.ir
-│       ├── class-signa-gateway-kavenegar.php      # درگاه کاوه‌نگار
-│       ├── class-signa-gateway-melipayamak.php    # درگاه ملی‌پیامک
-│       ├── class-signa-gateway-farazsms.php       # درگاه فراز اس‌ام‌اس
-│       ├── class-signa-gateway-ippanel.php        # درگاه آی‌پی‌پنل (Edge & REST)
-│       ├── class-signa-gateway-bale.php           # درگاه پیام‌رسان بله (سفیر + ربات)
-│       └── class-signa-gateway-email.php          # درگاه ایمیل وردپرس
+│   ├── class-signa-autoloader.php                 # بارگذار خودکار کلاس‌ها (SPL Autoloader)
+│   ├── class-signa-plugin.php                     # هسته مرکزی مدیریت چرخه حیات و سرویس‌ها
+│   ├── core/                                      # لایه زیرساخت و هسته (Core Layer)
+│   │   ├── class-signa-activator.php              # مدیریت جداول دیتابیس و زمان‌بند WP-Cron
+│   │   ├── class-signa-helper.php                 # مدیریت تنظیمات با کش درون‌حافظه‌ای و نرمال‌سازی
+│   │   ├── class-signa-logger.php                 # ریپازیتوری لاگ‌ها، آمار و نمودار ۷ روزه
+│   │   └── class-signa-security.php               # موتور فایروال، Rate Limit، قفل امنیتی و کپچا
+│   ├── services/                                  # لایه سرویس‌های کاربردی (Application Services)
+│   │   ├── class-signa-auth.php                   # سرویس احراز هویت AJAX، ثبت‌نام خودکار و ورود
+│   │   ├── class-signa-frontend.php               # شورت‌کدها، مودال سراسری و جایگزین wp-login.php
+│   │   └── class-signa-woocommerce.php            # یکپارچگی کامل با ووکامرس و پروفایل کاربران
+│   ├── gateways/                                  # لایه درایورهای ارسال پیام (Gateway Drivers)
+│   │   ├── interface-signa-gateway.php            # قرارداد استاندارد درگاه‌ها (Interface)
+│   │   ├── abstract-signa-gateway.php             # کلاس پایه انتزاعی درگاه‌ها (Abstract Base Class)
+│   │   ├── class-signa-gateway-manager.php        # مدیر درگاه‌ها و زنجیره ۳ مرحله‌ای Failover
+│   │   ├── class-signa-gateway-sandbox.php        # درایور آزمایشی (Sandbox)
+│   │   ├── class-signa-gateway-smsir.php          # درایور SMS.ir
+│   │   ├── class-signa-gateway-kavenegar.php      # درایور کاوه‌نگار
+│   │   ├── class-signa-gateway-melipayamak.php    # درایور ملی‌پیامک
+│   │   ├── class-signa-gateway-farazsms.php       # درایور فراز اس‌ام‌اس
+│   │   ├── class-signa-gateway-ippanel.php        # درایور آی‌پی‌پنل
+│   │   ├── class-signa-gateway-bale.php           # درایور پیام‌رسان بله (سفیر + ربات)
+│   │   └── class-signa-gateway-email.php          # درایور ایمیل وردپرس
+│   └── admin/                                     # لایه پنل مدیریت (Admin UI & Partials)
+│       ├── class-signa-admin.php                  # کنترلر پنل مدیریت، AJAX و خروجی CSV
+│       └── views/
+│           ├── settings-page.php                  # پوسته اصلی داشبورد مدیریت
+│           ├── logs-page.php                      # صفحه گزارش و لاگ کدها
+│           └── partials/                          # تب‌های ماژولار پنل تنظیمات
+│               ├── tab-dashboard.php
+│               ├── tab-auth-flow.php
+│               ├── tab-sms-gateways.php
+│               ├── tab-bale-email.php
+│               ├── tab-appearance.php
+│               ├── tab-woocommerce.php
+│               ├── tab-security.php
+│               └── tab-tools.php
 ├── assets/
 │   ├── css/ (frontend.css, admin.css)
 │   └── js/  (frontend.js, admin.js)
@@ -105,9 +88,22 @@ Signa/
 
 ---
 
-## نحوه نصب و راه‌اندازی
+## افزودن درگاه پیامک سفارشی توسط توسعه‌دهندگان
 
-1. پوشه پلاگین را در مسیر `wp-content/plugins/signa` قرار دهید (یا فایل فشرده ` zip` مخزن را از بخش **افزونه‌ها ← افزودن** در وردپرس بارگذاری کنید).
-2. افزونه **Signa - ورود و ثبت‌نام با کد یکبارمصرف (OTP)** را فعال کنید.
-3. از منوی پیشخوان وردپرس وارد بخش **ورود پیامکی (Signa)** شوید.
-4. برای تست اولیه بدون پنل پیامک، در تب **درگاه‌های پیامک** حالت `تست / آزمایشی (Sandbox)` به صورت پیش‌فرض فعال است و می‌توانید تیک «نمایش کد OTP در پیغام بالای فرم» را بزنید یا کدهای تولیدشده را در منوی **لاگ کدهای ارسالی** مشاهده کنید.
+به‌واسطه معماری `Signa_Abstract_Gateway` و متد `Signa_Gateway_Manager::register_gateway()`، هر توسعه‌دهنده‌ای می‌تواند بدون دستکاری هسته افزونه، درگاه جدیدی را در قالب یا افزونه جانبی ثبت کند:
+
+```php
+add_action( 'init', function() {
+    if ( class_exists( 'Signa_Abstract_Gateway' ) ) {
+        class My_Custom_SMS_Gateway extends Signa_Abstract_Gateway {
+            public function get_id()    { return 'my_gateway'; }
+            public function get_title() { return 'درگاه اختصاصی من'; }
+            public function send( $recipient, $code ) {
+                // ارسال درخواست وب‌سرویس با $this->http_request(...)
+                return true;
+            }
+        }
+        Signa_Gateway_Manager::register_gateway( new My_Custom_SMS_Gateway() );
+    }
+} );
+```

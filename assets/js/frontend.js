@@ -214,6 +214,31 @@
 				payload.captcha_token = $turnstileTok.val();
 			}
 
+			if (
+				typeof signaOtpParams !== 'undefined' &&
+				signaOtpParams.captchaType === 'recaptcha_v3' &&
+				signaOtpParams.captchaSiteKey &&
+				typeof window.grecaptcha !== 'undefined' &&
+				typeof window.grecaptcha.execute === 'function'
+			) {
+				window.grecaptcha.ready(function () {
+					window.grecaptcha
+						.execute(signaOtpParams.captchaSiteKey, { action: 'signa_otp_request' })
+						.then(function (token) {
+							payload.captcha_token = token;
+							dispatchOtpRequest(payload, $submitBtn);
+						})
+						.catch(function () {
+							dispatchOtpRequest(payload, $submitBtn);
+						});
+				});
+				return;
+			}
+
+			dispatchOtpRequest(payload, $submitBtn);
+		}
+
+		function dispatchOtpRequest(payload, $submitBtn) {
 			$.ajax({
 				url: signaOtpParams.ajaxUrl,
 				type: 'POST',

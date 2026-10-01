@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Signa_Gateway_Sandbox implements Signa_Gateway_Interface {
+class Signa_Gateway_Sandbox extends Signa_Abstract_Gateway {
 
 	/**
 	 * Get gateway ID

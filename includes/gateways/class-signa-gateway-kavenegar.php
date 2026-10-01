@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Signa_Gateway_Kavenegar implements Signa_Gateway_Interface {
+class Signa_Gateway_Kavenegar extends Signa_Abstract_Gateway {
 
 	/**
 	 * Get gateway ID

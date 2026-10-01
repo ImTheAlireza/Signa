@@ -34,12 +34,10 @@ class Signa_WooCommerce {
 	 * Constructor
 	 */
 	private function __construct() {
-		// WooCommerce template & checkout hooks
 		add_filter( 'wc_get_template', array( $this, 'override_myaccount_login_template' ), 99, 2 );
 		add_action( 'woocommerce_before_checkout_form', array( $this, 'render_checkout_otp_box' ), 5 );
 		add_filter( 'woocommerce_checkout_get_value', array( $this, 'prefill_checkout_billing_phone' ), 10, 2 );
 
-		// WordPress Users list & profile fields
 		add_filter( 'manage_users_columns', array( $this, 'add_user_phone_column' ) );
 		add_filter( 'manage_users_custom_column', array( $this, 'render_user_phone_column' ), 10, 3 );
 		add_action( 'show_user_profile', array( $this, 'render_user_profile_fields' ) );

@@ -63,7 +63,7 @@ class Signa_Security {
 	/**
 	 * Generate a stateless HMAC Math Captcha challenge
 	 *
-	 * @return array { label: string, token: string }
+	 * @return array { question: string, token: string }
 	 */
 	public static function generate_math_captcha() {
 		$a      = wp_rand( 2, 9 );
@@ -79,7 +79,7 @@ class Signa_Security {
 	}
 
 	/**
-	 * Verify Captcha (Math / reCAPTCHA v3 / Cloudflare Turnstile)
+	 * Verify Captcha (Math / Arcaptcha / reCAPTCHA v3 / Cloudflare Turnstile)
 	 *
 	 * @param array $post_data Submitted POST data.
 	 * @return true|WP_Error
@@ -106,7 +106,7 @@ class Signa_Security {
 
 			list( $ts, $sig ) = explode( '|', $decoded, 2 );
 			if ( time() - (int) $ts > 900 ) {
-				return new WP_Error( 'signa_captcha_expired', 'سوال امنیتی منقضی شده است. لطفاً صفحه را رفرش کنید.' );
+				return new WP_Error( 'signa_captcha_expired', 'سوال امنیتی منقضی شده است. لطفاً دوباره تلاش کنید.' );
 			}
 
 			$expected_sig = hash_hmac( 'sha256', $answer . '|' . $ts, wp_salt( 'auth' ) );
@@ -164,7 +164,6 @@ class Signa_Security {
 		}
 
 		// 3. Google reCAPTCHA v3 or Cloudflare Turnstile
-
 		$verify_url = 'turnstile' === $captcha_type
 			? 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 			: 'https://www.google.com/recaptcha/api/siteverify';
@@ -182,7 +181,7 @@ class Signa_Security {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			return true; // Fail open on network outage so site isn't locked
+			return true;
 		}
 
 		$body = json_decode( wp_remote_retrieve_body( $response ), true );
@@ -204,13 +203,11 @@ class Signa_Security {
 
 		$ip = Signa_Helper::get_client_ip();
 
-		// Check blacklist first
 		$blacklist = self::check_blacklist( $recipient, $ip );
 		if ( is_wp_error( $blacklist ) ) {
 			return $blacklist;
 		}
 
-		// Whitelisted identifiers bypass rate limits & lockouts
 		if ( self::is_whitelisted( $recipient, $ip ) ) {
 			return true;
 		}
@@ -326,6 +323,33 @@ class Signa_Security {
 	}
 
 	/**
+	 * Record a failed password attempt and trigger lockout if threshold reached
+	 *
+	 * @param string $identifier User identifier.
+	 */
+	public static function record_failed_password_attempt( $identifier ) {
+		$key          = 'signa_pw_try_' . md5( $identifier );
+		$attempts     = (int) get_transient( $key ) + 1;
+		$max_attempts = max( 2, absint( Signa_Helper::get_option( 'max_verify_attempts', 5 ) ) );
+
+		set_transient( $key, $attempts, 15 * MINUTE_IN_SECONDS );
+
+		if ( $attempts >= $max_attempts ) {
+			delete_transient( $key );
+			self::trigger_lockout( $identifier );
+		}
+	}
+
+	/**
+	 * Clear failed password attempts on successful login
+	 *
+	 * @param string $identifier User identifier.
+	 */
+	public static function clear_password_attempts( $identifier ) {
+		delete_transient( 'signa_pw_try_' . md5( $identifier ) );
+	}
+
+	/**
 	 * Lock out a recipient and IP temporarily and register in active lockouts list
 	 *
 	 * @param string $recipient Recipient.
@@ -397,6 +421,7 @@ class Signa_Security {
 		}
 
 		delete_transient( 'signa_lock_' . md5( $target ) );
+		delete_transient( 'signa_pw_try_' . md5( $target ) );
 		if ( isset( $lockouts[ $target ]['ip'] ) ) {
 			delete_transient( 'signa_lock_ip_' . md5( $lockouts[ $target ]['ip'] ) );
 		}

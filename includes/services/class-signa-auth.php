@@ -45,6 +45,30 @@ class Signa_Auth {
 	}
 
 	/**
+	 * Send clean JSON error response
+	 *
+	 * @param array $data Error payload.
+	 */
+	private function send_error( $data ) {
+		if ( ob_get_length() ) {
+			ob_clean();
+		}
+		wp_send_json_error( $data );
+	}
+
+	/**
+	 * Send clean JSON success response
+	 *
+	 * @param array $data Success payload.
+	 */
+	private function send_success( $data ) {
+		if ( ob_get_length() ) {
+			ob_clean();
+		}
+		wp_send_json_success( $data );
+	}
+
+	/**
 	 * Handle AJAX Request OTP
 	 */
 	public function ajax_request_otp() {
@@ -52,17 +76,17 @@ class Signa_Auth {
 
 		$raw_identifier = isset( $_POST['identifier'] ) ? sanitize_text_field( wp_unslash( $_POST['identifier'] ) ) : '';
 		if ( empty( $raw_identifier ) ) {
-			wp_send_json_error( array( 'message' => 'لطفاً شماره موبایل یا ایمیل خود را وارد کنید.' ) );
+			$this->send_error( array( 'message' => 'لطفاً شماره موبایل یا ایمیل خود را وارد کنید.' ) );
 		}
 
 		// Verify Captcha if enabled
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$captcha_ok = Signa_Security::verify_captcha( wp_unslash( $_POST ) );
 		if ( is_wp_error( $captcha_ok ) ) {
-			wp_send_json_error(
+			$this->send_error(
 				array(
-					'message'      => $captcha_ok->get_error_message(),
-					'new_captcha'  => 'math' === Signa_Helper::get_option( 'captcha_type' ) ? Signa_Security::generate_math_captcha() : null,
+					'message'     => $captcha_ok->get_error_message(),
+					'new_captcha' => 'math' === Signa_Helper::get_option( 'captcha_type' ) ? Signa_Security::generate_math_captcha() : null,
 				)
 			);
 		}
@@ -74,35 +98,33 @@ class Signa_Auth {
 
 		if ( 'invalid' === $type ) {
 			if ( 'phone_only' === $login_mode ) {
-				wp_send_json_error( array( 'message' => 'شماره موبایل وارد شده معتبر نیست. (مثال: 09123456789)' ) );
+				$this->send_error( array( 'message' => 'شماره موبایل وارد شده معتبر نیست. (مثال: 09123456789)' ) );
 			} elseif ( 'email_only' === $login_mode ) {
-				wp_send_json_error( array( 'message' => 'آدرس ایمیل وارد شده معتبر نیست.' ) );
+				$this->send_error( array( 'message' => 'آدرس ایمیل وارد شده معتبر نیست.' ) );
 			} else {
-				wp_send_json_error( array( 'message' => 'لطفاً یک شماره موبایل معتبر (مثل 09123456789) یا آدرس ایمیل صحیح وارد کنید.' ) );
+				$this->send_error( array( 'message' => 'لطفاً یک شماره موبایل معتبر (مثل 09123456789) یا آدرس ایمیل صحیح وارد کنید.' ) );
 			}
 		}
 
 		if ( 'phone_only' === $login_mode && 'phone' !== $type ) {
-			wp_send_json_error( array( 'message' => 'ورود فقط با شماره موبایل امکان‌پذیر است.' ) );
+			$this->send_error( array( 'message' => 'ورود فقط با شماره موبایل امکان‌پذیر است.' ) );
 		}
 
 		if ( 'email_only' === $login_mode && 'email' !== $type ) {
-			wp_send_json_error( array( 'message' => 'ورود فقط با آدرس ایمیل امکان‌پذیر است.' ) );
+			$this->send_error( array( 'message' => 'ورود فقط با آدرس ایمیل امکان‌پذیر است.' ) );
 		}
 
-		// Check if user exists
 		$existing_user = self::find_user( $identifier, $type );
 		$auto_register = (bool) Signa_Helper::get_option( 'auto_register', 1 );
 
 		if ( ! $existing_user && ! $auto_register ) {
-			wp_send_json_error( array( 'message' => 'حساب کاربری با این مشخصات یافت نشد.' ) );
+			$this->send_error( array( 'message' => 'حساب کاربری با این مشخصات یافت نشد.' ) );
 		}
 
-		// Rate limit, blacklist & cooldown check
 		$can_request = Signa_Security::can_request_otp( $identifier );
 		if ( is_wp_error( $can_request ) ) {
 			$data = $can_request->get_error_data();
-			wp_send_json_error(
+			$this->send_error(
 				array(
 					'message'   => $can_request->get_error_message(),
 					'code'      => $can_request->get_error_code(),
@@ -111,10 +133,9 @@ class Signa_Auth {
 			);
 		}
 
-		// Dispatch OTP
 		$dispatch = Signa_Gateway_Manager::dispatch_otp( $identifier, $type );
 		if ( is_wp_error( $dispatch ) ) {
-			wp_send_json_error(
+			$this->send_error(
 				array(
 					'message' => 'خطا در ارسال کد تایید: ' . $dispatch->get_error_message(),
 				)
@@ -151,7 +172,7 @@ class Signa_Auth {
 			$response_data['debug_code'] = $dispatch['code'];
 		}
 
-		wp_send_json_success( $response_data );
+		$this->send_success( $response_data );
 	}
 
 	/**
@@ -171,33 +192,32 @@ class Signa_Auth {
 		$identifier = $parsed['normalized'];
 
 		if ( 'invalid' === $type ) {
-			wp_send_json_error( array( 'message' => 'شناسه کاربری نامعتبر است.' ) );
+			$this->send_error( array( 'message' => 'شناسه کاربری نامعتبر است.' ) );
 		}
 
-		// Check if user exists first to validate required registration fields before consuming OTP
 		$user        = self::find_user( $identifier, $type );
 		$is_new_user = false;
 
 		if ( ! $user ) {
 			if ( ! Signa_Helper::get_option( 'auto_register', 1 ) ) {
-				wp_send_json_error( array( 'message' => 'ثبت‌نام خودکار غیرفعال است.' ) );
+				$this->send_error( array( 'message' => 'ثبت‌نام خودکار غیرفعال است.' ) );
 			}
 
 			$name_mode  = Signa_Helper::get_option( 'require_name_on_register', 'optional' );
 			$email_mode = Signa_Helper::get_option( 'require_email_on_register', 'disabled' );
 
 			if ( 'required' === $name_mode && empty( $full_name ) ) {
-				wp_send_json_error( array( 'message' => 'لطفاً نام و نام خانوادگی خود را وارد کنید.' ) );
+				$this->send_error( array( 'message' => 'لطفاً نام و نام خانوادگی خود را وارد کنید.' ) );
 			}
 
 			if ( 'phone' === $type && 'required' === $email_mode && ( empty( $extra_email ) || ! is_email( $extra_email ) ) ) {
-				wp_send_json_error( array( 'message' => 'لطفاً یک آدرس ایمیل معتبر وارد کنید.' ) );
+				$this->send_error( array( 'message' => 'لطفاً یک آدرس ایمیل معتبر وارد کنید.' ) );
 			}
 		}
 
 		$verified = Signa_Security::verify_otp( $identifier, $raw_code );
 		if ( is_wp_error( $verified ) ) {
-			wp_send_json_error(
+			$this->send_error(
 				array(
 					'message' => $verified->get_error_message(),
 					'code'    => $verified->get_error_code(),
@@ -215,7 +235,7 @@ class Signa_Auth {
 				)
 			);
 			if ( is_wp_error( $user ) ) {
-				wp_send_json_error( array( 'message' => $user->get_error_message() ) );
+				$this->send_error( array( 'message' => $user->get_error_message() ) );
 			}
 			$is_new_user = true;
 		} else {
@@ -227,7 +247,6 @@ class Signa_Auth {
 			}
 		}
 
-		// Log the user in
 		wp_clear_auth_cookie();
 		wp_set_current_user( $user->ID );
 		wp_set_auth_cookie( $user->ID, true, is_ssl() );
@@ -236,7 +255,7 @@ class Signa_Auth {
 
 		$final_redirect = self::resolve_redirect_url( $redirect_to, $user );
 
-		wp_send_json_success(
+		$this->send_success(
 			array(
 				'message'     => $is_new_user ? 'ثبت‌نام و ورود شما با موفقیت انجام شد! در حال انتقال...' : 'ورود با موفقیت انجام شد! در حال انتقال...',
 				'redirect_to' => $final_redirect,
@@ -247,13 +266,13 @@ class Signa_Auth {
 	}
 
 	/**
-	 * Handle AJAX Password Login Fallback
+	 * Handle AJAX Password Login Fallback (with Brute-Force Protection)
 	 */
 	public function ajax_password_login() {
 		check_ajax_referer( 'signa_otp_nonce', 'nonce' );
 
 		if ( ! Signa_Helper::get_option( 'allow_password_login', 0 ) ) {
-			wp_send_json_error( array( 'message' => 'ورود با رمز عبور غیرفعال است.' ) );
+			$this->send_error( array( 'message' => 'ورود با رمز عبور غیرفعال است.' ) );
 		}
 
 		$raw_identifier = isset( $_POST['identifier'] ) ? sanitize_text_field( wp_unslash( $_POST['identifier'] ) ) : '';
@@ -261,7 +280,7 @@ class Signa_Auth {
 		$redirect_to    = isset( $_POST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_POST['redirect_to'] ) ) : '';
 
 		if ( empty( $raw_identifier ) || empty( $password ) ) {
-			wp_send_json_error( array( 'message' => 'لطفاً شناسه کاربری و رمز عبور را وارد کنید.' ) );
+			$this->send_error( array( 'message' => 'لطفاً شناسه کاربری و رمز عبور را وارد کنید.' ) );
 		}
 
 		$parsed     = Signa_Helper::parse_identifier( $raw_identifier );
@@ -269,20 +288,23 @@ class Signa_Auth {
 
 		$lockout = Signa_Security::check_lockout( $identifier );
 		if ( is_wp_error( $lockout ) ) {
-			wp_send_json_error( array( 'message' => $lockout->get_error_message() ) );
+			$this->send_error( array( 'message' => $lockout->get_error_message() ) );
 		}
 
 		$user = 'invalid' !== $parsed['type'] ? self::find_user( $identifier, $parsed['type'] ) : get_user_by( 'login', $identifier );
 		if ( ! $user || ! wp_check_password( $password, $user->user_pass, $user->ID ) ) {
-			wp_send_json_error( array( 'message' => 'نام کاربری/شماره یا رمز عبور اشتباه است.' ) );
+			Signa_Security::record_failed_password_attempt( $identifier );
+			$this->send_error( array( 'message' => 'نام کاربری/شماره یا رمز عبور اشتباه است.' ) );
 		}
+
+		Signa_Security::clear_password_attempts( $identifier );
 
 		wp_clear_auth_cookie();
 		wp_set_current_user( $user->ID );
 		wp_set_auth_cookie( $user->ID, true, is_ssl() );
 		do_action( 'wp_login', $user->user_login, $user );
 
-		wp_send_json_success(
+		$this->send_success(
 			array(
 				'message'     => 'ورود با موفقیت انجام شد! در حال انتقال...',
 				'redirect_to' => self::resolve_redirect_url( $redirect_to, $user ),
@@ -454,18 +476,15 @@ class Signa_Auth {
 	 * @return string
 	 */
 	private static function resolve_redirect_url( $requested_redirect, $user ) {
-		// 1. Admin custom redirect
 		$admin_redirect = trim( (string) Signa_Helper::get_option( 'admin_redirect_url', '' ) );
 		if ( ! empty( $admin_redirect ) && user_can( $user, 'manage_options' ) ) {
 			return esc_url_raw( $admin_redirect );
 		}
 
-		// 2. Explicit form redirect attribute
 		if ( ! empty( $requested_redirect ) ) {
 			return wp_validate_redirect( $requested_redirect, home_url( '/' ) );
 		}
 
-		// 3. Configured behavior
 		$behavior            = Signa_Helper::get_option( 'redirect_behavior', 'auto' );
 		$configured_redirect = trim( (string) Signa_Helper::get_option( 'redirect_url', '' ) );
 

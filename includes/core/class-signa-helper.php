@@ -1,6 +1,6 @@
 <?php
 /**
- * Helper utility functions for Signa OTP
+ * Helper Utility Functions & Settings Cache Manager for Signa OTP
  *
  * @package Signa_OTP
  */
@@ -12,7 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Signa_Helper {
 
 	/**
-	 * Default plugin settings (v2.0)
+	 * In-memory runtime cache of merged plugin settings
+	 *
+	 * @var array|null
+	 */
+	private static $settings_cache = null;
+
+	/**
+	 * Default plugin settings (v2.3)
 	 *
 	 * @return array
 	 */
@@ -87,8 +94,8 @@ class Signa_Helper {
 			'bale_message_template'     => "کد تایید ورود شما به {site_name}:\n*{code}*\nاین کد تا {expiry} ثانیه معتبر است.",
 
 			'email_subject'             => 'کد تایید ورود به {site_name}',
-			'email_from_name'           => get_bloginfo( 'name' ),
-			'email_from_address'        => get_bloginfo( 'admin_email' ),
+			'email_from_name'           => '',
+			'email_from_address'        => '',
 			'email_heading'             => 'کد یکبارمصرف ورود به حساب کاربری',
 			'email_body_text'           => 'برای ورود به حساب کاربری خود در {site_name}، کد تایید زیر را در فرم ورود وارد نمایید:',
 
@@ -118,7 +125,8 @@ class Signa_Helper {
 			'max_ip_requests_per_hour'  => 15,
 			'max_verify_attempts'       => 5,
 			'lockout_duration'          => 900,               // 15 minutes
-			'captcha_type'              => 'none',            // none | math | recaptcha_v3 | turnstile
+			'trust_proxy_headers'       => 1,
+			'captcha_type'              => 'none',            // none | arcaptcha | math | recaptcha_v3 | turnstile
 			'captcha_site_key'          => '',
 			'captcha_secret_key'        => '',
 			'blocked_phones'            => '',                // newline or comma separated
@@ -132,16 +140,49 @@ class Signa_Helper {
 	}
 
 	/**
-	 * Get all settings merged with defaults
+	 * Get all settings merged with defaults (cached in memory per request)
 	 *
 	 * @return array
 	 */
 	public static function get_settings() {
+		if ( null !== self::$settings_cache ) {
+			return self::$settings_cache;
+		}
+
 		$saved = get_option( 'signa_otp_settings', array() );
 		if ( ! is_array( $saved ) ) {
 			$saved = array();
 		}
-		return wp_parse_args( $saved, self::default_settings() );
+
+		$merged = wp_parse_args( $saved, self::default_settings() );
+
+		if ( empty( $merged['email_from_name'] ) ) {
+			$merged['email_from_name'] = get_bloginfo( 'name' );
+		}
+		if ( empty( $merged['email_from_address'] ) ) {
+			$merged['email_from_address'] = get_bloginfo( 'admin_email' );
+		}
+
+		self::$settings_cache = $merged;
+		return self::$settings_cache;
+	}
+
+	/**
+	 * Update settings in DB and refresh runtime cache
+	 *
+	 * @param array $new_settings Sanitized settings array.
+	 * @return bool
+	 */
+	public static function save_settings( $new_settings ) {
+		self::$settings_cache = null;
+		return update_option( 'signa_otp_settings', $new_settings );
+	}
+
+	/**
+	 * Flush runtime settings cache
+	 */
+	public static function flush_cache() {
+		self::$settings_cache = null;
 	}
 
 	/**
@@ -282,12 +323,9 @@ class Signa_Helper {
 	 * @return string
 	 */
 	public static function get_client_ip() {
-		$keys = array(
-			'HTTP_CF_CONNECTING_IP',
-			'HTTP_X_REAL_IP',
-			'HTTP_X_FORWARDED_FOR',
-			'REMOTE_ADDR',
-		);
+		$keys = self::get_option( 'trust_proxy_headers', 1 )
+			? array( 'HTTP_CF_CONNECTING_IP', 'HTTP_X_REAL_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' )
+			: array( 'REMOTE_ADDR' );
 
 		foreach ( $keys as $key ) {
 			if ( ! empty( $_SERVER[ $key ] ) ) {

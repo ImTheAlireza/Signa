@@ -30,9 +30,9 @@ class Signa_Logger {
 	public static function insert( $data ) {
 		global $wpdb;
 
-		$now        = current_time( 'mysql' );
+		$now_local  = current_time( 'mysql' );
 		$expiry_sec = absint( Signa_Helper::get_option( 'otp_expiry', 120 ) );
-		$expires_at = gmdate( 'Y-m-d H:i:s', strtotime( $now ) + $expiry_sec );
+		$expires_at = gmdate( 'Y-m-d H:i:s', strtotime( $now_local ) + $expiry_sec );
 
 		$defaults = array(
 			'recipient'        => '',
@@ -46,7 +46,7 @@ class Signa_Logger {
 			'response_message' => '',
 			'expires_at'       => $expires_at,
 			'verified_at'      => null,
-			'created_at'       => $now,
+			'created_at'       => $now_local,
 		);
 
 		$row = wp_parse_args( $data, $defaults );
@@ -232,7 +232,7 @@ class Signa_Logger {
 	}
 
 	/**
-	 * Get 7-day chart analytics data
+	 * Get 7-day chart analytics data without double timezone offset
 	 *
 	 * @param int $days Number of days.
 	 * @return array
@@ -265,7 +265,8 @@ class Signa_Logger {
 		for ( $i = $days - 1; $i >= 0; $i-- ) {
 			$day_ts  = $now_ts - ( $i * DAY_IN_SECONDS );
 			$day_key = gmdate( 'Y-m-d', $day_ts );
-			$label   = date_i18n( 'j F', $day_ts );
+			// Pass true as 3rd param to date_i18n since $day_ts already includes site timezone offset
+			$label   = date_i18n( 'j F', $day_ts, true );
 
 			$total    = isset( $rows[ $day_key ] ) ? (int) $rows[ $day_key ]->total_count : 0;
 			$verified = isset( $rows[ $day_key ] ) ? (int) $rows[ $day_key ]->verified_count : 0;
@@ -311,5 +312,12 @@ class Signa_Logger {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE created_at < %s", $cutoff ) );
+	}
+
+	/**
+	 * Scheduled WP-Cron callback to purge expired logs automatically
+	 */
+	public static function run_scheduled_cleanup() {
+		self::clear_logs( false );
 	}
 }

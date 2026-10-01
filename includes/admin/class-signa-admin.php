@@ -144,6 +144,7 @@ class Signa_Admin {
 			'wc_checkout_otp_box',
 			'wp_login_integration',
 			'enable_global_modal',
+			'trust_proxy_headers',
 			'delete_data_on_uninstall',
 		);
 
@@ -211,7 +212,7 @@ class Signa_Admin {
 			$raw   = isset( $_POST['signa'] ) && is_array( $_POST['signa'] ) ? wp_unslash( $_POST['signa'] ) : array();
 			$clean = $this->sanitize_settings_payload( $raw );
 
-			update_option( 'signa_otp_settings', $clean );
+			Signa_Helper::save_settings( $clean );
 			delete_transient( 'signa_bale_safir_token' );
 
 			wp_safe_redirect( add_query_arg( 'settings-updated', 'true', admin_url( 'admin.php?page=signa-otp' ) ) );
@@ -277,7 +278,7 @@ class Signa_Admin {
 		$raw   = isset( $_POST['signa'] ) && is_array( $_POST['signa'] ) ? wp_unslash( $_POST['signa'] ) : array();
 		$clean = $this->sanitize_settings_payload( $raw );
 
-		update_option( 'signa_otp_settings', $clean );
+		Signa_Helper::save_settings( $clean );
 		delete_transient( 'signa_bale_safir_token' );
 
 		if ( ob_get_length() ) {
@@ -373,7 +374,7 @@ class Signa_Admin {
 		}
 
 		$clean = $this->sanitize_settings_payload( $decoded );
-		update_option( 'signa_otp_settings', $clean );
+		Signa_Helper::save_settings( $clean );
 
 		wp_send_json_success( array( 'message' => 'تنظیمات با موفقیت درون‌ریزی شد! در حال بارگذاری مجدد...' ) );
 	}
@@ -388,7 +389,7 @@ class Signa_Admin {
 			wp_send_json_error( array( 'message' => 'دسترسی غیرمجاز.' ) );
 		}
 
-		update_option( 'signa_otp_settings', Signa_Helper::default_settings() );
+		Signa_Helper::save_settings( Signa_Helper::default_settings() );
 		delete_transient( 'signa_bale_safir_token' );
 
 		wp_send_json_success( array( 'message' => 'تمام تنظیمات به حالت پیش‌فرض بازنشانی شد!' ) );
