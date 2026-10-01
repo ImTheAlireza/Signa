@@ -25,9 +25,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 					?>
 					<div class="signa-card">
 						<div class="signa-card-head">
-							<div>
-								<h2>انتخاب سامانه پیامک اصلی و ۳ درگاه پشتیبان خودکار (Failover)</h2>
-								<p>درگاه اصلی را انتخاب کنید و تا ۳ سامانه پشتیبان به ترتیب اولویت برای مواقع قطعی یا اتمام شارژ تعیین نمایید</p>
+							<div class="signa-card-head-title">
+								<span class="signa-card-icon is-blue">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+								</span>
+								<div>
+									<h2>انتخاب سامانه پیامک اصلی و ۳ درگاه پشتیبان خودکار (Failover)</h2>
+									<p>درگاه اصلی را انتخاب کنید و تا ۳ سامانه پشتیبان به ترتیب اولویت برای مواقع قطعی یا اتمام شارژ تعیین نمایید</p>
+								</div>
 							</div>
 						</div>
 

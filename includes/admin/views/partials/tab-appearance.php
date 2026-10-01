@@ -15,9 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<div class="signa-studio-controls">
 							<div class="signa-card">
 								<div class="signa-card-head">
-									<div>
-										<h2>پالت‌های رنگی و تم‌های آماده (Presets)</h2>
-										<p>با یک کلیک استایل کلی فرم را تغییر دهید یا رنگ‌ها را سفارشی کنید</p>
+									<div class="signa-card-head-title">
+										<span class="signa-card-icon is-purple">
+											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+										</span>
+										<div>
+											<h2>پالت‌های رنگی و تم‌های آماده (Presets)</h2>
+											<p>با یک کلیک استایل کلی فرم را تغییر دهید یا رنگ‌ها را سفارشی کنید</p>
+										</div>
 									</div>
 								</div>
 
@@ -94,9 +99,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							<div class="signa-card" style="margin-top:20px;">
 								<div class="signa-card-head">
-									<div>
-										<h2>متن‌ها و برچسب‌های فرم</h2>
-										<p>عنوان‌ها و متن دکمه‌ها را متناسب با لحن برند خود تغییر دهید</p>
+									<div class="signa-card-head-title">
+										<span class="signa-card-icon is-blue">
+											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+										</span>
+										<div>
+											<h2>متن‌ها و برچسب‌های فرم</h2>
+											<p>عنوان‌ها و متن دکمه‌ها را متناسب با لحن برند خود تغییر دهید</p>
+										</div>
 									</div>
 								</div>
 								<div class="signa-fields-grid signa-cols-2">

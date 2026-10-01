@@ -63,8 +63,16 @@
 	font-family: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
-#signa-app-shell .dashicons {
+#signa-app-shell.signa-app-shell .dashicons,
+#signa-app-shell.signa-app-shell .dashicons::before {
 	font-family: dashicons !important;
+}
+
+.signa-nav-svg {
+	width: 19px;
+	height: 19px;
+	flex-shrink: 0;
+	opacity: 0.9;
 }
 
 /* Floating Toast */
@@ -526,12 +534,20 @@
 	grid-column: span 8;
 }
 
-.signa-col-4 {
-	grid-column: span 4;
+.signa-col-7 {
+	grid-column: span 7;
 }
 
 .signa-col-6 {
 	grid-column: span 6;
+}
+
+.signa-col-5 {
+	grid-column: span 5;
+}
+
+.signa-col-4 {
+	grid-column: span 4;
 }
 
 #signa-app-shell .signa-card {
@@ -539,6 +555,8 @@
 	border: 1px solid #33415522;
 	border-radius: 16px;
 	padding: 24px 26px;
+	display: flex;
+	flex-direction: column;
 }
 
 #signa-app-shell.is-dark .signa-card {
@@ -549,10 +567,129 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 12px;
+	gap: 14px;
 	padding-bottom: 16px;
 	margin-bottom: 20px;
 	border-bottom: 1px solid #33415522;
+}
+
+.signa-card-head-title {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.signa-card-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	background: rgba(59, 130, 246, 0.14);
+	color: #3b82f6;
+	border: 1px solid rgba(59, 130, 246, 0.22);
+}
+
+.signa-card-icon.is-blue {
+	background: rgba(59, 130, 246, 0.14);
+	color: #3b82f6;
+	border-color: rgba(59, 130, 246, 0.24);
+}
+
+.signa-card-icon.is-purple {
+	background: rgba(139, 92, 246, 0.14);
+	color: #a855f7;
+	border-color: rgba(139, 92, 246, 0.24);
+}
+
+.signa-card-icon.is-green {
+	background: rgba(16, 185, 129, 0.14);
+	color: #10b981;
+	border-color: rgba(16, 185, 129, 0.24);
+}
+
+.signa-card-icon.is-amber {
+	background: rgba(245, 158, 11, 0.14);
+	color: #f59e0b;
+	border-color: rgba(245, 158, 11, 0.24);
+}
+
+.signa-card-icon.is-red {
+	background: rgba(239, 68, 68, 0.14);
+	color: #ef4444;
+	border-color: rgba(239, 68, 68, 0.24);
+}
+
+.signa-card-icon.is-cyan {
+	background: rgba(6, 182, 212, 0.14);
+	color: #06b6d4;
+	border-color: rgba(6, 182, 212, 0.24);
+}
+
+.signa-empty-state-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 32px 20px;
+	border-radius: 14px;
+	background: var(--s-bg-subtle);
+	border: 1px dashed var(--s-border-input);
+	gap: 8px;
+	flex: 1;
+}
+
+.signa-empty-state-icon {
+	width: 54px;
+	height: 54px;
+	border-radius: 50%;
+	background: rgba(16, 185, 129, 0.14);
+	color: #10b981;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 4px;
+}
+
+.signa-empty-state-box strong {
+	font-size: 14px;
+	font-weight: 800;
+	color: var(--s-text);
+}
+
+.signa-empty-state-box p {
+	margin: 0;
+	font-size: 12.5px;
+	color: var(--s-text-muted);
+}
+
+.signa-info-note {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 11px 14px;
+	border-radius: 10px;
+	background: rgba(59, 130, 246, 0.09);
+	border: 1px solid rgba(59, 130, 246, 0.2);
+	color: var(--s-text-secondary);
+	font-size: 12px;
+	line-height: 1.6;
+	margin-top: 14px;
+}
+
+.signa-choice-icon-svg {
+	width: 28px;
+	height: 28px;
+	border-radius: 8px;
+	background: var(--s-primary-soft);
+	color: var(--s-primary);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 2px;
 }
 
 #signa-app-shell.is-dark .signa-card-head {
@@ -1517,8 +1654,10 @@
 		grid-template-columns: 1fr;
 	}
 	.signa-col-8,
-	.signa-col-4,
-	.signa-col-6 {
+	.signa-col-7,
+	.signa-col-6,
+	.signa-col-5,
+	.signa-col-4 {
 		grid-column: span 12;
 	}
 }

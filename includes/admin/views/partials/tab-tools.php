@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Settings Partial: tab-tools.php
+ * Admin Settings Partial: tab-tools.php (Vector Icons + Side-by-Side Bento Grid)
  *
  * @package Signa_OTP
  */
@@ -13,10 +13,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<!-- Live Gateway Tester -->
 					<div class="signa-card">
 						<div class="signa-card-head">
-							<div>
-								<h2>آزمایشگاه تست زنده ارسال کد (Live Gateway Tester)</h2>
-								<p>ارسال آنی کد آزمایشی برای اطمینان از صحت تنظیمات هر درگاه، پیام‌رسان بله و ایمیل</p>
+							<div class="signa-card-head-title">
+								<span class="signa-card-icon is-green">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+								</span>
+								<div>
+									<h2>آزمایشگاه تست زنده ارسال کد (Live Gateway Tester)</h2>
+									<p>ارسال آنی کد آزمایشی برای اطمینان از صحت تنظیمات هر درگاه پیامک، پیام‌رسان بله و ایمیل</p>
+								</div>
 							</div>
+							<span class="signa-pill is-info">عیب‌یابی آنی</span>
 						</div>
 						<div class="signa-fields-grid signa-cols-3">
 							<div class="signa-field">
@@ -41,22 +47,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</select>
 							</div>
 						</div>
-						<div style="margin-top:14px;">
+						<div style="margin-top:16px;">
 							<button type="button" id="signa_run_test_btn" class="signa-btn-save">
-								<span class="dashicons dashicons-controls-play"></span>
-								ارسال کد آزمایشی همین الان
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+								<span>ارسال کد آزمایشی همین الان</span>
 							</button>
 						</div>
 						<div id="signa_test_result" style="display:none;margin-top:14px;padding:14px 18px;border-radius:10px;"></div>
 					</div>
 
-					<!-- Export / Import / Reset Settings -->
+					<!-- Export / Import / Reset Settings (Side-by-Side Bento Row) -->
 					<div class="signa-bento-row" style="margin-top:20px;">
 						<div class="signa-card signa-col-6">
 							<div class="signa-card-head">
-								<div>
-									<h2>برون‌ریزی و درون‌ریزی تنظیمات (JSON Backup)</h2>
-									<p>انتقال سریع تنظیمات بین سایت تستی و سایت اصلی</p>
+								<div class="signa-card-head-title">
+									<span class="signa-card-icon is-blue">
+										<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+									</span>
+									<div>
+										<h2>برون‌ریزی و درون‌ریزی تنظیمات (JSON Backup)</h2>
+										<p>انتقال سریع تنظیمات بین سایت تستی و سایت اصلی</p>
+									</div>
 								</div>
 							</div>
 							<div class="signa-field">
@@ -77,17 +88,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						<div class="signa-card signa-col-6">
 							<div class="signa-card-head">
-								<div>
-									<h2>نگهداری دیتابیس و بازنشانی</h2>
-									<p>مدیریت طول عمر لاگ‌ها و بازگشت به تنظیمات کارخانه</p>
+								<div class="signa-card-head-title">
+									<span class="signa-card-icon is-amber">
+										<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+									</span>
+									<div>
+										<h2>نگهداری دیتابیس و بازنشانی</h2>
+										<p>مدیریت طول عمر لاگ‌ها و بازگشت به تنظیمات کارخانه</p>
+									</div>
 								</div>
 							</div>
 							<div class="signa-field">
-								<label for="log_retention_days">مدت زمان نگهداری خودکار لاگ‌ها (روز)</label>
+								<label for="log_retention_days">مدت زمان نگهداری خودکار لاگ‌ها (روز — پاکسازی با WP-Cron)</label>
 								<input type="number" name="signa[log_retention_days]" id="log_retention_days" value="<?php echo esc_attr( (string) $settings['log_retention_days'] ); ?>" min="1" max="365" />
 							</div>
 							<div class="signa-switch-row" style="margin-top:14px;">
-								<div>
+								<div class="signa-switch-text">
 									<strong>پاکسازی کامل هنگام حذف افزونه</strong>
 									<p>حذف جدول لاگ‌ها و تنظیمات از دیتابیس در صورت پاک کردن افزونه.</p>
 								</div>

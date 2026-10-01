@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Settings Partial: tab-dashboard.php
+ * Admin Settings Partial: tab-dashboard.php (Vector Icons + Bento Grid)
  *
  * @package Signa_OTP
  */
@@ -67,10 +67,12 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 						</div>
 					</div>
 
-					<!-- KPI Summary Cards -->
+					<!-- KPI Summary Cards with SVG Vector Icons -->
 					<div class="signa-kpi-grid">
 						<div class="signa-kpi-card">
-							<div class="signa-kpi-icon is-blue"><span class="dashicons dashicons-email-alt"></span></div>
+							<div class="signa-kpi-icon is-blue">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+							</div>
 							<div class="signa-kpi-info">
 								<span>کل کدهای ارسال‌شده</span>
 								<strong><?php echo esc_html( number_format_i18n( $stats['total'] ) ); ?></strong>
@@ -79,7 +81,9 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 						</div>
 
 						<div class="signa-kpi-card">
-							<div class="signa-kpi-icon is-green"><span class="dashicons dashicons-yes-alt"></span></div>
+							<div class="signa-kpi-icon is-green">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+							</div>
 							<div class="signa-kpi-info">
 								<span>ورودهای موفق (Verified)</span>
 								<strong><?php echo esc_html( number_format_i18n( $stats['verified'] ) ); ?></strong>
@@ -88,7 +92,9 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 						</div>
 
 						<div class="signa-kpi-card">
-							<div class="signa-kpi-icon is-purple"><span class="dashicons dashicons-groups"></span></div>
+							<div class="signa-kpi-icon is-purple">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+							</div>
 							<div class="signa-kpi-info">
 								<span>کاربران ثبت‌نامی با OTP</span>
 								<strong><?php echo esc_html( number_format_i18n( $stats['otp_users'] ) ); ?></strong>
@@ -97,7 +103,9 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 						</div>
 
 						<div class="signa-kpi-card">
-							<div class="signa-kpi-icon is-red"><span class="dashicons dashicons-warning"></span></div>
+							<div class="signa-kpi-icon is-red">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+							</div>
 							<div class="signa-kpi-info">
 								<span>ارسال‌های ناموفق / خطا</span>
 								<strong><?php echo esc_html( number_format_i18n( $stats['failed'] ) ); ?></strong>
@@ -110,9 +118,14 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 						<!-- 7-Day Visual Bar Chart -->
 						<div class="signa-card signa-col-8">
 							<div class="signa-card-head">
-								<div>
-									<h2>نمودار ارسال کد در ۷ روز گذشته</h2>
-									<p>مقایسه تعداد کل درخواست‌ها و ورودهای موفق روزانه</p>
+								<div class="signa-card-head-title">
+									<span class="signa-card-icon is-blue">
+										<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+									</span>
+									<div>
+										<h2>نمودار ارسال کد در ۷ روز گذشته</h2>
+										<p>مقایسه تعداد کل درخواست‌ها و ورودهای موفق روزانه</p>
+									</div>
 								</div>
 								<div class="signa-chart-legend">
 									<span><i style="background:#3b82f6;"></i> کل ارسالی</span>
@@ -136,9 +149,14 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 						<!-- System Health Check -->
 						<div class="signa-card signa-col-4">
 							<div class="signa-card-head">
-								<div>
-									<h2>وضعیت سلامت سیستم</h2>
-									<p>بررسی پیش‌نیازهای سرور و یکپارچگی‌ها</p>
+								<div class="signa-card-head-title">
+									<span class="signa-card-icon is-green">
+										<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+									</span>
+									<div>
+										<h2>وضعیت سلامت سیستم</h2>
+										<p>پیش‌نیازها و یکپارچگی‌ها</p>
+									</div>
 								</div>
 							</div>
 							<ul class="signa-health-list">
@@ -171,9 +189,14 @@ $active_captcha_label = isset( $captcha_labels[ $settings['captcha_type'] ] ) ? 
 					<!-- Recent Logs Feed -->
 					<div class="signa-card" style="margin-top:20px;">
 						<div class="signa-card-head">
-							<div>
-								<h2>آخرین کدهای ارسال‌شده</h2>
-								<p>۶ درخواست اخیر ثبت‌شده در سیستم (مفید برای مشاهده سریع کد در حالت تست)</p>
+							<div class="signa-card-head-title">
+								<span class="signa-card-icon is-purple">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+								</span>
+								<div>
+									<h2>آخرین کدهای ارسال‌شده</h2>
+									<p>۶ درخواست اخیر ثبت‌شده در سیستم (مفید برای مشاهده سریع کد در حالت تست)</p>
+								</div>
 							</div>
 							<a href="<?php echo esc_url( admin_url( 'admin.php?page=signa-otp-logs' ) ); ?>" class="signa-btn-secondary">مشاهده تمام لاگ‌ها</a>
 						</div>
