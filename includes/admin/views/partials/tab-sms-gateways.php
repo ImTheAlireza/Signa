@@ -30,14 +30,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
 								</span>
 								<div>
-									<h2>انتخاب سامانه پیامک اصلی و ۳ درگاه پشتیبان خودکار (Failover)</h2>
-									<p>درگاه اصلی را انتخاب کنید و تا ۳ سامانه پشتیبان به ترتیب اولویت برای مواقع قطعی یا اتمام شارژ تعیین نمایید</p>
+									<h2>کدام سامانه پیامک را دارید؟</h2>
+									<p>درگاه اصلی خود را انتخاب کنید و در صورت تمایل تا ۳ درگاه پشتیبان برای مواقع قطعی تعیین نمایید</p>
 								</div>
 							</div>
 						</div>
 
 						<!-- Primary SMS Gateway Visual Selector Cards with Logos -->
-						<label class="signa-section-label">۱. انتخاب سامانه پیامک اصلی (Primary Gateway)</label>
+						<label class="signa-section-label">۱. سامانه پیامک اصلی شما</label>
 						<input type="hidden" name="signa[active_sms_gateway]" id="active_sms_gateway" value="<?php echo esc_attr( $settings['active_sms_gateway'] ); ?>" />
 						<div class="signa-gw-selector-grid">
 							<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
@@ -52,13 +52,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php endforeach; ?>
 						</div>
 
-						<!-- 3 Prioritized Backup Gateways -->
-						<label class="signa-section-label" style="margin-top:24px;">۲. زنجیره ۳ درگاه پشتیبان خودکار (Failover Chain)</label>
-						<div class="signa-fields-grid signa-cols-3">
-							<div class="signa-field">
-								<label for="backup_sms_gateway_1">پشتیبان اول (اولویت ۱)</label>
+						<!-- 3 Prioritized Backup Gateways (Visual Failover Pipeline) -->
+						<label class="signa-section-label" style="margin-top:24px;">۲. زنجیره نجات پیامک (اگر درگاه اصلی قطع بود، به ترتیب از کدام بفرستد؟)</label>
+						<div class="signa-failover-pipeline">
+							<div class="signa-pipeline-step">
+								<div class="signa-pipeline-step-head">
+									<span class="signa-step-num-badge">
+										<span class="signa-step-num-circle">۱</span>
+										<span>پشتیبان اول</span>
+									</span>
+									<span class="signa-pill is-info">اولویت اول</span>
+								</div>
 								<select name="signa[backup_sms_gateway_1]" id="backup_sms_gateway_1">
-									<option value="none" <?php selected( $b1_selected, 'none' ); ?>>غیرفعال (بدون پشتیبان اول)</option>
+									<option value="none" <?php selected( $b1_selected, 'none' ); ?>>غیرفعال (ندارم)</option>
 									<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
 										<?php if ( 'sandbox' !== $gw_id ) : ?>
 											<option value="<?php echo esc_attr( $gw_id ); ?>" <?php selected( $b1_selected, $gw_id ); ?>>
@@ -67,13 +73,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<?php endif; ?>
 									<?php endforeach; ?>
 								</select>
-								<small>در صورت خطای درگاه اصلی، ابتدا از این سامانه ارسال می‌شود.</small>
+								<small>به محض خطای درگاه اصلی، از این پنل ارسال می‌شود.</small>
 							</div>
 
-							<div class="signa-field">
-								<label for="backup_sms_gateway_2">پشتیبان دوم (اولویت ۲)</label>
+							<div class="signa-pipeline-step">
+								<div class="signa-pipeline-step-head">
+									<span class="signa-step-num-badge">
+										<span class="signa-step-num-circle">۲</span>
+										<span>پشتیبان دوم</span>
+									</span>
+									<span class="signa-pill is-muted">اولویت دوم</span>
+								</div>
 								<select name="signa[backup_sms_gateway_2]" id="backup_sms_gateway_2">
-									<option value="none" <?php selected( $settings['backup_sms_gateway_2'], 'none' ); ?>>غیرفعال (بدون پشتیبان دوم)</option>
+									<option value="none" <?php selected( $settings['backup_sms_gateway_2'], 'none' ); ?>>غیرفعال (ندارم)</option>
 									<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
 										<?php if ( 'sandbox' !== $gw_id ) : ?>
 											<option value="<?php echo esc_attr( $gw_id ); ?>" <?php selected( $settings['backup_sms_gateway_2'], $gw_id ); ?>>
@@ -82,13 +94,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<?php endif; ?>
 									<?php endforeach; ?>
 								</select>
-								<small>در صورت عدم موفقیت پشتیبان اول، نوبت این درگاه است.</small>
+								<small>اگر پشتیبان اول هم خطا داد، سراغ این پنل می‌رود.</small>
 							</div>
 
-							<div class="signa-field">
-								<label for="backup_sms_gateway_3">پشتیبان سوم (اولویت ۳)</label>
+							<div class="signa-pipeline-step">
+								<div class="signa-pipeline-step-head">
+									<span class="signa-step-num-badge">
+										<span class="signa-step-num-circle">۳</span>
+										<span>پشتیبان سوم</span>
+									</span>
+									<span class="signa-pill is-muted">اولویت سوم</span>
+								</div>
 								<select name="signa[backup_sms_gateway_3]" id="backup_sms_gateway_3">
-									<option value="none" <?php selected( $settings['backup_sms_gateway_3'], 'none' ); ?>>غیرفعال (بدون پشتیبان سوم)</option>
+									<option value="none" <?php selected( $settings['backup_sms_gateway_3'], 'none' ); ?>>غیرفعال (ندارم)</option>
 									<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
 										<?php if ( 'sandbox' !== $gw_id ) : ?>
 											<option value="<?php echo esc_attr( $gw_id ); ?>" <?php selected( $settings['backup_sms_gateway_3'], $gw_id ); ?>>
@@ -97,13 +115,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<?php endif; ?>
 									<?php endforeach; ?>
 								</select>
-								<small>آخرین حلقه پشتیبان برای تضمین ۱۰۰٪ تحویل پیامک.</small>
+								<small>آخرین سپر اطمینان برای تحویل ۱۰۰٪ پیامک.</small>
 							</div>
 						</div>
 
 						<!-- Gateway Switcher Pills with Logos to Inspect/Edit Any Gateway -->
 						<div class="signa-gw-tabs-bar">
-							<span class="signa-section-label" style="margin:0;">۳. مشاهده و ویرایش اطلاعات اتصال هر سامانه:</span>
+							<span class="signa-section-label" style="margin:0;">۳. تنظیم کلید API و کد پترن هر سامانه:</span>
 							<div class="signa-gw-pills">
 								<?php foreach ( $sms_gateways as $gw_id => $gw_obj ) : ?>
 									<button type="button" class="signa-gw-pill" data-gw="<?php echo esc_attr( $gw_id ); ?>">

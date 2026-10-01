@@ -58,16 +58,32 @@ $active_strategy_label = isset( $strategy_labels[ $settings['mobile_delivery_cha
 
 						<div class="signa-quick-item">
 							<div class="signa-quick-head">
-								<span class="signa-pill is-info">استراتژی ارسال</span>
-								<button type="button" class="signa-jump-tab" data-target-tab="auth_flow">تغییر سناریو &larr;</button>
+								<span class="signa-pill is-info">مسیر ارسال کد</span>
+								<button type="button" class="signa-jump-tab" data-target-tab="auth_flow">تغییر مسیر &larr;</button>
 							</div>
 							<div class="signa-quick-body">
-								<span class="signa-quick-icon is-purple">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-								</span>
+								<div class="signa-flow-icons" style="flex-shrink:0;">
+									<?php if ( 'bale_fallback_sms' === $settings['mobile_delivery_channel'] ) : ?>
+										<span class="signa-flow-node is-bale" title="بله"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><polyline points="9 11 12 14 16 10"/></svg></span>
+										<span class="signa-flow-sep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+										<span class="signa-flow-node is-sms" title="پیامک"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8"/><path d="M8 14h4"/></svg></span>
+									<?php elseif ( 'sms_fallback_bale' === $settings['mobile_delivery_channel'] ) : ?>
+										<span class="signa-flow-node is-sms" title="پیامک"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8"/><path d="M8 14h4"/></svg></span>
+										<span class="signa-flow-sep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+										<span class="signa-flow-node is-bale" title="بله"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><polyline points="9 11 12 14 16 10"/></svg></span>
+									<?php elseif ( 'both' === $settings['mobile_delivery_channel'] ) : ?>
+										<span class="signa-flow-node is-sms" title="پیامک"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8"/><path d="M8 14h4"/></svg></span>
+										<span class="signa-flow-sep is-plus">+</span>
+										<span class="signa-flow-node is-bale" title="بله"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><polyline points="9 11 12 14 16 10"/></svg></span>
+									<?php elseif ( 'bale' === $settings['mobile_delivery_channel'] ) : ?>
+										<span class="signa-flow-node is-bale" title="بله"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><polyline points="9 11 12 14 16 10"/></svg></span>
+									<?php else : ?>
+										<span class="signa-flow-node is-sms" title="پیامک"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8"/><path d="M8 14h4"/></svg></span>
+									<?php endif; ?>
+								</div>
 								<div class="signa-quick-text">
 									<strong><?php echo esc_html( $active_strategy_label ); ?></strong>
-									<small>عضویت خودکار: <?php echo ! empty( $settings['auto_register'] ) ? 'فعال' : 'غیرفعال'; ?> • کد <?php echo esc_html( (string) $settings['otp_length'] ); ?> رقمی</small>
+									<small>ثبت‌نام خودکار: <?php echo ! empty( $settings['auto_register'] ) ? 'روشن' : 'خاموش'; ?> • کد <?php echo esc_html( (string) $settings['otp_length'] ); ?> رقمی</small>
 								</div>
 							</div>
 						</div>

@@ -985,10 +985,134 @@
 	border-color: rgba(245, 158, 11, 0.25);
 }
 
-.signa-choice-icon-svg.is-cyan {
-	background: rgba(6, 182, 212, 0.14);
+/* MULTI-ICON FLOW BADGES (e.g. [SMS] -> [Bale], [Phone] + [Email]) */
+.signa-flow-icons {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 6px 9px;
+	border-radius: 12px;
+	background: var(--s-bg-surface);
+	border: 1px solid var(--s-border-input);
+	flex-shrink: 0;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.signa-flow-node {
+	width: 30px;
+	height: 30px;
+	border-radius: 8px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.signa-flow-node.is-sms {
+	background: rgba(59, 130, 246, 0.16);
+	color: #3b82f6;
+}
+
+.signa-flow-node.is-bale {
+	background: rgba(16, 185, 129, 0.18);
+	color: #10b981;
+}
+
+.signa-flow-node.is-email {
+	background: rgba(168, 85, 247, 0.16);
+	color: #a855f7;
+}
+
+.signa-flow-node.is-phone {
+	background: rgba(6, 182, 212, 0.16);
 	color: #06b6d4;
-	border-color: rgba(6, 182, 212, 0.25);
+}
+
+.signa-flow-sep {
+	font-size: 12px;
+	font-weight: 900;
+	color: var(--s-text-muted);
+	padding: 0 1px;
+	display: inline-flex;
+	align-items: center;
+}
+
+.signa-choice-tag {
+	display: inline-block;
+	font-size: 10.5px;
+	font-weight: 700;
+	padding: 1px 7px;
+	border-radius: 99px;
+	margin-right: 6px;
+	vertical-align: middle;
+}
+
+.signa-choice-tag.is-green {
+	background: rgba(16, 185, 129, 0.16);
+	color: #10b981;
+}
+
+.signa-choice-tag.is-amber {
+	background: rgba(245, 158, 11, 0.18);
+	color: #f59e0b;
+}
+
+.signa-choice-tag.is-purple {
+	background: rgba(168, 85, 247, 0.16);
+	color: #a855f7;
+}
+
+/* VISUAL FAILOVER PIPELINE IN SMS TAB */
+.signa-failover-pipeline {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 16px;
+	margin-top: 12px;
+}
+
+.signa-pipeline-step {
+	background: var(--s-bg-subtle);
+	border: 1.5px solid var(--s-border-input);
+	border-radius: 14px;
+	padding: 16px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	transition: border-color 0.15s ease;
+}
+
+.signa-pipeline-step:hover {
+	border-color: var(--s-primary);
+}
+
+.signa-pipeline-step-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.signa-step-num-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 12px;
+	font-weight: 800;
+	color: var(--s-text);
+}
+
+.signa-step-num-circle {
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background: var(--s-primary-soft);
+	color: var(--s-primary);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 11.5px;
+	font-weight: 900;
 }
 
 .signa-choice-body {

@@ -152,7 +152,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 												<img id="signa-prev-logo-img" src="<?php echo esc_url( $settings['logo_url'] ); ?>" alt="Logo" style="max-height:48px;" />
 											</div>
 											<div id="signa-prev-badge-icon" style="<?php echo ! empty( $settings['logo_url'] ) ? 'display:none;' : 'display:inline-flex;'; ?>width:48px;height:48px;border-radius:12px;align-items:center;justify-content:center;background:rgba(37,99,235,0.12);color:<?php echo esc_attr( $settings['primary_color'] ); ?>;margin-bottom:10px;">
-												<span class="dashicons dashicons-smartphone" style="font-size:24px;width:24px;height:24px;"></span>
+												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+													<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+													<path d="m9 12 2 2 4-4"></path>
+												</svg>
 											</div>
 											<h3 id="signa-prev-title" style="margin:0 0 6px 0;font-size:18px;color:inherit;"><?php echo esc_html( $settings['form_title'] ); ?></h3>
 											<p id="signa-prev-subtitle" style="margin:0;font-size:12.5px;opacity:0.75;"><?php echo esc_html( $settings['form_subtitle'] ); ?></p>

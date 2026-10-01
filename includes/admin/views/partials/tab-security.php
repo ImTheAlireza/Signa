@@ -20,8 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="8 12 11 15 16 9"/></svg>
 									</span>
 									<div>
-										<h2>محدودیت نرخ ارسال (Rate Limiting) و ضد Brute-Force</h2>
-										<p>جلوگیری از اسپم پیامکی و سوختن شارژ پنل با محدودسازی هوشمند درخواست‌ها</p>
+										<h2>محافظت از شارژ پنل و ضد اسپم</h2>
+										<p>جلوگیری خودکار از درخواست‌های رگباری و قفل موقت مهاجمان</p>
 									</div>
 								</div>
 								<span class="signa-pill is-ok">محافظت خودکار</span>
@@ -29,31 +29,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							<div class="signa-fields-grid signa-cols-2">
 								<div class="signa-field">
-									<label for="max_requests_per_hour">سقف درخواست هر شماره (در ساعت)</label>
+									<label for="max_requests_per_hour">سقف پیامک هر شماره (در ساعت)</label>
 									<input type="number" name="signa[max_requests_per_hour]" id="max_requests_per_hour" value="<?php echo esc_attr( (string) $settings['max_requests_per_hour'] ); ?>" min="1" max="50" />
-									<small>تعداد مجاز دریافت کد برای یک شماره در ۶۰ دقیقه</small>
+									<small>هر شماره موبایل چند بار در ساعت اجازه دریافت کد دارد؟</small>
 								</div>
 								<div class="signa-field">
-									<label for="max_ip_requests_per_hour">سقف درخواست هر IP (در ساعت)</label>
+									<label for="max_ip_requests_per_hour">سقف درخواست هر آی‌پی (در ساعت)</label>
 									<input type="number" name="signa[max_ip_requests_per_hour]" id="max_ip_requests_per_hour" value="<?php echo esc_attr( (string) $settings['max_ip_requests_per_hour'] ); ?>" min="2" max="200" />
-									<small>جلوگیری از تست انبوه شماره‌ها توسط یک آی‌پی</small>
+									<small>جلوگیری از تست شماره‌های متعدد توسط یک دستگاه</small>
 								</div>
 								<div class="signa-field">
-									<label for="max_verify_attempts">حداکثر تلاش اشتباه کد / رمز</label>
+									<label for="max_verify_attempts">تعداد مجاز خطا در وارد کردن کد</label>
 									<input type="number" name="signa[max_verify_attempts]" id="max_verify_attempts" value="<?php echo esc_attr( (string) $settings['max_verify_attempts'] ); ?>" min="2" max="15" />
-									<small>پس از این تعداد خطا، شماره و آی‌پی موقتاً قفل می‌شوند</small>
+									<small>بعد از این تعداد اشتباه، شماره موقتاً قفل می‌شود</small>
 								</div>
 								<div class="signa-field">
-									<label for="lockout_duration">مدت زمان مسدودی موقت (ثانیه)</label>
+									<label for="lockout_duration">مدت زمان قفل موقت (ثانیه)</label>
 									<input type="number" name="signa[lockout_duration]" id="lockout_duration" value="<?php echo esc_attr( (string) $settings['lockout_duration'] ); ?>" min="60" max="86400" />
-									<small>پیش‌فرض: ۹۰۰ ثانیه (۱۵ دقیقه قفل امنیتی)</small>
+									<small>پیش‌فرض: ۹۰۰ ثانیه (معادل ۱۵ دقیقه)</small>
 								</div>
 							</div>
 
 							<div class="signa-switch-row" style="margin-top:18px;">
 								<div class="signa-switch-text">
-									<strong>اعتماد به هدرهای کلودفلر / ابرآروان (Proxy IP Detection)</strong>
-									<p>در سایت‌های پشت CDN فعال کنید تا IP واقعی کاربر از <code>CF-Connecting-IP</code> یا <code>X-Forwarded-For</code> خوانده شود.</p>
+									<strong>تشخیص آی‌پی واقعی پشت کلودفلر و ابرآروان</strong>
+									<p>اگر سایت شما روی CDN است فعال کنید تا آی‌پی اصلی کاربر شناسایی شود.</p>
 								</div>
 								<label class="signa-switch">
 									<input type="checkbox" name="signa[trust_proxy_headers]" value="1" <?php checked( ! empty( $settings['trust_proxy_headers'] ), true ); ?> />
@@ -63,6 +63,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 
 						<!-- Box 2: Captcha Anti-Bot Shield -->
+						<?php
+						$cap_type  = isset( $settings['captcha_type'] ) ? $settings['captcha_type'] : 'none';
+						$needs_key = in_array( $cap_type, array( 'arcaptcha', 'recaptcha_v3', 'turnstile' ), true );
+						?>
 						<div class="signa-card signa-col-5">
 							<div class="signa-card-head">
 								<div class="signa-card-head-title">
@@ -70,36 +74,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg>
 									</span>
 									<div>
-										<h2>سپر امنیتی کپچا (Anti-Bot)</h2>
-										<p>محافظت در برابر ربات‌های SMS Bomber</p>
+										<h2>سپر ضد ربات (کپچا)</h2>
+										<p>جلوگیری از حملات ربات‌های پیامک‌بمبر روی فرم ورود</p>
 									</div>
 								</div>
 							</div>
 
 							<div class="signa-field">
-								<label for="captcha_type">سرویس کپچای انتخابی</label>
+								<label for="captcha_type">نوع کپچای فرم ورود</label>
 								<select name="signa[captcha_type]" id="captcha_type">
-									<option value="none" <?php selected( $settings['captcha_type'], 'none' ); ?>>غیرفعال (بدون کپچا)</option>
-									<option value="arcaptcha" <?php selected( $settings['captcha_type'], 'arcaptcha' ); ?>>آرکپچا - Arcaptcha.ir (بومی و ضد تحریم)</option>
-									<option value="math" <?php selected( $settings['captcha_type'], 'math' ); ?>>کپچای ریاضی هوشمند داخلی (بدون نیاز به کلید)</option>
-									<option value="recaptcha_v3" <?php selected( $settings['captcha_type'], 'recaptcha_v3' ); ?>>Google reCAPTCHA v3 (نامرئی)</option>
-									<option value="turnstile" <?php selected( $settings['captcha_type'], 'turnstile' ); ?>>Cloudflare Turnstile</option>
+									<option value="none" <?php selected( $cap_type, 'none' ); ?>>غیرفعال (بدون کپچا — تجربه راحت‌تر کاربر)</option>
+									<option value="math" <?php selected( $cap_type, 'math' ); ?>>کپچای ریاضی داخلی (آماده و بدون نیاز به کلید)</option>
+									<option value="arcaptcha" <?php selected( $cap_type, 'arcaptcha' ); ?>>آرکپچا — Arcaptcha.ir (بومی و ضد تحریم)</option>
+									<option value="recaptcha_v3" <?php selected( $cap_type, 'recaptcha_v3' ); ?>>گوگل کپچا — Google reCAPTCHA v3 (نامرئی)</option>
+									<option value="turnstile" <?php selected( $cap_type, 'turnstile' ); ?>>کلودفلر — Cloudflare Turnstile</option>
 								</select>
 							</div>
 
-							<div class="signa-field" style="margin-top:14px;">
-								<label for="captcha_site_key">کلید سایت (Site Key)</label>
-								<input type="text" name="signa[captcha_site_key]" id="captcha_site_key" value="<?php echo esc_attr( $settings['captcha_site_key'] ); ?>" dir="ltr" placeholder="Site Key (برای آرکپچا / گوگل / کلودفلر)" />
+							<div id="signa-captcha-keys-wrap" style="margin-top:14px; <?php echo $needs_key ? '' : 'display:none;'; ?>">
+								<div class="signa-field">
+									<label for="captcha_site_key">کلید عمومی سایت (Site Key)</label>
+									<input type="text" name="signa[captcha_site_key]" id="captcha_site_key" value="<?php echo esc_attr( $settings['captcha_site_key'] ); ?>" dir="ltr" placeholder="Site Key" />
+								</div>
+
+								<div class="signa-field" style="margin-top:14px;">
+									<label for="captcha_secret_key">کلید خصوصی (Secret Key)</label>
+									<input type="password" name="signa[captcha_secret_key]" id="captcha_secret_key" value="<?php echo esc_attr( $settings['captcha_secret_key'] ); ?>" dir="ltr" placeholder="Secret Key" />
+								</div>
 							</div>
 
-							<div class="signa-field" style="margin-top:14px;">
-								<label for="captcha_secret_key">کلید مخفی (Secret Key)</label>
-								<input type="password" name="signa[captcha_secret_key]" id="captcha_secret_key" value="<?php echo esc_attr( $settings['captcha_secret_key'] ); ?>" dir="ltr" placeholder="Secret Key" />
+							<div id="signa-captcha-math-note" class="signa-info-note" style="<?php echo 'math' === $cap_type ? '' : 'display:none;'; ?>">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+								<span><strong>کپچای ریاضی داخلی</strong> بلافاصله فعال است و به هیچ کلید یا سرویس خارجی نیاز ندارد.</span>
 							</div>
 
-							<div class="signa-info-note">
+							<div id="signa-captcha-none-note" class="signa-info-note" style="<?php echo 'none' === $cap_type ? '' : 'display:none;'; ?>">
 								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-								<span>در حالت <strong>کپچای ریاضی داخلی</strong> نیازی به وارد کردن Site Key و Secret Key نیست.</span>
+								<span>در حال حاضر محدودساز هوشمند نرخ ارسال (Rate Limit) بدون ایجاد مزاحمت کپچا از فرم شما محافظت می‌کند.</span>
 							</div>
 						</div>
 					</div>

@@ -78,9 +78,6 @@ $inline_vars = sprintf(
 					</svg>
 				</div>
 			<?php endif; ?>
-			<div class="signa-step-badge-wrap">
-				<span class="signa-step-badge">گام ۱ از ۲ • احراز هویت سریع</span>
-			</div>
 			<h3 class="signa-otp-title"><?php echo esc_html( $title ); ?></h3>
 			<p class="signa-otp-subtitle" data-default-subtitle="<?php echo esc_attr( $subtitle ); ?>">
 				<?php echo esc_html( $subtitle ); ?>

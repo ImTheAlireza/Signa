@@ -122,6 +122,42 @@
 			showGatewayConfigBox($(this).attr('data-gw'));
 		});
 
+		// 4.5. Progressive Disclosure Controls (v2.5.0 Smart Field Visibility)
+		$('#show_terms_checkbox').on('change', function () {
+			if ($(this).is(':checked')) {
+				$('#signa-terms-fields-wrap').slideDown(180);
+			} else {
+				$('#signa-terms-fields-wrap').slideUp(180);
+			}
+		});
+
+		$('#redirect_behavior').on('change', function () {
+			if ($(this).val() === 'custom') {
+				$('#signa-custom-redirect-wrap').slideDown(180);
+			} else {
+				$('#signa-custom-redirect-wrap').slideUp(180);
+			}
+		});
+
+		$('input[name="signa[bale_mode]"]').on('change', function () {
+			var mode = $(this).val();
+			if (mode === 'bot') {
+				$('#signa-bale-safir-box').hide();
+				$('#signa-bale-bot-box').fadeIn(180);
+			} else {
+				$('#signa-bale-bot-box').hide();
+				$('#signa-bale-safir-box').fadeIn(180);
+			}
+		});
+
+		$('#captcha_type').on('change', function () {
+			var ctype = $(this).val();
+			var needsKey = ctype === 'arcaptcha' || ctype === 'recaptcha_v3' || ctype === 'turnstile';
+			$('#signa-captcha-keys-wrap').toggle(needsKey);
+			$('#signa-captcha-math-note').toggle(ctype === 'math');
+			$('#signa-captcha-none-note').toggle(ctype === 'none');
+		});
+
 		// 5. Interactive Appearance Studio & Live Preview
 		function refreshLivePreview() {
 			var primary = $('#primary_color').val() || '#2563eb';
