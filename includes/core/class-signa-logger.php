@@ -78,7 +78,16 @@ class Signa_Logger {
 			return false;
 		}
 
+		self::flush_stats_cache();
 		return (int) $wpdb->insert_id;
+	}
+
+	/**
+	 * Flush cached admin analytics transients
+	 */
+	public static function flush_stats_cache() {
+		delete_transient( 'signa_admin_stats_cache' );
+		delete_transient( 'signa_admin_chart_cache' );
 	}
 
 	/**
@@ -109,11 +118,15 @@ class Signa_Logger {
 	public static function update( $id, $fields ) {
 		global $wpdb;
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		return (bool) $wpdb->update(
+		$updated = (bool) $wpdb->update(
 			self::table_name(),
 			$fields,
 			array( 'id' => absint( $id ) )
 		);
+		if ( $updated ) {
+			self::flush_stats_cache();
+		}
+		return $updated;
 	}
 
 	/**
@@ -202,26 +215,42 @@ class Signa_Logger {
 	}
 
 	/**
-	 * Get summary statistics for admin dashboard
+	 * Get summary statistics for admin dashboard (Single aggregated SQL + 60s Transient Cache)
 	 *
 	 * @return array
 	 */
 	public static function get_stats() {
+		$cached = get_transient( 'signa_admin_stats_cache' );
+		if ( is_array( $cached ) ) {
+			return $cached;
+		}
+
 		global $wpdb;
 		$table = self::table_name();
 		$today = gmdate( 'Y-m-d 00:00:00', strtotime( current_time( 'mysql' ) ) );
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$total_all      = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" );
-		$today_count    = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE created_at >= %s", $today ) );
-		$verified_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table} WHERE status = 'verified'" );
-		$failed_count   = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table} WHERE status = 'failed'" );
-		$otp_users      = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->usermeta} WHERE meta_key = 'signa_registered_via_otp'" );
+		$agg = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT COUNT(*) AS total_all,
+				        SUM(CASE WHEN created_at >= %s THEN 1 ELSE 0 END) AS today_count,
+				        SUM(CASE WHEN status = 'verified' THEN 1 ELSE 0 END) AS verified_count,
+				        SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) AS failed_count
+				 FROM {$table}",
+				$today
+			)
+		);
+		$otp_users = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->usermeta} WHERE meta_key = 'signa_registered_via_otp'" );
 		// phpcs:enable
+
+		$total_all      = $agg ? (int) $agg->total_all : 0;
+		$today_count    = $agg ? (int) $agg->today_count : 0;
+		$verified_count = $agg ? (int) $agg->verified_count : 0;
+		$failed_count   = $agg ? (int) $agg->failed_count : 0;
 
 		$conversion_rate = $total_all > 0 ? round( ( $verified_count / $total_all ) * 100, 1 ) : 0;
 
-		return array(
+		$stats = array(
 			'total'           => $total_all,
 			'today'           => $today_count,
 			'verified'        => $verified_count,
@@ -229,15 +258,25 @@ class Signa_Logger {
 			'otp_users'       => $otp_users,
 			'conversion_rate' => $conversion_rate,
 		);
+
+		set_transient( 'signa_admin_stats_cache', $stats, 60 );
+		return $stats;
 	}
 
 	/**
-	 * Get 7-day chart analytics data without double timezone offset
+	 * Get 7-day chart analytics data without double timezone offset (Cached 60s)
 	 *
 	 * @param int $days Number of days.
 	 * @return array
 	 */
 	public static function get_daily_chart_data( $days = 7 ) {
+		if ( 7 === $days ) {
+			$cached = get_transient( 'signa_admin_chart_cache' );
+			if ( is_array( $cached ) ) {
+				return $cached;
+			}
+		}
+
 		global $wpdb;
 		$table    = self::table_name();
 		$now_ts   = strtotime( current_time( 'mysql' ) );
@@ -289,6 +328,10 @@ class Signa_Logger {
 			$point['height_pct'] = $point['total'] > 0 ? max( 10, round( ( $point['total'] / $max_val ) * 100 ) ) : 4;
 		}
 
+		if ( 7 === $days ) {
+			set_transient( 'signa_admin_chart_cache', $chart, 60 );
+		}
+
 		return $chart;
 	}
 
@@ -304,14 +347,18 @@ class Signa_Logger {
 
 		if ( $all ) {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			return (int) $wpdb->query( "TRUNCATE TABLE {$table}" );
+			$res = (int) $wpdb->query( "TRUNCATE TABLE {$table}" );
+			self::flush_stats_cache();
+			return $res;
 		}
 
 		$days   = max( 1, absint( Signa_Helper::get_option( 'log_retention_days', 30 ) ) );
 		$cutoff = gmdate( 'Y-m-d H:i:s', strtotime( current_time( 'mysql' ) ) - ( $days * DAY_IN_SECONDS ) );
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		return (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE created_at < %s", $cutoff ) );
+		$res = (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE created_at < %s", $cutoff ) );
+		self::flush_stats_cache();
+		return $res;
 	}
 
 	/**

@@ -91,7 +91,7 @@
 }
 
 /* ==========================================
-   TOPBAR (Non-overlapping Clean Header)
+   TOPBAR (Sticky Glassmorphic Header)
    ========================================== */
 #signa-app-shell .signa-topbar {
 	display: flex;
@@ -102,9 +102,11 @@
 	background: var(--s-bg-surface);
 	border-bottom: 1px solid #33415526;
 	border-radius: 18px 18px 0 0;
-	padding: 20px 28px;
-	position: relative;
-	z-index: 10;
+	padding: 18px 28px;
+	position: sticky;
+	top: 32px;
+	z-index: 90;
+	backdrop-filter: blur(12px);
 }
 
 #signa-app-shell.is-dark .signa-topbar {
@@ -320,10 +322,15 @@
 
 .signa-sidebar-group-title {
 	font-size: 11px;
-	font-weight: 700;
+	font-weight: 800;
 	color: var(--s-text-muted);
-	padding: 0 12px 10px 12px;
+	padding: 14px 12px 6px 12px;
 	letter-spacing: 0.2px;
+	opacity: 0.85;
+}
+
+.signa-sidebar-group-title:first-child {
+	padding-top: 2px;
 }
 
 .signa-nav {
@@ -1358,6 +1365,139 @@
 	align-items: center;
 	gap: 8px;
 	flex-wrap: wrap;
+}
+
+/* UNSAVED CHANGES DOT ON SAVE BUTTON */
+.signa-unsaved-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #fbbf24;
+	box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.35);
+	display: inline-block;
+}
+
+#signa-app-shell .signa-btn-save.has-unsaved {
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.28), 0 6px 16px rgba(37, 99, 235, 0.38);
+}
+
+/* QUICK SETUP & JUMP BAR ON DASHBOARD */
+.signa-quick-setup-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 14px;
+	margin-bottom: 18px;
+}
+
+.signa-quick-item {
+	background: var(--s-bg-surface);
+	border: 1px solid var(--s-border-input);
+	border-radius: 14px;
+	padding: 14px 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.signa-quick-item:hover {
+	border-color: var(--s-primary);
+	transform: translateY(-1px);
+}
+
+.signa-quick-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: 2px;
+}
+
+.signa-quick-item strong {
+	font-size: 13.5px;
+	font-weight: 800;
+	color: var(--s-text);
+}
+
+.signa-quick-item small {
+	font-size: 11.5px;
+	color: var(--s-text-muted);
+}
+
+#signa-app-shell .signa-jump-tab {
+	background: transparent;
+	border: none;
+	padding: 2px 6px;
+	color: var(--s-primary);
+	font-size: 12px;
+	font-weight: 700;
+	cursor: pointer;
+	border-radius: 6px;
+	transition: background 0.15s ease;
+}
+
+#signa-app-shell .signa-jump-tab:hover {
+	background: var(--s-primary-soft);
+}
+
+/* ELEMENTOR NATIVE WIDGETS SHOWCASE */
+.signa-elementor-showcase-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 16px;
+}
+
+.signa-el-widget-card {
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+	background: var(--s-bg-subtle);
+	border: 1px solid var(--s-border-input);
+	border-radius: 14px;
+	padding: 18px;
+}
+
+.signa-el-widget-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	background: rgba(37, 99, 235, 0.14);
+	color: #2563eb;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.signa-el-widget-icon.is-purple {
+	background: rgba(147, 51, 234, 0.14);
+	color: #9333ea;
+}
+
+.signa-el-widget-body {
+	flex: 1;
+}
+
+.signa-el-widget-title-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 6px;
+}
+
+.signa-el-widget-title-row strong {
+	font-size: 14px;
+	font-weight: 800;
+	color: var(--s-text);
+}
+
+.signa-el-widget-body p {
+	margin: 0;
+	font-size: 12.5px;
+	line-height: 1.7;
+	color: var(--s-text-muted);
 }
 
 @media (max-width: 1024px) {

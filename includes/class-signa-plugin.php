@@ -59,6 +59,17 @@ final class Signa_Plugin {
 		Signa_Frontend::instance();
 		Signa_WooCommerce::instance();
 
+		if ( did_action( 'elementor/loaded' ) || class_exists( '\Elementor\Plugin' ) ) {
+			Signa_Elementor::instance();
+		} else {
+			add_action(
+				'elementor/loaded',
+				function () {
+					Signa_Elementor::instance();
+				}
+			);
+		}
+
 		if ( is_admin() ) {
 			Signa_Admin::instance();
 		}

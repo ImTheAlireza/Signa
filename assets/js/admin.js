@@ -65,6 +65,14 @@
 			activateTab($(this).attr('data-tab'));
 		});
 
+		$(document).on('click', '.signa-jump-tab', function () {
+			var targetTab = $(this).attr('data-target-tab');
+			if (targetTab) {
+				activateTab(targetTab);
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			}
+		});
+
 		try {
 			var lastTab = sessionStorage.getItem('signa_v2_active_tab');
 			if (lastTab) {
@@ -235,9 +243,31 @@
 			frame.open();
 		});
 
-		// 6. AJAX Save Settings & Ctrl+S Shortcut
+		// 6. AJAX Save Settings, Unsaved Changes Indicator & Ctrl+S Shortcut
 		var $settingsForm = $('#signa-settings-form');
 		var $saveBtn = $('#signa-ajax-save-btn');
+		var $unsavedDot = $('#signa-unsaved-dot');
+
+		function markFormDirty() {
+			$saveBtn.addClass('has-unsaved');
+			$unsavedDot.show();
+		}
+
+		function clearFormDirty() {
+			$saveBtn.removeClass('has-unsaved');
+			$unsavedDot.hide();
+		}
+
+		$settingsForm.on('input change', 'input, select, textarea', function () {
+			if ($(this).attr('id') === 'signa_test_recipient' || $(this).attr('id') === 'signa_import_json_box') {
+				return;
+			}
+			markFormDirty();
+		});
+
+		$('.signa-gw-select-card, .signa-preset-btn').on('click', function () {
+			markFormDirty();
+		});
 
 		$settingsForm.on('submit', function (e) {
 			e.preventDefault();
@@ -262,6 +292,7 @@
 			})
 				.done(function (res) {
 					if (res && res.success) {
+						clearFormDirty();
 						showToast('✅ ' + res.data.message, false);
 						if (res.data.settings) {
 							$('#signa_export_json_box').val(JSON.stringify(res.data.settings));

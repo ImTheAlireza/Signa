@@ -25,6 +25,7 @@ class Signa_Autoloader {
 		'Signa_Auth'                => 'includes/services/class-signa-auth.php',
 		'Signa_Frontend'            => 'includes/services/class-signa-frontend.php',
 		'Signa_WooCommerce'         => 'includes/services/class-signa-woocommerce.php',
+		'Signa_Elementor'           => 'includes/integrations/elementor/class-signa-elementor.php',
 		'Signa_Gateway_Interface'   => 'includes/gateways/interface-signa-gateway.php',
 		'Signa_Abstract_Gateway'    => 'includes/gateways/abstract-signa-gateway.php',
 		'Signa_Gateway_Manager'     => 'includes/gateways/class-signa-gateway-manager.php',

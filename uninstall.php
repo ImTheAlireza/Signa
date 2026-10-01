@@ -24,4 +24,6 @@ if ( ! empty( $settings['delete_data_on_uninstall'] ) ) {
 	delete_option( 'signa_otp_db_version' );
 	delete_option( 'signa_active_lockouts' );
 	delete_transient( 'signa_bale_safir_token' );
+	delete_transient( 'signa_admin_stats_cache' );
+	delete_transient( 'signa_admin_chart_cache' );
 }

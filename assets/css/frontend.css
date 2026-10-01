@@ -1,8 +1,6 @@
 /**
- * Signa OTP Frontend Styles (v2.2.1 - RTL, Vazirmatn Font & Right-Aligned Placeholders)
+ * Signa OTP Frontend Styles (v2.4.0 - High-Performance RTL UI, Vazirmatn & Micro-Interactions)
  */
-
-@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
 
 .signa-otp-wrapper {
 	--signa-primary: #2563eb;
@@ -55,15 +53,31 @@
 }
 
 .signa-otp-icon-badge {
-	width: 54px;
-	height: 54px;
-	border-radius: 14px;
-	background: rgba(37, 99, 235, 0.12);
+	width: 56px;
+	height: 56px;
+	border-radius: 16px;
+	background: linear-gradient(135deg, rgba(37, 99, 235, 0.14), rgba(59, 130, 246, 0.06));
+	border: 1px solid rgba(37, 99, 235, 0.16);
 	color: var(--signa-primary);
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	margin-bottom: 14px;
+	margin-bottom: 12px;
+}
+
+.signa-step-badge-wrap {
+	margin-bottom: 10px;
+}
+
+.signa-step-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 3px 11px;
+	border-radius: 99px;
+	font-size: 11.5px;
+	font-weight: 700;
+	background: rgba(37, 99, 235, 0.09);
+	color: var(--signa-primary);
 }
 
 .signa-otp-title {
@@ -236,16 +250,33 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background-color: rgba(243, 244, 246, 0.85);
+	background-color: #f8fafc;
+	border: 1px solid #e2e8f0;
 	padding: 10px 14px;
-	border-radius: 10px;
+	border-radius: 12px;
 	margin-bottom: 18px;
-	font-size: 13.5px;
+	font-size: 13px;
+}
+
+.signa-recipient-meta {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.signa-channel-pill {
+	font-size: 12px;
+	color: #64748b;
+	font-weight: 500;
 }
 
 .signa-recipient-display {
-	font-weight: 700;
-	color: #1f2937;
+	font-weight: 800;
+	color: #0f172a;
+	background: #ffffff;
+	padding: 2px 8px;
+	border-radius: 6px;
+	border: 1px solid #e2e8f0;
 }
 
 .signa-btn-link {
@@ -306,6 +337,28 @@
 	border-color: var(--signa-primary);
 	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
 	transform: translateY(-1px);
+}
+
+.signa-digit-box.is-filled {
+	background-color: #ffffff;
+	border-color: var(--signa-primary);
+}
+
+.signa-otp-digits.signa-shake {
+	animation: signaShake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.signa-otp-digits.signa-shake .signa-digit-box {
+	border-color: #ef4444;
+	background-color: #fef2f2;
+	color: #b91c1c;
+}
+
+@keyframes signaShake {
+	10%, 90% { transform: translate3d(-2px, 0, 0); }
+	20%, 80% { transform: translate3d(4px, 0, 0); }
+	30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+	40%, 60% { transform: translate3d(6px, 0, 0); }
 }
 
 .signa-digit-style-underline .signa-digit-box:focus {

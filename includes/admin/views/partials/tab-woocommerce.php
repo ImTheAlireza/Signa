@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<div class="signa-switch-row">
 								<div class="signa-switch-text">
 									<strong>مودال پاپ‌آپ سراسری (Global Modal)</strong>
-									<p>بارگذاری پنجره پاپ‌آپ ورود در فوتر سایت برای شورت‌کد دکمه و کلاس CSS.</p>
+									<p>بارگذاری پنجره پاپ‌آپ ورود در فوتر سایت برای شورت‌کد دکمه، ویجت المنتور و کلاس CSS.</p>
 								</div>
 								<label class="signa-switch">
 									<input type="checkbox" name="signa[enable_global_modal]" value="1" <?php checked( $settings['enable_global_modal'], 1 ); ?> />
@@ -65,11 +65,52 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 					</div>
 
+					<!-- Elementor Native Widgets Showcase Card -->
+					<div class="signa-card" style="margin-top:20px;">
+						<div class="signa-card-head">
+							<div>
+								<h2>ویجت‌های اختصاصی صفحه‌ساز المنتور (Elementor Native Widgets)</h2>
+								<p>طراحی و استایل‌دهی مستقیم فرم ورود و دکمه مودال در محیط Drag &amp; Drop المنتور</p>
+							</div>
+							<span class="signa-pill <?php echo ! empty( $elementor_active ) ? 'is-ok' : 'is-info'; ?>">
+								<?php echo ! empty( $elementor_active ) ? 'المنتور فعال است • آماده استفاده' : 'پشتیبانی کامل از المنتور'; ?>
+							</span>
+						</div>
+
+						<div class="signa-elementor-showcase-grid">
+							<div class="signa-el-widget-card">
+								<div class="signa-el-widget-icon">
+									<span class="dashicons dashicons-lock"></span>
+								</div>
+								<div class="signa-el-widget-body">
+									<div class="signa-el-widget-title-row">
+										<strong>۱. ویجت «فرم ورود و ثبت‌نام یکبارمصرف (Signa)»</strong>
+										<span class="signa-pill is-info">دسته: احراز هویت سیگنا</span>
+									</div>
+									<p>نمایش کارت کامل ورود و ثبت‌نام در هر برگه المنتوری با قابلیت سفارشی‌سازی عنوان، زیرعنوان، متن دکمه، رنگ برند، گردی گوشه‌ها و پیش‌نمایش زنده در محیط ادیتور.</p>
+								</div>
+							</div>
+
+							<div class="signa-el-widget-card">
+								<div class="signa-el-widget-icon is-purple">
+									<span class="dashicons dashicons-external"></span>
+								</div>
+								<div class="signa-el-widget-body">
+									<div class="signa-el-widget-title-row">
+										<strong>۲. ویجت «دکمه پاپ‌آپ ورود سریع (Signa)»</strong>
+										<span class="signa-pill is-info">مناسب هدر ساز المنتور</span>
+									</div>
+									<p>دکمه هوشمند برای قرارگیری در هدر سایت: برای مهمانان مودال پاپ‌آپ ورود را باز می‌کند و برای کاربران واردشده نام کاربر یا لینک «حساب کاربری» را نمایش می‌دهد.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<div class="signa-card" style="margin-top:20px;">
 						<div class="signa-card-head">
 							<div>
 								<h2>شورت‌کدها و کلاس‌های آماده (کلیک برای کپی)</h2>
-								<p>از این شورت‌کدها در برگه‌ها، هدر قالب یا المنتور استفاده کنید</p>
+								<p>از این شورت‌کدها در برگه‌های گوتنبرگ، ابزارک‌ها یا هدر قالب استفاده کنید</p>
 							</div>
 						</div>
 						<div class="signa-copy-cards-grid">

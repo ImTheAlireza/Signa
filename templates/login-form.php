@@ -1,6 +1,6 @@
 <?php
 /**
- * Signa OTP Login / Register Form Template (v2.0)
+ * Signa OTP Login / Register Form Template (v2.4)
  *
  * Can be overridden by copying to yourtheme/signa/login-form.php
  *
@@ -12,22 +12,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$login_mode          = Signa_Helper::get_option( 'login_mode', 'phone_and_email' );
-$otp_length          = absint( Signa_Helper::get_option( 'otp_length', 5 ) );
-$primary_color       = Signa_Helper::get_option( 'primary_color', '#2563eb' );
-$card_bg_color       = Signa_Helper::get_option( 'card_bg_color', '#ffffff' );
-$text_color          = Signa_Helper::get_option( 'text_color', '#111827' );
-$border_radius       = absint( Signa_Helper::get_option( 'border_radius', 16 ) );
-$digit_box_style     = Signa_Helper::get_option( 'digit_box_style', 'box' );
-$logo_url            = trim( (string) Signa_Helper::get_option( 'logo_url', '' ) );
-$max_width           = max( 320, min( 640, absint( Signa_Helper::get_option( 'form_max_width', 420 ) ) ) );
-$allow_password      = (bool) Signa_Helper::get_option( 'allow_password_login', 0 );
-$show_terms          = (bool) Signa_Helper::get_option( 'show_terms_checkbox', 0 );
-$terms_text          = Signa_Helper::get_option( 'terms_text', 'ورود و ثبت‌نام شما به معنای پذیرش قوانین و مقررات سایت است.' );
-$terms_url           = trim( (string) Signa_Helper::get_option( 'terms_url', '' ) );
-$captcha_type        = Signa_Helper::get_option( 'captcha_type', 'none' );
-$captcha_site_key    = trim( (string) Signa_Helper::get_option( 'captcha_site_key', '' ) );
-$math_captcha        = 'math' === $captcha_type ? Signa_Security::generate_math_captcha() : null;
+$login_mode       = Signa_Helper::get_option( 'login_mode', 'phone_and_email' );
+$otp_length       = absint( Signa_Helper::get_option( 'otp_length', 5 ) );
+$primary_color    = ! empty( $args['primary_color'] ) ? $args['primary_color'] : Signa_Helper::get_option( 'primary_color', '#2563eb' );
+$card_bg_color    = ! empty( $args['card_bg_color'] ) ? $args['card_bg_color'] : Signa_Helper::get_option( 'card_bg_color', '#ffffff' );
+$text_color       = ! empty( $args['text_color'] ) ? $args['text_color'] : Signa_Helper::get_option( 'text_color', '#111827' );
+$border_radius    = isset( $args['border_radius'] ) && null !== $args['border_radius'] ? absint( $args['border_radius'] ) : absint( Signa_Helper::get_option( 'border_radius', 16 ) );
+$digit_box_style  = ! empty( $args['digit_box_style'] ) ? $args['digit_box_style'] : Signa_Helper::get_option( 'digit_box_style', 'box' );
+$logo_url         = trim( (string) Signa_Helper::get_option( 'logo_url', '' ) );
+$raw_max_width    = isset( $args['max_width'] ) && null !== $args['max_width'] ? absint( $args['max_width'] ) : absint( Signa_Helper::get_option( 'form_max_width', 420 ) );
+$max_width        = max( 320, min( 640, $raw_max_width ) );
+$allow_password   = (bool) Signa_Helper::get_option( 'allow_password_login', 0 );
+$show_terms       = (bool) Signa_Helper::get_option( 'show_terms_checkbox', 0 );
+$terms_text       = Signa_Helper::get_option( 'terms_text', 'ورود و ثبت‌نام شما به معنای پذیرش قوانین و مقررات سایت است.' );
+$terms_url        = trim( (string) Signa_Helper::get_option( 'terms_url', '' ) );
+$captcha_type     = Signa_Helper::get_option( 'captcha_type', 'none' );
+$captcha_site_key = trim( (string) Signa_Helper::get_option( 'captcha_site_key', '' ) );
+$math_captcha     = 'math' === $captcha_type ? Signa_Security::generate_math_captcha() : null;
 
 if ( 'phone_only' === $login_mode ) {
 	$input_label       = 'شماره موبایل';
@@ -48,8 +49,8 @@ if ( 'phone_only' === $login_mode ) {
 
 $title       = ! empty( $args['title'] ) ? $args['title'] : Signa_Helper::get_option( 'form_title', 'ورود / ثبت‌نام' );
 $subtitle    = ! empty( $args['subtitle'] ) ? $args['subtitle'] : Signa_Helper::get_option( 'form_subtitle', 'برای ادامه، شماره موبایل یا ایمیل خود را وارد کنید.' );
-$btn_text    = Signa_Helper::get_option( 'button_text', 'دریافت کد تایید' );
-$verify_text = Signa_Helper::get_option( 'verify_button_text', 'تایید و ورود به حساب' );
+$btn_text    = ! empty( $args['button_text'] ) ? $args['button_text'] : Signa_Helper::get_option( 'button_text', 'دریافت کد تایید' );
+$verify_text = ! empty( $args['verify_button_text'] ) ? $args['verify_button_text'] : Signa_Helper::get_option( 'verify_button_text', 'تایید و ورود به حساب' );
 $redirect_to = ! empty( $args['redirect'] ) ? $args['redirect'] : '';
 $context     = ! empty( $args['context'] ) ? $args['context'] : 'shortcode';
 
@@ -67,16 +68,19 @@ $inline_vars = sprintf(
 		<div class="signa-otp-header">
 			<?php if ( ! empty( $logo_url ) ) : ?>
 				<div class="signa-otp-custom-logo">
-					<img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
+					<img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" loading="lazy" />
 				</div>
 			<?php else : ?>
 				<div class="signa-otp-icon-badge" aria-hidden="true">
 					<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-						<line x1="12" y1="18" x2="12.01" y2="18"></line>
+						<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+						<path d="m9 12 2 2 4-4"></path>
 					</svg>
 				</div>
 			<?php endif; ?>
+			<div class="signa-step-badge-wrap">
+				<span class="signa-step-badge">گام ۱ از ۲ • احراز هویت سریع</span>
+			</div>
 			<h3 class="signa-otp-title"><?php echo esc_html( $title ); ?></h3>
 			<p class="signa-otp-subtitle" data-default-subtitle="<?php echo esc_attr( $subtitle ); ?>">
 				<?php echo esc_html( $subtitle ); ?>
@@ -146,9 +150,12 @@ $inline_vars = sprintf(
 		<!-- Step 2: Verify OTP (+ Optional New User Profile Fields) -->
 		<form class="signa-otp-form signa-step-verify" style="display:none;" novalidate>
 			<div class="signa-recipient-bar">
-				<span class="signa-recipient-display" dir="ltr"></span>
+				<div class="signa-recipient-meta">
+					<span class="signa-channel-pill">کد ارسالی به:</span>
+					<span class="signa-recipient-display" dir="ltr"></span>
+				</div>
 				<button type="button" class="signa-btn-link signa-change-identifier">
-					ویرایش
+					✎ ویرایش
 				</button>
 			</div>
 
@@ -156,16 +163,16 @@ $inline_vars = sprintf(
 			<div class="signa-new-user-fields" style="display:none;">
 				<div class="signa-field-group signa-reg-name-group" style="display:none;">
 					<label class="signa-label">نام و نام خانوادگی <span class="signa-req-badge"></span></label>
-					<input type="text" name="full_name" class="signa-input signa-reg-fullname" placeholder="مثلاً: علی محمدی" style="text-align:right;" />
+					<input type="text" name="full_name" class="signa-input signa-reg-fullname" placeholder="مثلاً: علی محمدی" dir="rtl" />
 				</div>
 				<div class="signa-field-group signa-reg-email-group" style="display:none;">
 					<label class="signa-label">آدرس ایمیل <span class="signa-req-badge"></span></label>
-					<input type="email" name="user_email" class="signa-input signa-reg-email" placeholder="name@example.com" dir="ltr" />
+					<input type="email" name="user_email" class="signa-input signa-reg-email" placeholder="مثلاً: name@example.com" dir="rtl" />
 				</div>
 			</div>
 
 			<div class="signa-field-group">
-				<label class="signa-label">کد تایید <?php echo esc_html( (string) $otp_length ); ?> رقمی را وارد کنید</label>
+				<label class="signa-label" style="text-align:center;">کد تایید <?php echo esc_html( (string) $otp_length ); ?> رقمی را وارد کنید</label>
 				<div class="signa-otp-digits" dir="ltr">
 					<?php for ( $i = 0; $i < $otp_length; $i++ ) : ?>
 						<input
@@ -195,7 +202,7 @@ $inline_vars = sprintf(
 					<span> دیگر</span>
 				</div>
 				<button type="button" class="signa-btn-link signa-resend-btn" style="display:none;">
-					ارسال مجدد کد تایید
+					↻ ارسال مجدد کد تایید
 				</button>
 			</div>
 		</form>

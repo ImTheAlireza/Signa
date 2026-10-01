@@ -1,6 +1,6 @@
 <?php
 /**
- * Signa OTP v2.3 - Enterprise SaaS Admin Dashboard Layout Shell
+ * Signa OTP v2.4 - Enterprise SaaS Admin Dashboard Layout Shell
  *
  * Each tab panel is modularized under includes/admin/views/partials/tab-*.php
  *
@@ -17,12 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$active_gw_obj   = isset( $sms_gateways[ $settings['active_sms_gateway'] ] ) ? $sms_gateways[ $settings['active_sms_gateway'] ] : reset( $sms_gateways );
-$active_gw_title = $active_gw_obj ? $active_gw_obj->get_title() : 'نامشخص';
-$wc_active       = class_exists( 'WooCommerce' );
-$curl_active     = function_exists( 'curl_version' );
-$openssl_active  = extension_loaded( 'openssl' );
-$partials_dir    = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
+$active_gw_obj    = isset( $sms_gateways[ $settings['active_sms_gateway'] ] ) ? $sms_gateways[ $settings['active_sms_gateway'] ] : reset( $sms_gateways );
+$active_gw_title  = $active_gw_obj ? $active_gw_obj->get_title() : 'نامشخص';
+$wc_active        = class_exists( 'WooCommerce' );
+$elementor_active = did_action( 'elementor/loaded' ) || class_exists( '\Elementor\Plugin' );
+$curl_active      = function_exists( 'curl_version' );
+$openssl_active   = extension_loaded( 'openssl' );
+$partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 ?>
 <div class="signa-app-shell" id="signa-app-shell" dir="rtl">
 	<!-- Floating Toast Notification -->
@@ -35,7 +36,7 @@ $partials_dir    = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 		<?php wp_nonce_field( 'signa_save_settings_action', 'signa_settings_nonce' ); ?>
 		<input type="hidden" name="signa_save_settings" value="1" />
 
-		<!-- TOPBAR -->
+		<!-- STICKY TOPBAR -->
 		<header class="signa-topbar">
 			<div class="signa-topbar-brand">
 				<div class="signa-brand-logo">
@@ -49,7 +50,7 @@ $partials_dir    = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 						<h1>Signa OTP</h1>
 						<span class="signa-badge-ver">v<?php echo esc_html( SIGNA_OTP_VERSION ); ?> Pro</span>
 					</div>
-					<p>سیستم جامع احراز هویت، ورود پیامکی، بله و ایمیل وردپرس</p>
+					<p>سیستم جامع احراز هویت، ورود پیامکی، بله، ایمیل و المنتور</p>
 				</div>
 			</div>
 
@@ -71,22 +72,24 @@ $partials_dir    = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 				<button type="submit" id="signa-ajax-save-btn" class="signa-btn-save">
 					<span class="dashicons dashicons-yes-alt"></span>
 					<span class="signa-save-label">ذخیره تغییرات</span>
+					<span id="signa-unsaved-dot" class="signa-unsaved-dot" style="display:none;" title="تغییرات ذخیره نشده"></span>
 					<kbd class="signa-kbd">Ctrl+S</kbd>
 				</button>
 			</div>
 		</header>
 
-		<!-- APP BODY (SIDEBAR + MAIN PANEL) -->
+		<!-- APP BODY (ORGANIZED SIDEBAR + MAIN PANEL) -->
 		<div class="signa-app-body">
-			<!-- VERTICAL SIDEBAR -->
+			<!-- CATEGORIZED VERTICAL SIDEBAR -->
 			<aside class="signa-sidebar">
-				<div class="signa-sidebar-group-title">منوی مدیریت افزونه</div>
 				<nav class="signa-nav">
+					<div class="signa-sidebar-group-title">مانیتورینگ و گزارش</div>
 					<button type="button" class="signa-nav-item active" data-tab="dashboard">
 						<span class="dashicons dashicons-chart-bar"></span>
 						<span class="signa-nav-label">پیشخوان و آمار</span>
 					</button>
 
+					<div class="signa-sidebar-group-title">احراز هویت و درگاه‌ها</div>
 					<button type="button" class="signa-nav-item" data-tab="auth_flow">
 						<span class="dashicons dashicons-admin-users"></span>
 						<span class="signa-nav-label">سناریوی ورود و عضویت</span>
@@ -102,6 +105,7 @@ $partials_dir    = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 						<span class="signa-nav-label">پیام‌رسان بله و ایمیل</span>
 					</button>
 
+					<div class="signa-sidebar-group-title">ظاهر و یکپارچگی</div>
 					<button type="button" class="signa-nav-item" data-tab="appearance_studio">
 						<span class="dashicons dashicons-art"></span>
 						<span class="signa-nav-label">استودیو طراحی ظاهر</span>
@@ -109,9 +113,10 @@ $partials_dir    = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 
 					<button type="button" class="signa-nav-item" data-tab="woocommerce">
 						<span class="dashicons dashicons-cart"></span>
-						<span class="signa-nav-label">ووکامرس و شورت‌کدها</span>
+						<span class="signa-nav-label">ووکامرس، المنتور و شورت‌کد</span>
 					</button>
 
+					<div class="signa-sidebar-group-title">امنیت و ابزارها</div>
 					<button type="button" class="signa-nav-item" data-tab="security_firewall">
 						<span class="dashicons dashicons-shield-alt"></span>
 						<span class="signa-nav-label">امنیت، فایروال و کپچا</span>
@@ -128,7 +133,7 @@ $partials_dir    = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 
 				<div class="signa-sidebar-footer">
 					<p>Signa OTP v<?php echo esc_html( SIGNA_OTP_VERSION ); ?></p>
-					<small>احراز هویت یکپارچه وردپرس</small>
+					<small>معماری ماژولار + ویجت المنتور</small>
 				</div>
 			</aside>
 

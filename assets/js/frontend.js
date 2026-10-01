@@ -97,14 +97,16 @@
 		function syncDigitsToHidden() {
 			var code = '';
 			$digitBoxes.each(function () {
-				code += toEnglishDigits($(this).val());
+				var v = toEnglishDigits($(this).val());
+				$(this).toggleClass('is-filled', v.length > 0);
+				code += v;
 			});
 			$hiddenCode.val(code);
 			return code;
 		}
 
 		function clearDigits() {
-			$digitBoxes.val('');
+			$digitBoxes.val('').removeClass('is-filled');
 			$hiddenCode.val('');
 		}
 
@@ -282,6 +284,7 @@
 						}
 
 						$stepVerify.fadeIn(200);
+						$wrapper.find('.signa-step-badge').text('گام ۲ از ۲ • تایید کد یکبارمصرف');
 						clearDigits();
 
 						var msg = res.data.message;
@@ -339,6 +342,7 @@
 			hideAlert();
 			$stepVerify.hide();
 			$stepPassword.hide();
+			$wrapper.find('.signa-step-badge').text('گام ۱ از ۲ • احراز هویت سریع');
 			$stepRequest.fadeIn(180);
 			$identifierInput.trigger('focus').trigger('select');
 		});
@@ -390,6 +394,11 @@
 						var errMsg = res && res.data && res.data.message ? res.data.message : signaOtpParams.i18n.networkError;
 						showAlert(errMsg, 'error');
 						setLoading($verifyBtn, false);
+						var $digitsWrap = $stepVerify.find('.signa-otp-digits');
+						$digitsWrap.addClass('signa-shake');
+						setTimeout(function () {
+							$digitsWrap.removeClass('signa-shake');
+						}, 480);
 					}
 				})
 				.fail(function () {

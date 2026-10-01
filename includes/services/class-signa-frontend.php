@@ -19,6 +19,13 @@ class Signa_Frontend {
 	private static $instance = null;
 
 	/**
+	 * Track if inline custom CSS was already attached
+	 *
+	 * @var bool
+	 */
+	private static $inline_css_added = false;
+
+	/**
 	 * Get instance
 	 *
 	 * @return Signa_Frontend
@@ -37,6 +44,7 @@ class Signa_Frontend {
 		add_shortcode( 'signa_otp_login', array( $this, 'shortcode_login_form' ) );
 		add_shortcode( 'signa_otp_button', array( $this, 'shortcode_modal_button' ) );
 
+		add_filter( 'wp_resource_hints', array( $this, 'add_resource_hints' ), 10, 2 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_footer', array( $this, 'render_global_modal' ) );
 
@@ -46,9 +54,28 @@ class Signa_Frontend {
 	}
 
 	/**
-	 * Enqueue frontend CSS and JS
+	 * Add preconnect hint for jsDelivr font CDN to reduce latency
+	 *
+	 * @param array  $urls          URLs to print for resource hints.
+	 * @param string $relation_type The relation type the URLs are printed for.
+	 * @return array
 	 */
-	public function enqueue_assets() {
+	public function add_resource_hints( $urls, $relation_type ) {
+		if ( 'preconnect' === $relation_type ) {
+			$urls[] = array(
+				'href'        => 'https://cdn.jsdelivr.net',
+				'crossorigin' => 'anonymous',
+			);
+		}
+		return $urls;
+	}
+
+	/**
+	 * Enqueue frontend CSS and JS with smart conditional loading
+	 *
+	 * @param bool $force Force enqueueing guest-only scripts (e.g. inside Elementor editor).
+	 */
+	public function enqueue_assets( $force = false ) {
 		wp_enqueue_style(
 			'signa-vazirmatn-font',
 			'https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css',
@@ -63,9 +90,17 @@ class Signa_Frontend {
 			SIGNA_OTP_VERSION
 		);
 
-		$custom_css = trim( (string) Signa_Helper::get_option( 'custom_css', '' ) );
-		if ( ! empty( $custom_css ) ) {
-			wp_add_inline_style( 'signa-otp-frontend', wp_strip_all_tags( $custom_css ) );
+		if ( ! self::$inline_css_added ) {
+			$custom_css = trim( (string) Signa_Helper::get_option( 'custom_css', '' ) );
+			if ( ! empty( $custom_css ) ) {
+				wp_add_inline_style( 'signa-otp-frontend', wp_strip_all_tags( $custom_css ) );
+			}
+			self::$inline_css_added = true;
+		}
+
+		// Performance Optimization: Skip heavy 3rd-party Captcha SDKs & OTP JS for already logged-in users unless forced
+		if ( is_user_logged_in() && ! $force ) {
+			return;
 		}
 
 		$captcha_type = Signa_Helper::get_option( 'captcha_type', 'none' );
@@ -126,7 +161,7 @@ class Signa_Frontend {
 		$redirect_to = isset( $_REQUEST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_REQUEST['redirect_to'] ) ) : '';
 		// phpcs:enable
 
-		$this->enqueue_assets();
+		$this->enqueue_assets( true );
 
 		status_header( 200 );
 		nocache_headers();
@@ -200,10 +235,18 @@ class Signa_Frontend {
 	 */
 	public static function get_login_form_html( $args = array() ) {
 		$defaults = array(
-			'title'    => Signa_Helper::get_option( 'form_title', 'ورود / ثبت‌نام' ),
-			'subtitle' => Signa_Helper::get_option( 'form_subtitle', 'برای ادامه، شماره موبایل یا ایمیل خود را وارد کنید.' ),
-			'redirect' => '',
-			'context'  => 'shortcode',
+			'title'              => Signa_Helper::get_option( 'form_title', 'ورود / ثبت‌نام' ),
+			'subtitle'           => Signa_Helper::get_option( 'form_subtitle', 'برای ادامه، شماره موبایل یا ایمیل خود را وارد کنید.' ),
+			'button_text'        => '',
+			'verify_button_text' => '',
+			'redirect'           => '',
+			'primary_color'      => '',
+			'card_bg_color'      => '',
+			'text_color'         => '',
+			'digit_box_style'    => '',
+			'border_radius'      => null,
+			'max_width'          => null,
+			'context'            => 'shortcode',
 		);
 		$args     = wp_parse_args( $args, $defaults );
 
@@ -228,7 +271,9 @@ class Signa_Frontend {
 			array(
 				'title'          => '',
 				'subtitle'       => '',
+				'button_text'    => '',
 				'redirect'       => '',
+				'primary_color'  => '',
 				'show_if_logged' => 'no',
 			),
 			$atts,
@@ -248,12 +293,16 @@ class Signa_Frontend {
 			);
 		}
 
+		$this->enqueue_assets( true );
+
 		return self::get_login_form_html(
 			array(
-				'title'    => $atts['title'],
-				'subtitle' => $atts['subtitle'],
-				'redirect' => $atts['redirect'],
-				'context'  => 'shortcode',
+				'title'         => $atts['title'],
+				'subtitle'      => $atts['subtitle'],
+				'button_text'   => $atts['button_text'],
+				'redirect'      => $atts['redirect'],
+				'primary_color' => $atts['primary_color'],
+				'context'       => 'shortcode',
 			)
 		);
 	}
@@ -287,6 +336,8 @@ class Signa_Frontend {
 				esc_html( $atts['logged_in_text'] )
 			);
 		}
+
+		$this->enqueue_assets( true );
 
 		return sprintf(
 			'<button type="button" class="signa-trigger-btn signa-open-modal %s" style="--signa-primary:%s;">%s</button>',
