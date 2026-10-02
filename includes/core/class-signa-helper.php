@@ -389,7 +389,7 @@ class Signa_Helper {
 		$size      = absint( $size ) ? absint( $size ) : 24;
 		$local_url = SIGNA_OTP_URL . 'assets/images/bale-logo.png?v=' . SIGNA_OTP_VERSION;
 		return sprintf(
-			'<img class="signa-bale-real-logo" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Bale_logo.png" onerror="this.onerror=null;this.src=\'%2$s\';" width="%1$d" height="%1$d" alt="Bale" style="width:%1$dpx !important;height:%1$dpx !important;min-width:%1$dpx;min-height:%1$dpx;max-width:none !important;object-fit:contain !important;display:block !important;flex-shrink:0 !important;border:none !important;box-shadow:none !important;background:transparent !important;filter:drop-shadow(0 0 6px rgba(10,202,155,0.55));" />',
+			'<img class="signa-bale-real-logo" src="%2$s" width="%1$d" height="%1$d" alt="Bale" style="width:%1$dpx !important;height:%1$dpx !important;min-width:%1$dpx;min-height:%1$dpx;max-width:none !important;object-fit:contain !important;display:block !important;flex-shrink:0 !important;border:none !important;box-shadow:none !important;background:transparent !important;filter:drop-shadow(0 0 6px rgba(10,202,155,0.55));" />',
 			$size,
 			esc_url( $local_url )
 		);

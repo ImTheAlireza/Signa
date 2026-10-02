@@ -74,7 +74,7 @@ class Signa_Security {
 
 		return array(
 			'question' => sprintf( 'حاصل جمع %d + %d چند می‌شود؟', $a, $b ),
-			'token'    => base64_encode( $ts . '|' . $sig ),
+			'token'    => $ts . '.' . $sig,
 		);
 	}
 
@@ -99,12 +99,11 @@ class Signa_Security {
 				return new WP_Error( 'signa_captcha_empty', 'لطفاً به سوال امنیتی (کپچا) پاسخ دهید.' );
 			}
 
-			$decoded = base64_decode( $token, true );
-			if ( ! $decoded || strpos( $decoded, '|' ) === false ) {
+			if ( strpos( $token, '.' ) === false ) {
 				return new WP_Error( 'signa_captcha_invalid', 'توکن امنیتی کپچا نامعتبر است.' );
 			}
 
-			list( $ts, $sig ) = explode( '|', $decoded, 2 );
+			list( $ts, $sig ) = explode( '.', $token, 2 );
 			if ( time() - (int) $ts > 900 ) {
 				return new WP_Error( 'signa_captcha_expired', 'سوال امنیتی منقضی شده است. لطفاً دوباره تلاش کنید.' );
 			}
