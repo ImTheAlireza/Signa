@@ -83,11 +83,14 @@ class Signa_Frontend {
 			'33.003'
 		);
 
+		$css_ver = SIGNA_OTP_VERSION . '.' . ( file_exists( SIGNA_OTP_PATH . 'assets/css/frontend.css' ) ? filemtime( SIGNA_OTP_PATH . 'assets/css/frontend.css' ) : '1' );
+		$js_ver  = SIGNA_OTP_VERSION . '.' . ( file_exists( SIGNA_OTP_PATH . 'assets/js/frontend.js' ) ? filemtime( SIGNA_OTP_PATH . 'assets/js/frontend.js' ) : '1' );
+
 		wp_enqueue_style(
 			'signa-otp-frontend',
 			SIGNA_OTP_URL . 'assets/css/frontend.css',
 			array( 'signa-vazirmatn-font' ),
-			SIGNA_OTP_VERSION
+			$css_ver
 		);
 
 		if ( ! self::$inline_css_added ) {
@@ -106,19 +109,21 @@ class Signa_Frontend {
 		$captcha_type = Signa_Helper::get_option( 'captcha_type', 'none' );
 		$site_key     = trim( (string) Signa_Helper::get_option( 'captcha_site_key', '' ) );
 
-		if ( 'arcaptcha' === $captcha_type && ! empty( $site_key ) ) {
-			wp_enqueue_script( 'signa-arcaptcha', 'https://widget.arcaptcha.ir/1/api.js', array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
-		} elseif ( 'turnstile' === $captcha_type && ! empty( $site_key ) ) {
-			wp_enqueue_script( 'signa-turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js', array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
-		} elseif ( 'recaptcha_v3' === $captcha_type && ! empty( $site_key ) ) {
-			wp_enqueue_script( 'signa-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . rawurlencode( $site_key ), array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		if ( ! is_user_logged_in() ) {
+			if ( 'arcaptcha' === $captcha_type && ! empty( $site_key ) ) {
+				wp_enqueue_script( 'signa-arcaptcha', 'https://widget.arcaptcha.ir/1/api.js', array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+			} elseif ( 'turnstile' === $captcha_type && ! empty( $site_key ) ) {
+				wp_enqueue_script( 'signa-turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js', array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+			} elseif ( 'recaptcha_v3' === $captcha_type && ! empty( $site_key ) ) {
+				wp_enqueue_script( 'signa-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . rawurlencode( $site_key ), array(), null, true ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+			}
 		}
 
 		wp_enqueue_script(
 			'signa-otp-frontend',
 			SIGNA_OTP_URL . 'assets/js/frontend.js',
 			array( 'jquery' ),
-			SIGNA_OTP_VERSION,
+			$js_ver,
 			true
 		);
 

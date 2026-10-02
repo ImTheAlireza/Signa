@@ -30,51 +30,51 @@ $bale_mode = isset( $settings['bale_mode'] ) ? $settings['bale_mode'] : 'safir';
 
 							<label class="signa-section-label">روش اتصال به پیام‌رسان بله را انتخاب کنید</label>
 							<div class="signa-choice-grid signa-cols-2">
-								<label class="signa-choice-card <?php echo 'safir' === $bale_mode ? 'selected' : ''; ?>">
+								<label class="signa-choice-card <?php echo 'safir' === $bale_mode ? 'selected' : ''; ?>" style="display:flex;flex-direction:column;align-items:stretch;gap:14px;padding:18px 20px;">
 									<input type="radio" name="signa[bale_mode]" value="safir" <?php checked( $bale_mode, 'safir' ); ?> />
-									<div class="signa-choice-card-top">
-										<div class="signa-flow-icons">
-											<span class="signa-flow-node is-bale" title="سفیر بله">
-												<?php echo Signa_Helper::get_bale_logo_svg( 22 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+									<div class="signa-choice-card-top" style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+										<div class="signa-flow-icons" style="display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:14px;">
+											<span class="signa-flow-node is-bale" title="سفیر بله" style="width:40px;height:40px;padding:8px;box-sizing:border-box;">
+												<?php echo Signa_Helper::get_bale_logo_svg( 24 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 											</span>
 											<span class="signa-flow-sep">
-												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+												<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
 											</span>
-											<span class="signa-flow-node is-phone" title="شماره موبایل">
-												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+											<span class="signa-flow-node is-phone" title="شماره موبایل" style="width:40px;height:40px;padding:8px;box-sizing:border-box;">
+												<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
 											</span>
 										</div>
-										<div class="signa-choice-top-left">
+										<div class="signa-choice-top-left" style="display:inline-flex;align-items:center;gap:8px;">
 											<span class="signa-choice-tag is-green">پیشنهادی</span>
 											<span class="signa-choice-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
 										</div>
 									</div>
-									<div class="signa-choice-body">
-										<strong>سفیر بله (Safir OTP)</strong>
-										<small>ارسال مستقیم کد تایید به شماره موبایل کاربر در بله</small>
+									<div class="signa-choice-body" style="display:flex;flex-direction:column;align-items:flex-start;gap:5px;width:100%;">
+										<strong style="display:block;width:100%;font-size:14.5px;line-height:1.45;">سفیر بله (Safir OTP)</strong>
+										<small style="display:block;width:100%;font-size:12.5px;line-height:1.65;">ارسال مستقیم کد تایید به شماره موبایل کاربر در بله</small>
 									</div>
 								</label>
 
-								<label class="signa-choice-card <?php echo 'bot' === $bale_mode ? 'selected' : ''; ?>">
+								<label class="signa-choice-card <?php echo 'bot' === $bale_mode ? 'selected' : ''; ?>" style="display:flex;flex-direction:column;align-items:stretch;gap:14px;padding:18px 20px;">
 									<input type="radio" name="signa[bale_mode]" value="bot" <?php checked( $bale_mode, 'bot' ); ?> />
-									<div class="signa-choice-card-top">
-										<div class="signa-flow-icons">
-											<span class="signa-flow-node is-bale" title="پیام‌رسان بله">
-												<?php echo Signa_Helper::get_bale_logo_svg( 22 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+									<div class="signa-choice-card-top" style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+										<div class="signa-flow-icons" style="display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:14px;">
+											<span class="signa-flow-node is-bale" title="پیام‌رسان بله" style="width:40px;height:40px;padding:8px;box-sizing:border-box;">
+												<?php echo Signa_Helper::get_bale_logo_svg( 24 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 											</span>
 											<span class="signa-flow-sep">+</span>
-											<span class="signa-flow-node is-sms" title="ربات بله">
-												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg>
+											<span class="signa-flow-node is-sms" title="ربات بله" style="width:40px;height:40px;padding:8px;box-sizing:border-box;">
+												<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg>
 											</span>
 										</div>
-										<div class="signa-choice-top-left">
+										<div class="signa-choice-top-left" style="display:inline-flex;align-items:center;gap:8px;">
 											<span class="signa-choice-tag is-blue">بازوی اختصاصی</span>
 											<span class="signa-choice-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
 										</div>
 									</div>
-									<div class="signa-choice-body">
-										<strong>ربات بله (Bot API)</strong>
-										<small>ارسال پیام از طریق توکن بازوی اختصاصی شما در بله</small>
+									<div class="signa-choice-body" style="display:flex;flex-direction:column;align-items:flex-start;gap:5px;width:100%;">
+										<strong style="display:block;width:100%;font-size:14.5px;line-height:1.45;">ربات بله (Bot API)</strong>
+										<small style="display:block;width:100%;font-size:12.5px;line-height:1.65;">ارسال پیام از طریق توکن بازوی اختصاصی شما در بله</small>
 									</div>
 								</label>
 							</div>

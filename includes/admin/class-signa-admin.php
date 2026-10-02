@@ -98,18 +98,21 @@ class Signa_Admin {
 			'33.003'
 		);
 
+		$css_ver = SIGNA_OTP_VERSION . '.' . ( file_exists( SIGNA_OTP_PATH . 'assets/css/admin.css' ) ? filemtime( SIGNA_OTP_PATH . 'assets/css/admin.css' ) : '1' );
+		$js_ver  = SIGNA_OTP_VERSION . '.' . ( file_exists( SIGNA_OTP_PATH . 'assets/js/admin.js' ) ? filemtime( SIGNA_OTP_PATH . 'assets/js/admin.js' ) : '1' );
+
 		wp_enqueue_style(
 			'signa-otp-admin',
 			SIGNA_OTP_URL . 'assets/css/admin.css',
 			array(),
-			SIGNA_OTP_VERSION
+			$css_ver
 		);
 
 		wp_enqueue_script(
 			'signa-otp-admin',
 			SIGNA_OTP_URL . 'assets/js/admin.js',
 			array( 'jquery' ),
-			SIGNA_OTP_VERSION,
+			$js_ver,
 			true
 		);
 

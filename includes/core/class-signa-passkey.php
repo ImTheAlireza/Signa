@@ -555,6 +555,10 @@ class Signa_Passkey {
 			return '';
 		}
 
+		if ( class_exists( 'Signa_Frontend' ) ) {
+			Signa_Frontend::instance()->enqueue_assets( true );
+		}
+
 		$user_id  = get_current_user_id();
 		$passkeys = self::get_user_passkeys( $user_id );
 

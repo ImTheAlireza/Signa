@@ -384,11 +384,11 @@ class Signa_Helper {
 	 * @param int $size Width/Height in px.
 	 * @return string SVG markup.
 	 */
-	public static function get_bale_logo_svg( $size = 20 ) {
-		$size = absint( $size ) ? absint( $size ) : 20;
+	public static function get_bale_logo_svg( $size = 24 ) {
+		$size = absint( $size ) ? absint( $size ) : 24;
 		$uid  = 'baleGrad_' . wp_rand( 100, 99999 );
 		return sprintf(
-			'<svg class="signa-bale-real-logo" width="%1$d" height="%1$d" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="%2$s" x1="20.5" y1="3.5" x2="3.5" y2="20.5" gradientUnits="userSpaceOnUse"><stop offset="0%%" stop-color="#32ECC0"/><stop offset="50%%" stop-color="#13B997"/><stop offset="100%%" stop-color="#253070"/></linearGradient></defs><path d="M3.4 12.6V4.7C3.4 3.6 4.6 3.1 5.5 3.8L7.9 5.5A8.6 8.6 0 1 1 3.4 12.6Z" fill="url(#%2$s)"/><path d="M8.3 12.7L11.0 15.4L16.2 10.1" stroke="#FFFFFF" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+			'<svg class="signa-bale-real-logo" width="%1$d" height="%1$d" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="%2$s" x1="20.5" y1="3.5" x2="3.5" y2="20.5" gradientUnits="userSpaceOnUse"><stop offset="0%%" stop-color="#2CEBBF"/><stop offset="48%%" stop-color="#14B897"/><stop offset="100%%" stop-color="#273273"/></linearGradient></defs><path d="M3.4 12.4V4.3C3.4 3.2 4.6 2.7 5.5 3.4L8.2 5.4A8.8 8.8 0 1 1 3.4 12.4Z" fill="url(#%2$s)"/><path d="M8.3 12.5L11.1 15.3L16.3 10.1" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
 			$size,
 			esc_attr( $uid )
 		);
