@@ -1,0 +1,677 @@
+/**
+ * Signa OTP Frontend Styles (v2.4.0 - High-Performance RTL UI, Vazirmatn & Micro-Interactions)
+ */
+
+.signa-otp-wrapper {
+	--signa-primary: #2563eb;
+	--signa-bg: #ffffff;
+	--signa-text: #111827;
+	--signa-muted: #6b7280;
+	--signa-border: #d1d5db;
+	--signa-radius: 16px;
+	direction: rtl;
+	text-align: right;
+	font-family: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif !important;
+	max-width: 420px;
+	margin: 24px auto;
+	box-sizing: border-box;
+}
+
+.signa-otp-wrapper *,
+.signa-otp-wrapper *::before,
+.signa-otp-wrapper *::after,
+.signa-otp-wrapper button,
+.signa-otp-wrapper input,
+.signa-otp-wrapper select,
+.signa-otp-wrapper textarea {
+	box-sizing: border-box;
+	font-family: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.signa-otp-card {
+	background: var(--signa-bg);
+	color: var(--signa-text);
+	border: 1px solid rgba(156, 163, 175, 0.25);
+	border-radius: var(--signa-radius);
+	padding: 32px 28px;
+	box-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.07), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+}
+
+.signa-otp-header {
+	text-align: center;
+	margin-bottom: 24px;
+}
+
+.signa-otp-custom-logo {
+	margin-bottom: 14px;
+}
+
+.signa-otp-custom-logo img {
+	max-height: 58px;
+	width: auto;
+	display: inline-block;
+}
+
+.signa-otp-icon-badge {
+	width: 56px;
+	height: 56px;
+	border-radius: 16px;
+	background: linear-gradient(135deg, rgba(37, 99, 235, 0.14), rgba(59, 130, 246, 0.06));
+	border: 1px solid rgba(37, 99, 235, 0.16);
+	color: var(--signa-primary);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 12px;
+}
+
+.signa-step-badge-wrap {
+	margin-bottom: 10px;
+}
+
+.signa-step-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 3px 11px;
+	border-radius: 99px;
+	font-size: 11.5px;
+	font-weight: 700;
+	background: rgba(37, 99, 235, 0.09);
+	color: var(--signa-primary);
+}
+
+.signa-otp-title {
+	margin: 0 0 8px 0;
+	font-size: 20px;
+	font-weight: 800;
+	color: var(--signa-text);
+}
+
+.signa-otp-subtitle {
+	margin: 0;
+	font-size: 13.5px;
+	line-height: 1.7;
+	color: var(--signa-muted);
+}
+
+.signa-otp-alert {
+	padding: 12px 14px;
+	border-radius: 10px;
+	font-size: 13px;
+	line-height: 1.6;
+	margin-bottom: 18px;
+}
+
+.signa-otp-alert.is-error {
+	background-color: #fef2f2;
+	border: 1px solid #fecaca;
+	color: #b91c1c;
+}
+
+.signa-otp-alert.is-success {
+	background-color: #f0fdf4;
+	border: 1px solid #bbf7d0;
+	color: #15803d;
+}
+
+.signa-otp-alert.is-info {
+	background-color: #eff6ff;
+	border: 1px solid #bfdbfe;
+	color: #1e40af;
+}
+
+.signa-field-group {
+	margin-bottom: 18px;
+}
+
+.signa-label {
+	display: block;
+	font-size: 13.5px;
+	font-weight: 600;
+	color: var(--signa-text);
+	opacity: 0.9;
+	margin-bottom: 8px;
+	text-align: right;
+}
+
+.signa-req-badge {
+	font-size: 11px;
+	color: var(--signa-muted);
+	font-weight: 400;
+}
+
+.signa-otp-wrapper input.signa-input {
+	width: 100% !important;
+	height: 48px !important;
+	padding: 0 16px !important;
+	margin: 0 !important;
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 14.5px !important;
+	line-height: 46px !important;
+	border: 1.5px solid var(--signa-border) !important;
+	border-radius: calc(var(--signa-radius) * 0.68) !important;
+	background-color: #f8fafc !important;
+	color: #0f172a !important;
+	transition: all 0.2s ease;
+	outline: none !important;
+	text-align: right !important;
+	box-shadow: none;
+}
+
+/* Right-aligned RTL placeholders so Persian text & punctuation render properly on the right */
+.signa-otp-wrapper input.signa-input:placeholder-shown {
+	direction: rtl !important;
+	text-align: right !important;
+}
+
+.signa-otp-wrapper input.signa-input::placeholder {
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 13.5px !important;
+	color: #94a3b8 !important;
+	direction: rtl !important;
+	text-align: right !important;
+	opacity: 1;
+}
+
+.signa-otp-wrapper input.signa-input:focus {
+	background-color: #ffffff !important;
+	border-color: var(--signa-primary) !important;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14) !important;
+}
+
+.signa-terms-row {
+	font-size: 12px;
+	color: var(--signa-muted);
+	margin-bottom: 16px;
+	line-height: 1.6;
+	text-align: center;
+}
+
+.signa-terms-row a {
+	color: var(--signa-primary);
+	text-decoration: underline;
+}
+
+.signa-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	height: 48px;
+	padding: 0 20px;
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 15px;
+	font-weight: 700;
+	border-radius: calc(var(--signa-radius) * 0.68);
+	border: none;
+	cursor: pointer;
+	transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+	text-decoration: none;
+}
+
+.signa-btn-primary {
+	background-color: var(--signa-primary);
+	color: #ffffff !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+}
+
+.signa-btn-primary:hover {
+	opacity: 0.93;
+}
+
+.signa-btn-primary:disabled {
+	opacity: 0.65;
+	cursor: not-allowed;
+}
+
+.signa-btn-outline {
+	background: transparent;
+	border: 1.5px solid var(--signa-border);
+	color: var(--signa-text);
+}
+
+.signa-btn-sm {
+	width: auto;
+	height: 38px;
+	font-size: 13px;
+	padding: 0 14px;
+	background-color: var(--signa-primary);
+	color: #ffffff;
+}
+
+.signa-alt-action {
+	margin-top: 16px;
+	text-align: center;
+}
+
+/* Recipient display bar in Step 2 */
+.signa-recipient-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #f8fafc;
+	border: 1px solid #e2e8f0;
+	padding: 10px 14px;
+	border-radius: 12px;
+	margin-bottom: 18px;
+	font-size: 13px;
+}
+
+.signa-recipient-meta {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.signa-channel-pill {
+	font-size: 12px;
+	color: #64748b;
+	font-weight: 500;
+}
+
+.signa-recipient-display {
+	font-weight: 800;
+	color: #0f172a;
+	background: #ffffff;
+	padding: 2px 8px;
+	border-radius: 6px;
+	border: 1px solid #e2e8f0;
+}
+
+.signa-btn-link {
+	background: none;
+	border: none;
+	padding: 0;
+	color: var(--signa-primary);
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 13.5px;
+	font-weight: 700;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.signa-btn-link:hover {
+	text-decoration: underline;
+}
+
+/* Segmented OTP Digit Boxes */
+.signa-otp-digits {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	direction: ltr;
+}
+
+.signa-digit-box {
+	width: 48px;
+	height: 54px;
+	text-align: center !important;
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 20px;
+	font-weight: 700;
+	border: 1.5px solid var(--signa-border);
+	border-radius: 11px;
+	background-color: #f9fafb;
+	color: #111827;
+	transition: all 0.18s ease;
+	outline: none;
+	padding: 0;
+}
+
+.signa-digit-style-underline .signa-digit-box {
+	border: none;
+	border-bottom: 2.5px solid var(--signa-border);
+	border-radius: 0;
+	background: transparent;
+	color: var(--signa-text);
+}
+
+.signa-digit-style-pill .signa-digit-box {
+	border-radius: 99px;
+}
+
+.signa-digit-box:focus {
+	background-color: #ffffff;
+	border-color: var(--signa-primary);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
+	transform: translateY(-1px);
+}
+
+.signa-digit-box.is-filled {
+	background-color: #ffffff;
+	border-color: var(--signa-primary);
+}
+
+.signa-otp-digits.signa-shake {
+	animation: signaShake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.signa-otp-digits.signa-shake .signa-digit-box {
+	border-color: #ef4444;
+	background-color: #fef2f2;
+	color: #b91c1c;
+}
+
+@keyframes signaShake {
+	10%, 90% { transform: translate3d(-2px, 0, 0); }
+	20%, 80% { transform: translate3d(4px, 0, 0); }
+	30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+	40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+.signa-digit-style-underline .signa-digit-box:focus {
+	background: transparent;
+	box-shadow: none;
+	border-bottom-color: var(--signa-primary);
+}
+
+/* Resend & Countdown Row */
+.signa-resend-row {
+	margin-top: 18px;
+	text-align: center;
+	font-size: 13px;
+	color: var(--signa-muted);
+}
+
+/* Loading Spinner */
+.signa-spinner {
+	width: 18px;
+	height: 18px;
+	border: 2.5px solid rgba(255, 255, 255, 0.35);
+	border-top-color: #ffffff;
+	border-radius: 50%;
+	display: inline-block;
+	animation: signaSpin 0.7s linear infinite;
+}
+
+@keyframes signaSpin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Trigger Button */
+.signa-trigger-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 9px 18px;
+	border-radius: 9px;
+	background-color: var(--signa-primary, #2563eb);
+	color: #ffffff !important;
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 14px;
+	font-weight: 700;
+	border: none;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+/* Global Modal Overlay */
+.signa-modal-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(17, 24, 39, 0.6);
+	backdrop-filter: blur(3px);
+	z-index: 999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+}
+
+.signa-modal-dialog {
+	position: relative;
+	width: 100%;
+	max-width: 420px;
+}
+
+.signa-modal-dialog .signa-otp-wrapper {
+	margin: 0;
+}
+
+.signa-modal-close {
+	position: absolute;
+	top: 14px;
+	left: 14px;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	border: none;
+	background: #f3f4f6;
+	color: #4b5563;
+	font-size: 20px;
+	line-height: 1;
+	cursor: pointer;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.signa-modal-close:hover {
+	background: #e5e7eb;
+	color: #111827;
+}
+
+/* WooCommerce Checkout Banner */
+.signa-wc-checkout-banner {
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 16px 20px;
+	margin-bottom: 24px;
+	font-family: 'Vazirmatn', Tahoma, sans-serif;
+}
+
+.signa-wc-checkout-notice {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+	font-size: 14px;
+}
+
+.signa-logged-actions {
+	display: flex;
+	gap: 10px;
+	margin-top: 16px;
+}
+
+/* ==========================================
+   BIOMETRIC PASSKEY LOGIN (WebAuthn / FIDO2)
+   ========================================== */
+.signa-passkey-login-wrap {
+	margin-top: 14px;
+}
+
+.signa-passkey-divider {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	margin: 12px 0;
+	color: #94a3b8;
+	font-size: 11.5px;
+	font-weight: 600;
+}
+
+.signa-passkey-divider::before,
+.signa-passkey-divider::after {
+	content: '';
+	flex: 1;
+	border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.signa-passkey-divider span {
+	padding: 0 10px;
+}
+
+.signa-btn-passkey {
+	background: rgba(16, 185, 129, 0.1) !important;
+	color: #059669 !important;
+	border: 1.5px solid rgba(16, 185, 129, 0.35) !important;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: 100%;
+	height: 46px;
+	border-radius: calc(var(--signa-radius, 16px) * 0.68);
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 13.5px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.signa-btn-passkey:hover {
+	background: rgba(16, 185, 129, 0.18) !important;
+	border-color: #10b981 !important;
+	transform: translateY(-1px);
+	box-shadow: 0 6px 16px -4px rgba(16, 185, 129, 0.25);
+}
+
+.signa-pk-enroll-icon {
+	width: 58px;
+	height: 58px;
+	border-radius: 16px;
+	background: rgba(16, 185, 129, 0.14);
+	color: #10b981;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 6px;
+	box-shadow: 0 0 18px rgba(16, 185, 129, 0.25);
+}
+
+/* Passkey Account Manager Card (WooCommerce My Account & Shortcode) */
+.signa-passkey-account-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 16px;
+	padding: 20px 22px;
+	margin: 20px 0;
+	font-family: 'Vazirmatn', Tahoma, sans-serif;
+	box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.05);
+}
+
+.signa-pk-card-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 14px;
+}
+
+.signa-pk-card-title {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.signa-pk-badge-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	background: rgba(16, 185, 129, 0.14);
+	color: #10b981;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.signa-pk-card-title h4 {
+	margin: 0 0 3px 0;
+	font-size: 15px;
+	font-weight: 800;
+	color: #0f172a;
+}
+
+.signa-pk-card-title p {
+	margin: 0;
+	font-size: 12.5px;
+	color: #64748b;
+}
+
+.signa-btn-register-passkey {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 9px 16px;
+	border-radius: 10px;
+	background: #10b981;
+	color: #ffffff !important;
+	border: none;
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 13px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.18s ease;
+}
+
+.signa-btn-register-passkey:hover {
+	background: #059669;
+}
+
+.signa-pk-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-top: 16px;
+	padding-top: 14px;
+	border-top: 1px solid #f1f5f9;
+}
+
+.signa-pk-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 14px;
+	border-radius: 10px;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+}
+
+.signa-pk-item-info strong {
+	display: block;
+	font-size: 13px;
+	color: #0f172a;
+}
+
+.signa-pk-item-info small {
+	font-size: 11.5px;
+	color: #64748b;
+}
+
+.signa-pk-delete-btn {
+	background: rgba(239, 68, 68, 0.1);
+	color: #ef4444;
+	border: 1px solid rgba(239, 68, 68, 0.25);
+	padding: 4px 12px;
+	border-radius: 7px;
+	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-size: 12px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.signa-pk-empty {
+	margin: 14px 0 0 0;
+	font-size: 12.5px;
+	color: #94a3b8;
+}
+
+@media (max-width: 480px) {
+	.signa-otp-card {
+		padding: 24px 18px;
+	}
+	.signa-digit-box {
+		width: 42px;
+		height: 48px;
+		font-size: 18px;
+	}
+}
