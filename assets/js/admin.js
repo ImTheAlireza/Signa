@@ -172,6 +172,14 @@
 			}
 		});
 
+		$('#enable_passkey').on('change', function () {
+			if ($(this).is(':checked')) {
+				$('#signa-passkey-extra-wrap').slideDown(180);
+			} else {
+				$('#signa-passkey-extra-wrap').slideUp(180);
+			}
+		});
+
 		$('input[name="signa[redirect_behavior]"], #redirect_behavior').on('change', function () {
 			if ($(this).val() === 'custom') {
 				$('#signa-custom-redirect-wrap').slideDown(180);
@@ -215,7 +223,7 @@
 		$('#signa_quick_sms_test_btn').on('click', function () {
 			var phone = ($('#signa_quick_sms_test_phone').val() || '').trim();
 			if (!phone) {
-				showToast('لطفاً شماره موبایل مقصد را برای تست وارد کنید.', 'error');
+				showToast('لطفاً شماره موبایل مقصد را برای تست وارد کنید.', true);
 				$('#signa_quick_sms_test_phone').trigger('focus');
 				return;
 			}
@@ -223,26 +231,33 @@
 			var origHtml = $btn.html();
 			$btn.prop('disabled', true).html('<span>در حال ذخیره و ارسال...</span>');
 
-			var formData = $form.serialize();
-			$.post(
-				signaAdmin.ajaxUrl,
-				formData + '&action=signa_ajax_save_settings&nonce=' + encodeURIComponent(signaAdmin.nonce)
-			).always(function () {
-				$.post(signaAdmin.ajaxUrl, {
-					action: 'signa_admin_test_otp',
-					nonce: signaAdmin.nonce,
+			var rawArray = $('#signa-settings-form').serializeArray();
+			var formData = [];
+			for (var i = 0; i < rawArray.length; i++) {
+				if (rawArray[i].name !== 'signa_save_settings' && rawArray[i].name !== 'signa_settings_nonce') {
+					formData.push(rawArray[i]);
+				}
+			}
+			formData.push({ name: 'action', value: 'signa_admin_save_settings' });
+			formData.push({ name: 'nonce', value: signaAdminParams.nonce });
+
+			$.post(signaAdminParams.ajaxUrl, $.param(formData)).always(function () {
+				$.post(signaAdminParams.ajaxUrl, {
+					action: 'signa_admin_test_gateway',
+					nonce: signaAdminParams.nonce,
 					recipient: phone,
-					channel: 'sms'
+					channel: 'sms',
+					gateway_id: $('#active_sms_gateway').val() || ''
 				})
 					.done(function (res) {
 						if (res && res.success) {
-							showToast((res.data && res.data.message) || 'پیامک تست با موفقیت ارسال شد!', 'success');
+							showToast('✅ ' + ((res.data && res.data.message) || 'پیامک تست با موفقیت ارسال شد!'), false);
 						} else {
-							showToast((res && res.data && res.data.message) || 'خطا در ارسال پیامک تست.', 'error');
+							showToast('❌ ' + ((res && res.data && res.data.message) || 'خطا در ارسال پیامک تست.'), true);
 						}
 					})
 					.fail(function () {
-						showToast('خطا در ارتباط با سرور هنگام ارسال تست.', 'error');
+						showToast('❌ خطا در ارتباط با سرور هنگام ارسال تست.', true);
 					})
 					.always(function () {
 						$btn.prop('disabled', false).html(origHtml);

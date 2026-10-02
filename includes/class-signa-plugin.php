@@ -56,6 +56,7 @@ final class Signa_Plugin {
 		Signa_Activator::maybe_upgrade();
 
 		Signa_Auth::instance();
+		new Signa_Passkey();
 		Signa_Frontend::instance();
 		Signa_WooCommerce::instance();
 

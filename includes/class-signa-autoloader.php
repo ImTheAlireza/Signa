@@ -21,6 +21,7 @@ class Signa_Autoloader {
 		'Signa_Activator'           => 'includes/core/class-signa-activator.php',
 		'Signa_Helper'              => 'includes/core/class-signa-helper.php',
 		'Signa_Security'            => 'includes/core/class-signa-security.php',
+		'Signa_Passkey'             => 'includes/core/class-signa-passkey.php',
 		'Signa_Logger'              => 'includes/core/class-signa-logger.php',
 		'Signa_Auth'                => 'includes/services/class-signa-auth.php',
 		'Signa_Frontend'            => 'includes/services/class-signa-frontend.php',

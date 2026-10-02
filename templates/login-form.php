@@ -23,6 +23,9 @@ $logo_url         = trim( (string) Signa_Helper::get_option( 'logo_url', '' ) );
 $raw_max_width    = isset( $args['max_width'] ) && null !== $args['max_width'] ? absint( $args['max_width'] ) : absint( Signa_Helper::get_option( 'form_max_width', 420 ) );
 $max_width        = max( 320, min( 640, $raw_max_width ) );
 $allow_password   = (bool) Signa_Helper::get_option( 'allow_password_login', 0 );
+$enable_passkey   = (bool) Signa_Helper::get_option( 'enable_passkey', 1 );
+$passkey_prompt   = (bool) Signa_Helper::get_option( 'passkey_prompt_after_otp', 1 );
+$passkey_btn_text = Signa_Helper::get_option( 'passkey_btn_text', 'ورود سریع با اثر انگشت / چهره (Passkey)' );
 $show_terms       = (bool) Signa_Helper::get_option( 'show_terms_checkbox', 0 );
 $terms_text       = Signa_Helper::get_option( 'terms_text', 'ورود و ثبت‌نام شما به معنای پذیرش قوانین و مقررات سایت است.' );
 $terms_url        = trim( (string) Signa_Helper::get_option( 'terms_url', '' ) );
@@ -63,7 +66,7 @@ $inline_vars = sprintf(
 	$max_width
 );
 ?>
-<div class="signa-otp-wrapper signa-digit-style-<?php echo esc_attr( $digit_box_style ); ?>" dir="rtl" style="<?php echo esc_attr( $inline_vars ); ?>" data-otp-length="<?php echo esc_attr( (string) $otp_length ); ?>" data-redirect="<?php echo esc_url( $redirect_to ); ?>" data-context="<?php echo esc_attr( $context ); ?>">
+<div class="signa-otp-wrapper signa-digit-style-<?php echo esc_attr( $digit_box_style ); ?>" dir="rtl" style="<?php echo esc_attr( $inline_vars ); ?>" data-otp-length="<?php echo esc_attr( (string) $otp_length ); ?>" data-redirect="<?php echo esc_url( $redirect_to ); ?>" data-context="<?php echo esc_attr( $context ); ?>" data-passkey-prompt="<?php echo $enable_passkey && $passkey_prompt ? '1' : '0'; ?>">
 	<div class="signa-otp-card">
 		<div class="signa-otp-header">
 			<?php if ( ! empty( $logo_url ) ) : ?>
@@ -98,7 +101,7 @@ $inline_vars = sprintf(
 						class="signa-input signa-identifier-input"
 						placeholder="<?php echo esc_attr( $input_placeholder ); ?>"
 						dir="rtl"
-						autocomplete="username"
+						autocomplete="username webauthn"
 						required
 					/>
 				</div>
@@ -134,6 +137,17 @@ $inline_vars = sprintf(
 				<span class="signa-btn-text"><?php echo esc_html( $btn_text ); ?></span>
 				<span class="signa-spinner" style="display:none;"></span>
 			</button>
+
+			<?php if ( $enable_passkey ) : ?>
+				<div class="signa-passkey-login-wrap" style="display:none;">
+					<div class="signa-passkey-divider"><span>یا ورود بدون پیامک</span></div>
+					<button type="button" class="signa-btn signa-btn-passkey signa-trigger-passkey-login">
+						<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4"/><path d="M5 19.5C5.5 18 6 15 6 12c0-.7.12-1.37.34-2"/><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M8.65 22c.21-.66.45-1.32.57-2"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M9 6.8a6 6 0 0 1 9 5.2c0 .47 0 1.17-.02 2"/></svg>
+						<span class="signa-btn-text"><?php echo esc_html( $passkey_btn_text ); ?></span>
+						<span class="signa-spinner" style="display:none;"></span>
+					</button>
+				</div>
+			<?php endif; ?>
 
 			<?php if ( $allow_password ) : ?>
 				<div class="signa-alt-action">
@@ -225,6 +239,28 @@ $inline_vars = sprintf(
 					</button>
 				</div>
 			</form>
+		<?php endif; ?>
+
+		<?php if ( $enable_passkey && $passkey_prompt ) : ?>
+			<!-- Optional Step 4: Post-Login 1-Click Biometric Passkey Enrollment Prompt -->
+			<div class="signa-otp-form signa-step-passkey-enroll" style="display:none;text-align:center;">
+				<div class="signa-pk-enroll-icon">
+					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4"/><path d="M5 19.5C5.5 18 6 15 6 12c0-.7.12-1.37.34-2"/><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M8.65 22c.21-.66.45-1.32.57-2"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M9 6.8a6 6 0 0 1 9 5.2c0 .47 0 1.17-.02 2"/></svg>
+				</div>
+				<h4 style="margin:8px 0 6px 0;font-size:16px;font-weight:800;">ورود بعدی فقط با اثر انگشت یا چهره!</h4>
+				<p style="margin:0 0 16px 0;font-size:13px;opacity:0.8;line-height:1.6;">
+					می‌خواهید این دستگاه را ثبت کنید تا دفعات بعد بدون صبر کردن برای پیامک، در ۱ ثانیه وارد شوید؟
+				</p>
+				<button type="button" class="signa-btn signa-btn-primary signa-enroll-passkey-now">
+					<span class="signa-btn-text">فعال‌سازی ورود بیومتریک (Passkey)</span>
+					<span class="signa-spinner" style="display:none;"></span>
+				</button>
+				<div class="signa-alt-action" style="margin-top:12px;">
+					<button type="button" class="signa-btn-link signa-skip-passkey-enroll">
+						فعلاً نه، ادامه و ورود به سایت &larr;
+					</button>
+				</div>
+			</div>
 		<?php endif; ?>
 	</div>
 </div>

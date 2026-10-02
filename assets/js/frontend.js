@@ -24,6 +24,30 @@
 		return (mins < 10 ? '0' + mins : mins) + ':' + (secs < 10 ? '0' + secs : secs);
 	}
 
+	function base64urlToUint8Array(base64url) {
+		var padding = '='.repeat((4 - (base64url.length % 4)) % 4);
+		var base64 = (base64url + padding).replace(/-/g, '+').replace(/_/g, '/');
+		var rawData = window.atob(base64);
+		var outputArray = new Uint8Array(rawData.length);
+		for (var i = 0; i < rawData.length; ++i) {
+			outputArray[i] = rawData.charCodeAt(i);
+		}
+		return outputArray;
+	}
+
+	function bufferToBase64url(buffer) {
+		var bytes = new Uint8Array(buffer);
+		var str = '';
+		for (var i = 0; i < bytes.byteLength; i++) {
+			str += String.fromCharCode(bytes[i]);
+		}
+		return window.btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+	}
+
+	function isWebAuthnSupported() {
+		return typeof window !== 'undefined' && typeof window.PublicKeyCredential !== 'undefined' && navigator.credentials;
+	}
+
 	function initOtpWrapper($wrapper) {
 		if ($wrapper.data('signa-initialized')) {
 			return;
@@ -383,13 +407,27 @@
 				.done(function (res) {
 					if (res && res.success) {
 						showAlert(res.data.message, 'success');
-						setTimeout(function () {
-							if (res.data.redirect_to) {
-								window.location.href = res.data.redirect_to;
-							} else {
-								window.location.reload();
-							}
-						}, 600);
+						var finalUrl = res.data.redirect_to || window.location.href;
+						var $enrollStep = $wrapper.find('.signa-step-passkey-enroll');
+						var shouldPromptPasskey =
+							$wrapper.attr('data-passkey-prompt') === '1' &&
+							isWebAuthnSupported() &&
+							$enrollStep.length > 0 &&
+							window.localStorage.getItem('signa_pk_enrolled') !== '1';
+
+						if (shouldPromptPasskey) {
+							$stepVerify.hide();
+							$enrollStep.attr('data-final-url', finalUrl).fadeIn(200);
+							setLoading($verifyBtn, false);
+						} else {
+							setTimeout(function () {
+								if (res.data.redirect_to) {
+									window.location.href = res.data.redirect_to;
+								} else {
+									window.location.reload();
+								}
+							}, 600);
+						}
 					} else {
 						var errMsg = res && res.data && res.data.message ? res.data.message : signaOtpParams.i18n.networkError;
 						showAlert(errMsg, 'error');
@@ -471,6 +509,201 @@
 					setLoading($pwBtn, false);
 				});
 		});
+
+		// Biometric Passkey (WebAuthn) Login & Post-OTP Enrollment
+		if (isWebAuthnSupported()) {
+			$wrapper.find('.signa-passkey-login-wrap').show();
+		}
+
+		$wrapper.find('.signa-trigger-passkey-login').on('click', function () {
+			if (!isWebAuthnSupported()) {
+				showAlert('مرورگر یا دستگاه شما از ورود بیومتریک (Passkey) پشتیبانی نمی‌کند.', 'error');
+				return;
+			}
+			var $pkBtn = $(this);
+			hideAlert();
+			setLoading($pkBtn, true);
+
+			$.post(signaOtpParams.ajaxUrl, {
+				action: 'signa_passkey_login_options',
+				nonce: signaOtpParams.nonce,
+				identifier: toEnglishDigits($identifierInput.val()).trim()
+			})
+				.done(function (res) {
+					if (!res || !res.success || !res.data) {
+						showAlert((res && res.data && res.data.message) || 'خطا در شروع ورود بیومتریک.', 'error');
+						setLoading($pkBtn, false);
+						return;
+					}
+					var opts = res.data;
+					var publicKey = {
+						challenge: base64urlToUint8Array(opts.challenge),
+						rpId: opts.rpId,
+						timeout: opts.timeout || 60000,
+						userVerification: opts.userVerification || 'preferred'
+					};
+					if (opts.allowCredentials && opts.allowCredentials.length) {
+						publicKey.allowCredentials = opts.allowCredentials.map(function (c) {
+							return {
+								type: 'public-key',
+								id: base64urlToUint8Array(c.id)
+							};
+						});
+					}
+
+					navigator.credentials
+						.get({ publicKey: publicKey })
+						.then(function (assertion) {
+							return $.post(signaOtpParams.ajaxUrl, {
+								action: 'signa_passkey_login_verify',
+								nonce: signaOtpParams.nonce,
+								credential_id: bufferToBase64url(assertion.rawId),
+								client_data_json: bufferToBase64url(assertion.response.clientDataJSON),
+								authenticator_data: bufferToBase64url(assertion.response.authenticatorData),
+								signature: bufferToBase64url(assertion.response.signature),
+								redirect_to: redirectTo
+							});
+						})
+						.then(function (verifyRes) {
+							if (verifyRes && verifyRes.success) {
+								try {
+									window.localStorage.setItem('signa_pk_enrolled', '1');
+								} catch (e) {}
+								showAlert(verifyRes.data.message || 'ورود بیومتریک موفق!', 'success');
+								setTimeout(function () {
+									window.location.href = verifyRes.data.redirect || window.location.href;
+								}, 500);
+							} else {
+								showAlert((verifyRes && verifyRes.data && verifyRes.data.message) || 'تایید بیومتریک ناموفق بود.', 'error');
+								setLoading($pkBtn, false);
+							}
+						})
+						.catch(function (err) {
+							setLoading($pkBtn, false);
+							if (err && err.name !== 'NotAllowedError') {
+								showAlert('خطا در خواندن کلید بیومتریک دستگاه.', 'error');
+							}
+						});
+				})
+				.fail(function () {
+					showAlert(signaOtpParams.i18n.networkError, 'error');
+					setLoading($pkBtn, false);
+				});
+		});
+
+		$wrapper.find('.signa-skip-passkey-enroll').on('click', function () {
+			var finalUrl = $wrapper.find('.signa-step-passkey-enroll').attr('data-final-url');
+			window.location.href = finalUrl || window.location.href;
+		});
+
+		$wrapper.find('.signa-enroll-passkey-now').on('click', function () {
+			var $btn = $(this);
+			var finalUrl = $wrapper.find('.signa-step-passkey-enroll').attr('data-final-url');
+			setLoading($btn, true);
+			enrollPasskeyDevice(
+				function (msg) {
+					showAlert(msg || 'ورود بیومتریک فعال شد!', 'success');
+					setTimeout(function () {
+						window.location.href = finalUrl || window.location.href;
+					}, 700);
+				},
+				function (errMsg) {
+					setLoading($btn, false);
+					showAlert(errMsg || 'امکان ثبت کلید بیومتریک وجود نداشت.', 'error');
+				}
+			);
+		});
+	}
+
+	function enrollPasskeyDevice(onSuccess, onError) {
+		if (!isWebAuthnSupported()) {
+			onError('مرورگر شما از استاندارد بیومتریک WebAuthn پشتیبانی نمی‌کند.');
+			return;
+		}
+		$.post(signaOtpParams.ajaxUrl, {
+			action: 'signa_passkey_register_options',
+			nonce: signaOtpParams.nonce
+		})
+			.done(function (res) {
+				if (!res || !res.success || !res.data) {
+					onError((res && res.data && res.data.message) || 'خطا در دریافت تنظیمات Passkey.');
+					return;
+				}
+				var opts = res.data;
+				var publicKey = {
+					rp: opts.rp,
+					user: {
+						id: base64urlToUint8Array(opts.user.id),
+						name: opts.user.name,
+						displayName: opts.user.displayName
+					},
+					challenge: base64urlToUint8Array(opts.challenge),
+					pubKeyCredParams: opts.pubKeyCredParams,
+					timeout: opts.timeout || 60000,
+					authenticatorSelection: opts.authenticatorSelection,
+					attestation: opts.attestation || 'none'
+				};
+				if (opts.excludeCredentials && opts.excludeCredentials.length) {
+					publicKey.excludeCredentials = opts.excludeCredentials.map(function (c) {
+						return {
+							type: 'public-key',
+							id: base64urlToUint8Array(c.id)
+						};
+					});
+				}
+
+				navigator.credentials
+					.create({ publicKey: publicKey })
+					.then(function (cred) {
+						var spkiB64 = '';
+						var alg = -7;
+						if (cred.response && typeof cred.response.getPublicKey === 'function') {
+							var spkiBuf = cred.response.getPublicKey();
+							if (spkiBuf) {
+								spkiB64 = bufferToBase64url(spkiBuf);
+							}
+						}
+						if (cred.response && typeof cred.response.getPublicKeyAlgorithm === 'function') {
+							alg = cred.response.getPublicKeyAlgorithm();
+						}
+						var authDataB64 = '';
+						if (cred.response && typeof cred.response.getAuthenticatorData === 'function') {
+							authDataB64 = bufferToBase64url(cred.response.getAuthenticatorData());
+						}
+
+						return $.post(signaOtpParams.ajaxUrl, {
+							action: 'signa_passkey_register_verify',
+							nonce: signaOtpParams.nonce,
+							credential_id: bufferToBase64url(cred.rawId),
+							client_data_json: bufferToBase64url(cred.response.clientDataJSON),
+							authenticator_data: authDataB64,
+							public_key_spki: spkiB64,
+							public_key_alg: alg
+						});
+					})
+					.then(function (verifyRes) {
+						if (verifyRes && verifyRes.success) {
+							try {
+								window.localStorage.setItem('signa_pk_enrolled', '1');
+							} catch (e) {}
+							onSuccess(verifyRes.data.message);
+						} else {
+							onError((verifyRes && verifyRes.data && verifyRes.data.message) || 'خطا در ذخیره کلید بیومتریک.');
+						}
+					})
+					.catch(function (err) {
+						if (err && err.name === 'InvalidStateError') {
+							onError('این دستگاه قبلاً برای حساب شما ثبت شده است.');
+						} else if (err && err.name === 'NotAllowedError') {
+							onError('عملیات تایید بیومتریک توسط شما لغو شد.');
+						} else {
+							onError('خطا در ثبت بیومتریک دستگاه.');
+						}
+					});
+			})
+			.fail(function () {
+				onError(signaOtpParams.i18n.networkError);
+			});
 	}
 
 	$(function () {
@@ -505,6 +738,45 @@
 
 		$(document).on('click', '.signa-toggle-checkout-otp', function () {
 			$('.signa-wc-checkout-form-holder').slideToggle(200);
+		});
+
+		// WooCommerce My Account / [signa_passkey_manager] Register & Delete Buttons
+		$(document).on('click', '.signa-btn-register-passkey', function () {
+			var $btn = $(this);
+			var $card = $btn.closest('.signa-passkey-account-card');
+			var $msg = $card.find('.signa-pk-msg');
+			$btn.prop('disabled', true);
+			enrollPasskeyDevice(
+				function (successMsg) {
+					$msg.css({ color: '#059669', marginTop: '12px', fontWeight: '700' }).text('✅ ' + successMsg).slideDown(150);
+					setTimeout(function () {
+						window.location.reload();
+					}, 900);
+				},
+				function (errMsg) {
+					$btn.prop('disabled', false);
+					$msg.css({ color: '#dc2626', marginTop: '12px', fontWeight: '700' }).text('❌ ' + errMsg).slideDown(150);
+				}
+			);
+		});
+
+		$(document).on('click', '.signa-pk-delete-btn', function () {
+			var $btn = $(this);
+			var credId = $btn.attr('data-cred-id');
+			$btn.prop('disabled', true).text('...');
+			$.post(signaOtpParams.ajaxUrl, {
+				action: 'signa_passkey_delete',
+				nonce: signaOtpParams.nonce,
+				credential_id: credId
+			}).done(function (res) {
+				if (res && res.success) {
+					$btn.closest('.signa-pk-item').fadeOut(180, function () {
+						$(this).remove();
+					});
+				} else {
+					$btn.prop('disabled', false).text('حذف');
+				}
+			});
 		});
 	});
 })(jQuery);

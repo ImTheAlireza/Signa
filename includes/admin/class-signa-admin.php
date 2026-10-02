@@ -137,6 +137,9 @@ class Signa_Admin {
 		$checkbox_keys = array(
 			'auto_register',
 			'allow_password_login',
+			'enable_passkey',
+			'passkey_prompt_after_otp',
+			'passkey_wc_myaccount',
 			'show_terms_checkbox',
 			'send_welcome_message',
 			'show_debug_code_in_toast',

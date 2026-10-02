@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Settings Partial: tab-auth-flow.php (v2.5.0 Creative Visual Flow Badges, Human Copy & Progressive Disclosure)
+ * Admin Settings Partial: tab-auth-flow.php (Real Bale Logo + Subtle Glow, Passkey Biometric Login & Human Copy)
  *
  * @package Signa_OTP
  */
@@ -9,14 +9,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Crisp SVG Icons & Official Bale Messenger Emblem
-$svg_phone = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>';
-$svg_email = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';
-$svg_sms   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>';
-// Recognizable Bale Messenger Logo (Speech Bubble + Signature Check Wing)
-$svg_bale  = '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3C6.8 3 2.8 6.6 2.8 11.2c0 2.3 1 4.4 2.7 5.9-.2 1.2-.9 2.7-1.5 3.5-.2.3 0 .6.4.6 1.7-.1 3.6-.8 4.8-1.5.9.2 1.8.4 2.8.4 5.2 0 9.2-3.6 9.2-8.2S17.2 3 12 3z" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 11.6L11.1 14.2L16.5 8.6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-$svg_arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
-$svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+// Crisp SVG Icons & Authentic Official Bale Messenger Logo with Subtle Glow
+$svg_phone       = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>';
+$svg_email       = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';
+$svg_sms         = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>';
+$svg_bale_real   = Signa_Helper::get_bale_logo_svg( 22 );
+$svg_arrow       = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
+$svg_check       = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+$svg_fingerprint = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4"/><path d="M5 19.5C5.5 18 6 15 6 12c0-.7.12-1.37.34-2"/><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M8.65 22c.21-.66.45-1.32.57-2"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M9 6.8a6 6 0 0 1 9 5.2c0 .47 0 1.17-.02 2"/></svg>';
+$svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>';
 ?>
 				<section class="signa-panel" id="signa-tab-auth_flow">
 					<!-- TOP BENTO ROW: Identifier Type (Col 5) + Mobile Delivery Strategy (Col 7) -->
@@ -40,9 +41,9 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 									<input type="radio" name="signa[login_mode]" value="phone_and_email" <?php checked( $settings['login_mode'], 'phone_and_email' ); ?> />
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="شماره موبایل یا ایمیل">
-											<span class="signa-flow-node is-phone"><?php echo $svg_phone; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>موبایل</span></span>
+											<span class="signa-flow-node is-phone"><?php echo $svg_phone; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 											<span class="signa-flow-sep">+</span>
-											<span class="signa-flow-node is-email"><?php echo $svg_email; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>ایمیل</span></span>
+											<span class="signa-flow-node is-email"><?php echo $svg_email; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 										</div>
 										<div class="signa-choice-top-left">
 											<span class="signa-choice-tag is-green">تشخیص خودکار</span>
@@ -59,7 +60,7 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 									<input type="radio" name="signa[login_mode]" value="phone_only" <?php checked( $settings['login_mode'], 'phone_only' ); ?> />
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="فقط شماره موبایل">
-											<span class="signa-flow-node is-phone"><?php echo $svg_phone; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>شماره موبایل</span></span>
+											<span class="signa-flow-node is-phone"><?php echo $svg_phone; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 										</div>
 										<div class="signa-choice-top-left">
 											<span class="signa-choice-tag is-blue">محبوب فروشگاهی</span>
@@ -76,7 +77,7 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 									<input type="radio" name="signa[login_mode]" value="email_only" <?php checked( $settings['login_mode'], 'email_only' ); ?> />
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="فقط آدرس ایمیل">
-											<span class="signa-flow-node is-email"><?php echo $svg_email; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>آدرس ایمیل</span></span>
+											<span class="signa-flow-node is-email"><?php echo $svg_email; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 										</div>
 										<div class="signa-choice-top-left">
 											<span class="signa-choice-check"><?php echo $svg_check; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -90,7 +91,7 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 							</div>
 						</div>
 
-						<!-- Top-Left Box (Col 7): 2. Mobile Delivery Strategy with Visual [SMS Icon <- Bale Logo] -->
+						<!-- Top-Left Box (Col 7): 2. Mobile Delivery Strategy with Real Bale Logo & Subtle Glow -->
 						<div class="signa-card signa-col-7" id="signa-mobile-strategy-card" style="<?php echo 'email_only' === $settings['login_mode'] ? 'opacity:0.55;' : ''; ?>">
 							<div class="signa-card-head">
 								<div class="signa-card-head-title">
@@ -105,14 +106,14 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 							</div>
 
 							<div class="signa-choice-grid signa-cols-2">
-								<!-- 1. SMS -> Fallback Bale (Visual: [SMS Icon] <- [Bale Logo]) -->
+								<!-- 1. SMS -> Fallback Bale (Visual: [SMS Icon] <- [Real Bale Logo with Glow]) -->
 								<label class="signa-choice-card <?php echo 'sms_fallback_bale' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[mobile_delivery_channel]" value="sms_fallback_bale" <?php checked( $settings['mobile_delivery_channel'], 'sms_fallback_bale' ); ?> />
 									<div class="signa-choice-card-top">
-										<div class="signa-flow-icons" title="اول پیامک، بعد پیام‌رسان بله">
-											<span class="signa-flow-node is-sms-brand"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>پیامک</span></span>
+										<div class="signa-flow-icons" title="اول پیامک ← بعد بله">
+											<span class="signa-flow-node is-sms"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 											<span class="signa-flow-sep"><?php echo $svg_arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-											<span class="signa-flow-node is-bale-brand"><?php echo $svg_bale; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>بله</span></span>
+											<span class="signa-flow-node is-bale"><?php echo $svg_bale_real; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 										</div>
 										<div class="signa-choice-top-left">
 											<span class="signa-choice-tag is-amber">ضد قطعی</span>
@@ -125,14 +126,14 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 									</div>
 								</label>
 
-								<!-- 2. Bale -> Fallback SMS (Visual: [Bale Logo] <- [SMS Icon]) -->
+								<!-- 2. Bale -> Fallback SMS (Visual: [Real Bale Logo with Glow] <- [SMS Icon]) -->
 								<label class="signa-choice-card <?php echo 'bale_fallback_sms' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[mobile_delivery_channel]" value="bale_fallback_sms" <?php checked( $settings['mobile_delivery_channel'], 'bale_fallback_sms' ); ?> />
 									<div class="signa-choice-card-top">
-										<div class="signa-flow-icons" title="اول پیام‌رسان بله، بعد پیامک">
-											<span class="signa-flow-node is-bale-brand"><?php echo $svg_bale; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>بله</span></span>
+										<div class="signa-flow-icons" title="اول بله ← بعد پیامک">
+											<span class="signa-flow-node is-bale"><?php echo $svg_bale_real; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 											<span class="signa-flow-sep"><?php echo $svg_arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-											<span class="signa-flow-node is-sms-brand"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>پیامک</span></span>
+											<span class="signa-flow-node is-sms"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 										</div>
 										<div class="signa-choice-top-left">
 											<span class="signa-choice-tag is-green">کاهش هزینه</span>
@@ -150,7 +151,7 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 									<input type="radio" name="signa[mobile_delivery_channel]" value="sms" <?php checked( $settings['mobile_delivery_channel'], 'sms' ); ?> />
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="فقط پیامک">
-											<span class="signa-flow-node is-sms-brand"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>پیامک</span></span>
+											<span class="signa-flow-node is-sms"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 										</div>
 										<div class="signa-choice-top-left">
 											<span class="signa-choice-check"><?php echo $svg_check; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -167,7 +168,7 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 									<input type="radio" name="signa[mobile_delivery_channel]" value="bale" <?php checked( $settings['mobile_delivery_channel'], 'bale' ); ?> />
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="فقط پیام‌رسان بله">
-											<span class="signa-flow-node is-bale-brand"><?php echo $svg_bale; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>پیام‌رسان بله</span></span>
+											<span class="signa-flow-node is-bale"><?php echo $svg_bale_real; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 										</div>
 										<div class="signa-choice-top-left">
 											<span class="signa-choice-check"><?php echo $svg_check; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -184,9 +185,9 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 									<input type="radio" name="signa[mobile_delivery_channel]" value="both" <?php checked( $settings['mobile_delivery_channel'], 'both' ); ?> />
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="ارسال همزمان در پیامک و بله">
-											<span class="signa-flow-node is-sms-brand"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>پیامک</span></span>
+											<span class="signa-flow-node is-sms"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 											<span class="signa-flow-sep">+</span>
-											<span class="signa-flow-node is-bale-brand"><?php echo $svg_bale; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span>پیام‌رسان بله</span></span>
+											<span class="signa-flow-node is-bale"><?php echo $svg_bale_real; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 										</div>
 										<div class="signa-choice-top-left">
 											<span class="signa-choice-tag is-purple">تحویل فوری در هر دو</span>
@@ -202,6 +203,75 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 						</div>
 					</div>
 
+					<!-- MIDDLE FULL-WIDTH CARD: Biometric & Passwordless Passkey Login (WebAuthn / FIDO2) -->
+					<div class="signa-card" style="margin-top:20px;">
+						<div class="signa-card-head">
+							<div class="signa-card-head-title">
+								<div class="signa-flow-icons" style="margin-left:4px;">
+									<span class="signa-flow-node is-passkey" title="اثر انگشت (TouchID / Fingerprint)"><?php echo $svg_fingerprint; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+									<span class="signa-flow-sep">+</span>
+									<span class="signa-flow-node is-phone" title="تشخیص چهره (FaceID / Windows Hello)"><?php echo $svg_faceid; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+								</div>
+								<div>
+									<h2>۳. ورود بیومتریک و بدون رمز (Passkey / WebAuthn)</h2>
+									<p>ورود ۱ ثانیه‌ای کاربران با اثر انگشت (TouchID)، تشخیص چهره (FaceID) و Windows Hello بدون نیاز به صبر کردن برای پیامک</p>
+								</div>
+							</div>
+							<span class="signa-pill is-ok">فناوری نسل جدید WebAuthn</span>
+						</div>
+
+						<div class="signa-fields-grid signa-cols-3">
+							<div class="signa-switch-row" style="margin:0;">
+								<div class="signa-switch-text">
+									<strong>فعال‌سازی ورود با Passkey</strong>
+									<p>نمایش دکمه «ورود با اثر انگشت / چهره» در فرم ورود</p>
+								</div>
+								<label class="signa-switch">
+									<input type="checkbox" name="signa[enable_passkey]" id="enable_passkey" value="1" <?php checked( ! empty( $settings['enable_passkey'] ), true ); ?> />
+									<span class="signa-slider"></span>
+								</label>
+							</div>
+
+							<div class="signa-switch-row" style="margin:0;">
+								<div class="signa-switch-text">
+									<strong>پیشنهاد ثبت پس از ورود با کد</strong>
+									<p>بعد از تایید کد، به کاربر پیشنهاد شود دستگاهش را بیومتریک کند</p>
+								</div>
+								<label class="signa-switch">
+									<input type="checkbox" name="signa[passkey_prompt_after_otp]" value="1" <?php checked( ! empty( $settings['passkey_prompt_after_otp'] ), true ); ?> />
+									<span class="signa-slider"></span>
+								</label>
+							</div>
+
+							<div class="signa-switch-row" style="margin:0;">
+								<div class="signa-switch-text">
+									<strong>مدیریت در حساب ووکامرس</strong>
+									<p>نمایش لیست دستگاه‌های بیومتریک در پیشخوان حساب کاربری</p>
+								</div>
+								<label class="signa-switch">
+									<input type="checkbox" name="signa[passkey_wc_myaccount]" value="1" <?php checked( ! empty( $settings['passkey_wc_myaccount'] ), true ); ?> />
+									<span class="signa-slider"></span>
+								</label>
+							</div>
+						</div>
+
+						<div id="signa-passkey-extra-wrap" style="margin-top:14px; <?php echo ! empty( $settings['enable_passkey'] ) ? '' : 'display:none;'; ?>">
+							<div class="signa-fields-grid signa-cols-2">
+								<div class="signa-field">
+									<label for="passkey_btn_text">متن دکمه ورود بیومتریک در فرم</label>
+									<input type="text" name="signa[passkey_btn_text]" id="passkey_btn_text" value="<?php echo esc_attr( isset( $settings['passkey_btn_text'] ) ? $settings['passkey_btn_text'] : 'ورود سریع با اثر انگشت / چهره (Passkey)' ); ?>" />
+								</div>
+								<div class="signa-field">
+									<label>شورت‌کد مدیریت دستگاه‌های بیومتریک کاربر</label>
+									<div style="display:flex;gap:8px;align-items:center;">
+										<input type="text" value="[signa_passkey_manager]" dir="ltr" readonly style="flex:1;" />
+										<button type="button" class="signa-btn-secondary signa-copy-btn" data-copy="[signa_passkey_manager]">کپی شورت‌کد</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<!-- BOTTOM BENTO ROW: OTP Code Timing & Registration (Col 6) + Redirect & Password Options (Col 6) -->
 					<div class="signa-bento-row" style="margin-top:20px;">
 						<!-- Left Box: Code Settings & New User Signup -->
@@ -212,7 +282,7 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 										<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
 									</span>
 									<div>
-										<h2>تنظیمات کد و عضویت کاربران جدید</h2>
+										<h2>۴. تنظیمات کد و عضویت کاربران جدید</h2>
 										<p>تعداد ارقام کد، زمان اعتبار و اطلاعات دریافتی هنگام ثبت‌نام</p>
 									</div>
 								</div>
@@ -291,20 +361,19 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 										<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
 									</span>
 									<div>
-										<h2>پس از ورود، کاربر به کجا برود؟</h2>
+										<h2>۵. پس از ورود، کاربر به کجا برود؟</h2>
 										<p>مسیر انتقال کاربر بعد از ورود و گزینه‌های کمکی فرم</p>
 									</div>
 								</div>
 							</div>
 
-							<!-- Visual Redirect Behavior Cards instead of a dry select -->
+							<!-- Visual Redirect Behavior Cards -->
 							<div class="signa-choice-grid signa-cols-2">
 								<label class="signa-choice-card <?php echo 'auto' === $settings['redirect_behavior'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[redirect_behavior]" value="auto" <?php checked( $settings['redirect_behavior'], 'auto' ); ?> />
 									<div class="signa-choice-card-top">
 										<span class="signa-flow-node is-phone">
 											<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-											<span>هوشمند</span>
 										</span>
 										<span class="signa-choice-check"><?php echo $svg_check; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 									</div>
@@ -319,7 +388,6 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 									<div class="signa-choice-card-top">
 										<span class="signa-flow-node is-sms">
 											<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-											<span>پنل کاربری</span>
 										</span>
 										<span class="signa-choice-check"><?php echo $svg_check; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 									</div>
@@ -332,9 +400,8 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 								<label class="signa-choice-card <?php echo 'home' === $settings['redirect_behavior'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[redirect_behavior]" value="home" <?php checked( $settings['redirect_behavior'], 'home' ); ?> />
 									<div class="signa-choice-card-top">
-										<span class="signa-flow-node is-bale">
+										<span class="signa-flow-node is-passkey">
 											<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-											<span>صفحه اول</span>
 										</span>
 										<span class="signa-choice-check"><?php echo $svg_check; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 									</div>
@@ -349,7 +416,6 @@ $svg_check = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke
 									<div class="signa-choice-card-top">
 										<span class="signa-flow-node is-email">
 											<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-											<span>لینک دلخواه</span>
 										</span>
 										<span class="signa-choice-check"><?php echo $svg_check; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 									</div>

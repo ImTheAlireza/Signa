@@ -115,6 +115,7 @@ $export_csv_url = wp_nonce_url(
 						<option value="sms" <?php selected( $channel, 'sms' ); ?>>پیامک (SMS)</option>
 						<option value="bale" <?php selected( $channel, 'bale' ); ?>>پیام‌رسان بله</option>
 						<option value="email" <?php selected( $channel, 'email' ); ?>>ایمیل</option>
+						<option value="passkey" <?php selected( $channel, 'passkey' ); ?>>بیومتریک (Passkey)</option>
 					</select>
 					<button type="submit" class="signa-btn-secondary">اعمال فیلتر</button>
 					<?php if ( ! empty( $search ) || ! empty( $status ) || ! empty( $channel ) ) : ?>

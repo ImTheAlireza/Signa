@@ -1006,7 +1006,7 @@
 	border-color: rgba(245, 158, 11, 0.25);
 }
 
-/* MULTI-ICON FLOW BADGES (e.g. [SMS Icon] <- [Bale Logo], [Phone] + [Email]) */
+/* MULTI-ICON FLOW BADGES (e.g. [SMS Icon] <- [Bale Real Logo], [Phone] + [Email]) */
 .signa-flow-icons {
 	display: inline-flex;
 	align-items: center;
@@ -1020,54 +1020,60 @@
 }
 
 .signa-flow-node {
-	height: 32px;
-	min-width: 32px;
-	padding: 0 8px;
+	width: 34px;
+	height: 34px;
 	border-radius: 9px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 5px;
-	font-size: 11.5px;
-	font-weight: 800;
 	flex-shrink: 0;
-	transition: transform 0.18s ease;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-.signa-flow-node svg {
-	width: 16px;
-	height: 16px;
+.signa-flow-node svg:not(.signa-bale-real-logo) {
+	width: 18px;
+	height: 18px;
 	flex-shrink: 0;
+}
+
+.signa-bale-real-logo {
+	width: 22px;
+	height: 22px;
+	flex-shrink: 0;
+	filter: drop-shadow(0 0 6px rgba(50, 236, 192, 0.52));
+	transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+#signa-app-shell .signa-choice-card:hover .signa-bale-real-logo,
+#signa-app-shell .signa-choice-card.selected .signa-bale-real-logo {
+	filter: drop-shadow(0 0 9px rgba(50, 236, 192, 0.78));
+	transform: scale(1.06);
 }
 
 #signa-app-shell .signa-choice-card:hover .signa-flow-node {
-	transform: scale(1.03);
+	transform: scale(1.04);
 }
 
-.signa-flow-node.is-sms {
+.signa-flow-node.is-sms,
+.signa-flow-node.is-sms-brand {
 	background: rgba(59, 130, 246, 0.16);
 	color: #3b82f6;
-	border: 1px solid rgba(59, 130, 246, 0.26);
+	border: 1px solid rgba(59, 130, 246, 0.28);
 }
 
-.signa-flow-node.is-bale {
-	background: linear-gradient(135deg, rgba(0, 200, 150, 0.2), rgba(16, 185, 129, 0.16));
-	color: #10b981;
-	border: 1px solid rgba(16, 185, 129, 0.32);
-}
-
+.signa-flow-node.is-bale,
 .signa-flow-node.is-bale-brand {
-	background: linear-gradient(135deg, #00c896 0%, #059669 100%);
-	color: #ffffff;
-	border: none;
-	box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+	background: rgba(19, 185, 151, 0.14);
+	color: #13b997;
+	border: 1px solid rgba(50, 236, 192, 0.34);
+	box-shadow: 0 0 12px rgba(19, 185, 151, 0.22);
 }
 
-.signa-flow-node.is-sms-brand {
-	background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-	color: #ffffff;
-	border: none;
-	box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+.signa-flow-node.is-passkey {
+	background: rgba(16, 185, 129, 0.16);
+	color: #10b981;
+	border: 1px solid rgba(16, 185, 129, 0.3);
+	box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
 }
 
 .signa-flow-node.is-email {

@@ -37,6 +37,10 @@ class Signa_Helper {
 			'require_name_on_register'  => 'optional',        // disabled | optional | required
 			'require_email_on_register' => 'disabled',        // disabled | optional | required
 			'allow_password_login'      => 0,
+			'enable_passkey'            => 1,                 // WebAuthn Biometric Passkey Login
+			'passkey_prompt_after_otp'  => 1,                 // Offer 1-click Passkey enrollment after OTP verify
+			'passkey_wc_myaccount'      => 1,                 // Show Passkey manager in WooCommerce My Account
+			'passkey_btn_text'          => 'ورود سریع با اثر انگشت / چهره (Passkey)',
 			'show_terms_checkbox'       => 0,
 			'terms_text'                => 'ورود و ثبت‌نام شما به معنای پذیرش قوانین و مقررات سایت است.',
 			'terms_url'                 => '',
@@ -372,5 +376,21 @@ class Signa_Helper {
 			}
 		}
 		return array_unique( $clean );
+	}
+
+	/**
+	 * Return the authentic official Bale Messenger logo SVG with subtle glow
+	 *
+	 * @param int $size Width/Height in px.
+	 * @return string SVG markup.
+	 */
+	public static function get_bale_logo_svg( $size = 20 ) {
+		$size = absint( $size ) ? absint( $size ) : 20;
+		$uid  = 'baleGrad_' . wp_rand( 100, 99999 );
+		return sprintf(
+			'<svg class="signa-bale-real-logo" width="%1$d" height="%1$d" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="%2$s" x1="20.5" y1="3.5" x2="3.5" y2="20.5" gradientUnits="userSpaceOnUse"><stop offset="0%%" stop-color="#32ECC0"/><stop offset="50%%" stop-color="#13B997"/><stop offset="100%%" stop-color="#253070"/></linearGradient></defs><path d="M3.4 12.6V4.7C3.4 3.6 4.6 3.1 5.5 3.8L7.9 5.5A8.6 8.6 0 1 1 3.4 12.6Z" fill="url(#%2$s)"/><path d="M8.3 12.7L11.0 15.4L16.2 10.1" stroke="#FFFFFF" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+			$size,
+			esc_attr( $uid )
+		);
 	}
 }
