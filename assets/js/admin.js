@@ -106,6 +106,30 @@
 			showGatewayConfigBox($gwHiddenInput.val());
 		}
 
+		function refreshFailoverStrip() {
+			var $container = $('#signa-live-route-nodes');
+			if (!$container.length) {
+				return;
+			}
+			var primaryTitle = $('.signa-gw-select-card.selected').attr('data-gw-title') || 'درگاه اصلی';
+			var html = '<span class="signa-route-pill is-primary">🟢 اصلی: ' + primaryTitle + '</span>';
+
+			var b1 = $('#backup_sms_gateway_1');
+			var b2 = $('#backup_sms_gateway_2');
+			var b3 = $('#backup_sms_gateway_3');
+
+			if (b1.length && b1.val() && b1.val() !== 'none') {
+				html += '<span class="signa-flow-sep">&larr;</span><span class="signa-route-pill">🛡️ پشتیبان ۱: ' + b1.find('option:selected').text().trim() + '</span>';
+			}
+			if (b2.length && b2.val() && b2.val() !== 'none') {
+				html += '<span class="signa-flow-sep">&larr;</span><span class="signa-route-pill">🛡️ پشتیبان ۲: ' + b2.find('option:selected').text().trim() + '</span>';
+			}
+			if (b3.length && b3.val() && b3.val() !== 'none') {
+				html += '<span class="signa-flow-sep">&larr;</span><span class="signa-route-pill">🛡️ پشتیبان ۳: ' + b3.find('option:selected').text().trim() + '</span>';
+			}
+			$container.html(html);
+		}
+
 		$gwCards.on('click', function () {
 			var $card = $(this);
 			var gwId = $card.attr('data-gw-id');
@@ -116,13 +140,30 @@
 			$gwHiddenInput.val(gwId);
 			$('#signa-topbar-gw-name').text(gwTitle);
 			showGatewayConfigBox(gwId);
+			refreshFailoverStrip();
 		});
+
+		$('#backup_sms_gateway_1, #backup_sms_gateway_2, #backup_sms_gateway_3').on('change', refreshFailoverStrip);
+		refreshFailoverStrip();
 
 		$gwPills.on('click', function () {
 			showGatewayConfigBox($(this).attr('data-gw'));
 		});
 
 		// 4.5. Progressive Disclosure Controls (v2.5.0 Smart Field Visibility)
+		$('input[name="signa[login_mode]"]').on('change', function () {
+			var isEmailOnly = $(this).val() === 'email_only';
+			$('#signa-mobile-strategy-card').css('opacity', isEmailOnly ? '0.55' : '1');
+		});
+
+		$('#auto_register').on('change', function () {
+			if ($(this).is(':checked')) {
+				$('#signa-auto-register-fields').slideDown(180);
+			} else {
+				$('#signa-auto-register-fields').slideUp(180);
+			}
+		});
+
 		$('#show_terms_checkbox').on('change', function () {
 			if ($(this).is(':checked')) {
 				$('#signa-terms-fields-wrap').slideDown(180);
@@ -131,12 +172,24 @@
 			}
 		});
 
-		$('#redirect_behavior').on('change', function () {
+		$('input[name="signa[redirect_behavior]"], #redirect_behavior').on('change', function () {
 			if ($(this).val() === 'custom') {
 				$('#signa-custom-redirect-wrap').slideDown(180);
 			} else {
 				$('#signa-custom-redirect-wrap').slideUp(180);
 			}
+		});
+
+		$('#farazsms_auth_type').on('change', function () {
+			var isUserPass = $(this).val() === 'userpass';
+			$('#farazsms-apikey-wrap').toggle(!isUserPass);
+			$('#farazsms-userpass-wrap').toggle(isUserPass);
+		});
+
+		$('#ippanel_auth_type').on('change', function () {
+			var isUserPass = $(this).val() === 'userpass';
+			$('#ippanel-apikey-wrap').toggle(!isUserPass);
+			$('#ippanel-userpass-wrap').toggle(isUserPass);
 		});
 
 		$('input[name="signa[bale_mode]"]').on('change', function () {
@@ -156,6 +209,45 @@
 			$('#signa-captcha-keys-wrap').toggle(needsKey);
 			$('#signa-captcha-math-note').toggle(ctype === 'math');
 			$('#signa-captcha-none-note').toggle(ctype === 'none');
+		});
+
+		// Inline Quick SMS Test inside Tab 3 (Saves settings first, then dispatches test SMS)
+		$('#signa_quick_sms_test_btn').on('click', function () {
+			var phone = ($('#signa_quick_sms_test_phone').val() || '').trim();
+			if (!phone) {
+				showToast('لطفاً شماره موبایل مقصد را برای تست وارد کنید.', 'error');
+				$('#signa_quick_sms_test_phone').trigger('focus');
+				return;
+			}
+			var $btn = $(this);
+			var origHtml = $btn.html();
+			$btn.prop('disabled', true).html('<span>در حال ذخیره و ارسال...</span>');
+
+			var formData = $form.serialize();
+			$.post(
+				signaAdmin.ajaxUrl,
+				formData + '&action=signa_ajax_save_settings&nonce=' + encodeURIComponent(signaAdmin.nonce)
+			).always(function () {
+				$.post(signaAdmin.ajaxUrl, {
+					action: 'signa_admin_test_otp',
+					nonce: signaAdmin.nonce,
+					recipient: phone,
+					channel: 'sms'
+				})
+					.done(function (res) {
+						if (res && res.success) {
+							showToast((res.data && res.data.message) || 'پیامک تست با موفقیت ارسال شد!', 'success');
+						} else {
+							showToast((res && res.data && res.data.message) || 'خطا در ارسال پیامک تست.', 'error');
+						}
+					})
+					.fail(function () {
+						showToast('خطا در ارتباط با سرور هنگام ارسال تست.', 'error');
+					})
+					.always(function () {
+						$btn.prop('disabled', false).html(origHtml);
+					});
+			});
 		});
 
 		// 5. Interactive Appearance Studio & Live Preview

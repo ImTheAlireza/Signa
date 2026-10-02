@@ -34,34 +34,47 @@ $bale_mode = isset( $settings['bale_mode'] ) ? $settings['bale_mode'] : 'safir';
 									<input type="radio" name="signa[bale_mode]" value="safir" <?php checked( $bale_mode, 'safir' ); ?> />
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons">
-											<span class="signa-flow-node is-bale" title="سفیر بله">
-												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><polyline points="9 11 12 14 16 10"/></svg>
+											<span class="signa-flow-node is-bale-brand" title="سفیر بله">
+												<svg viewBox="0 0 24 24" fill="none"><path d="M12 3C6.8 3 2.8 6.6 2.8 11.2c0 2.3 1 4.4 2.7 5.9-.2 1.2-.9 2.7-1.5 3.5-.2.3 0 .6.4.6 1.7-.1 3.6-.8 4.8-1.5.9.2 1.8.4 2.8.4 5.2 0 9.2-3.6 9.2-8.2S17.2 3 12 3z" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 11.6L11.1 14.2L16.5 8.6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+												<span>سفیر بله</span>
 											</span>
 											<span class="signa-flow-sep">
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
 											</span>
 											<span class="signa-flow-node is-phone" title="شماره موبایل">
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+												<span>موبایل</span>
 											</span>
 										</div>
-										<span class="signa-choice-tag is-green">پیشنهادی</span>
+										<div class="signa-choice-top-left">
+											<span class="signa-choice-tag is-green">پیشنهادی</span>
+											<span class="signa-choice-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+										</div>
 									</div>
-									<span class="signa-choice-title">سفیر بله (Safir OTP)</span>
-									<span class="signa-choice-desc">ارسال مستقیم کد تایید به شماره موبایل کاربر در بله</span>
+									<div class="signa-choice-body">
+										<strong>سفیر بله (Safir OTP)</strong>
+										<small>ارسال مستقیم کد تایید به شماره موبایل کاربر در بله</small>
+									</div>
 								</label>
 
 								<label class="signa-choice-card <?php echo 'bot' === $bale_mode ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[bale_mode]" value="bot" <?php checked( $bale_mode, 'bot' ); ?> />
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons">
-											<span class="signa-flow-node is-bale" title="ربات بله">
+											<span class="signa-flow-node is-bale-brand" title="ربات بله">
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg>
+												<span>ربات بله</span>
 											</span>
 										</div>
-										<span class="signa-choice-tag is-blue">بازوی اختصاصی</span>
+										<div class="signa-choice-top-left">
+											<span class="signa-choice-tag is-blue">بازوی اختصاصی</span>
+											<span class="signa-choice-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+										</div>
 									</div>
-									<span class="signa-choice-title">ربات بله (Bot API)</span>
-									<span class="signa-choice-desc">ارسال پیام از طریق توکن بازوی اختصاصی شما در بله</span>
+									<div class="signa-choice-body">
+										<strong>ربات بله (Bot API)</strong>
+										<small>ارسال پیام از طریق توکن بازوی اختصاصی شما در بله</small>
+									</div>
 								</label>
 							</div>
 

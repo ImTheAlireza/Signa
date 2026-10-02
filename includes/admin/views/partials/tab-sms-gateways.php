@@ -119,6 +119,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</div>
 						</div>
 
+						<!-- Live Visual Failover Route Strip -->
+						<div class="signa-live-route-strip" id="signa-live-failover-strip">
+							<span style="font-size:12px;font-weight:700;color:var(--s-text-muted);">مسیر فعلی ارسال پیامک:</span>
+							<div class="signa-route-nodes" id="signa-live-route-nodes">
+								<span class="signa-route-pill is-primary" id="signa-route-primary-label"><?php echo esc_html( $active_gw_title ); ?></span>
+							</div>
+						</div>
+
 						<!-- Gateway Switcher Pills with Logos to Inspect/Edit Any Gateway -->
 						<div class="signa-gw-tabs-bar">
 							<span class="signa-section-label" style="margin:0;">۳. تنظیم کلید API و کد پترن هر سامانه:</span>
@@ -138,14 +146,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<!-- 1. Sandbox Box -->
 						<div class="signa-gateway-box" data-gateway="sandbox">
 							<div class="signa-gw-box-head">
-								<h3>🧪 حالت تست / آزمایشی (Sandbox)</h3>
-								<span class="signa-pill is-warn">مخصوص توسعه و تست لوکال</span>
+								<h3>🧪 حالت تست لوکال (Sandbox)</h3>
+								<span class="signa-pill is-warn">بدون ارسال پیامک واقعی</span>
 							</div>
-							<p class="description">در این حالت هیچ پیامکی به بیرون ارسال نمی‌شود، اما کد تولیدشده در جدول لاگ ثبت می‌شود تا بدون نیاز به پنل پیامک، کل فرآیند را روی لوکال تست کنید.</p>
+							<p class="description">در این حالت پیامکی ارسال نمی‌شود و کد تایید در «لاگ کدها» ثبت می‌گردد تا بدون نیاز به شارژ پنل، فرم ورود را تست کنید.</p>
 							<div class="signa-switch-row" style="margin-top:14px;">
-								<div>
-									<strong>نمایش کد OTP در کادر پیام بالای فرم ورود</strong>
-									<p>هنگام درخواست کد، خودِ کد آزمایشی در پیغام سبز بالای فرم به کاربر نمایش داده شود (در سایت عملیاتی خاموش کنید).</p>
+								<div class="signa-switch-text">
+									<strong>نمایش کد آزمایشی بالای فرم ورود</strong>
+									<p>کد تایید تولیدشده در کادر پیام بالای فرم به شما نمایش داده شود (در سایت اصلی خاموش کنید).</p>
 								</div>
 								<label class="signa-switch">
 									<input type="checkbox" name="signa[show_debug_code_in_toast]" value="1" <?php checked( $settings['show_debug_code_in_toast'], 1 ); ?> />
@@ -157,8 +165,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<!-- 2. SMS.ir Box -->
 						<div class="signa-gateway-box" data-gateway="smsir">
 							<div class="signa-gw-box-head">
-								<h3>💬 پیکربندی درگاه SMS.ir (نسخه جدید REST v1)</h3>
-								<span class="signa-pill is-info">api.sms.ir/v1/send/verify</span>
+								<h3>تنظیمات درگاه SMS.ir</h3>
+								<span class="signa-pill is-info">ارسال سریع خدماتی (Verify)</span>
 							</div>
 							<div class="signa-fields-grid signa-cols-3">
 								<div class="signa-field">
@@ -167,7 +175,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</div>
 								<div class="signa-field">
 									<label for="smsir_template_id">شناسه قالب (Template ID)</label>
-									<input type="text" name="signa[smsir_template_id]" id="smsir_template_id" value="<?php echo esc_attr( $settings['smsir_template_id'] ); ?>" dir="ltr" placeholder="100000" />
+									<input type="text" name="signa[smsir_template_id]" id="smsir_template_id" value="<?php echo esc_attr( $settings['smsir_template_id'] ); ?>" dir="ltr" placeholder="مثلاً: 100000" />
 								</div>
 								<div class="signa-field">
 									<label for="smsir_param_name">نام متغیر کد در قالب</label>
@@ -179,18 +187,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<!-- 3. Kavenegar Box -->
 						<div class="signa-gateway-box" data-gateway="kavenegar">
 							<div class="signa-gw-box-head">
-								<h3>📨 پیکربندی درگاه کاوه‌نگار (Kavenegar)</h3>
-								<span class="signa-pill is-info">verify/lookup.json</span>
+								<h3>تنظیمات درگاه کاوه‌نگار (Kavenegar)</h3>
+								<span class="signa-pill is-info">ارسال اعتبارسنجی (Lookup)</span>
 							</div>
 							<div class="signa-fields-grid signa-cols-2">
 								<div class="signa-field">
 									<label for="kavenegar_api_key">کلید API (API Key)</label>
-									<input type="text" name="signa[kavenegar_api_key]" id="kavenegar_api_key" value="<?php echo esc_attr( $settings['kavenegar_api_key'] ); ?>" dir="ltr" />
+									<input type="text" name="signa[kavenegar_api_key]" id="kavenegar_api_key" value="<?php echo esc_attr( $settings['kavenegar_api_key'] ); ?>" dir="ltr" placeholder="کلید API از پنل کاوه‌نگار" />
 								</div>
 								<div class="signa-field">
 									<label for="kavenegar_template">نام الگوی اعتبارسنجی (Template)</label>
 									<input type="text" name="signa[kavenegar_template]" id="kavenegar_template" value="<?php echo esc_attr( $settings['kavenegar_template'] ); ?>" dir="ltr" placeholder="verify-login" />
-									<small>الگو باید در پنل کاوه‌نگار شامل متغیر <code>%token</code> باشد.</small>
+									<small>در متن الگوی کاوه‌نگار حتماً از متغیر <code>%token</code> استفاده کنید.</small>
 								</div>
 							</div>
 						</div>
@@ -198,8 +206,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<!-- 4. Melipayamak Box -->
 						<div class="signa-gateway-box" data-gateway="melipayamak">
 							<div class="signa-gw-box-head">
-								<h3>📱 پیکربندی درگاه ملی‌پیامک (Melipayamak)</h3>
-								<span class="signa-pill is-info">BaseServiceNumber</span>
+								<h3>تنظیمات درگاه ملی‌پیامک (Melipayamak)</h3>
+								<span class="signa-pill is-info">وب‌سرویس خط خدماتی ( پترن )</span>
 							</div>
 							<div class="signa-fields-grid signa-cols-3">
 								<div class="signa-field">
@@ -213,27 +221,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<div class="signa-field">
 									<label for="melipayamak_body_id">کد متن خدماتی (bodyId)</label>
 									<input type="text" name="signa[melipayamak_body_id]" id="melipayamak_body_id" value="<?php echo esc_attr( $settings['melipayamak_body_id'] ); ?>" dir="ltr" placeholder="12345" />
+									<small>متن الگو در ملی‌پیامک باید شامل <code>{0}</code> باشد.</small>
 								</div>
 							</div>
 						</div>
 
-						<!-- 5. FarazSMS Box -->
+						<!-- 5. FarazSMS Box (Progressive Disclosure for Auth Type) -->
 						<div class="signa-gateway-box" data-gateway="farazsms">
 							<div class="signa-gw-box-head">
-								<h3>🚀 پیکربندی درگاه فراز اس‌ام‌اس (FarazSMS)</h3>
-								<span class="signa-pill is-info">ارسال پترن خدماتی</span>
+								<h3>تنظیمات درگاه فراز اس‌ام‌اس (FarazSMS)</h3>
+								<span class="signa-pill is-info">ارسال سریع پترن</span>
 							</div>
 							<div class="signa-fields-grid signa-cols-3">
 								<div class="signa-field">
-									<label for="farazsms_auth_type">روش احراز هویت</label>
+									<label for="farazsms_auth_type">روش اتصال به پنل</label>
 									<select name="signa[farazsms_auth_type]" id="farazsms_auth_type">
-										<option value="apikey" <?php selected( $settings['farazsms_auth_type'], 'apikey' ); ?>>کلید دسترسی (API Key)</option>
+										<option value="apikey" <?php selected( $settings['farazsms_auth_type'], 'apikey' ); ?>>کلید دسترسی (API Key — پیشنهادی)</option>
 										<option value="userpass" <?php selected( $settings['farazsms_auth_type'], 'userpass' ); ?>>نام کاربری و رمز عبور</option>
 									</select>
 								</div>
-								<div class="signa-field">
+								<div class="signa-field" id="farazsms-apikey-wrap" style="<?php echo 'userpass' === $settings['farazsms_auth_type'] ? 'display:none;' : ''; ?>">
 									<label for="farazsms_api_key">کلید دسترسی (API Key)</label>
 									<input type="text" name="signa[farazsms_api_key]" id="farazsms_api_key" value="<?php echo esc_attr( $settings['farazsms_api_key'] ); ?>" dir="ltr" />
+								</div>
+								<div class="signa-field" id="farazsms-userpass-wrap" style="<?php echo 'userpass' === $settings['farazsms_auth_type'] ? '' : 'display:none;'; ?>">
+									<label for="farazsms_username">نام کاربری و رمز پنل</label>
+									<div style="display:flex;gap:6px;">
+										<input type="text" name="signa[farazsms_username]" id="farazsms_username" value="<?php echo esc_attr( $settings['farazsms_username'] ); ?>" dir="ltr" placeholder="Username" />
+										<input type="password" name="signa[farazsms_password]" id="farazsms_password" value="<?php echo esc_attr( $settings['farazsms_password'] ); ?>" dir="ltr" placeholder="Password" />
+									</div>
 								</div>
 								<div class="signa-field">
 									<label for="farazsms_from_number">شماره خط فرستنده</label>
@@ -241,40 +257,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</div>
 								<div class="signa-field">
 									<label for="farazsms_pattern_code">کد پترن (Pattern Code)</label>
-									<input type="text" name="signa[farazsms_pattern_code]" id="farazsms_pattern_code" value="<?php echo esc_attr( $settings['farazsms_pattern_code'] ); ?>" dir="ltr" />
+									<input type="text" name="signa[farazsms_pattern_code]" id="farazsms_pattern_code" value="<?php echo esc_attr( $settings['farazsms_pattern_code'] ); ?>" dir="ltr" placeholder="مثلاً: x8k9p2m" />
 								</div>
 								<div class="signa-field">
-									<label for="farazsms_param_name">نام متغیر درون پترن</label>
+									<label for="farazsms_param_name">نام متغیر کد در پترن</label>
 									<input type="text" name="signa[farazsms_param_name]" id="farazsms_param_name" value="<?php echo esc_attr( $settings['farazsms_param_name'] ); ?>" dir="ltr" placeholder="verification-code" />
-								</div>
-								<div class="signa-field">
-									<label for="farazsms_username">نام کاربری و رمز (در حالت سنتی)</label>
-									<div style="display:flex;gap:6px;">
-										<input type="text" name="signa[farazsms_username]" id="farazsms_username" value="<?php echo esc_attr( $settings['farazsms_username'] ); ?>" dir="ltr" placeholder="Username" />
-										<input type="password" name="signa[farazsms_password]" id="farazsms_password" value="<?php echo esc_attr( $settings['farazsms_password'] ); ?>" dir="ltr" placeholder="Password" />
-									</div>
 								</div>
 							</div>
 						</div>
 
-						<!-- 6. IPPanel Box -->
+						<!-- 6. IPPanel Box (Progressive Disclosure for Auth Type) -->
 						<div class="signa-gateway-box" data-gateway="ippanel">
 							<div class="signa-gw-box-head">
-								<h3>🌐 پیکربندی درگاه آی‌پی‌پنل (IPPanel Edge / REST)</h3>
-								<span class="signa-pill is-info">edge.ippanel.com</span>
+								<h3>تنظیمات درگاه آی‌پی‌پنل (IPPanel)</h3>
+								<span class="signa-pill is-info">پشتیبانی از Edge و REST</span>
 							</div>
 							<div class="signa-fields-grid signa-cols-3">
 								<div class="signa-field">
-									<label for="ippanel_auth_type">نسخه وب‌سرویس IPPanel</label>
+									<label for="ippanel_auth_type">نسخه وب‌سرویس</label>
 									<select name="signa[ippanel_auth_type]" id="ippanel_auth_type">
 										<option value="edge" <?php selected( $settings['ippanel_auth_type'], 'edge' ); ?>>وب‌سرویس جدید Edge (پیشنهادی)</option>
 										<option value="apikey" <?php selected( $settings['ippanel_auth_type'], 'apikey' ); ?>>وب‌سرویس REST با کلید API</option>
 										<option value="userpass" <?php selected( $settings['ippanel_auth_type'], 'userpass' ); ?>>نام کاربری و رمز عبور</option>
 									</select>
 								</div>
-								<div class="signa-field">
-									<label for="ippanel_api_key">کلید API / توکن Authorization</label>
+								<div class="signa-field" id="ippanel-apikey-wrap" style="<?php echo 'userpass' === $settings['ippanel_auth_type'] ? 'display:none;' : ''; ?>">
+									<label for="ippanel_api_key">کلید API / توکن</label>
 									<input type="text" name="signa[ippanel_api_key]" id="ippanel_api_key" value="<?php echo esc_attr( $settings['ippanel_api_key'] ); ?>" dir="ltr" />
+								</div>
+								<div class="signa-field" id="ippanel-userpass-wrap" style="<?php echo 'userpass' === $settings['ippanel_auth_type'] ? '' : 'display:none;'; ?>">
+									<label>نام کاربری و رمز پنل</label>
+									<div style="display:flex;gap:6px;">
+										<input type="text" name="signa[ippanel_username]" value="<?php echo esc_attr( $settings['ippanel_username'] ); ?>" dir="ltr" placeholder="Username" />
+										<input type="password" name="signa[ippanel_password]" value="<?php echo esc_attr( $settings['ippanel_password'] ); ?>" dir="ltr" placeholder="Password" />
+									</div>
 								</div>
 								<div class="signa-field">
 									<label for="ippanel_from_number">شماره خط فرستنده</label>
@@ -285,16 +301,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<input type="text" name="signa[ippanel_pattern_code]" id="ippanel_pattern_code" value="<?php echo esc_attr( $settings['ippanel_pattern_code'] ); ?>" dir="ltr" />
 								</div>
 								<div class="signa-field">
-									<label for="ippanel_param_name">نام متغیر درون پترن</label>
+									<label for="ippanel_param_name">نام متغیر کد در پترن</label>
 									<input type="text" name="signa[ippanel_param_name]" id="ippanel_param_name" value="<?php echo esc_attr( $settings['ippanel_param_name'] ); ?>" dir="ltr" placeholder="code" />
 								</div>
-								<div class="signa-field">
-									<label>نام کاربری و رمز (در حالت کلاسیک)</label>
-									<div style="display:flex;gap:6px;">
-										<input type="text" name="signa[ippanel_username]" value="<?php echo esc_attr( $settings['ippanel_username'] ); ?>" dir="ltr" placeholder="Username" />
-										<input type="password" name="signa[ippanel_password]" value="<?php echo esc_attr( $settings['ippanel_password'] ); ?>" dir="ltr" placeholder="Password" />
-									</div>
+							</div>
+						</div>
+
+						<!-- 4. Inline Quick SMS Test Bar (Relocated right inside SMS Gateways Tab for instant testing!) -->
+						<div class="signa-inline-test-bar">
+							<div style="display:flex;align-items:center;gap:12px;">
+								<span class="signa-card-icon is-blue" style="width:38px;height:38px;">
+									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+								</span>
+								<div>
+									<strong style="font-size:13.5px;color:var(--s-text);display:block;">تست فوری ارسال پیامک با همین درگاه</strong>
+									<small style="font-size:12px;color:var(--s-text-muted);">بعد از وارد کردن کلید API، شماره موبایل خود را وارد کنید تا اتصال درگاه همین الان تست شود</small>
 								</div>
+							</div>
+							<div class="signa-inline-test-controls">
+								<input type="text" id="signa_quick_sms_test_phone" placeholder="مثلاً: 09123456789" dir="ltr" style="flex:1;" />
+								<button type="button" id="signa_quick_sms_test_btn" class="signa-btn-save" style="height:42px;white-space:nowrap;">
+									<span>ارسال پیامک تست</span>
+								</button>
 							</div>
 						</div>
 					</div>

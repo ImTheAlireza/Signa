@@ -912,9 +912,10 @@
 
 #signa-app-shell .signa-choice-card {
 	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 14px;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: space-between;
+	gap: 12px;
 	padding: 16px 18px;
 	border-radius: 14px;
 	border: 1.5px solid var(--s-border-input);
@@ -924,10 +925,15 @@
 	position: relative;
 }
 
+#signa-app-shell .signa-choice-card.is-row-card {
+	flex-direction: row;
+	align-items: center;
+}
+
 #signa-app-shell .signa-choice-card:hover {
 	border-color: var(--s-primary);
 	background: var(--s-bg-hover);
-	transform: translateY(-1px);
+	transform: translateY(-2px);
 }
 
 #signa-app-shell .signa-choice-card input[type="radio"] {
@@ -939,12 +945,27 @@
 #signa-app-shell .signa-choice-card.selected {
 	border-color: var(--s-primary);
 	background: var(--s-primary-soft);
-	box-shadow: 0 0 0 1px var(--s-primary), 0 8px 20px -6px rgba(37, 99, 235, 0.25);
+	box-shadow: 0 0 0 1px var(--s-primary), 0 8px 22px -6px rgba(37, 99, 235, 0.28);
+}
+
+.signa-choice-card-top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	width: 100%;
+}
+
+.signa-choice-top-left {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	flex-shrink: 0;
 }
 
 .signa-choice-icon-svg {
-	width: 44px;
-	height: 44px;
+	width: 42px;
+	height: 42px;
 	border-radius: 12px;
 	background: rgba(59, 130, 246, 0.14);
 	color: #3b82f6;
@@ -985,12 +1006,12 @@
 	border-color: rgba(245, 158, 11, 0.25);
 }
 
-/* MULTI-ICON FLOW BADGES (e.g. [SMS] -> [Bale], [Phone] + [Email]) */
+/* MULTI-ICON FLOW BADGES (e.g. [SMS Icon] <- [Bale Logo], [Phone] + [Email]) */
 .signa-flow-icons {
 	display: inline-flex;
 	align-items: center;
-	gap: 5px;
-	padding: 6px 9px;
+	gap: 6px;
+	padding: 5px 8px;
 	border-radius: 12px;
 	background: var(--s-bg-surface);
 	border: 1px solid var(--s-border-input);
@@ -999,52 +1020,91 @@
 }
 
 .signa-flow-node {
-	width: 30px;
-	height: 30px;
-	border-radius: 8px;
+	height: 32px;
+	min-width: 32px;
+	padding: 0 8px;
+	border-radius: 9px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	gap: 5px;
+	font-size: 11.5px;
+	font-weight: 800;
 	flex-shrink: 0;
+	transition: transform 0.18s ease;
+}
+
+.signa-flow-node svg {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+#signa-app-shell .signa-choice-card:hover .signa-flow-node {
+	transform: scale(1.03);
 }
 
 .signa-flow-node.is-sms {
 	background: rgba(59, 130, 246, 0.16);
 	color: #3b82f6;
+	border: 1px solid rgba(59, 130, 246, 0.26);
 }
 
 .signa-flow-node.is-bale {
-	background: rgba(16, 185, 129, 0.18);
+	background: linear-gradient(135deg, rgba(0, 200, 150, 0.2), rgba(16, 185, 129, 0.16));
 	color: #10b981;
+	border: 1px solid rgba(16, 185, 129, 0.32);
+}
+
+.signa-flow-node.is-bale-brand {
+	background: linear-gradient(135deg, #00c896 0%, #059669 100%);
+	color: #ffffff;
+	border: none;
+	box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+}
+
+.signa-flow-node.is-sms-brand {
+	background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+	color: #ffffff;
+	border: none;
+	box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
 }
 
 .signa-flow-node.is-email {
 	background: rgba(168, 85, 247, 0.16);
 	color: #a855f7;
+	border: 1px solid rgba(168, 85, 247, 0.26);
 }
 
 .signa-flow-node.is-phone {
 	background: rgba(6, 182, 212, 0.16);
 	color: #06b6d4;
+	border: 1px solid rgba(6, 182, 212, 0.26);
 }
 
 .signa-flow-sep {
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: 900;
 	color: var(--s-text-muted);
-	padding: 0 1px;
+	padding: 0 2px;
 	display: inline-flex;
 	align-items: center;
+	justify-content: center;
+}
+
+.signa-flow-sep svg {
+	width: 15px;
+	height: 15px;
 }
 
 .signa-choice-tag {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
 	font-size: 10.5px;
 	font-weight: 700;
-	padding: 1px 7px;
+	padding: 2px 8px;
 	border-radius: 99px;
-	margin-right: 6px;
-	vertical-align: middle;
+	white-space: nowrap;
 }
 
 .signa-choice-tag.is-green {
@@ -1060,6 +1120,27 @@
 .signa-choice-tag.is-purple {
 	background: rgba(168, 85, 247, 0.16);
 	color: #a855f7;
+}
+
+.signa-choice-tag.is-blue {
+	background: rgba(59, 130, 246, 0.16);
+	color: #3b82f6;
+}
+
+.signa-choice-title {
+	display: block;
+	font-size: 14px;
+	font-weight: 800;
+	color: var(--s-text);
+	line-height: 1.45;
+}
+
+.signa-choice-desc {
+	display: block;
+	font-size: 12px;
+	color: var(--s-text-muted);
+	line-height: 1.6;
+	margin-top: 3px;
 }
 
 /* VISUAL FAILOVER PIPELINE IN SMS TAB */
@@ -1115,18 +1196,80 @@
 	font-weight: 900;
 }
 
+/* LIVE FAILOVER VISUAL ROUTE STRIP & INLINE QUICK SMS TEST BAR */
+.signa-live-route-strip {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 10px;
+	padding: 12px 16px;
+	border-radius: 12px;
+	background: var(--s-bg-subtle);
+	border: 1px dashed var(--s-border-input);
+	margin-top: 14px;
+}
+
+.signa-route-nodes {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.signa-route-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 11px;
+	border-radius: 99px;
+	font-size: 12px;
+	font-weight: 700;
+	background: var(--s-bg-surface);
+	border: 1px solid var(--s-border-input);
+	color: var(--s-text);
+}
+
+.signa-route-pill.is-primary {
+	background: var(--s-primary-soft);
+	border-color: var(--s-primary);
+	color: var(--s-primary);
+}
+
+.signa-inline-test-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 14px;
+	margin-top: 22px;
+	padding: 16px 20px;
+	border-radius: 14px;
+	background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(16, 185, 129, 0.08));
+	border: 1px solid rgba(37, 99, 235, 0.25);
+}
+
+.signa-inline-test-controls {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex: 1;
+	max-width: 460px;
+}
+
 .signa-choice-body {
 	display: flex;
 	flex-direction: column;
-	gap: 4px;
+	gap: 3px;
 	flex: 1;
 	min-width: 0;
 }
 
 .signa-choice-body strong {
-	font-size: 13.5px;
+	font-size: 14px;
 	font-weight: 800;
 	color: var(--s-text);
+	line-height: 1.45;
 }
 
 .signa-choice-body small {
