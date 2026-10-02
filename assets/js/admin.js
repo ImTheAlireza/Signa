@@ -13,21 +13,24 @@
 			if (toastTimer) {
 				clearTimeout(toastTimer);
 			}
+			var cleanMsg = String(msg || '').replace(/^[\u2700-\u27BF\uD83C-\uDBFF\uDC00-\uDFFF\s]+/, '');
+			var iconSvg = isError
+				? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+				: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
 			$toast
 				.toggleClass('is-error', !!isError)
-				.find('.signa-toast-text')
-				.text(msg);
+				.find('.signa-toast-icon')
+				.html(iconSvg);
+			$toast.find('.signa-toast-text').text(cleanMsg);
 			$toast.fadeIn(180);
 			toastTimer = setTimeout(function () {
 				$toast.fadeOut(220);
 			}, 3400);
 		}
 
-		// 1. Dark Mode Toggle with localStorage persistence (Linear Stroke SVG Icons)
+		// 1. Dark Mode Toggle with localStorage persistence (Linear Stroke SVG Icons controlled by .is-dark)
 		function applyDarkMode(isDark) {
-			$shell.toggleClass('is-dark', isDark);
-			$('.signa-icon-moon').toggle(!isDark);
-			$('.signa-icon-sun').toggle(!!isDark);
+			$shell.toggleClass('is-dark', !!isDark);
 		}
 
 		try {
@@ -113,20 +116,22 @@
 				return;
 			}
 			var primaryTitle = $('.signa-gw-select-card.selected').attr('data-gw-title') || 'درگاه اصلی';
-			var html = '<span class="signa-route-pill is-primary">🟢 اصلی: ' + primaryTitle + '</span>';
+			var svgSignal = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-left:4px;"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>';
+			var svgShield = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;margin-left:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
+			var html = '<span class="signa-route-pill is-primary">' + svgSignal + 'اصلی: ' + primaryTitle + '</span>';
 
 			var b1 = $('#backup_sms_gateway_1');
 			var b2 = $('#backup_sms_gateway_2');
 			var b3 = $('#backup_sms_gateway_3');
 
 			if (b1.length && b1.val() && b1.val() !== 'none') {
-				html += '<span class="signa-flow-sep">&larr;</span><span class="signa-route-pill">🛡️ پشتیبان ۱: ' + b1.find('option:selected').text().trim() + '</span>';
+				html += '<span class="signa-flow-sep">&larr;</span><span class="signa-route-pill">' + svgShield + 'پشتیبان ۱: ' + b1.find('option:selected').text().trim() + '</span>';
 			}
 			if (b2.length && b2.val() && b2.val() !== 'none') {
-				html += '<span class="signa-flow-sep">&larr;</span><span class="signa-route-pill">🛡️ پشتیبان ۲: ' + b2.find('option:selected').text().trim() + '</span>';
+				html += '<span class="signa-flow-sep">&larr;</span><span class="signa-route-pill">' + svgShield + 'پشتیبان ۲: ' + b2.find('option:selected').text().trim() + '</span>';
 			}
 			if (b3.length && b3.val() && b3.val() !== 'none') {
-				html += '<span class="signa-flow-sep">&larr;</span><span class="signa-route-pill">🛡️ پشتیبان ۳: ' + b3.find('option:selected').text().trim() + '</span>';
+				html += '<span class="signa-flow-sep">&larr;</span><span class="signa-route-pill">' + svgShield + 'پشتیبان ۳: ' + b3.find('option:selected').text().trim() + '</span>';
 			}
 			$container.html(html);
 		}

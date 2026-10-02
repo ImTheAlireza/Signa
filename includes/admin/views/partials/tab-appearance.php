@@ -138,7 +138,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<div class="signa-studio-preview-col">
 							<div class="signa-preview-box">
 								<div class="signa-preview-toolbar">
-									<span>👁️ پیش‌نمایش زنده فرم</span>
+									<span style="display:inline-flex;align-items:center;gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> پیش‌نمایش زنده فرم</span>
 									<div class="signa-preview-step-btns">
 										<button type="button" class="signa-prev-step-btn active" data-step="1">مرحله ۱: شماره</button>
 										<button type="button" class="signa-prev-step-btn" data-step="2">مرحله ۲: کد تایید</button>

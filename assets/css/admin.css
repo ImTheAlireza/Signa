@@ -207,16 +207,18 @@
 }
 
 #signa-app-shell .signa-icon-btn {
-	width: 40px;
-	height: 40px;
+	width: 40px !important;
+	height: 40px !important;
+	padding: 0 !important;
+	margin: 0;
 	border-radius: 10px;
 	border: 1px solid var(--s-border-input);
 	background: var(--s-bg-subtle);
 	color: var(--s-text);
 	cursor: pointer;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
 	font-size: 16px;
 	outline: none !important;
 	box-shadow: none !important;
@@ -226,6 +228,43 @@
 #signa-app-shell .signa-icon-btn:hover {
 	background: var(--s-bg-hover);
 	border-color: var(--s-primary);
+	color: var(--s-primary);
+}
+
+#signa-app-shell .signa-dark-icon {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 20px !important;
+	height: 20px !important;
+	line-height: 0;
+}
+
+#signa-app-shell .signa-icon-moon {
+	display: block !important;
+	width: 20px !important;
+	height: 20px !important;
+	flex-shrink: 0 !important;
+}
+
+#signa-app-shell .signa-icon-sun {
+	display: none !important;
+	width: 20px !important;
+	height: 20px !important;
+	flex-shrink: 0 !important;
+}
+
+#signa-app-shell.is-dark .signa-icon-moon {
+	display: none !important;
+}
+
+#signa-app-shell.is-dark .signa-icon-sun {
+	display: block !important;
+}
+
+#signa-app-shell .signa-topbar svg {
+	flex-shrink: 0 !important;
+	display: block;
 }
 
 #signa-app-shell .signa-btn-secondary {

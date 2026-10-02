@@ -146,7 +146,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<!-- 1. Sandbox Box -->
 						<div class="signa-gateway-box" data-gateway="sandbox">
 							<div class="signa-gw-box-head">
-								<h3>🧪 حالت تست لوکال (Sandbox)</h3>
+								<h3 style="display:inline-flex;align-items:center;gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6m-5 0v5.172a2 2 0 0 1-.586 1.414l-4.828 4.828A2 2 0 0 0 4 15.828V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3.172a2 2 0 0 0-.586-1.414l-4.828-4.828A2 2 0 0 1 14 8.172V3"/></svg> حالت تست لوکال (Sandbox)</h3>
 								<span class="signa-pill is-warn">بدون ارسال پیامک واقعی</span>
 							</div>
 							<p class="description">در این حالت پیامکی ارسال نمی‌شود و کد تایید در «لاگ کدها» ثبت می‌گردد تا بدون نیاز به شارژ پنل، فرم ورود را تست کنید.</p>
