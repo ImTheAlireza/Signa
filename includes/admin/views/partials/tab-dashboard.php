@@ -34,6 +34,71 @@ $strategy_labels = array(
 $active_strategy_label = isset( $strategy_labels[ $settings['mobile_delivery_channel'] ] )
 	? $strategy_labels[ $settings['mobile_delivery_channel'] ]
 	: $settings['mobile_delivery_channel'];
+
+$step1_done = ( 'sandbox' !== $settings['active_sms_gateway'] ) || ! empty( $settings['bale_client_id'] ) || ! empty( $settings['bale_bot_token'] );
+$step2_done = ! empty( $settings['mobile_delivery_channel'] );
+$step3_done = ! empty( $settings['enable_passkey'] );
+$step4_done = 'none' !== $settings['captcha_type'];
+$step5_done = ! empty( $settings['wc_replace_myaccount'] ) || ! empty( $settings['enable_global_modal'] ) || ( isset( $settings['wp_login_integration'] ) && 'disabled' !== $settings['wp_login_integration'] );
+
+$checklist_steps = array(
+	array(
+		'done'        => $step1_done,
+		'title'       => '۱. اتصال درگاه پیامک یا پیام‌رسان بله',
+		'desc'        => $step1_done
+			? sprintf( 'درگاه «%s» متصل و آماده ارسال کد به کاربران است.', $active_gw_title )
+			: 'درگاه فعلی روی حالت آزمایشی (Sandbox) است؛ کلید API اپراتور پیامک یا سفیر بله را وارد کنید.',
+		'status_text' => $step1_done ? 'متصل و فعال' : 'در انتظار اتصال',
+		'btn_text'    => 'تنظیم درگاه پیامک',
+		'target_tab'  => 'sms_gateways',
+	),
+	array(
+		'done'        => $step2_done,
+		'title'       => '۲. انتخاب مسیر ارسال کد و عضویت خودکار',
+		'desc'        => sprintf( 'استراتژی فعلی: «%s» با کد %d رقمی.', $active_strategy_label, (int) $settings['otp_length'] ),
+		'status_text' => 'پیکربندی شده',
+		'btn_text'    => 'سناریوی ورود',
+		'target_tab'  => 'auth_flow',
+	),
+	array(
+		'done'        => $step3_done,
+		'title'       => '۳. فعال‌سازی ورود بیومتریک بدون رمز (Passkey)',
+		'desc'        => $step3_done
+			? 'ورود سریع با اثر انگشت و تشخیص چهره (FaceID / TouchID) برای مشتریان فعال است.'
+			: 'با فعال‌سازی Passkey، کاربران در مراجعات بعدی بدون نیاز به پیامک با اثر انگشت وارد می‌شوند.',
+		'status_text' => $step3_done ? 'فعال شده' : 'پیشنهادی',
+		'btn_text'    => 'تنظیم Passkey',
+		'target_tab'  => 'auth_flow',
+	),
+	array(
+		'done'        => $step4_done,
+		'title'       => '۴. ایمن‌سازی فرم در برابر ربات‌ها (کپچا و فایروال)',
+		'desc'        => $step4_done
+			? sprintf( 'سپر امنیتی «%s» به همراه محدودیت %d درخواست در ساعت فعال است.', $active_captcha_label, (int) $settings['max_requests_per_hour'] )
+			: 'برای جلوگیری از ارسال پیامک‌های جعلی، آرکپچا یا کپچای ریاضی را فعال نمایید.',
+		'status_text' => $step4_done ? 'محافظت فعال' : 'پیشنهاد امنیتی',
+		'btn_text'    => 'امنیت و فایروال',
+		'target_tab'  => 'security_firewall',
+	),
+	array(
+		'done'        => $step5_done,
+		'title'       => '۵. نمایش فرم ورود در سایت (ووکامرس / المنتور / شورت‌کد)',
+		'desc'        => 'جایگزینی خودکار فرم حساب کاربری ووکامرس، ویجت اختصاصی المنتور یا شورت‌کد [signa_otp_form].',
+		'status_text' => $step5_done ? 'متصل به سایت' : 'آماده جایگذاری',
+		'btn_text'    => 'ووکامرس و المنتور',
+		'target_tab'  => 'woocommerce',
+		'shortcode'   => '[signa_otp_form]',
+	),
+);
+
+$checklist_completed = 0;
+foreach ( $checklist_steps as $c_step ) {
+	if ( ! empty( $c_step['done'] ) ) {
+		++$checklist_completed;
+	}
+}
+$checklist_total   = count( $checklist_steps );
+$checklist_percent = (int) round( ( $checklist_completed / $checklist_total ) * 100 );
 ?>
 				<section class="signa-panel active" id="signa-tab-dashboard">
 					<!-- Quick Configuration & Jump Bar -->
@@ -183,6 +248,66 @@ $active_strategy_label = isset( $strategy_labels[ $settings['mobile_delivery_cha
 							<div class="signa-kpi-number-box is-red">
 								<strong><?php echo esc_html( number_format_i18n( $stats['failed'] ) ); ?></strong>
 							</div>
+						</div>
+					</div>
+
+					<!-- Quick Setup Checklist for Customers (چک‌لیست راه‌اندازی سریع) -->
+					<div class="signa-card signa-setup-checklist-card" style="margin-bottom:20px;">
+						<div class="signa-card-head">
+							<div class="signa-card-head-title">
+								<span class="signa-card-icon is-green">
+									<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+								</span>
+								<div>
+									<h2>چک‌لیست راه‌اندازی سریع افزونه</h2>
+									<p>راهنمای گام‌به‌گام برای اتصال درگاه، شخصی‌سازی و فعال‌سازی ورود پیامکی و بیومتریک در سایت</p>
+								</div>
+							</div>
+
+							<div class="signa-checklist-progress-wrap">
+								<div class="signa-checklist-progress-meta">
+									<span class="signa-checklist-progress-label"><?php echo esc_html( sprintf( '%d از %d گام تکمیل شده', $checklist_completed, $checklist_total ) ); ?></span>
+									<strong class="signa-checklist-progress-pct">%<?php echo esc_html( (string) $checklist_percent ); ?></strong>
+								</div>
+								<div class="signa-checklist-progress-bar">
+									<div class="signa-checklist-progress-fill" style="width:<?php echo esc_attr( (string) $checklist_percent ); ?>%;"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="signa-checklist-list">
+							<?php foreach ( $checklist_steps as $step_idx => $c_step ) : ?>
+								<div class="signa-checklist-row <?php echo ! empty( $c_step['done'] ) ? 'is-done' : 'is-pending'; ?>">
+									<div class="signa-checklist-main">
+										<span class="signa-checklist-check <?php echo ! empty( $c_step['done'] ) ? 'is-done' : 'is-pending'; ?>">
+											<?php if ( ! empty( $c_step['done'] ) ) : ?>
+												<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+											<?php else : ?>
+												<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+											<?php endif; ?>
+										</span>
+										<div class="signa-checklist-text">
+											<strong><?php echo esc_html( $c_step['title'] ); ?></strong>
+											<p><?php echo esc_html( $c_step['desc'] ); ?></p>
+										</div>
+									</div>
+
+									<div class="signa-checklist-actions">
+										<?php if ( ! empty( $c_step['shortcode'] ) ) : ?>
+											<button type="button" class="signa-copy-btn" data-copy="<?php echo esc_attr( $c_step['shortcode'] ); ?>" title="کپی شورت‌کد فرم ورود">
+												کپی <code><?php echo esc_html( $c_step['shortcode'] ); ?></code>
+											</button>
+										<?php endif; ?>
+										<span class="signa-pill <?php echo ! empty( $c_step['done'] ) ? 'is-ok' : 'is-warn'; ?>">
+											<?php echo esc_html( $c_step['status_text'] ); ?>
+										</span>
+										<button type="button" class="signa-checklist-jump signa-jump-tab" data-target-tab="<?php echo esc_attr( $c_step['target_tab'] ); ?>">
+											<span><?php echo esc_html( $c_step['btn_text'] ); ?></span>
+											<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+										</button>
+									</div>
+								</div>
+							<?php endforeach; ?>
 						</div>
 					</div>
 

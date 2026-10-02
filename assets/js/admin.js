@@ -23,10 +23,11 @@
 			}, 3400);
 		}
 
-		// 1. Dark Mode Toggle with localStorage persistence
+		// 1. Dark Mode Toggle with localStorage persistence (Linear Stroke SVG Icons)
 		function applyDarkMode(isDark) {
 			$shell.toggleClass('is-dark', isDark);
-			$('.signa-dark-icon').text(isDark ? '☀️' : '🌙');
+			$('.signa-icon-moon').toggle(!isDark);
+			$('.signa-icon-sun').toggle(!!isDark);
 		}
 
 		try {
