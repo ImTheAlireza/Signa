@@ -46,6 +46,7 @@ class Signa_Helper {
 			'terms_url'                 => '',
 			'redirect_behavior'         => 'auto',            // auto | referer | custom | myaccount
 			'redirect_url'              => '',
+			'custom_redirect_url'       => '',
 			'admin_redirect_url'        => '',
 			'send_welcome_message'      => 0,
 			'welcome_message_text'      => 'به {site_name} خوش آمدید! حساب کاربری شما با موفقیت ایجاد شد.',

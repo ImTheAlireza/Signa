@@ -39,7 +39,7 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 		#signa-app-shell.is-dark .signa-icon-moon { display: none !important; }
 		#signa-app-shell.is-dark .signa-icon-sun { display: block !important; }
 	</style>
-	<form id="signa-settings-form" method="post" action="">
+	<form id="signa-settings-form" method="post" action="" novalidate="novalidate">
 		<?php wp_nonce_field( 'signa_save_settings_action', 'signa_settings_nonce' ); ?>
 		<input type="hidden" name="signa_save_settings" value="1" />
 

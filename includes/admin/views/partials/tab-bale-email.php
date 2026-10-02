@@ -133,7 +133,7 @@ $bale_mode = isset( $settings['bale_mode'] ) ? $settings['bale_mode'] : 'safir';
 								</div>
 								<div class="signa-field">
 									<label for="email_from_address">ایمیل فرستنده</label>
-									<input type="email" name="signa[email_from_address]" id="email_from_address" value="<?php echo esc_attr( $settings['email_from_address'] ); ?>" dir="ltr" placeholder="noreply@yoursite.com" />
+									<input type="text" name="signa[email_from_address]" id="email_from_address" value="<?php echo esc_attr( $settings['email_from_address'] ); ?>" dir="ltr" placeholder="noreply@yoursite.com" />
 								</div>
 								<div class="signa-field">
 									<label for="email_subject">عنوان ایمیل</label>

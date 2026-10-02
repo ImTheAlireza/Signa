@@ -91,7 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<div class="signa-field" style="margin-top:16px;">
 									<label for="logo_url">تصویر لوگوی بالای فرم (اختیاری)</label>
 									<div style="display:flex;gap:8px;">
-										<input type="url" name="signa[logo_url]" id="logo_url" value="<?php echo esc_attr( $settings['logo_url'] ); ?>" dir="ltr" placeholder="https://example.com/logo.png" style="flex:1;" />
+										<input type="text" name="signa[logo_url]" id="logo_url" value="<?php echo esc_attr( $settings['logo_url'] ); ?>" dir="ltr" placeholder="https://example.com/logo.png" style="flex:1;" />
 										<button type="button" id="signa_upload_logo_btn" class="signa-btn-secondary">انتخاب از رسانه</button>
 									</div>
 								</div>

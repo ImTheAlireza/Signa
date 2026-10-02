@@ -427,9 +427,12 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 							</div>
 
 							<!-- Progressive disclosure: only show Custom Redirect URL when 'custom' is selected -->
+							<?php
+							$custom_redir_val = ! empty( $settings['custom_redirect_url'] ) ? $settings['custom_redirect_url'] : ( isset( $settings['redirect_url'] ) ? $settings['redirect_url'] : '' );
+							?>
 							<div class="signa-field" id="signa-custom-redirect-wrap" style="margin-top:14px; <?php echo 'custom' === $settings['redirect_behavior'] ? '' : 'display:none;'; ?>">
 								<label for="custom_redirect_url">آدرس لینک مقصد دلخواه</label>
-								<input type="url" name="signa[custom_redirect_url]" id="custom_redirect_url" value="<?php echo esc_attr( $settings['custom_redirect_url'] ); ?>" dir="ltr" placeholder="https://yoursite.com/dashboard" />
+								<input type="text" name="signa[custom_redirect_url]" id="custom_redirect_url" value="<?php echo esc_attr( $custom_redir_val ); ?>" dir="ltr" placeholder="https://yoursite.com/dashboard" />
 							</div>
 
 							<div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
@@ -464,7 +467,7 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 								</div>
 								<div class="signa-field">
 									<label for="terms_url">لینک برگه قوانین (اختیاری)</label>
-									<input type="url" name="signa[terms_url]" id="terms_url" value="<?php echo esc_attr( $settings['terms_url'] ); ?>" dir="ltr" placeholder="https://example.com/terms" />
+									<input type="text" name="signa[terms_url]" id="terms_url" value="<?php echo esc_attr( $settings['terms_url'] ); ?>" dir="ltr" placeholder="https://example.com/terms" />
 								</div>
 							</div>
 						</div>

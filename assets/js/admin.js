@@ -36,6 +36,9 @@
 		try {
 			var savedDark = localStorage.getItem('signa_admin_dark_mode') === '1';
 			applyDarkMode(savedDark);
+			if (window.location.search && window.location.search.indexOf('settings-updated=true') !== -1) {
+				showToast('تنظیمات با موفقیت ذخیره شد!', false);
+			}
 		} catch (e) {}
 
 		$('#signa-theme-toggle').on('click', function () {
@@ -418,23 +421,38 @@
 			markFormDirty();
 		});
 
-		$settingsForm.on('submit', function (e) {
-			e.preventDefault();
+		var isSavingSettings = false;
+
+		function performAjaxSave() {
+			if (isSavingSettings || !$settingsForm.length) {
+				return;
+			}
+			isSavingSettings = true;
+
 			var rawArray = $settingsForm.serializeArray();
 			var formData = [];
 			for (var i = 0; i < rawArray.length; i++) {
-				if (rawArray[i].name !== 'signa_save_settings' && rawArray[i].name !== 'signa_settings_nonce') {
+				if (rawArray[i].name !== 'signa_save_settings') {
 					formData.push(rawArray[i]);
 				}
 			}
 			formData.push({ name: 'action', value: 'signa_admin_save_settings' });
-			formData.push({ name: 'nonce', value: signaAdminParams.nonce });
+			if (typeof signaAdminParams !== 'undefined' && signaAdminParams.nonce) {
+				formData.push({ name: 'nonce', value: signaAdminParams.nonce });
+			}
+
+			var ajaxEndpoint =
+				typeof signaAdminParams !== 'undefined' && signaAdminParams.ajaxUrl
+					? signaAdminParams.ajaxUrl
+					: typeof window.ajaxurl !== 'undefined'
+					? window.ajaxurl
+					: '';
 
 			$saveBtn.prop('disabled', true);
 			$saveBtn.find('.signa-save-label').text('در حال ذخیره...');
 
 			$.ajax({
-				url: signaAdminParams.ajaxUrl,
+				url: ajaxEndpoint,
 				type: 'POST',
 				dataType: 'json',
 				data: $.param(formData)
@@ -442,28 +460,40 @@
 				.done(function (res) {
 					if (res && res.success) {
 						clearFormDirty();
-						showToast('✅ ' + res.data.message, false);
-						if (res.data.settings) {
+						showToast((res.data && res.data.message) || 'تنظیمات با موفقیت ذخیره شد!', false);
+						if (res.data && res.data.settings) {
 							$('#signa_export_json_box').val(JSON.stringify(res.data.settings));
 						}
 					} else {
-						showToast('❌ خطا در ذخیره تنظیمات', true);
+						var errMsg = res && res.data && res.data.message ? res.data.message : 'خطا در ذخیره تنظیمات';
+						showToast(errMsg, true);
 					}
 				})
 				.fail(function () {
-					showToast('❌ خطا در ارتباط با سرور وردپرس', true);
+					showToast('خطا در ارتباط با سرور وردپرس', true);
 				})
 				.always(function () {
+					isSavingSettings = false;
 					$saveBtn.prop('disabled', false);
 					$saveBtn.find('.signa-save-label').text('ذخیره تغییرات');
 				});
+		}
+
+		$settingsForm.on('submit', function (e) {
+			e.preventDefault();
+			performAjaxSave();
+		});
+
+		$saveBtn.on('click', function (e) {
+			e.preventDefault();
+			performAjaxSave();
 		});
 
 		$(document).on('keydown', function (e) {
-			if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+			if ((e.ctrlKey || e.metaKey) && e.key && e.key.toLowerCase() === 's') {
 				if ($settingsForm.length) {
 					e.preventDefault();
-					$settingsForm.trigger('submit');
+					performAjaxSave();
 				}
 			}
 		});

@@ -102,14 +102,14 @@ class Signa_Admin {
 		$js_ver  = SIGNA_OTP_VERSION . '.' . ( file_exists( SIGNA_OTP_PATH . 'assets/js/admin.js' ) ? filemtime( SIGNA_OTP_PATH . 'assets/js/admin.js' ) : '1' );
 
 		wp_enqueue_style(
-			'signa-otp-admin-v264',
+			'signa-otp-admin-v265',
 			SIGNA_OTP_URL . 'assets/css/admin.css',
 			array(),
 			$css_ver
 		);
 
 		wp_enqueue_script(
-			'signa-otp-admin-v264',
+			'signa-otp-admin-v265',
 			SIGNA_OTP_URL . 'assets/js/admin.js',
 			array( 'jquery' ),
 			$js_ver,
@@ -117,7 +117,7 @@ class Signa_Admin {
 		);
 
 		wp_localize_script(
-			'signa-otp-admin-v264',
+			'signa-otp-admin-v265',
 			'signaAdminParams',
 			array(
 				'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
@@ -179,6 +179,7 @@ class Signa_Admin {
 
 		$url_keys = array(
 			'redirect_url',
+			'custom_redirect_url',
 			'admin_redirect_url',
 			'terms_url',
 			'logo_url',
@@ -197,6 +198,12 @@ class Signa_Admin {
 			} else {
 				$clean[ $key ] = isset( $raw[ $key ] ) ? sanitize_text_field( $raw[ $key ] ) : $default_val;
 			}
+		}
+
+		if ( ! empty( $clean['custom_redirect_url'] ) && empty( $clean['redirect_url'] ) ) {
+			$clean['redirect_url'] = $clean['custom_redirect_url'];
+		} elseif ( ! empty( $clean['redirect_url'] ) && empty( $clean['custom_redirect_url'] ) ) {
+			$clean['custom_redirect_url'] = $clean['redirect_url'];
 		}
 
 		$clean['otp_length']     = max( 4, min( 8, $clean['otp_length'] ) );
@@ -272,13 +279,18 @@ class Signa_Admin {
 	 * AJAX Handler: Live Save Settings without page reload
 	 */
 	public function ajax_save_settings() {
-		check_ajax_referer( 'signa_admin_nonce', 'nonce' );
+		$nonce_ok = false;
+		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'signa_admin_nonce' ) ) {
+			$nonce_ok = true;
+		} elseif ( isset( $_POST['signa_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['signa_settings_nonce'] ) ), 'signa_save_settings_action' ) ) {
+			$nonce_ok = true;
+		}
 
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! $nonce_ok || ! current_user_can( 'manage_options' ) ) {
 			if ( ob_get_length() ) {
 				ob_clean();
 			}
-			wp_send_json_error( array( 'message' => 'دسترسی غیرمجاز.' ) );
+			wp_send_json_error( array( 'message' => 'نشست امنیتی منقضی شده است؛ لطفاً صفحه را رفرش کنید.' ) );
 		}
 
 		$raw   = isset( $_POST['signa'] ) && is_array( $_POST['signa'] ) ? wp_unslash( $_POST['signa'] ) : array();
