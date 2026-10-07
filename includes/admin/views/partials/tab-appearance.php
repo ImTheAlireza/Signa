@@ -1451,24 +1451,34 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 						function syncStudioCat2(e){
 							var triggeredById = (e && e.target && e.target.id) ? e.target.id : '';
+							var isWidePreview = $('.signa-studio-layout').hasClass('is-wide-preview');
 							var primary = $('#primary_color').val() || '#2563eb';
 							var secondary = $('#secondary_color').val() || '#4f46e5';
 							var btnBgMode = $('#button_bg_mode').val() || 'solid';
 							var bg = $('#card_bg_color').val() || '#ffffff';
 							var text = $('#text_color').val() || '#111827';
-							var radius = $('#border_radius').val() || 16;
+							var radius = parseFloat($('#border_radius').val() || 16);
 							var isGlass = $('#glassmorphism').is(':checked');
 							var cardOpacity = parseFloat($('#card_bg_opacity').val() || 85);
 							var blurPx = parseFloat($('#backdrop_blur').val() || 16);
 							var cardShadow = $('#card_shadow').val() || 'medium';
 							var cardBorder = $('#card_border_style').val() || 'subtle';
-							var cardPadding = $('#card_padding').val() || 32;
+							var cardPadding = parseFloat($('#card_padding').val() || 32);
 							var bgPattern = $('input[name="signa[bg_pattern]"]:checked').val() || 'none';
 							var canvasBgStyle = $('#canvas_bg_style').val() || 'mesh_light';
 							var canvasBgColor = $('#canvas_bg_color').val() || '#f1f5f9';
 							var canvasBgImg = ($('#canvas_bg_image').val() || '').trim();
 							var splitBgColor = $('#split_bg_color').val() || '#1e3a8a';
 							var splitImgUrl = ($('#split_image_url').val() || '').trim();
+							var splitBadge = $('#split_badge_text').val() || '';
+							var splitTitle = $('#split_title').val() || '';
+							var splitSub = $('#split_subtitle').val() || '';
+							var splitFeatures = ($('#split_features').val() || '').split('\n');
+							var logoUrl = ($('#logo_url').val() || '').trim();
+							var formTitle = $('#form_title').val() || 'ورود / ثبت‌نام';
+							var formSubtitle = $('#form_subtitle').val() || 'برای ادامه، شماره موبایل یا ایمیل خود را وارد کنید.';
+							var btn1Text = $('#button_text').val() || 'دریافت کد تایید';
+							var btn2Text = $('#verify_button_text').val() || 'تایید و ورود به حساب';
 							var formLayout = $('input[name="signa[form_layout]"]:checked').val() || 'card';
 							var cardPosition = $('input[name="signa[card_position]"]:checked').val() || 'center';
 							var modalStyle = $('input[name="signa[modal_style]"]:checked').val() || 'center';
@@ -1493,6 +1503,15 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var isSplit = (formLayout === 'split_right' || formLayout === 'split_left');
 							var isDrawerOrSheet = (currentPreviewMode === 'modal' && (modalStyle === 'drawer_left' || modalStyle === 'drawer_right' || modalStyle === 'bottom_sheet'));
 							var showSplitBanner = isSplit && !isDrawerOrSheet;
+
+							// Progressive disclosure for Split-Screen & Canvas background sub-controls
+							if (isSplit) {
+								$('#signa-split-banner-settings').slideDown(180);
+							} else {
+								$('#signa-split-banner-settings').slideUp(180);
+							}
+							$('#signa-canvas-color-wrap').toggle(canvasBgStyle === 'solid' || canvasBgStyle === 'mesh_light');
+							$('#signa-canvas-image-wrap').toggle(canvasBgStyle === 'custom_image');
 
 							// Automatically widen preview column slightly when Split-Screen is active so both columns fit inside 100% of the canvas without overflowing
 							$('.signa-studio-layout').toggleClass('is-split-preview-active', showSplitBanner);
@@ -1569,7 +1588,13 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('#signa-prev-split-banner').css('color', splitTextColor);
 							$('#signa-prev-split-title, #signa-prev-split-subtitle, #signa-prev-split-features').css('color', splitTextColor);
 
+							$('#primary_color_hex').text(primary);
 							$('#secondary_color_hex').text(secondary);
+							$('#card_bg_color_hex').text(bg);
+							$('#text_color_hex').text(text);
+							$('#split_bg_color_hex').text(splitBgColor);
+							$('#canvas_bg_color_hex').text(canvasBgColor);
+							$('#radius_val_label').text(radius + 'px');
 							$('#opacity_val_label').text(cardOpacity + '%');
 							$('#blur_val_label').text(blurPx + 'px');
 							$('#padding_val_label').text(cardPadding + 'px');
@@ -1581,6 +1606,44 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('#input_border_color_hex').text(inputBorder);
 							$('#digit_size_val_label').text(digitSize + 'px');
 							$('#digit_gap_val_label').text(digitGap + 'px');
+
+							// Sync Logo, Title, Subtitle, Button Labels, and Split-Screen Banner Content
+							$('#signa-prev-badge-icon').css('color', primary);
+							$('#signa-prev-title').text(formTitle);
+							$('#signa-prev-subtitle').text(formSubtitle);
+							$('#signa-prev-btn-1').text(btn1Text);
+							$('#signa-prev-btn-2').text(btn2Text);
+							if (logoUrl) {
+								$('#signa-prev-logo-img').attr('src', logoUrl);
+								$('#signa-prev-logo-wrap').show();
+								$('#signa-prev-badge-icon').hide();
+							} else {
+								$('#signa-prev-logo-wrap').hide();
+								$('#signa-prev-badge-icon').css('display', 'inline-flex');
+							}
+
+							if (showSplitBanner) {
+								$('#signa-prev-split-banner').css({
+									display: 'flex',
+									backgroundColor: splitBgColor,
+									backgroundImage: splitImgUrl
+										? 'linear-gradient(135deg, rgba(15,23,42,0.72), rgba(30,58,138,0.78)), url(' + splitImgUrl + ')'
+										: 'radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 65%)'
+								});
+								$('#signa-prev-split-badge').text(splitBadge).toggle(!!splitBadge);
+								$('#signa-prev-split-title').text(splitTitle);
+								$('#signa-prev-split-subtitle').text(splitSub);
+								var featHtml = '';
+								for (var f = 0; f < splitFeatures.length; f++) {
+									var line = $.trim(splitFeatures[f]);
+									if (line) {
+										featHtml += '<li style="display:flex;align-items:center;gap:8px;margin:0;"><span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:rgba(16,185,129,0.28);color:#6ee7b7;align-items:center;justify-content:center;flex-shrink:0;">✓</span><span>' + $('<div>').text(line).html() + '</span></li>';
+									}
+								}
+								$('#signa-prev-split-features').html(featHtml);
+							} else {
+								$('#signa-prev-split-banner').hide();
+							}
 
 							if (isGlass) { $('#signa-glassmorphism-controls').slideDown(180); } else { $('#signa-glassmorphism-controls').slideUp(180); }
 							$('#signa-secondary-color-wrap').css('opacity', btnBgMode === 'gradient' ? '1' : '0.65');
@@ -1645,42 +1708,74 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							else if (cardBorder === 'glow') { borderCss = '1.5px solid ' + hexRgba(primary, 65); borderTopCss = borderCss; }
 							else if (cardBorder === 'top_accent') { borderTopCss = '4px solid ' + primary; }
 
+							// Compute exact corner border-radius for Shell, Card, and Split Banner so corners never poke out
+							var radNum = Math.max(0, Math.round(radius));
+							var innerRad = Math.max(0, radNum - 1) + 'px';
+							var shellRadiusCss = radNum + 'px';
+							var cardRadiusCss = innerRad;
+							var bannerRadiusCss = '0';
+
+							if (currentPreviewMode === 'modal' && modalStyle === 'bottom_sheet') {
+								shellRadiusCss = '22px 22px 0 0';
+								cardRadiusCss = '21px 21px 0 0';
+							} else if (currentPreviewMode === 'modal' && modalStyle === 'drawer_left') {
+								shellRadiusCss = '0 16px 16px 0';
+								cardRadiusCss = '0 15px 15px 0';
+							} else if (currentPreviewMode === 'modal' && modalStyle === 'drawer_right') {
+								shellRadiusCss = '16px 0 0 16px';
+								cardRadiusCss = '15px 0 0 15px';
+							} else if (showSplitBanner) {
+								if (formLayout === 'split_left') {
+									// In RTL row-reverse: Form Card is on LEFT, Split Banner is on RIGHT
+									cardRadiusCss = innerRad + ' 0 0 ' + innerRad;
+									bannerRadiusCss = '0 ' + innerRad + ' ' + innerRad + ' 0';
+								} else {
+									// In RTL row: Form Card is on RIGHT, Split Banner is on LEFT
+									cardRadiusCss = '0 ' + innerRad + ' ' + innerRad + ' 0';
+									bannerRadiusCss = innerRad + ' 0 0 ' + innerRad;
+								}
+							}
+
+							var singleCardMaxW = isWidePreview ? '470px' : '350px';
 							var $shell = $('#signa-live-preview-shell');
 							$shell.toggleClass('is-split', showSplitBanner);
 							var shellDom = document.getElementById('signa-live-preview-shell');
 							if (shellDom) {
 								shellDom.style.setProperty('width', '100%', 'important');
-								shellDom.style.setProperty('max-width', showSplitBanner ? '100%' : '340px', 'important');
+								shellDom.style.setProperty('max-width', showSplitBanner ? '100%' : singleCardMaxW, 'important');
 								shellDom.style.setProperty('box-sizing', 'border-box', 'important');
 								shellDom.style.setProperty('transform', 'none', 'important');
 								shellDom.style.setProperty('margin', '0', 'important');
+								shellDom.style.setProperty('border-radius', shellRadiusCss, 'important');
 								shellDom.style.setProperty('flex-direction', formLayout === 'split_left' ? 'row-reverse' : 'row', 'important');
 								shellDom.style.setProperty('box-shadow', shadowCss, 'important');
 								shellDom.style.setProperty('border', borderCss, 'important');
 								shellDom.style.setProperty('border-top', borderTopCss, 'important');
 								shellDom.style.setProperty('background', 'transparent', 'important');
 							}
-							$('#signa-prev-split-banner').toggle(showSplitBanner);
 
 							// 3. Apply Glassmorphism Backdrop Blur directly via native setProperty (with dark glass adaptation if background is dark)
 							var effectiveCardBgHex = (isGlass && isDarkFormSurface && cardLum > 0.7) ? '#0f172a' : bg;
 							var effectiveGlassOpacity = isGlass ? Math.min(cardOpacity, 88) : 100;
 							var cardBgValue = isGlass ? hexRgba(effectiveCardBgHex, effectiveGlassOpacity) : bg;
 							var blurValue = isGlass ? ('blur(' + blurPx + 'px) saturate(160%)') : 'none';
-							var previewScaleFactor = showSplitBanner ? 0.62 : 0.85;
+							var previewScaleFactor = isWidePreview ? (showSplitBanner ? 0.88 : 1.0) : (showSplitBanner ? 0.62 : 0.85);
 
 							var cardEl = document.getElementById('signa-live-preview-card');
 							if (cardEl) {
+								$(cardEl).toggleClass('is-dark-preview-card', isDarkFormSurface);
 								cardEl.style.setProperty('background', cardBgValue, 'important');
 								cardEl.style.setProperty('backdrop-filter', blurValue, 'important');
 								cardEl.style.setProperty('-webkit-backdrop-filter', blurValue, 'important');
 								cardEl.style.setProperty('color', text, 'important');
 								cardEl.style.setProperty('padding', Math.round(cardPadding * previewScaleFactor) + 'px', 'important');
+								cardEl.style.setProperty('border-radius', cardRadiusCss, 'important');
 							}
 
 							var splitBannerEl = document.getElementById('signa-prev-split-banner');
 							if (splitBannerEl && showSplitBanner) {
 								splitBannerEl.style.setProperty('padding', Math.round(cardPadding * previewScaleFactor) + 'px', 'important');
+								splitBannerEl.style.setProperty('border-radius', bannerRadiusCss, 'important');
 							}
 
 							// Ensure title, subtitle, and labels smoothly fade to the detected text color
@@ -1697,10 +1792,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							};
 							var activeFont = fontMap[fontKey] || fontMap.vazirmatn;
 							$('#signa-live-preview-shell, #signa-live-preview-shell *').css('font-family', activeFont);
-							var previewTitleSize = showSplitBanner ? Math.max(13, Math.round(titleSize * 0.78)) : titleSize;
-							var previewSubSize = showSplitBanner ? Math.max(10.5, Math.round(subSize * 0.82)) : subSize;
-							var previewBtnSize = showSplitBanner ? Math.max(12, Math.round(btnSize * 0.84)) : btnSize;
-							var previewInputH = showSplitBanner ? Math.max(36, Math.round(inputHeight * 0.82)) : inputHeight;
+							var previewTitleSize = isWidePreview ? (showSplitBanner ? titleSize : Math.round(titleSize * 1.08)) : (showSplitBanner ? Math.max(13, Math.round(titleSize * 0.78)) : titleSize);
+							var previewSubSize = isWidePreview ? (showSplitBanner ? subSize : Math.round(subSize * 1.04)) : (showSplitBanner ? Math.max(11, Math.round(subSize * 0.82)) : subSize);
+							var previewBtnSize = isWidePreview ? (showSplitBanner ? btnSize : Math.round(btnSize * 1.05)) : (showSplitBanner ? Math.max(12.5, Math.round(btnSize * 0.84)) : btnSize);
+							var previewInputH = isWidePreview ? (showSplitBanner ? inputHeight : Math.round(inputHeight * 1.06)) : (showSplitBanner ? Math.max(38, Math.round(inputHeight * 0.84)) : inputHeight);
 
 							$('#signa-prev-title').css('font-size', previewTitleSize + 'px');
 							$('#signa-prev-subtitle').css('font-size', previewSubSize + 'px');
@@ -1708,6 +1803,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var $prevInput = $('#signa-live-preview-card input.signa-prev-input');
 							var inputRad = inputStyle === 'soft_pill' ? '99px' : inputStyle === 'underlined' ? '0' : Math.round(radius * 0.68) + 'px';
 							var btnRad = inputStyle === 'soft_pill' ? '99px' : Math.round(radius * 0.68) + 'px';
+							var inputFontSize = (showSplitBanner && !isWidePreview) ? '12px' : (isWidePreview ? '14px' : '13px');
 
 							if ($prevInput.length) {
 								if (inputStyle === 'underlined') {
@@ -1726,6 +1822,8 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								}
 								$prevInput[0].style.setProperty('color', text, 'important');
 								$prevInput[0].style.setProperty('height', previewInputH + 'px', 'important');
+								$prevInput[0].style.setProperty('font-size', inputFontSize, 'important');
+								$prevInput[0].style.setProperty('padding-right', '14px', 'important');
 							}
 
 							var $addon = $('#signa-prev-input-addon');
@@ -1750,8 +1848,9 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							});
 
 							// Category 4: Sync OTP Digit Boxes & Countdown Timer in Step 2
-							var scaledDigitSize = showSplitBanner ? Math.max(30, Math.round(digitSize * 0.72)) : Math.round(digitSize * 0.88);
-							var scaledDigitGap = showSplitBanner ? Math.max(3, Math.round(digitGap * 0.65)) : digitGap;
+							var scaledDigitSize = isWidePreview ? (showSplitBanner ? Math.round(digitSize * 0.92) : digitSize) : (showSplitBanner ? Math.max(30, Math.round(digitSize * 0.72)) : Math.round(digitSize * 0.88));
+							var scaledDigitGap = (showSplitBanner && !isWidePreview) ? Math.max(3, Math.round(digitGap * 0.65)) : digitGap;
+							var maxSingleDigitW = 'calc((100% - ' + (scaledDigitGap * 4) + 'px) / 5)';
 							var $digitsWrap = $('#signa-prev-digits');
 							var $digits = $('.signa-prev-digit');
 
@@ -1769,6 +1868,8 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									$(this).css({
 										flex: '1',
 										width: 'auto',
+										maxWidth: '20%',
+										boxSizing: 'border-box',
 										height: scaledDigitSize + 'px',
 										lineHeight: scaledDigitSize + 'px',
 										border: 'none',
@@ -1794,8 +1895,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									var isFocusIdx = (idx === 2);
 									if (digitStyle === 'underline') {
 										$(this).css({
-											flex: '0 0 auto',
+											flex: '1 1 0',
 											width: Math.round(scaledDigitSize * 0.86) + 'px',
+											maxWidth: maxSingleDigitW,
+											boxSizing: 'border-box',
 											height: scaledDigitSize + 'px',
 											lineHeight: scaledDigitSize + 'px',
 											border: 'none',
@@ -1808,8 +1911,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										});
 									} else if (digitStyle === 'pill') {
 										$(this).css({
-											flex: '0 0 auto',
+											flex: '1 1 0',
 											width: Math.round(scaledDigitSize * 0.88) + 'px',
+											maxWidth: maxSingleDigitW,
+											boxSizing: 'border-box',
 											height: scaledDigitSize + 'px',
 											lineHeight: scaledDigitSize + 'px',
 											border: '1.5px solid ' + (isFocusIdx ? primary : inputBorder),
@@ -1821,8 +1926,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										});
 									} else if (digitStyle === 'separated_glow') {
 										$(this).css({
-											flex: '0 0 auto',
+											flex: '1 1 0',
 											width: Math.round(scaledDigitSize * 0.88) + 'px',
+											maxWidth: maxSingleDigitW,
+											boxSizing: 'border-box',
 											height: scaledDigitSize + 'px',
 											lineHeight: scaledDigitSize + 'px',
 											border: '1.5px solid ' + primary,
@@ -1834,8 +1941,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										});
 									} else {
 										$(this).css({
-											flex: '0 0 auto',
+											flex: '1 1 0',
 											width: Math.round(scaledDigitSize * 0.88) + 'px',
+											maxWidth: maxSingleDigitW,
+											boxSizing: 'border-box',
 											height: scaledDigitSize + 'px',
 											lineHeight: scaledDigitSize + 'px',
 											border: '1.5px solid ' + (isFocusIdx ? primary : inputBorder),
@@ -1879,6 +1988,9 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								);
 							}
 						}
+
+						// Expose unified authoritative Live Preview renderer so admin.js delegates to it without conflict
+						window.signaSyncLivePreview = syncStudioCat2;
 
 						// Mode Tabs (Page vs Modal Simulation)
 						$('.signa-prev-mode-btn').on('click', function(){
@@ -1953,10 +2065,24 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							syncStudioCat2();
 						});
 
-						// Toggle Wide Preview Column
-						$('#signa-prev-expand-btn').on('click', function(){
-							$(this).toggleClass('active');
-							$('.signa-studio-layout').toggleClass('is-wide-preview');
+						// Toggle Wide / Zoomed Preview Column & Card Size
+						$('#signa-prev-expand-btn').off('click').on('click', function(){
+							var $btn = $(this);
+							$btn.toggleClass('active');
+							var isNowWide = $btn.hasClass('active');
+							$('.signa-studio-layout').toggleClass('is-wide-preview', isNowWide);
+							$btn.find('span').text(isNowWide ? 'کوچک‌نمایی' : 'بزرگ‌نمایی');
+							syncStudioCat2();
+						});
+
+						// Preset Theme Buttons Sync
+						$('.signa-preset-btn').off('click.signaPreset').on('click.signaPreset', function(){
+							var $btn = $(this);
+							$('#primary_color').val($btn.attr('data-primary'));
+							$('#card_bg_color').val($btn.attr('data-bg'));
+							$('#text_color').val($btn.attr('data-text'));
+							$('#border_radius').val($btn.attr('data-radius'));
+							syncStudioCat2();
 						});
 
 						$('#signa-tab-appearance_studio').on('input change', 'input, select, textarea', syncStudioCat2);

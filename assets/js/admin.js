@@ -287,8 +287,12 @@
 			return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
 		}
 
-		// 5. Interactive Appearance Studio & Live Preview (Categories 1 & 2)
-		function refreshLivePreview() {
+		// 5. Interactive Appearance Studio & Live Preview (Categories 1–4)
+		function refreshLivePreview(e) {
+			if (typeof window.signaSyncLivePreview === 'function') {
+				window.signaSyncLivePreview(e);
+				return;
+			}
 			var primary = $('#primary_color').val() || '#2563eb';
 			var secondary = $('#secondary_color').val() || '#4f46e5';
 			var btnBgMode = $('#button_bg_mode').val() || 'solid';
