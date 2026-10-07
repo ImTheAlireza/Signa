@@ -136,6 +136,17 @@ class Signa_Helper {
 			'canvas_bg_image'           => '',
 			'canvas_show_back_link'     => 1,
 
+			// 4.2. Card Styling, Glassmorphism, Shadows, Gradients & Patterns (Category 2)
+			'secondary_color'           => '#4f46e5',
+			'button_bg_mode'            => 'solid',           // solid | gradient
+			'glassmorphism'             => 0,
+			'card_bg_opacity'           => 85,                // 20..100 (%)
+			'backdrop_blur'             => 16,                // 0..32 (px)
+			'card_shadow'               => 'medium',          // none | soft | medium | deep | glow
+			'card_border_style'         => 'subtle',          // subtle | none | glow | top_accent
+			'card_padding'              => 32,                // 20..48 (px)
+			'bg_pattern'                => 'none',            // none | dots | grid | waves | geometric
+
 			// 5. WooCommerce & Integrations
 			'wc_replace_myaccount'      => 1,
 			'wc_checkout_otp_box'       => 1,
@@ -410,5 +421,27 @@ class Signa_Helper {
 			$size,
 			esc_url( $local_url )
 		);
+	}
+
+	/**
+	 * Convert a hex color (#ffffff) and percentage opacity (0..100) into an rgba() CSS value
+	 *
+	 * @param string $hex         Hex color code.
+	 * @param int    $opacity_pct Opacity percentage (0 to 100).
+	 * @return string
+	 */
+	public static function hex_to_rgba( $hex, $opacity_pct = 100 ) {
+		$hex = ltrim( trim( (string) $hex ), '#' );
+		if ( 3 === strlen( $hex ) ) {
+			$hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+		}
+		if ( 6 !== strlen( $hex ) || ! ctype_xdigit( $hex ) ) {
+			return 'rgba(255, 255, 255, 0.85)';
+		}
+		$r     = hexdec( substr( $hex, 0, 2 ) );
+		$g     = hexdec( substr( $hex, 2, 2 ) );
+		$b     = hexdec( substr( $hex, 4, 2 ) );
+		$alpha = max( 0, min( 100, (int) $opacity_pct ) ) / 100;
+		return sprintf( 'rgba(%d, %d, %d, %s)', $r, $g, $b, rtrim( rtrim( number_format( $alpha, 2, '.', '' ), '0' ), '.' ) ?: '0' );
 	}
 }

@@ -274,9 +274,24 @@
 			});
 		});
 
-		// 5. Interactive Appearance Studio & Live Preview (Including Category 1: Split-Screen, Alignment & Canvas)
+		// Helper: Convert hex color (#ffffff) + opacity (0..100) to rgba()
+		function hexToRgbaJs(hex, opacityPct) {
+			var c = String(hex || '#ffffff').replace('#', '').trim();
+			if (c.length === 3) {
+				c = c[0] + c[0] + c[1] + c[1] + c[2] + c[2];
+			}
+			var r = parseInt(c.substring(0, 2), 16) || 255;
+			var g = parseInt(c.substring(2, 4), 16) || 255;
+			var b = parseInt(c.substring(4, 6), 16) || 255;
+			var a = Math.max(0.2, Math.min(1, (parseFloat(opacityPct) || 100) / 100));
+			return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+		}
+
+		// 5. Interactive Appearance Studio & Live Preview (Categories 1 & 2)
 		function refreshLivePreview() {
 			var primary = $('#primary_color').val() || '#2563eb';
+			var secondary = $('#secondary_color').val() || '#4f46e5';
+			var btnBgMode = $('#button_bg_mode').val() || 'solid';
 			var bg = $('#card_bg_color').val() || '#ffffff';
 			var text = $('#text_color').val() || '#111827';
 			var radius = $('#border_radius').val() || 16;
@@ -286,6 +301,14 @@
 			var subtitle = $('#form_subtitle').val() || '';
 			var btn1 = $('#button_text').val() || 'دریافت کد تایید';
 			var btn2 = $('#verify_button_text').val() || 'تایید و ورود به حساب';
+
+			var isGlass = $('#glassmorphism').is(':checked');
+			var cardOpacity = $('#card_bg_opacity').val() || 85;
+			var blurPx = $('#backdrop_blur').val() || 16;
+			var cardShadow = $('#card_shadow').val() || 'medium';
+			var cardBorder = $('#card_border_style').val() || 'subtle';
+			var cardPadding = $('#card_padding').val() || 32;
+			var bgPattern = $('input[name="signa[bg_pattern]"]:checked').val() || 'none';
 
 			var formLayout = $('input[name="signa[form_layout]"]:checked').val() || 'card';
 			var cardPosition = $('input[name="signa[card_position]"]:checked').val() || 'center';
@@ -300,13 +323,17 @@
 			var canvasBgImg = ($('#canvas_bg_image').val() || '').trim();
 
 			$('#primary_color_hex').text(primary);
+			$('#secondary_color_hex').text(secondary);
 			$('#card_bg_color_hex').text(bg);
 			$('#text_color_hex').text(text);
 			$('#split_bg_color_hex').text(splitBg);
 			$('#canvas_bg_color_hex').text(canvasBgColor);
 			$('#radius_val_label').text(radius + 'px');
+			$('#opacity_val_label').text(cardOpacity + '%');
+			$('#blur_val_label').text(blurPx + 'px');
+			$('#padding_val_label').text(cardPadding + 'px');
 
-			// Progressive disclosure for Split-Screen settings & Canvas background
+			// Progressive disclosure for Split-Screen, Glassmorphism & Button Gradient
 			var isSplit = formLayout === 'split_right' || formLayout === 'split_left';
 			if (isSplit) {
 				$('#signa-split-banner-settings').slideDown(180);
@@ -314,17 +341,24 @@
 				$('#signa-split-banner-settings').slideUp(180);
 			}
 
+			if (isGlass) {
+				$('#signa-glassmorphism-controls').slideDown(180);
+			} else {
+				$('#signa-glassmorphism-controls').slideUp(180);
+			}
+
+			$('#signa-secondary-color-wrap').css('opacity', btnBgMode === 'gradient' ? '1' : '0.65');
 			$('#signa-canvas-color-wrap').toggle(canvasBgStyle === 'solid' || canvasBgStyle === 'mesh_light');
 			$('#signa-canvas-image-wrap').toggle(canvasBgStyle === 'custom_image');
 
-			// Update Canvas Alignment & Background in Live Preview
+			// Update Canvas Alignment, Background & SVG Pattern in Live Preview
 			var $canvas = $('#signa-preview-canvas');
 			var alignFlex = cardPosition === 'right' ? 'flex-start' : cardPosition === 'left' ? 'flex-end' : 'center';
 			var canvasBgCss = '';
 			if (canvasBgStyle === 'mesh_dark') {
 				canvasBgCss = 'radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 60%, #020617 100%)';
 			} else if (canvasBgStyle === 'brand_gradient') {
-				canvasBgCss = 'linear-gradient(135deg, ' + primary + '26 0%, #f8fafc 60%, ' + primary + '14 100%)';
+				canvasBgCss = 'linear-gradient(135deg, ' + primary + '26 0%, #f8fafc 60%, ' + secondary + '1f 100%)';
 			} else if (canvasBgStyle === 'custom_image' && canvasBgImg) {
 				canvasBgCss = 'linear-gradient(rgba(15,23,42,0.45), rgba(15,23,42,0.45)), url(' + canvasBgImg + ') center/cover no-repeat';
 			} else if (canvasBgStyle === 'solid') {
@@ -332,10 +366,53 @@
 			} else {
 				canvasBgCss = 'radial-gradient(circle at top right, #e0e7ff 0%, ' + canvasBgColor + ' 65%)';
 			}
+
+			var patternLayer = '';
+			var patternSize = 'auto';
+			if (bgPattern === 'dots') {
+				patternLayer = 'radial-gradient(rgba(99, 102, 241, 0.22) 1.25px, transparent 1.25px), ';
+				patternSize = '18px 18px, auto';
+			} else if (bgPattern === 'grid') {
+				patternLayer =
+					'linear-gradient(to right, rgba(148, 163, 184, 0.16) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.16) 1px, transparent 1px), ';
+				patternSize = '22px 22px, 22px 22px, auto';
+			} else if (bgPattern === 'waves') {
+				patternLayer = 'repeating-radial-gradient(circle at 0 0, transparent 0, rgba(99, 102, 241, 0.07) 12px, transparent 24px), ';
+			} else if (bgPattern === 'geometric') {
+				patternLayer =
+					'linear-gradient(30deg, rgba(99, 102, 241, 0.08) 12%, transparent 12.5%, transparent 87%, rgba(99, 102, 241, 0.08) 87.5%), ';
+				patternSize = '28px 48px, auto';
+			}
+
 			$canvas.css({
 				alignItems: alignFlex,
-				background: canvasBgCss
+				background: patternLayer + canvasBgCss,
+				backgroundSize: patternSize
 			});
+
+			// Compute Shadow & Border CSS for Shell
+			var shadowCss = '0 14px 32px -6px rgba(15, 23, 42, 0.12)';
+			if (cardShadow === 'none') {
+				shadowCss = 'none';
+			} else if (cardShadow === 'soft') {
+				shadowCss = '0 4px 16px -2px rgba(15, 23, 42, 0.06)';
+			} else if (cardShadow === 'deep') {
+				shadowCss = '0 26px 58px -10px rgba(15, 23, 42, 0.28), 0 10px 24px -6px rgba(15, 23, 42, 0.14)';
+			} else if (cardShadow === 'glow') {
+				shadowCss = '0 0 34px -2px ' + hexToRgbaJs(primary, 45) + ', 0 12px 28px -6px rgba(15, 23, 42, 0.16)';
+			}
+
+			var borderCss = '1px solid rgba(156, 163, 175, 0.25)';
+			var borderTopCss = borderCss;
+			if (cardBorder === 'none') {
+				borderCss = 'none';
+				borderTopCss = 'none';
+			} else if (cardBorder === 'glow') {
+				borderCss = '1.5px solid ' + hexToRgbaJs(primary, 65);
+				borderTopCss = borderCss;
+			} else if (cardBorder === 'top_accent') {
+				borderTopCss = '4px solid ' + primary;
+			}
 
 			// Update Shell & Split Banner in Live Preview
 			var $shell = $('#signa-live-preview-shell');
@@ -345,12 +422,19 @@
 			$shell.css({
 				maxWidth: isSplit ? '100%' : '360px',
 				borderRadius: radius + 'px',
-				flexDirection: formLayout === 'split_left' ? 'row-reverse' : 'row'
+				flexDirection: formLayout === 'split_left' ? 'row-reverse' : 'row',
+				boxShadow: shadowCss,
+				border: borderCss,
+				borderTop: borderTopCss
 			});
 
+			var effectiveCardBg = isGlass ? hexToRgbaJs(bg, cardOpacity) : bg;
 			$card.css({
-				background: bg,
+				background: effectiveCardBg,
+				backdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
+				webkitBackdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
 				color: text,
+				padding: Math.round(cardPadding * 0.78) + 'px',
 				borderRadius: '0'
 			});
 
@@ -381,15 +465,17 @@
 				$banner.hide();
 			}
 
+			var btnBackground = btnBgMode === 'gradient' ? 'linear-gradient(135deg, ' + primary + ', ' + secondary + ')' : primary;
+
 			$('#signa-prev-badge-icon').css('color', primary);
 			$('#signa-prev-title').text(title);
 			$('#signa-prev-subtitle').text(subtitle);
 			$('#signa-prev-btn-1').text(btn1).css({
-				background: primary,
+				background: btnBackground,
 				borderRadius: Math.round(radius * 0.68) + 'px'
 			});
 			$('#signa-prev-btn-2').text(btn2).css({
-				background: primary,
+				background: btnBackground,
 				borderRadius: Math.round(radius * 0.68) + 'px'
 			});
 
@@ -429,8 +515,9 @@
 		}
 
 		$(
-			'#primary_color, #card_bg_color, #text_color, #border_radius, #digit_box_style, #logo_url, #form_title, #form_subtitle, #button_text, #verify_button_text, input[name="signa[form_layout]"], input[name="signa[card_position]"], #split_bg_color, #split_image_url, #split_badge_text, #split_title, #split_subtitle, #split_features, #canvas_bg_style, #canvas_bg_color, #canvas_bg_image'
+			'#primary_color, #secondary_color, #button_bg_mode, #card_bg_color, #text_color, #border_radius, #digit_box_style, #logo_url, #form_title, #form_subtitle, #button_text, #verify_button_text, #glassmorphism, #card_bg_opacity, #backdrop_blur, #card_shadow, #card_border_style, #card_padding, input[name="signa[bg_pattern]"], input[name="signa[form_layout]"], input[name="signa[card_position]"], #split_bg_color, #split_image_url, #split_badge_text, #split_title, #split_subtitle, #split_features, #canvas_bg_style, #canvas_bg_color, #canvas_bg_image'
 		).on('input change', refreshLivePreview);
+		refreshLivePreview();
 
 		$('.signa-preset-btn').on('click', function () {
 			var $btn = $(this);

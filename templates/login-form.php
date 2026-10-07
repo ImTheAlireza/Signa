@@ -15,10 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 $login_mode       = Signa_Helper::get_option( 'login_mode', 'phone_and_email' );
 $otp_length       = absint( Signa_Helper::get_option( 'otp_length', 5 ) );
 $primary_color    = ! empty( $args['primary_color'] ) ? $args['primary_color'] : Signa_Helper::get_option( 'primary_color', '#2563eb' );
+$secondary_color  = ! empty( $args['secondary_color'] ) ? $args['secondary_color'] : Signa_Helper::get_option( 'secondary_color', '#4f46e5' );
+$button_bg_mode   = ! empty( $args['button_bg_mode'] ) ? $args['button_bg_mode'] : Signa_Helper::get_option( 'button_bg_mode', 'solid' );
 $card_bg_color    = ! empty( $args['card_bg_color'] ) ? $args['card_bg_color'] : Signa_Helper::get_option( 'card_bg_color', '#ffffff' );
 $text_color       = ! empty( $args['text_color'] ) ? $args['text_color'] : Signa_Helper::get_option( 'text_color', '#111827' );
 $border_radius    = isset( $args['border_radius'] ) && null !== $args['border_radius'] ? absint( $args['border_radius'] ) : absint( Signa_Helper::get_option( 'border_radius', 16 ) );
 $digit_box_style  = ! empty( $args['digit_box_style'] ) ? $args['digit_box_style'] : Signa_Helper::get_option( 'digit_box_style', 'box' );
+$glassmorphism    = isset( $args['glassmorphism'] ) && null !== $args['glassmorphism'] ? (bool) $args['glassmorphism'] : (bool) Signa_Helper::get_option( 'glassmorphism', 0 );
+$card_bg_opacity  = isset( $args['card_bg_opacity'] ) && null !== $args['card_bg_opacity'] ? absint( $args['card_bg_opacity'] ) : absint( Signa_Helper::get_option( 'card_bg_opacity', 85 ) );
+$backdrop_blur    = isset( $args['backdrop_blur'] ) && null !== $args['backdrop_blur'] ? absint( $args['backdrop_blur'] ) : absint( Signa_Helper::get_option( 'backdrop_blur', 16 ) );
+$card_shadow      = ! empty( $args['card_shadow'] ) ? $args['card_shadow'] : Signa_Helper::get_option( 'card_shadow', 'medium' );
+$card_border      = ! empty( $args['card_border_style'] ) ? $args['card_border_style'] : Signa_Helper::get_option( 'card_border_style', 'subtle' );
+$card_padding     = isset( $args['card_padding'] ) && null !== $args['card_padding'] ? absint( $args['card_padding'] ) : absint( Signa_Helper::get_option( 'card_padding', 32 ) );
 $logo_url         = trim( (string) Signa_Helper::get_option( 'logo_url', '' ) );
 $raw_max_width    = isset( $args['max_width'] ) && null !== $args['max_width'] ? absint( $args['max_width'] ) : absint( Signa_Helper::get_option( 'form_max_width', 420 ) );
 $max_width        = max( 320, min( 640, $raw_max_width ) );
@@ -73,17 +81,41 @@ $split_title      = Signa_Helper::get_option( 'split_title', 'ورود آسان 
 $split_subtitle   = Signa_Helper::get_option( 'split_subtitle', '' );
 $split_features   = array_filter( array_map( 'trim', explode( "\n", (string) Signa_Helper::get_option( 'split_features', '' ) ) ) );
 
+$effective_card_bg = $glassmorphism ? Signa_Helper::hex_to_rgba( $card_bg_color, $card_bg_opacity ) : $card_bg_color;
+$btn_bg_css        = ( 'gradient' === $button_bg_mode )
+	? sprintf( 'linear-gradient(135deg, %s, %s)', $primary_color, $secondary_color )
+	: $primary_color;
+$glow_shadow_rgba  = Signa_Helper::hex_to_rgba( $primary_color, 45 );
+$glow_border_rgba  = Signa_Helper::hex_to_rgba( $primary_color, 65 );
+
 $inline_vars = sprintf(
-	'--signa-primary:%s;--signa-bg:%s;--signa-text:%s;--signa-radius:%dpx;--signa-split-bg:%s;max-width:%dpx;',
+	'--signa-primary:%s;--signa-secondary:%s;--signa-btn-bg:%s;--signa-bg:%s;--signa-text:%s;--signa-radius:%dpx;--signa-split-bg:%s;--signa-blur:%dpx;--signa-card-pad:%dpx;--signa-glow-shadow:%s;--signa-glow-border:%s;max-width:%dpx;',
 	esc_attr( $primary_color ),
-	esc_attr( $card_bg_color ),
+	esc_attr( $secondary_color ),
+	esc_attr( $btn_bg_css ),
+	esc_attr( $effective_card_bg ),
 	esc_attr( $text_color ),
 	$border_radius,
 	esc_attr( $split_bg_color ),
+	$backdrop_blur,
+	$card_padding,
+	esc_attr( $glow_shadow_rgba ),
+	esc_attr( $glow_border_rgba ),
 	$wrapper_max_w
 );
+
+$wrapper_classes = sprintf(
+	'signa-otp-wrapper signa-digit-style-%s signa-layout-%s signa-pos-%s signa-shadow-%s signa-border-%s signa-btn-mode-%s%s',
+	esc_attr( $digit_box_style ),
+	esc_attr( $effective_layout ),
+	esc_attr( $card_position ),
+	esc_attr( $card_shadow ),
+	esc_attr( $card_border ),
+	esc_attr( $button_bg_mode ),
+	$glassmorphism ? ' signa-glassmorphism' : ''
+);
 ?>
-<div class="signa-otp-wrapper signa-digit-style-<?php echo esc_attr( $digit_box_style ); ?> signa-layout-<?php echo esc_attr( $effective_layout ); ?> signa-pos-<?php echo esc_attr( $card_position ); ?>" dir="rtl" style="<?php echo esc_attr( $inline_vars ); ?>" data-otp-length="<?php echo esc_attr( (string) $otp_length ); ?>" data-redirect="<?php echo esc_url( $redirect_to ); ?>" data-context="<?php echo esc_attr( $context ); ?>" data-passkey-prompt="<?php echo $enable_passkey && $passkey_prompt ? '1' : '0'; ?>">
+<div class="<?php echo esc_attr( $wrapper_classes ); ?>" dir="rtl" style="<?php echo esc_attr( $inline_vars ); ?>" data-otp-length="<?php echo esc_attr( (string) $otp_length ); ?>" data-redirect="<?php echo esc_url( $redirect_to ); ?>" data-context="<?php echo esc_attr( $context ); ?>" data-passkey-prompt="<?php echo $enable_passkey && $passkey_prompt ? '1' : '0'; ?>">
 	<div class="signa-otp-card">
 		<div class="signa-otp-header">
 			<?php if ( ! empty( $logo_url ) ) : ?>

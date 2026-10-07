@@ -156,6 +156,29 @@ class Signa_Elementor_Login_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'button_bg_mode',
+			array(
+				'label'   => 'حالت رنگ دکمه اصلی',
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => array(
+					''         => 'پیش‌فرض تنظیمات افزونه',
+					'solid'    => 'تک‌رنگ کلاسیک (Solid)',
+					'gradient' => 'گرادینت دو رنگ (Gradient)',
+				),
+			)
+		);
+
+		$this->add_control(
+			'secondary_color',
+			array(
+				'label'   => 'رنگ دوم گرادینت دکمه',
+				'type'    => \Elementor\Controls_Manager::COLOR,
+				'default' => Signa_Helper::get_option( 'secondary_color', '#4f46e5' ),
+			)
+		);
+
+		$this->add_control(
 			'card_bg_color',
 			array(
 				'label'   => 'رنگ پس‌زمینه کارت فرم',
@@ -170,6 +193,39 @@ class Signa_Elementor_Login_Widget extends \Elementor\Widget_Base {
 				'label'   => 'رنگ متون فرم',
 				'type'    => \Elementor\Controls_Manager::COLOR,
 				'default' => Signa_Helper::get_option( 'text_color', '#111827' ),
+			)
+		);
+
+		$this->add_control(
+			'card_shadow',
+			array(
+				'label'   => 'عمق سایه کارت (Elevation)',
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => array(
+					''       => 'پیش‌فرض تنظیمات افزونه',
+					'none'   => 'بدون سایه (Flat)',
+					'soft'   => 'سایه ملایم (Soft)',
+					'medium' => 'سایه استاندارد (Medium)',
+					'deep'   => 'سایه عمیق سه‌بعدی (Deep)',
+					'glow'   => 'هاله نوری همرنگ برند (Glow)',
+				),
+			)
+		);
+
+		$this->add_control(
+			'card_border_style',
+			array(
+				'label'   => 'استایل کادر دور کارت',
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => array(
+					''           => 'پیش‌فرض تنظیمات افزونه',
+					'subtle'     => 'کادر ظریف استاندارد (1px)',
+					'none'       => 'بدون کادر (Borderless)',
+					'top_accent' => 'نوار رنگی بالای کارت (Top Bar)',
+					'glow'       => 'کادر درخشان برند (Glowing)',
+				),
 			)
 		);
 
@@ -295,6 +351,8 @@ class Signa_Elementor_Login_Widget extends \Elementor\Widget_Base {
 				'verify_button_text' => $settings['verify_button_text'] ?? '',
 				'redirect'           => $redirect_url,
 				'primary_color'      => $settings['primary_color'] ?? '',
+				'secondary_color'    => $settings['secondary_color'] ?? '',
+				'button_bg_mode'     => $settings['button_bg_mode'] ?? '',
 				'card_bg_color'      => $settings['card_bg_color'] ?? '',
 				'text_color'         => $settings['text_color'] ?? '',
 				'digit_box_style'    => $settings['digit_box_style'] ?? '',
@@ -302,6 +360,8 @@ class Signa_Elementor_Login_Widget extends \Elementor\Widget_Base {
 				'max_width'          => $max_width,
 				'form_layout'        => $settings['form_layout'] ?? '',
 				'card_position'      => $settings['card_position'] ?? '',
+				'card_shadow'        => $settings['card_shadow'] ?? '',
+				'card_border_style'  => $settings['card_border_style'] ?? '',
 				'context'            => 'elementor',
 			)
 		);

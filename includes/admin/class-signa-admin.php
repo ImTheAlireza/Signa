@@ -163,6 +163,7 @@ class Signa_Admin {
 			'enable_global_modal',
 			'modal_mobile_sheet',
 			'canvas_show_back_link',
+			'glassmorphism',
 			'trust_proxy_headers',
 			'delete_data_on_uninstall',
 		);
@@ -174,6 +175,9 @@ class Signa_Admin {
 			'border_radius',
 			'form_max_width',
 			'standalone_page_id',
+			'card_bg_opacity',
+			'backdrop_blur',
+			'card_padding',
 			'max_requests_per_hour',
 			'max_ip_requests_per_hour',
 			'max_verify_attempts',
@@ -207,8 +211,12 @@ class Signa_Admin {
 				$clean[ $key ] = ! empty( $raw[ $key ] ) ? 1 : 0;
 			} elseif ( in_array( $key, $int_keys, true ) ) {
 				$val = isset( $raw[ $key ] ) ? absint( Signa_Helper::convert_digits( $raw[ $key ] ) ) : $default_val;
-				if ( 'border_radius' === $key ) {
+				if ( 'border_radius' === $key || 'backdrop_blur' === $key ) {
 					$clean[ $key ] = min( 32, $val );
+				} elseif ( 'card_bg_opacity' === $key ) {
+					$clean[ $key ] = max( 20, min( 100, $val > 0 ? $val : 85 ) );
+				} elseif ( 'card_padding' === $key ) {
+					$clean[ $key ] = max( 16, min( 56, $val > 0 ? $val : 32 ) );
 				} elseif ( 'standalone_page_id' === $key ) {
 					$clean[ $key ] = $val;
 				} else {

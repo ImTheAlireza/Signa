@@ -204,29 +204,48 @@ class Signa_Frontend {
 	private function render_standalone_canvas( $redirect_to = '', $context = 'wp-login' ) {
 		$this->enqueue_assets( true );
 
-		$primary_color  = Signa_Helper::get_option( 'primary_color', '#2563eb' );
-		$card_position  = Signa_Helper::get_option( 'card_position', 'center' );
-		$bg_style       = Signa_Helper::get_option( 'canvas_bg_style', 'mesh_light' );
-		$bg_color       = Signa_Helper::get_option( 'canvas_bg_color', '#f1f5f9' );
-		$bg_image       = trim( (string) Signa_Helper::get_option( 'canvas_bg_image', '' ) );
-		$show_back_link = (bool) Signa_Helper::get_option( 'canvas_show_back_link', 1 );
+		$primary_color   = Signa_Helper::get_option( 'primary_color', '#2563eb' );
+		$secondary_color = Signa_Helper::get_option( 'secondary_color', '#4f46e5' );
+		$card_position   = Signa_Helper::get_option( 'card_position', 'center' );
+		$bg_style        = Signa_Helper::get_option( 'canvas_bg_style', 'mesh_light' );
+		$bg_color        = Signa_Helper::get_option( 'canvas_bg_color', '#f1f5f9' );
+		$bg_image        = trim( (string) Signa_Helper::get_option( 'canvas_bg_image', '' ) );
+		$bg_pattern      = Signa_Helper::get_option( 'bg_pattern', 'none' );
+		$show_back_link  = (bool) Signa_Helper::get_option( 'canvas_show_back_link', 1 );
 
 		if ( 'mesh_dark' === $bg_style ) {
-			$canvas_bg_css  = 'background: radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 58%, #020617 100%);';
+			$base_bg        = 'radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 58%, #020617 100%)';
 			$back_link_dark = true;
 		} elseif ( 'brand_gradient' === $bg_style ) {
-			$canvas_bg_css  = sprintf( 'background: radial-gradient(circle at top right, %1$s28 0%%, #f8fafc 58%%, %1$s14 100%%);', esc_attr( $primary_color ) );
+			$base_bg        = sprintf( 'radial-gradient(circle at top right, %1$s28 0%%, #f8fafc 58%%, %2$s1a 100%%)', esc_attr( $primary_color ), esc_attr( $secondary_color ) );
 			$back_link_dark = false;
 		} elseif ( 'custom_image' === $bg_style && ! empty( $bg_image ) ) {
-			$canvas_bg_css  = sprintf( 'background: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.45)), url(%s) center/cover no-repeat fixed;', esc_url( $bg_image ) );
+			$base_bg        = sprintf( 'linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.45)), url(%s) center/cover no-repeat fixed', esc_url( $bg_image ) );
 			$back_link_dark = true;
 		} elseif ( 'solid' === $bg_style ) {
-			$canvas_bg_css  = sprintf( 'background: %s;', esc_attr( $bg_color ) );
+			$base_bg        = esc_attr( $bg_color );
 			$back_link_dark = false;
 		} else {
-			$canvas_bg_css  = sprintf( 'background: radial-gradient(circle at top right, #e0e7ff 0%%, #f8fafc 55%%, %s 100%%);', esc_attr( $bg_color ) );
+			$base_bg        = sprintf( 'radial-gradient(circle at top right, #e0e7ff 0%%, #f8fafc 55%%, %s 100%%)', esc_attr( $bg_color ) );
 			$back_link_dark = false;
 		}
+
+		$pattern_layer = '';
+		$pattern_size  = '';
+		if ( 'dots' === $bg_pattern ) {
+			$pattern_layer = 'radial-gradient(rgba(99, 102, 241, 0.22) 1.3px, transparent 1.3px), ';
+			$pattern_size  = 'background-size: 20px 20px, auto;';
+		} elseif ( 'grid' === $bg_pattern ) {
+			$pattern_layer = 'linear-gradient(to right, rgba(148, 163, 184, 0.16) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.16) 1px, transparent 1px), ';
+			$pattern_size  = 'background-size: 26px 26px, 26px 26px, auto;';
+		} elseif ( 'waves' === $bg_pattern ) {
+			$pattern_layer = 'repeating-radial-gradient(circle at 0 0, transparent 0, rgba(99, 102, 241, 0.065) 14px, transparent 28px), ';
+		} elseif ( 'geometric' === $bg_pattern ) {
+			$pattern_layer = 'linear-gradient(30deg, rgba(99, 102, 241, 0.075) 12%, transparent 12.5%, transparent 87%, rgba(99, 102, 241, 0.075) 87.5%), ';
+			$pattern_size  = 'background-size: 32px 56px, auto;';
+		}
+
+		$canvas_bg_css = sprintf( 'background: %s%s; %s', $pattern_layer, $base_bg, $pattern_size );
 
 		$align_items = 'center';
 		if ( 'right' === $card_position ) {

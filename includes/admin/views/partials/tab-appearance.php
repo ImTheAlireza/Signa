@@ -14,6 +14,10 @@ $form_layout    = isset( $settings['form_layout'] ) ? $settings['form_layout'] :
 $card_position  = isset( $settings['card_position'] ) ? $settings['card_position'] : 'center';
 $modal_style    = isset( $settings['modal_style'] ) ? $settings['modal_style'] : 'center';
 $canvas_bg      = isset( $settings['canvas_bg_style'] ) ? $settings['canvas_bg_style'] : 'mesh_light';
+$button_bg_mode = isset( $settings['button_bg_mode'] ) ? $settings['button_bg_mode'] : 'solid';
+$card_shadow    = isset( $settings['card_shadow'] ) ? $settings['card_shadow'] : 'medium';
+$card_border    = isset( $settings['card_border_style'] ) ? $settings['card_border_style'] : 'subtle';
+$bg_pattern     = isset( $settings['bg_pattern'] ) ? $settings['bg_pattern'] : 'none';
 $is_split       = in_array( $form_layout, array( 'split_right', 'split_left' ), true );
 $wp_pages       = get_pages( array( 'post_status' => 'publish' ) );
 $svg_check_mark = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
@@ -351,6 +355,177 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								</div>
 							</div>
 
+							<!-- CARD 2.5 (CATEGORY 2): Glassmorphism, Shadows, Borders, Gradients & SVG Background Patterns -->
+							<div class="signa-card" style="margin-bottom:20px;">
+								<div class="signa-card-head">
+									<div class="signa-card-head-title">
+										<span class="signa-card-icon is-amber">
+											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+										</span>
+										<div>
+											<h2>۳. استایل کارت، افکت شیشه‌ای (Glassmorphism) و سایه‌ها</h2>
+											<p>شخصی‌سازی افکت شیشه‌ای مات، عمق سایه، کادر دور کارت، گرادینت دکمه و پترن گرافیکی پس‌زمینه</p>
+										</div>
+									</div>
+									<span class="signa-pill is-ok">افکت‌های مدرن</span>
+								</div>
+
+								<!-- 1. Glassmorphism Switch & Sliders -->
+								<div class="signa-switch-row">
+									<div class="signa-switch-text">
+										<strong>افکت شیشه‌ای مات (Glassmorphism / Frosted Glass)</strong>
+										<p>شفاف شدن پس‌زمینه کارت به همراه تار شدن نوری تصویر یا گرادینت پشت کارت (Backdrop Blur).</p>
+									</div>
+									<label class="signa-switch">
+										<input type="checkbox" name="signa[glassmorphism]" id="glassmorphism" value="1" <?php checked( ! empty( $settings['glassmorphism'] ), true ); ?> />
+										<span class="signa-slider"></span>
+									</label>
+								</div>
+
+								<div id="signa-glassmorphism-controls" style="margin-top:12px;padding:16px;border-radius:12px;background:var(--s-bg-subtle);border:1px solid var(--s-border-input);<?php echo ! empty( $settings['glassmorphism'] ) ? '' : 'display:none;'; ?>">
+									<div class="signa-fields-grid signa-cols-2">
+										<div class="signa-field">
+											<label for="card_bg_opacity">شفافیت پس‌زمینه کارت (Opacity): <strong id="opacity_val_label"><?php echo esc_html( (string) $settings['card_bg_opacity'] ); ?>%</strong></label>
+											<input type="range" name="signa[card_bg_opacity]" id="card_bg_opacity" min="25" max="100" value="<?php echo esc_attr( (string) $settings['card_bg_opacity'] ); ?>" />
+										</div>
+										<div class="signa-field">
+											<label for="backdrop_blur">شدت ماتی شیشه (Backdrop Blur): <strong id="blur_val_label"><?php echo esc_html( (string) $settings['backdrop_blur'] ); ?>px</strong></label>
+											<input type="range" name="signa[backdrop_blur]" id="backdrop_blur" min="0" max="32" value="<?php echo esc_attr( (string) $settings['backdrop_blur'] ); ?>" />
+										</div>
+									</div>
+								</div>
+
+								<!-- 2. Card Shadow, Border Style & Inner Padding -->
+								<div class="signa-fields-grid signa-cols-3" style="margin-top:18px;">
+									<div class="signa-field">
+										<label for="card_shadow">عمق سایه کارت (Elevation)</label>
+										<select name="signa[card_shadow]" id="card_shadow">
+											<option value="none" <?php selected( $card_shadow, 'none' ); ?>>بدون سایه (Flat)</option>
+											<option value="soft" <?php selected( $card_shadow, 'soft' ); ?>>سایه ملایم و ظریف (Soft)</option>
+											<option value="medium" <?php selected( $card_shadow, 'medium' ); ?>>سایه استاندارد مدرن (Medium)</option>
+											<option value="deep" <?php selected( $card_shadow, 'deep' ); ?>>سایه عمیق و معلق (Deep 3D)</option>
+											<option value="glow" <?php selected( $card_shadow, 'glow' ); ?>>هاله نوری همرنگ برند (Brand Glow)</option>
+										</select>
+									</div>
+
+									<div class="signa-field">
+										<label for="card_border_style">استایل کادر دور کارت</label>
+										<select name="signa[card_border_style]" id="card_border_style">
+											<option value="subtle" <?php selected( $card_border, 'subtle' ); ?>>کادر ظریف استاندارد (1px)</option>
+											<option value="none" <?php selected( $card_border, 'none' ); ?>>بدون کادر (Borderless)</option>
+											<option value="top_accent" <?php selected( $card_border, 'top_accent' ); ?>>نوار رنگی برجسته بالای کارت (Top Bar)</option>
+											<option value="glow" <?php selected( $card_border, 'glow' ); ?>>کادر درخشان همرنگ برند (Glowing)</option>
+										</select>
+									</div>
+
+									<div class="signa-field">
+										<label for="card_padding">فاصله داخلی کارت (Padding): <strong id="padding_val_label"><?php echo esc_html( (string) $settings['card_padding'] ); ?>px</strong></label>
+										<input type="range" name="signa[card_padding]" id="card_padding" min="20" max="48" value="<?php echo esc_attr( (string) $settings['card_padding'] ); ?>" />
+									</div>
+								</div>
+
+								<!-- 3. Dual-Tone Button Gradient & Secondary Brand Color -->
+								<div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--s-border);">
+									<label class="signa-section-label">استایل رنگ دکمه‌ها و هدر کارت (تک‌رنگ یا گرادینت دو رنگ)</label>
+									<div class="signa-fields-grid signa-cols-2">
+										<div class="signa-field">
+											<label for="button_bg_mode">حالت رنگ دکمه اصلی</label>
+											<select name="signa[button_bg_mode]" id="button_bg_mode">
+												<option value="solid" <?php selected( $button_bg_mode, 'solid' ); ?>>تک‌رنگ یکدست کلاسیک (Solid Color)</option>
+												<option value="gradient" <?php selected( $button_bg_mode, 'gradient' ); ?>>گرادینت دو رنگ مدرن (Linear Gradient 135°)</option>
+											</select>
+										</div>
+
+										<div class="signa-field" id="signa-secondary-color-wrap" style="<?php echo 'gradient' === $button_bg_mode ? '' : 'opacity:0.65;'; ?>">
+											<label for="secondary_color">رنگ دوم گرادینت دکمه و المان‌ها</label>
+											<div class="signa-color-input-wrap">
+												<input type="color" name="signa[secondary_color]" id="secondary_color" value="<?php echo esc_attr( $settings['secondary_color'] ); ?>" />
+												<span id="secondary_color_hex"><?php echo esc_html( $settings['secondary_color'] ); ?></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- 4. SVG Background Patterns -->
+								<div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--s-border);">
+									<label class="signa-section-label">پترن و بافت گرافیکی پس‌زمینه (SVG Background Pattern)</label>
+									<div class="signa-choice-grid signa-cols-3">
+										<label class="signa-choice-card <?php echo 'none' === $bg_pattern ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[bg_pattern]" value="none" <?php checked( $bg_pattern, 'none' ); ?> />
+											<div class="signa-choice-card-top">
+												<span class="signa-flow-node is-phone">
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+												</span>
+												<span class="signa-choice-check"><?php echo $svg_check_mark; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+											</div>
+											<div class="signa-choice-body">
+												<strong>ساده (بدون پترن)</strong>
+												<small>پس‌زمینه صاف و یکدست بدون بافت</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'dots' === $bg_pattern ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[bg_pattern]" value="dots" <?php checked( $bg_pattern, 'dots' ); ?> />
+											<div class="signa-choice-card-top">
+												<span class="signa-flow-node is-sms">
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="6" cy="6" r="1"/><circle cx="12" cy="6" r="1"/><circle cx="18" cy="6" r="1"/><circle cx="6" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="18" cy="12" r="1"/><circle cx="6" cy="18" r="1"/><circle cx="12" cy="18" r="1"/><circle cx="18" cy="18" r="1"/></svg>
+												</span>
+												<div class="signa-choice-top-left">
+													<span class="signa-choice-tag is-blue">مدرن</span>
+													<span class="signa-choice-check"><?php echo $svg_check_mark; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+												</div>
+											</div>
+											<div class="signa-choice-body">
+												<strong>ماتریس نقطه‌ای (Dots)</strong>
+												<small>نقطه‌های ظریف و منظم به سبک پنل‌های SaaS</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'grid' === $bg_pattern ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[bg_pattern]" value="grid" <?php checked( $bg_pattern, 'grid' ); ?> />
+											<div class="signa-choice-card-top">
+												<span class="signa-flow-node is-passkey">
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+												</span>
+												<span class="signa-choice-check"><?php echo $svg_check_mark; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+											</div>
+											<div class="signa-choice-body">
+												<strong>شبکه‌ای مهندسی (Micro-Grid)</strong>
+												<small>خطوط شطرنجی بسیار ظریف و مدرن</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'waves' === $bg_pattern ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[bg_pattern]" value="waves" <?php checked( $bg_pattern, 'waves' ); ?> />
+											<div class="signa-choice-card-top">
+												<span class="signa-flow-node is-email">
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+												</span>
+												<span class="signa-choice-check"><?php echo $svg_check_mark; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+											</div>
+											<div class="signa-choice-body">
+												<strong>موج‌های موازی (Waves)</strong>
+												<small>بافت خطوط منحنی و موجی در پس‌زمینه</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'geometric' === $bg_pattern ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[bg_pattern]" value="geometric" <?php checked( $bg_pattern, 'geometric' ); ?> />
+											<div class="signa-choice-card-top">
+												<span class="signa-flow-node is-phone">
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+												</span>
+												<span class="signa-choice-check"><?php echo $svg_check_mark; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+											</div>
+											<div class="signa-choice-body">
+												<strong>هندسی الماسی (Geometric)</strong>
+												<small>الگوی چندضلعی ظریف روی محیط پس‌زمینه</small>
+											</div>
+										</label>
+									</div>
+								</div>
+							</div>
+
 							<!-- CARD 3: Color Presets, Card Colors & Dimensions -->
 							<div class="signa-card">
 								<div class="signa-card-head">
@@ -359,7 +534,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
 										</span>
 										<div>
-											<h2>۳. پالت‌های رنگی و تم‌های آماده (Presets)</h2>
+											<h2>۴. پالت‌های رنگی و تم‌های آماده (Presets)</h2>
 											<p>با یک کلیک استایل کلی فرم را تغییر دهید یا رنگ‌ها را سفارشی کنید</p>
 										</div>
 									</div>
@@ -444,7 +619,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
 										</span>
 										<div>
-											<h2>۴. متن‌ها و برچسب‌های فرم</h2>
+											<h2>۵. متن‌ها و برچسب‌های فرم</h2>
 											<p>عنوان‌ها و متن دکمه‌ها را متناسب با لحن برند خود تغییر دهید</p>
 										</div>
 									</div>
@@ -554,4 +729,104 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							</div>
 						</div>
 					</div>
+					<script>
+					jQuery(function($){
+						function hexRgba(hex, pct){
+							var c = String(hex || '#ffffff').replace('#','').trim();
+							if(c.length === 3){ c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2]; }
+							var r = parseInt(c.substring(0,2),16)||255, g = parseInt(c.substring(2,4),16)||255, b = parseInt(c.substring(4,6),16)||255;
+							var a = Math.max(0.2, Math.min(1, (parseFloat(pct)||100)/100));
+							return 'rgba('+r+', '+g+', '+b+', '+a+')';
+						}
+						function syncStudioCat2(){
+							var primary = $('#primary_color').val() || '#2563eb';
+							var secondary = $('#secondary_color').val() || '#4f46e5';
+							var btnBgMode = $('#button_bg_mode').val() || 'solid';
+							var bg = $('#card_bg_color').val() || '#ffffff';
+							var text = $('#text_color').val() || '#111827';
+							var radius = $('#border_radius').val() || 16;
+							var isGlass = $('#glassmorphism').is(':checked');
+							var cardOpacity = $('#card_bg_opacity').val() || 85;
+							var blurPx = $('#backdrop_blur').val() || 16;
+							var cardShadow = $('#card_shadow').val() || 'medium';
+							var cardBorder = $('#card_border_style').val() || 'subtle';
+							var cardPadding = $('#card_padding').val() || 32;
+							var bgPattern = $('input[name="signa[bg_pattern]"]:checked').val() || 'none';
+							var canvasBgStyle = $('#canvas_bg_style').val() || 'mesh_light';
+							var canvasBgColor = $('#canvas_bg_color').val() || '#f1f5f9';
+							var canvasBgImg = ($('#canvas_bg_image').val() || '').trim();
+							var cardPosition = $('input[name="signa[card_position]"]:checked').val() || 'center';
+
+							$('#secondary_color_hex').text(secondary);
+							$('#opacity_val_label').text(cardOpacity + '%');
+							$('#blur_val_label').text(blurPx + 'px');
+							$('#padding_val_label').text(cardPadding + 'px');
+
+							if (isGlass) { $('#signa-glassmorphism-controls').slideDown(180); } else { $('#signa-glassmorphism-controls').slideUp(180); }
+							$('#signa-secondary-color-wrap').css('opacity', btnBgMode === 'gradient' ? '1' : '0.65');
+
+							var canvasBgCss = '';
+							if (canvasBgStyle === 'mesh_dark') {
+								canvasBgCss = 'radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 60%, #020617 100%)';
+							} else if (canvasBgStyle === 'brand_gradient') {
+								canvasBgCss = 'linear-gradient(135deg, ' + primary + '26 0%, #f8fafc 60%, ' + secondary + '1f 100%)';
+							} else if (canvasBgStyle === 'custom_image' && canvasBgImg) {
+								canvasBgCss = 'linear-gradient(rgba(15,23,42,0.45), rgba(15,23,42,0.45)), url(' + canvasBgImg + ') center/cover no-repeat';
+							} else if (canvasBgStyle === 'solid') {
+								canvasBgCss = canvasBgColor;
+							} else {
+								canvasBgCss = 'radial-gradient(circle at top right, #e0e7ff 0%, ' + canvasBgColor + ' 65%)';
+							}
+							var patternLayer = '', patternSize = 'auto';
+							if (bgPattern === 'dots') {
+								patternLayer = 'radial-gradient(rgba(99, 102, 241, 0.22) 1.25px, transparent 1.25px), ';
+								patternSize = '18px 18px, auto';
+							} else if (bgPattern === 'grid') {
+								patternLayer = 'linear-gradient(to right, rgba(148, 163, 184, 0.16) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.16) 1px, transparent 1px), ';
+								patternSize = '22px 22px, 22px 22px, auto';
+							} else if (bgPattern === 'waves') {
+								patternLayer = 'repeating-radial-gradient(circle at 0 0, transparent 0, rgba(99, 102, 241, 0.07) 12px, transparent 24px), ';
+							} else if (bgPattern === 'geometric') {
+								patternLayer = 'linear-gradient(30deg, rgba(99, 102, 241, 0.08) 12%, transparent 12.5%, transparent 87%, rgba(99, 102, 241, 0.08) 87.5%), ';
+								patternSize = '28px 48px, auto';
+							}
+							$('#signa-preview-canvas').css({
+								alignItems: cardPosition === 'right' ? 'flex-start' : cardPosition === 'left' ? 'flex-end' : 'center',
+								background: patternLayer + canvasBgCss,
+								backgroundSize: patternSize
+							});
+
+							var shadowCss = '0 14px 32px -6px rgba(15, 23, 42, 0.12)';
+							if (cardShadow === 'none') shadowCss = 'none';
+							else if (cardShadow === 'soft') shadowCss = '0 4px 16px -2px rgba(15, 23, 42, 0.06)';
+							else if (cardShadow === 'deep') shadowCss = '0 26px 58px -10px rgba(15, 23, 42, 0.28), 0 10px 24px -6px rgba(15, 23, 42, 0.14)';
+							else if (cardShadow === 'glow') shadowCss = '0 0 34px -2px ' + hexRgba(primary, 45) + ', 0 12px 28px -6px rgba(15, 23, 42, 0.16)';
+
+							var borderCss = '1px solid rgba(156, 163, 175, 0.25)', borderTopCss = borderCss;
+							if (cardBorder === 'none') { borderCss = 'none'; borderTopCss = 'none'; }
+							else if (cardBorder === 'glow') { borderCss = '1.5px solid ' + hexRgba(primary, 65); borderTopCss = borderCss; }
+							else if (cardBorder === 'top_accent') { borderTopCss = '4px solid ' + primary; }
+
+							$('#signa-live-preview-shell').css({
+								boxShadow: shadowCss,
+								border: borderCss,
+								borderTop: borderTopCss
+							});
+							$('#signa-live-preview-card').css({
+								background: isGlass ? hexRgba(bg, cardOpacity) : bg,
+								backdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
+								webkitBackdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
+								color: text,
+								padding: Math.round(cardPadding * 0.78) + 'px'
+							});
+							var btnBg = btnBgMode === 'gradient' ? 'linear-gradient(135deg, ' + primary + ', ' + secondary + ')' : primary;
+							$('#signa-prev-btn-1, #signa-prev-btn-2').css({
+								background: btnBg,
+								borderRadius: Math.round(radius * 0.68) + 'px'
+							});
+						}
+						$('#tab-appearance').on('input change', 'input, select, textarea', syncStudioCat2);
+						syncStudioCat2();
+					});
+					</script>
 				</section>

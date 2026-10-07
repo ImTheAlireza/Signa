@@ -4,12 +4,18 @@
 
 .signa-otp-wrapper {
 	--signa-primary: #2563eb;
+	--signa-secondary: #4f46e5;
+	--signa-btn-bg: #2563eb;
 	--signa-bg: #ffffff;
 	--signa-text: #111827;
 	--signa-muted: #6b7280;
 	--signa-border: #d1d5db;
 	--signa-radius: 16px;
 	--signa-split-bg: #1e3a8a;
+	--signa-blur: 16px;
+	--signa-card-pad: 32px;
+	--signa-glow-shadow: rgba(37, 99, 235, 0.45);
+	--signa-glow-border: rgba(37, 99, 235, 0.65);
 	direction: rtl;
 	text-align: right;
 	font-family: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif !important;
@@ -53,12 +59,78 @@
 .signa-otp-wrapper.signa-layout-split_left .signa-otp-card {
 	flex: 1 1 50%;
 	min-width: 0;
-	border: none;
+	border: none !important;
 	border-radius: 0;
-	box-shadow: none;
+	box-shadow: none !important;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+/* Category 2: Card Elevation (Shadows), Borders, Padding & Glassmorphism */
+.signa-otp-card {
+	background: var(--signa-bg);
+	color: var(--signa-text);
+	border: 1px solid rgba(156, 163, 175, 0.25);
+	border-radius: var(--signa-radius);
+	padding: var(--signa-card-pad, 32px) calc(var(--signa-card-pad, 32px) * 0.88);
+	box-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+	transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.signa-otp-wrapper.signa-glassmorphism .signa-otp-card {
+	backdrop-filter: blur(var(--signa-blur, 16px));
+	-webkit-backdrop-filter: blur(var(--signa-blur, 16px));
+}
+
+/* Elevation Presets (apply to card in standard mode, or wrapper in split-screen mode) */
+.signa-otp-wrapper.signa-shadow-none .signa-otp-card,
+.signa-otp-wrapper.signa-layout-split_right.signa-shadow-none,
+.signa-otp-wrapper.signa-layout-split_left.signa-shadow-none {
+	box-shadow: none;
+}
+
+.signa-otp-wrapper.signa-shadow-soft .signa-otp-card,
+.signa-otp-wrapper.signa-layout-split_right.signa-shadow-soft,
+.signa-otp-wrapper.signa-layout-split_left.signa-shadow-soft {
+	box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
+}
+
+.signa-otp-wrapper.signa-shadow-medium .signa-otp-card,
+.signa-otp-wrapper.signa-layout-split_right.signa-shadow-medium,
+.signa-otp-wrapper.signa-layout-split_left.signa-shadow-medium {
+	box-shadow: 0 14px 34px -6px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+}
+
+.signa-otp-wrapper.signa-shadow-deep .signa-otp-card,
+.signa-otp-wrapper.signa-layout-split_right.signa-shadow-deep,
+.signa-otp-wrapper.signa-layout-split_left.signa-shadow-deep {
+	box-shadow: 0 28px 60px -12px rgba(15, 23, 42, 0.28), 0 12px 26px -6px rgba(15, 23, 42, 0.14);
+}
+
+.signa-otp-wrapper.signa-shadow-glow .signa-otp-card,
+.signa-otp-wrapper.signa-layout-split_right.signa-shadow-glow,
+.signa-otp-wrapper.signa-layout-split_left.signa-shadow-glow {
+	box-shadow: 0 0 38px -2px var(--signa-glow-shadow), 0 14px 30px -6px rgba(15, 23, 42, 0.16);
+}
+
+/* Border Style Presets */
+.signa-otp-wrapper.signa-border-none .signa-otp-card,
+.signa-otp-wrapper.signa-layout-split_right.signa-border-none,
+.signa-otp-wrapper.signa-layout-split_left.signa-border-none {
+	border: none;
+}
+
+.signa-otp-wrapper.signa-border-top_accent .signa-otp-card,
+.signa-otp-wrapper.signa-layout-split_right.signa-border-top_accent,
+.signa-otp-wrapper.signa-layout-split_left.signa-border-top_accent {
+	border-top: 4px solid var(--signa-primary);
+}
+
+.signa-otp-wrapper.signa-border-glow .signa-otp-card,
+.signa-otp-wrapper.signa-layout-split_right.signa-border-glow,
+.signa-otp-wrapper.signa-layout-split_left.signa-border-glow {
+	border: 1.5px solid var(--signa-glow-border);
 }
 
 .signa-otp-side-banner {
@@ -143,15 +215,6 @@
 .signa-otp-wrapper textarea {
 	box-sizing: border-box;
 	font-family: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif !important;
-}
-
-.signa-otp-card {
-	background: var(--signa-bg);
-	color: var(--signa-text);
-	border: 1px solid rgba(156, 163, 175, 0.25);
-	border-radius: var(--signa-radius);
-	padding: 32px 28px;
-	box-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.07), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
 }
 
 .signa-otp-header {
@@ -328,9 +391,9 @@
 }
 
 .signa-btn-primary {
-	background-color: var(--signa-primary);
+	background: var(--signa-btn-bg, var(--signa-primary));
 	color: #ffffff !important;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
 }
 
 .signa-btn-primary:hover {
@@ -353,7 +416,7 @@
 	height: 38px;
 	font-size: 13px;
 	padding: 0 14px;
-	background-color: var(--signa-primary);
+	background: var(--signa-btn-bg, var(--signa-primary));
 	color: #ffffff;
 }
 
