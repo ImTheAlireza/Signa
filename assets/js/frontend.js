@@ -101,10 +101,21 @@
 			if (timerInterval) {
 				clearInterval(timerInterval);
 			}
-			var remaining = parseInt(seconds, 10) || 60;
+			var totalSecs = Math.max(1, parseInt(seconds, 10) || 60);
+			var remaining = totalSecs;
+			var $progressFill = $timerWrap.find('.signa-timer-progress-fill');
+			var $ringFg = $timerWrap.find('.signa-ring-fg');
+			var circumference = 56.55;
+
 			$resendBtn.hide();
 			$timerWrap.show();
 			$timerCountdown.text(formatCountdown(remaining));
+			if ($progressFill.length) {
+				$progressFill.css('width', '100%');
+			}
+			if ($ringFg.length) {
+				$ringFg.css('stroke-dashoffset', '0');
+			}
 
 			timerInterval = setInterval(function () {
 				remaining--;
@@ -114,6 +125,13 @@
 					$resendBtn.fadeIn(150);
 				} else {
 					$timerCountdown.text(formatCountdown(remaining));
+					var ratio = Math.max(0, Math.min(1, remaining / totalSecs));
+					if ($progressFill.length) {
+						$progressFill.css('width', Math.round(ratio * 100) + '%');
+					}
+					if ($ringFg.length) {
+						$ringFg.css('stroke-dashoffset', String((1 - ratio) * circumference));
+					}
 				}
 			}, 1000);
 		}
@@ -153,8 +171,8 @@
 				$digitBoxes.eq(idx + 1).trigger('focus').trigger('select');
 			}
 
-			// Auto-submit when all digits entered (unless required new user name/email is still empty)
-			if (fullCode.length === otpLength && !hasRequiredExtraFields) {
+			// Auto-submit when all digits entered (unless disabled or required new user name/email is still empty)
+			if (fullCode.length === otpLength && !hasRequiredExtraFields && $wrapper.attr('data-auto-submit') !== '0') {
 				$stepVerify.trigger('submit');
 			}
 		});
@@ -432,11 +450,13 @@
 						var errMsg = res && res.data && res.data.message ? res.data.message : signaOtpParams.i18n.networkError;
 						showAlert(errMsg, 'error');
 						setLoading($verifyBtn, false);
-						var $digitsWrap = $stepVerify.find('.signa-otp-digits');
-						$digitsWrap.addClass('signa-shake');
-						setTimeout(function () {
-							$digitsWrap.removeClass('signa-shake');
-						}, 480);
+						if ($wrapper.attr('data-error-shake') !== '0') {
+							var $digitsWrap = $stepVerify.find('.signa-otp-digits');
+							$digitsWrap.addClass('signa-shake');
+							setTimeout(function () {
+								$digitsWrap.removeClass('signa-shake');
+							}, 480);
+						}
 					}
 				})
 				.fail(function () {

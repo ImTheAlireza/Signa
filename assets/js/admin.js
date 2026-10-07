@@ -427,9 +427,10 @@
 			$viewport.toggleClass('is-scaled-split', showSplitBanner);
 			$viewport.css('alignItems', alignFlex);
 
-			$shell.css({
-				width: showSplitBanner ? '720px' : '100%',
-				maxWidth: showSplitBanner ? '720px' : '360px',
+			$shell.toggleClass('is-split', showSplitBanner).css({
+				width: '100%',
+				maxWidth: showSplitBanner ? '100%' : '340px',
+				boxSizing: 'border-box',
 				borderRadius: radius + 'px',
 				flexDirection: formLayout === 'split_left' ? 'row-reverse' : 'row',
 				boxShadow: shadowCss,

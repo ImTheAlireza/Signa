@@ -164,6 +164,8 @@ class Signa_Admin {
 			'modal_mobile_sheet',
 			'canvas_show_back_link',
 			'glassmorphism',
+			'otp_auto_submit',
+			'error_shake_effect',
 			'trust_proxy_headers',
 			'delete_data_on_uninstall',
 		);
@@ -182,6 +184,8 @@ class Signa_Admin {
 			'subtitle_font_size',
 			'btn_font_size',
 			'input_height',
+			'digit_box_size',
+			'digit_box_gap',
 			'max_requests_per_hour',
 			'max_ip_requests_per_hour',
 			'max_verify_attempts',

@@ -586,26 +586,26 @@
 	text-decoration: underline;
 }
 
-/* Segmented OTP Digit Boxes */
+/* Segmented OTP Digit Boxes (Category 4) */
 .signa-otp-digits {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 8px;
+	gap: var(--signa-digit-gap, 8px);
 	direction: ltr;
 }
 
 .signa-digit-box {
-	width: 48px;
-	height: 54px;
+	width: var(--signa-digit-size, 48px);
+	height: calc(var(--signa-digit-size, 48px) * 1.1);
 	text-align: center !important;
-	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
-	font-size: 20px;
+	font-family: var(--signa-font) !important;
+	font-size: calc(var(--signa-digit-size, 48px) * 0.42);
 	font-weight: 700;
 	border: 1.5px solid var(--signa-border);
-	border-radius: 11px;
-	background-color: #f9fafb;
-	color: #111827;
+	border-radius: calc(var(--signa-radius) * 0.65);
+	background-color: var(--signa-input-bg, #f9fafb);
+	color: var(--signa-text, #111827);
 	transition: all 0.18s ease;
 	outline: none;
 	padding: 0;
@@ -623,6 +623,38 @@
 	border-radius: 99px;
 }
 
+.signa-digit-style-separated_glow .signa-digit-box {
+	border: 1.5px solid var(--signa-primary);
+	box-shadow: 0 0 12px var(--signa-glow-shadow, rgba(37, 99, 235, 0.28));
+}
+
+.signa-digit-style-connected .signa-otp-digits {
+	gap: 0 !important;
+	border: 1.5px solid var(--signa-border);
+	border-radius: calc(var(--signa-radius) * 0.65);
+	overflow: hidden;
+	background-color: var(--signa-input-bg, #f8fafc);
+}
+
+.signa-digit-style-connected .signa-digit-box {
+	flex: 1 1 0%;
+	width: auto;
+	border: none !important;
+	border-right: 1px solid var(--signa-border) !important;
+	border-radius: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+}
+
+.signa-digit-style-connected .signa-digit-box:last-child {
+	border-right: none !important;
+}
+
+.signa-digit-style-connected .signa-digit-box:focus {
+	background-color: rgba(37, 99, 235, 0.1) !important;
+	transform: none !important;
+}
+
 .signa-digit-box:focus {
 	background-color: #ffffff;
 	border-color: var(--signa-primary);
@@ -630,8 +662,12 @@
 	transform: translateY(-1px);
 }
 
+.signa-theme-dark .signa-digit-box:focus {
+	background-color: rgba(30, 41, 59, 0.95);
+	color: #f8fafc;
+}
+
 .signa-digit-box.is-filled {
-	background-color: #ffffff;
 	border-color: var(--signa-primary);
 }
 
@@ -658,12 +694,101 @@
 	border-bottom-color: var(--signa-primary);
 }
 
-/* Resend & Countdown Row */
+/* Resend & Countdown Timer Styles (Category 4) */
 .signa-resend-row {
 	margin-top: 18px;
 	text-align: center;
 	font-size: 13px;
 	color: var(--signa-muted);
+}
+
+.signa-timer-wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+
+.signa-timer-head {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+}
+
+.signa-timer-countdown {
+	color: var(--signa-primary);
+	font-weight: 800;
+}
+
+.signa-timer-progress-track {
+	width: 100%;
+	max-width: 220px;
+	height: 5px;
+	border-radius: 99px;
+	background: rgba(148, 163, 184, 0.24);
+	overflow: hidden;
+}
+
+.signa-timer-progress-fill {
+	height: 100%;
+	border-radius: 99px;
+	background: var(--signa-btn-bg, var(--signa-primary));
+	transition: width 1s linear;
+}
+
+.signa-timer-ring-svg {
+	transform: rotate(-90deg);
+	flex-shrink: 0;
+}
+
+.signa-ring-bg {
+	stroke: rgba(148, 163, 184, 0.28);
+}
+
+.signa-ring-fg {
+	stroke: var(--signa-primary);
+	transition: stroke-dashoffset 1s linear;
+}
+
+.signa-timer-minimal_badge .signa-timer-head,
+.signa-timer-circular_ring .signa-timer-head {
+	padding: 6px 14px;
+	border-radius: 99px;
+	background: rgba(37, 99, 235, 0.1);
+	border: 1px solid rgba(37, 99, 235, 0.22);
+	color: var(--signa-text);
+	font-weight: 600;
+}
+
+.signa-timer-badge-icon {
+	color: var(--signa-primary);
+	flex-shrink: 0;
+}
+
+/* Category 4 Form Entrance Animations */
+@keyframes signaFeFadeUp {
+	0% { opacity: 0; transform: translateY(16px); }
+	100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes signaFeZoomSpring {
+	0% { opacity: 0; transform: scale(0.92); }
+	70% { transform: scale(1.015); }
+	100% { opacity: 1; transform: scale(1); }
+}
+@keyframes signaFeSlideRtl {
+	0% { opacity: 0; transform: translateX(24px); }
+	100% { opacity: 1; transform: translateX(0); }
+}
+
+.signa-otp-wrapper.signa-anim-fade_up .signa-otp-card {
+	animation: signaFeFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.signa-otp-wrapper.signa-anim-zoom_spring .signa-otp-card {
+	animation: signaFeZoomSpring 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.signa-otp-wrapper.signa-anim-slide_rtl .signa-otp-card {
+	animation: signaFeSlideRtl 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Loading Spinner */

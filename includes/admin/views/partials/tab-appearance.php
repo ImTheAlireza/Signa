@@ -845,6 +845,249 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								</div>
 							</div>
 
+							<!-- CARD 2.9 (CATEGORY 4): OTP Digit Boxes, Countdown Timer Styles & Micro-Animations -->
+							<?php
+							$digit_box_style    = isset( $settings['digit_box_style'] ) ? $settings['digit_box_style'] : 'box';
+							$digit_box_size     = isset( $settings['digit_box_size'] ) ? absint( $settings['digit_box_size'] ) : 48;
+							$digit_box_gap      = isset( $settings['digit_box_gap'] ) ? absint( $settings['digit_box_gap'] ) : 8;
+							$timer_style        = isset( $settings['timer_style'] ) ? $settings['timer_style'] : 'progress_bar';
+							$form_animation     = isset( $settings['form_animation'] ) ? $settings['form_animation'] : 'fade_up';
+							$otp_auto_submit    = ! empty( $settings['otp_auto_submit'] );
+							$error_shake_effect = ! empty( $settings['error_shake_effect'] );
+							?>
+							<div class="signa-card signa-accordion-card" style="margin-bottom:16px;">
+								<div class="signa-card-head signa-accordion-trigger">
+									<div class="signa-card-head-title">
+										<span class="signa-card-icon is-green">
+											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="5" height="12" rx="1.5"/><rect x="9.5" y="6" width="5" height="12" rx="1.5"/><rect x="17" y="6" width="5" height="12" rx="1.5"/></svg>
+										</span>
+										<div>
+											<h2>۵. باکس‌های کد تایید (OTP)، تایمر شمارش معکوس و انیمیشن‌ها</h2>
+											<p>طراحی خانه‌های ورود کد یکبارمصرف، استایل گرافیکی تایمر ارسال مجدد و انیمیشن‌های تعاملی فرم</p>
+										</div>
+									</div>
+									<div style="display:flex;align-items:center;gap:10px;">
+										<span class="signa-pill is-ok">مرحله ۲ و انیمیشن</span>
+										<span class="signa-accordion-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+									</div>
+								</div>
+								<div class="signa-accordion-body" style="display:none;">
+
+									<!-- 1. OTP Digit Box Styles with Animated Mini-Video Previews -->
+									<label class="signa-section-label">الف) استایل ظاهری خانه‌های کد تایید (OTP Digit Boxes)</label>
+									<div class="signa-choice-grid signa-cols-3">
+										<label class="signa-choice-card <?php echo 'box' === $digit_box_style ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[digit_box_style]" class="signa-cat4-control" value="box" <?php checked( $digit_box_style, 'box' ); ?> />
+											<div class="signa-mini-video">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+												<div style="display:flex;gap:5px;direction:ltr;">
+													<span style="width:22px;height:26px;border-radius:6px;background:#f8fafc;border:1.5px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">5</span>
+													<span style="width:22px;height:26px;border-radius:6px;background:#f8fafc;border:1.5px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">8</span>
+													<span style="width:22px;height:26px;border-radius:6px;background:#ffffff;border:2px solid #38bdf8;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;transform:translateY(-2px);">2</span>
+													<span style="width:22px;height:26px;border-radius:6px;background:rgba(248,250,252,0.2);border:1.5px solid #64748b;"></span>
+												</div>
+											</div>
+											<div class="signa-choice-body">
+												<strong>مربعی مدرن (Modern Box)</strong>
+												<small>خانه‌های مجزا با گوشه‌های گرد استاندارد</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'underline' === $digit_box_style ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[digit_box_style]" class="signa-cat4-control" value="underline" <?php checked( $digit_box_style, 'underline' ); ?> />
+											<div class="signa-mini-video">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+												<div style="display:flex;gap:6px;direction:ltr;">
+													<span style="width:20px;height:26px;border-bottom:2.5px solid #38bdf8;color:#f8fafc;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">5</span>
+													<span style="width:20px;height:26px;border-bottom:2.5px solid #38bdf8;color:#f8fafc;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">8</span>
+													<span style="width:20px;height:26px;border-bottom:2.5px solid #10b981;color:#38bdf8;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
+													<span style="width:20px;height:26px;border-bottom:2px solid #64748b;"></span>
+												</div>
+											</div>
+											<div class="signa-choice-body">
+												<strong>خط تیره پایین (Underline)</strong>
+												<small>مینیمال با خط شاخص در پایین هر رقم</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'pill' === $digit_box_style ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[digit_box_style]" class="signa-cat4-control" value="pill" <?php checked( $digit_box_style, 'pill' ); ?> />
+											<div class="signa-mini-video">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+												<div style="display:flex;gap:5px;direction:ltr;">
+													<span style="width:22px;height:26px;border-radius:99px;background:#f8fafc;border:1.5px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">5</span>
+													<span style="width:22px;height:26px;border-radius:99px;background:#f8fafc;border:1.5px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">8</span>
+													<span style="width:22px;height:26px;border-radius:99px;background:#ffffff;border:2px solid #38bdf8;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
+													<span style="width:22px;height:26px;border-radius:99px;background:rgba(248,250,252,0.2);border:1.5px solid #64748b;"></span>
+												</div>
+											</div>
+											<div class="signa-choice-body">
+												<strong>کپسولی گرد (Soft Pill)</strong>
+												<small>کادرهای کاملاً گرد و منحنی</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'separated_glow' === $digit_box_style ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[digit_box_style]" class="signa-cat4-control" value="separated_glow" <?php checked( $digit_box_style, 'separated_glow' ); ?> />
+											<div class="signa-mini-video">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+												<div style="display:flex;gap:5px;direction:ltr;">
+													<span style="width:22px;height:26px;border-radius:7px;background:rgba(56,189,248,0.15);border:1.5px solid #38bdf8;box-shadow:0 0 10px rgba(56,189,248,0.45);color:#f8fafc;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">5</span>
+													<span style="width:22px;height:26px;border-radius:7px;background:rgba(56,189,248,0.15);border:1.5px solid #38bdf8;box-shadow:0 0 10px rgba(56,189,248,0.45);color:#f8fafc;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">8</span>
+													<span style="width:22px;height:26px;border-radius:7px;background:rgba(16,185,129,0.2);border:1.5px solid #10b981;box-shadow:0 0 12px rgba(16,185,129,0.6);color:#6ee7b7;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
+													<span style="width:22px;height:26px;border-radius:7px;background:rgba(15,23,42,0.5);border:1.5px solid #475569;"></span>
+												</div>
+											</div>
+											<div class="signa-choice-body">
+												<strong>نئونی درخشان (Glow Box)</strong>
+												<small>درخشش نوری رنگ برند دور خانه‌های کد</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'connected' === $digit_box_style ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[digit_box_style]" class="signa-cat4-control" value="connected" <?php checked( $digit_box_style, 'connected' ); ?> />
+											<div class="signa-mini-video">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+												<div style="display:inline-flex;border-radius:8px;overflow:hidden;border:1.5px solid #94a3b8;background:#f8fafc;direction:ltr;">
+													<span style="width:22px;height:26px;border-right:1px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">5</span>
+													<span style="width:22px;height:26px;border-right:1px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">8</span>
+													<span style="width:22px;height:26px;border-right:1px solid #cbd5e1;background:#eff6ff;color:#2563eb;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
+													<span style="width:22px;height:26px;color:#94a3b8;font-size:11px;display:inline-flex;align-items:center;justify-content:center;">•</span>
+												</div>
+											</div>
+											<div class="signa-choice-body">
+												<strong>پیوسته یکپارچه (Connected)</strong>
+												<small>نوار یکپارچه با جداکننده عمودی ظریف</small>
+											</div>
+										</label>
+									</div>
+
+									<!-- 2. Digit Box Size & Gap Sliders -->
+									<div class="signa-fields-grid signa-cols-2" style="margin-top:18px;">
+										<div class="signa-field">
+											<label for="digit_box_size">اندازه و ارتفاع هر خانه کد: <strong id="digit_size_val_label"><?php echo esc_html( (string) $digit_box_size ); ?>px</strong></label>
+											<input type="range" name="signa[digit_box_size]" id="digit_box_size" class="signa-cat4-control" min="38" max="58" value="<?php echo esc_attr( (string) $digit_box_size ); ?>" />
+										</div>
+										<div class="signa-field">
+											<label for="digit_box_gap">فاصله افقی بین خانه‌های کد: <strong id="digit_gap_val_label"><?php echo esc_html( (string) $digit_box_gap ); ?>px</strong></label>
+											<input type="range" name="signa[digit_box_gap]" id="digit_box_gap" class="signa-cat4-control" min="4" max="14" value="<?php echo esc_attr( (string) $digit_box_gap ); ?>" />
+										</div>
+									</div>
+
+									<!-- 3. Countdown Timer Style with Animated Mini-Video Previews -->
+									<div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--s-border);">
+										<label class="signa-section-label">ب) استایل تایمر شمارش معکوس ارسال مجدد کد (Countdown Timer)</label>
+										<div class="signa-choice-grid signa-cols-2">
+											<label class="signa-choice-card <?php echo 'progress_bar' === $timer_style ? 'selected' : ''; ?>">
+												<input type="radio" name="signa[timer_style]" class="signa-cat4-control" value="progress_bar" <?php checked( $timer_style, 'progress_bar' ); ?> />
+												<div class="signa-mini-video">
+													<span class="signa-mini-video-badge">پیشنمایش</span>
+													<div style="width:120px;display:flex;flex-direction:column;gap:5px;align-items:center;">
+														<span style="font-size:10px;color:#e2e8f0;font-weight:700;">۰۱:۴۵ تا ارسال مجدد</span>
+														<div style="width:100%;height:5px;border-radius:99px;background:rgba(148,163,184,0.25);overflow:hidden;">
+															<div style="width:68%;height:100%;border-radius:99px;background:linear-gradient(90deg,#38bdf8,#2563eb);"></div>
+														</div>
+													</div>
+												</div>
+												<div class="signa-choice-body">
+													<strong>نوار پیشرفت افقی (Progress Bar)</strong>
+													<small>نوار گرادینت متحرک زیر زمان باقی‌مانده</small>
+												</div>
+											</label>
+
+											<label class="signa-choice-card <?php echo 'circular_ring' === $timer_style ? 'selected' : ''; ?>">
+												<input type="radio" name="signa[timer_style]" class="signa-cat4-control" value="circular_ring" <?php checked( $timer_style, 'circular_ring' ); ?> />
+												<div class="signa-mini-video">
+													<span class="signa-mini-video-badge">پیشنمایش</span>
+													<div style="display:inline-flex;align-items:center;gap:8px;background:rgba(15,23,42,0.55);padding:5px 12px;border-radius:99px;border:1px solid rgba(56,189,248,0.3);">
+														<svg width="22" height="22" viewBox="0 0 24 24" style="transform:rotate(-90deg);">
+															<circle cx="12" cy="12" r="9" fill="none" stroke="rgba(148,163,184,0.25)" stroke-width="2.5"/>
+															<circle cx="12" cy="12" r="9" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="56.5" stroke-dashoffset="16" stroke-linecap="round"/>
+														</svg>
+														<span style="font-size:11px;color:#f8fafc;font-weight:800;" dir="ltr">01:45</span>
+													</div>
+												</div>
+												<div class="signa-choice-body">
+													<strong>حلقه گرافیکی دایره‌ای (Circular SVG Ring)</strong>
+													<small>حلقه прогреس دایره‌ای مدرن کنار ثانیه‌شمار</small>
+												</div>
+											</label>
+
+											<label class="signa-choice-card <?php echo 'minimal_badge' === $timer_style ? 'selected' : ''; ?>">
+												<input type="radio" name="signa[timer_style]" class="signa-cat4-control" value="minimal_badge" <?php checked( $timer_style, 'minimal_badge' ); ?> />
+												<div class="signa-mini-video">
+													<span class="signa-mini-video-badge">پیشنمایش</span>
+													<div style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;background:rgba(59,130,246,0.18);border:1px solid rgba(59,130,246,0.4);color:#93c5fd;font-size:10.5px;font-weight:700;">
+														<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+														<span>ارسال مجدد: ۰۱:۴۵</span>
+													</div>
+												</div>
+												<div class="signa-choice-body">
+													<strong>بج کپسولی مینیمال (Minimal Pill Badge)</strong>
+													<small>نمایش زمان داخل تگ کپسولی به همراه آیکون ساعت</small>
+												</div>
+											</label>
+
+											<label class="signa-choice-card <?php echo 'simple_text' === $timer_style ? 'selected' : ''; ?>">
+												<input type="radio" name="signa[timer_style]" class="signa-cat4-control" value="simple_text" <?php checked( $timer_style, 'simple_text' ); ?> />
+												<div class="signa-mini-video">
+													<span class="signa-mini-video-badge">پیشنمایش</span>
+													<span style="font-size:11px;color:#cbd5e1;font-weight:600;">ارسال مجدد کد تا <strong>۰۱:۴۵</strong> دیگر</span>
+												</div>
+												<div class="signa-choice-body">
+													<strong>متن ساده کلاسیک (Simple Text)</strong>
+													<small>نمایش متنی ساده بدون المان گرافیکی اضافه</small>
+												</div>
+											</label>
+										</div>
+									</div>
+
+									<!-- 4. Form Entrance Animation & Interactive Micro-Interactions -->
+									<div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--s-border);">
+										<div class="signa-fields-grid signa-cols-2" style="margin-bottom:14px;">
+											<div class="signa-field">
+												<label for="form_animation">ج) انیمیشن ورود فرم و تغییر مراحل</label>
+												<select name="signa[form_animation]" id="form_animation">
+													<option value="fade_up" <?php selected( $form_animation, 'fade_up' ); ?>>ظهور نرم از پایین (Smooth Fade Up)</option>
+													<option value="zoom_spring" <?php selected( $form_animation, 'zoom_spring' ); ?>>بزرگ‌نمایی فنری مدرن (Spring Scale)</option>
+													<option value="slide_rtl" <?php selected( $form_animation, 'slide_rtl' ); ?>>حرکت کشویی افقی (Slide Horizontal)</option>
+													<option value="none" <?php selected( $form_animation, 'none' ); ?>>بدون انیمیشن (Instant)</option>
+												</select>
+											</div>
+											<div class="signa-field" style="display:flex;flex-direction:column;justify-content:flex-end;">
+												<button type="button" id="signa-test-shake-btn" class="signa-btn-secondary" style="height:42px;justify-content:center;gap:8px;">
+													<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+													<span>تست زنده افکت لرزش خطا در پیش‌نمایش</span>
+												</button>
+											</div>
+										</div>
+
+										<div class="signa-switch-row" style="margin-bottom:10px;">
+											<div class="signa-switch-text">
+												<strong>ارسال خودکار به محض تکمیل آخرین رقم کد (Auto-Submit OTP)</strong>
+												<p>به محض وارد کردن آخرین رقم کد تایید (یا خواندن خودکار پیامک توسط مرورگر)، فرم بدون نیاز به کلیک روی دکمه بررسی می‌شود.</p>
+											</div>
+											<label class="signa-switch">
+												<input type="checkbox" name="signa[otp_auto_submit]" id="otp_auto_submit" value="1" <?php checked( $otp_auto_submit, true ); ?> />
+												<span class="signa-slider"></span>
+											</label>
+										</div>
+
+										<div class="signa-switch-row">
+											<div class="signa-switch-text">
+												<strong>افکت لرزش و قرمز شدن کادرها هنگام کد اشتباه (Error Shake Effect)</strong>
+												<p>در صورت وارد کردن کد نادرست، خانه‌های کد با انیمیشن لرزش افقی و هایلایت قرمز به کاربر بازخورد بصری می‌دهند.</p>
+											</div>
+											<label class="signa-switch">
+												<input type="checkbox" name="signa[error_shake_effect]" id="error_shake_effect" value="1" <?php checked( $error_shake_effect, true ); ?> />
+												<span class="signa-slider"></span>
+											</label>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
 							<!-- CARD 3: Color Presets, Card Colors & Dimensions -->
 							<div class="signa-card signa-accordion-card" style="margin-bottom:16px;">
 								<div class="signa-card-head signa-accordion-trigger">
@@ -853,7 +1096,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
 										</span>
 										<div>
-											<h2>۵. پالت‌های رنگی و تم‌های آماده (Presets)</h2>
+											<h2>۶. پالت‌های رنگی و تم‌های آماده (Presets)</h2>
 											<p>با یک کلیک استایل کلی فرم را تغییر دهید یا رنگ‌ها را سفارشی کنید (با تشخیص خودکار کنتراست تیره/روشن)</p>
 										</div>
 									</div>
@@ -907,21 +1150,13 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									</div>
 								</div>
 
-								<div class="signa-fields-grid signa-cols-3" style="margin-top:16px;">
+								<div class="signa-fields-grid signa-cols-2" style="margin-top:16px;">
 									<div class="signa-field">
 										<label for="border_radius">گردی گوشه‌ها: <strong id="radius_val_label"><?php echo esc_html( (string) $settings['border_radius'] ); ?>px</strong></label>
 										<input type="range" name="signa[border_radius]" id="border_radius" min="0" max="28" value="<?php echo esc_attr( (string) $settings['border_radius'] ); ?>" />
 									</div>
 									<div class="signa-field">
-										<label for="digit_box_style">استایل باکس ارقام کد</label>
-										<select name="signa[digit_box_style]" id="digit_box_style">
-											<option value="box" <?php selected( $settings['digit_box_style'], 'box' ); ?>>مربعی مدرن (Box)</option>
-											<option value="underline" <?php selected( $settings['digit_box_style'], 'underline' ); ?>>خط تیره پایین (Underline)</option>
-											<option value="pill" <?php selected( $settings['digit_box_style'], 'pill' ); ?>>کپسولی گرد (Pill)</option>
-										</select>
-									</div>
-									<div class="signa-field">
-										<label for="form_max_width">حداکثر عرض کارت (px)</label>
+										<label for="form_max_width">حداکثر عرض کارت در سایت (px)</label>
 										<input type="text" inputmode="numeric" name="signa[form_max_width]" id="form_max_width" value="<?php echo esc_attr( (string) $settings['form_max_width'] ); ?>" dir="ltr" />
 									</div>
 								</div>
@@ -944,7 +1179,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
 										</span>
 										<div>
-											<h2>۶. متن‌ها و برچسب‌های فرم</h2>
+											<h2>۷. متن‌ها و برچسب‌های فرم</h2>
 											<p>عنوان‌ها و متن دکمه‌ها را متناسب با لحن برند خود تغییر دهید</p>
 										</div>
 									</div>
@@ -1064,13 +1299,14 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 														<strong dir="ltr">0912***6789</strong>
 														<span style="color:<?php echo esc_attr( $settings['primary_color'] ); ?>;font-weight:600;">ویرایش</span>
 													</div>
-													<div id="signa-prev-digits" style="display:flex;justify-content:center;gap:6px;margin-bottom:16px;" dir="ltr">
+													<div id="signa-prev-digits" style="display:flex;justify-content:center;gap:6px;margin-bottom:14px;" dir="ltr">
 														<span class="signa-prev-digit">5</span>
 														<span class="signa-prev-digit">8</span>
 														<span class="signa-prev-digit">2</span>
 														<span class="signa-prev-digit">9</span>
 														<span class="signa-prev-digit">1</span>
 													</div>
+													<div id="signa-prev-timer-box" style="margin-bottom:14px;text-align:center;"></div>
 													<button type="button" id="signa-prev-btn-2" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:600;font-size:14px;cursor:default;transition:all 0.35s ease;">
 														<?php echo esc_html( $settings['verify_button_text'] ); ?>
 													</button>
@@ -1239,18 +1475,27 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 							// Category 3 values
 							var fontKey = $('#font_family').val() || 'vazirmatn';
-							var titleSize = $('#title_font_size').val() || 20;
-							var subSize = $('#subtitle_font_size').val() || 14;
-							var btnSize = $('#btn_font_size').val() || 15;
+							var titleSize = parseFloat($('#title_font_size').val() || 20);
+							var subSize = parseFloat($('#subtitle_font_size').val() || 14);
+							var btnSize = parseFloat($('#btn_font_size').val() || 15);
 							var inputStyle = $('input[name="signa[input_style]"]:checked').val() || 'filled';
-							var inputHeight = $('#input_height').val() || 48;
+							var inputHeight = parseFloat($('#input_height').val() || 48);
 							var inputBg = $('#input_bg_color').val() || '#f8fafc';
 							var inputBorder = $('#input_border_color').val() || '#d1d5db';
 							var inputAddon = $('#input_addon_style').val() || 'icon';
 
+							// Category 4 values
+							var digitStyle = $('input[name="signa[digit_box_style]"]:checked').val() || $('#digit_box_style').val() || 'box';
+							var digitSize = parseFloat($('#digit_box_size').val() || 48);
+							var digitGap = parseFloat($('#digit_box_gap').val() || 8);
+							var timerStyle = $('input[name="signa[timer_style]"]:checked').val() || 'progress_bar';
+
 							var isSplit = (formLayout === 'split_right' || formLayout === 'split_left');
 							var isDrawerOrSheet = (currentPreviewMode === 'modal' && (modalStyle === 'drawer_left' || modalStyle === 'drawer_right' || modalStyle === 'bottom_sheet'));
 							var showSplitBanner = isSplit && !isDrawerOrSheet;
+
+							// Automatically widen preview column slightly when Split-Screen is active so both columns fit inside 100% of the canvas without overflowing
+							$('.signa-studio-layout').toggleClass('is-split-preview-active', showSplitBanner);
 
 							// 4. Smart Automatic Dark/Light Theme & Image Contrast Detection
 							var cardLum = hexLuminance(bg);
@@ -1334,6 +1579,8 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('#input_height_val_label').text(inputHeight + 'px');
 							$('#input_bg_color_hex').text(inputBg);
 							$('#input_border_color_hex').text(inputBorder);
+							$('#digit_size_val_label').text(digitSize + 'px');
+							$('#digit_gap_val_label').text(digitGap + 'px');
 
 							if (isGlass) { $('#signa-glassmorphism-controls').slideDown(180); } else { $('#signa-glassmorphism-controls').slideUp(180); }
 							$('#signa-secondary-color-wrap').css('opacity', btnBgMode === 'gradient' ? '1' : '0.65');
@@ -1399,15 +1646,20 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							else if (cardBorder === 'top_accent') { borderTopCss = '4px solid ' + primary; }
 
 							var $shell = $('#signa-live-preview-shell');
-							$shell.css({
-								maxWidth: showSplitBanner ? '720px' : '360px',
-								width: showSplitBanner ? '720px' : '100%',
-								flexDirection: formLayout === 'split_left' ? 'row-reverse' : 'row',
-								boxShadow: shadowCss,
-								border: borderCss,
-								borderTop: borderTopCss,
-								background: 'transparent'
-							});
+							$shell.toggleClass('is-split', showSplitBanner);
+							var shellDom = document.getElementById('signa-live-preview-shell');
+							if (shellDom) {
+								shellDom.style.setProperty('width', '100%', 'important');
+								shellDom.style.setProperty('max-width', showSplitBanner ? '100%' : '340px', 'important');
+								shellDom.style.setProperty('box-sizing', 'border-box', 'important');
+								shellDom.style.setProperty('transform', 'none', 'important');
+								shellDom.style.setProperty('margin', '0', 'important');
+								shellDom.style.setProperty('flex-direction', formLayout === 'split_left' ? 'row-reverse' : 'row', 'important');
+								shellDom.style.setProperty('box-shadow', shadowCss, 'important');
+								shellDom.style.setProperty('border', borderCss, 'important');
+								shellDom.style.setProperty('border-top', borderTopCss, 'important');
+								shellDom.style.setProperty('background', 'transparent', 'important');
+							}
 							$('#signa-prev-split-banner').toggle(showSplitBanner);
 
 							// 3. Apply Glassmorphism Backdrop Blur directly via native setProperty (with dark glass adaptation if background is dark)
@@ -1415,6 +1667,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var effectiveGlassOpacity = isGlass ? Math.min(cardOpacity, 88) : 100;
 							var cardBgValue = isGlass ? hexRgba(effectiveCardBgHex, effectiveGlassOpacity) : bg;
 							var blurValue = isGlass ? ('blur(' + blurPx + 'px) saturate(160%)') : 'none';
+							var previewScaleFactor = showSplitBanner ? 0.62 : 0.85;
 
 							var cardEl = document.getElementById('signa-live-preview-card');
 							if (cardEl) {
@@ -1422,7 +1675,12 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								cardEl.style.setProperty('backdrop-filter', blurValue, 'important');
 								cardEl.style.setProperty('-webkit-backdrop-filter', blurValue, 'important');
 								cardEl.style.setProperty('color', text, 'important');
-								cardEl.style.setProperty('padding', Math.round(cardPadding * 0.85) + 'px', 'important');
+								cardEl.style.setProperty('padding', Math.round(cardPadding * previewScaleFactor) + 'px', 'important');
+							}
+
+							var splitBannerEl = document.getElementById('signa-prev-split-banner');
+							if (splitBannerEl && showSplitBanner) {
+								splitBannerEl.style.setProperty('padding', Math.round(cardPadding * previewScaleFactor) + 'px', 'important');
 							}
 
 							// Ensure title, subtitle, and labels smoothly fade to the detected text color
@@ -1439,8 +1697,13 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							};
 							var activeFont = fontMap[fontKey] || fontMap.vazirmatn;
 							$('#signa-live-preview-shell, #signa-live-preview-shell *').css('font-family', activeFont);
-							$('#signa-prev-title').css('font-size', titleSize + 'px');
-							$('#signa-prev-subtitle').css('font-size', subSize + 'px');
+							var previewTitleSize = showSplitBanner ? Math.max(13, Math.round(titleSize * 0.78)) : titleSize;
+							var previewSubSize = showSplitBanner ? Math.max(10.5, Math.round(subSize * 0.82)) : subSize;
+							var previewBtnSize = showSplitBanner ? Math.max(12, Math.round(btnSize * 0.84)) : btnSize;
+							var previewInputH = showSplitBanner ? Math.max(36, Math.round(inputHeight * 0.82)) : inputHeight;
+
+							$('#signa-prev-title').css('font-size', previewTitleSize + 'px');
+							$('#signa-prev-subtitle').css('font-size', previewSubSize + 'px');
 
 							var $prevInput = $('#signa-live-preview-card input.signa-prev-input');
 							var inputRad = inputStyle === 'soft_pill' ? '99px' : inputStyle === 'underlined' ? '0' : Math.round(radius * 0.68) + 'px';
@@ -1462,7 +1725,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									$prevInput[0].style.setProperty('border-radius', inputRad, 'important');
 								}
 								$prevInput[0].style.setProperty('color', text, 'important');
-								$prevInput[0].style.setProperty('height', inputHeight + 'px', 'important');
+								$prevInput[0].style.setProperty('height', previewInputH + 'px', 'important');
 							}
 
 							var $addon = $('#signa-prev-input-addon');
@@ -1482,9 +1745,139 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('#signa-prev-btn-1, #signa-prev-btn-2').css({
 								background: btnBg,
 								borderRadius: btnRad,
-								height: inputHeight + 'px',
-								fontSize: btnSize + 'px'
+								height: previewInputH + 'px',
+								fontSize: previewBtnSize + 'px'
 							});
+
+							// Category 4: Sync OTP Digit Boxes & Countdown Timer in Step 2
+							var scaledDigitSize = showSplitBanner ? Math.max(30, Math.round(digitSize * 0.72)) : Math.round(digitSize * 0.88);
+							var scaledDigitGap = showSplitBanner ? Math.max(3, Math.round(digitGap * 0.65)) : digitGap;
+							var $digitsWrap = $('#signa-prev-digits');
+							var $digits = $('.signa-prev-digit');
+
+							if (digitStyle === 'connected') {
+								$digitsWrap.css({
+									gap: '0px',
+									border: '1.5px solid ' + inputBorder,
+									borderRadius: Math.round(radius * 0.55) + 'px',
+									overflow: 'hidden',
+									background: inputBg,
+									display: 'inline-flex',
+									width: '100%'
+								});
+								$digits.each(function(idx){
+									$(this).css({
+										flex: '1',
+										width: 'auto',
+										height: scaledDigitSize + 'px',
+										lineHeight: scaledDigitSize + 'px',
+										border: 'none',
+										borderRight: idx < 4 ? ('1px solid ' + inputBorder) : 'none',
+										borderRadius: '0',
+										background: idx === 2 ? hexRgba(primary, 14) : 'transparent',
+										color: idx === 2 ? primary : text,
+										boxShadow: 'none',
+										fontSize: Math.round(scaledDigitSize * 0.4) + 'px'
+									});
+								});
+							} else {
+								$digitsWrap.css({
+									gap: scaledDigitGap + 'px',
+									border: 'none',
+									borderRadius: '0',
+									overflow: 'visible',
+									background: 'transparent',
+									display: 'flex',
+									width: '100%'
+								});
+								$digits.each(function(idx){
+									var isFocusIdx = (idx === 2);
+									if (digitStyle === 'underline') {
+										$(this).css({
+											flex: '0 0 auto',
+											width: Math.round(scaledDigitSize * 0.86) + 'px',
+											height: scaledDigitSize + 'px',
+											lineHeight: scaledDigitSize + 'px',
+											border: 'none',
+											borderBottom: '2.5px solid ' + (isFocusIdx ? primary : inputBorder),
+											borderRadius: '0',
+											background: 'transparent',
+											color: text,
+											boxShadow: 'none',
+											fontSize: Math.round(scaledDigitSize * 0.42) + 'px'
+										});
+									} else if (digitStyle === 'pill') {
+										$(this).css({
+											flex: '0 0 auto',
+											width: Math.round(scaledDigitSize * 0.88) + 'px',
+											height: scaledDigitSize + 'px',
+											lineHeight: scaledDigitSize + 'px',
+											border: '1.5px solid ' + (isFocusIdx ? primary : inputBorder),
+											borderRadius: '99px',
+											background: inputBg,
+											color: text,
+											boxShadow: isFocusIdx ? ('0 0 0 3px ' + hexRgba(primary, 20)) : 'none',
+											fontSize: Math.round(scaledDigitSize * 0.4) + 'px'
+										});
+									} else if (digitStyle === 'separated_glow') {
+										$(this).css({
+											flex: '0 0 auto',
+											width: Math.round(scaledDigitSize * 0.88) + 'px',
+											height: scaledDigitSize + 'px',
+											lineHeight: scaledDigitSize + 'px',
+											border: '1.5px solid ' + primary,
+											borderRadius: Math.round(radius * 0.5) + 'px',
+											background: hexRgba(primary, isDarkFormSurface ? 18 : 10),
+											color: text,
+											boxShadow: '0 0 12px ' + hexRgba(primary, isFocusIdx ? 55 : 28),
+											fontSize: Math.round(scaledDigitSize * 0.4) + 'px'
+										});
+									} else {
+										$(this).css({
+											flex: '0 0 auto',
+											width: Math.round(scaledDigitSize * 0.88) + 'px',
+											height: scaledDigitSize + 'px',
+											lineHeight: scaledDigitSize + 'px',
+											border: '1.5px solid ' + (isFocusIdx ? primary : inputBorder),
+											borderRadius: Math.round(radius * 0.5) + 'px',
+											background: inputBg,
+											color: text,
+											boxShadow: isFocusIdx ? ('0 0 0 3px ' + hexRgba(primary, 18)) : 'none',
+											fontSize: Math.round(scaledDigitSize * 0.4) + 'px'
+										});
+									}
+								});
+							}
+
+							// Render Live Countdown Timer Preview in Step 2
+							var $timerBox = $('#signa-prev-timer-box');
+							if (timerStyle === 'circular_ring') {
+								$timerBox.html(
+									'<div style="display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:99px;background:' + hexRgba(primary, 12) + ';border:1px solid ' + hexRgba(primary, 30) + ';color:' + text + ';font-size:11.5px;font-weight:700;">' +
+									'<svg width="20" height="20" viewBox="0 0 24 24" style="transform:rotate(-90deg);flex-shrink:0;"><circle cx="12" cy="12" r="9" fill="none" stroke="rgba(148,163,184,0.28)" stroke-width="2.5"/><circle cx="12" cy="12" r="9" fill="none" stroke="' + primary + '" stroke-width="2.5" stroke-dasharray="56.5" stroke-dashoffset="16" stroke-linecap="round"/></svg>' +
+									'<span>ارسال مجدد کد: <strong dir="ltr" style="color:' + primary + ';">01:45</strong></span>' +
+									'</div>'
+								);
+							} else if (timerStyle === 'minimal_badge') {
+								$timerBox.html(
+									'<div style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:99px;background:' + hexRgba(primary, 12) + ';color:' + primary + ';font-size:11.5px;font-weight:700;">' +
+									'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
+									'<span>ارسال مجدد تا ۰۱:۴۵ دیگر</span>' +
+									'</div>'
+								);
+							} else if (timerStyle === 'simple_text') {
+								$timerBox.html(
+									'<div style="font-size:11.5px;opacity:0.8;color:' + text + ';font-weight:600;">ارسال مجدد کد تا <strong style="color:' + primary + ';">۰۱:۴۵</strong> دیگر</div>'
+								);
+							} else {
+								$timerBox.html(
+									'<div style="display:flex;flex-direction:column;gap:5px;align-items:center;">' +
+									'<span style="font-size:11.5px;opacity:0.85;color:' + text + ';font-weight:600;">ارسال مجدد کد تا <strong style="color:' + primary + ';">۰۱:۴۵</strong> دیگر</span>' +
+									'<div style="width:100%;height:5px;border-radius:99px;background:rgba(148,163,184,0.22);overflow:hidden;">' +
+									'<div style="width:68%;height:100%;border-radius:99px;background:' + btnBg + ';"></div>' +
+									'</div></div>'
+								);
+							}
 						}
 
 						// Mode Tabs (Page vs Modal Simulation)
@@ -1509,6 +1902,43 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('.signa-prev-mode-btn').removeClass('active');
 							$('.signa-prev-mode-btn[data-mode="page"]').addClass('active');
 							syncStudioCat2();
+						});
+
+						// Auto-switch Live Preview to Step 2 when user changes any Category 4 OTP/Timer control
+						$(document).on('input change', '.signa-cat4-control', function(){
+							$('.signa-prev-step-btn').removeClass('active');
+							$('.signa-prev-step-btn[data-step="2"]').addClass('active');
+							$('#signa-prev-step-1').hide();
+							$('#signa-prev-step-2').fadeIn(150);
+							syncStudioCat2();
+						});
+
+						// Replay Form Entrance Animation in Live Preview when changed
+						$('#form_animation').on('change', function(){
+							var anim = $(this).val() || 'fade_up';
+							var $card = $('#signa-live-preview-card');
+							$card.removeClass('signa-anim-fade_up signa-anim-zoom_spring signa-anim-slide_rtl');
+							if (anim !== 'none') {
+								void $card[0].offsetWidth;
+								$card.addClass('signa-anim-' + anim);
+							}
+						});
+
+						// Live Error Shake Effect Test Button in Preview
+						$('#signa-test-shake-btn').on('click', function(){
+							$('.signa-prev-step-btn').removeClass('active');
+							$('.signa-prev-step-btn[data-step="2"]').addClass('active');
+							$('#signa-prev-step-1').hide();
+							$('#signa-prev-step-2').show();
+							var $digits = $('#signa-prev-digits');
+							$digits.removeClass('signa-shake-anim');
+							void $digits[0].offsetWidth;
+							$digits.addClass('signa-shake-anim');
+							$('.signa-prev-digit').css({ borderColor: '#ef4444', color: '#ef4444' });
+							setTimeout(function(){
+								$digits.removeClass('signa-shake-anim');
+								syncStudioCat2();
+							}, 750);
 						});
 
 						// When user adjusts Glassmorphism blur or opacity slider, auto-Lower opacity slightly if it was 100% so blur is immediately visible

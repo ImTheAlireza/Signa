@@ -158,6 +158,14 @@ class Signa_Helper {
 			'input_border_color'        => '#d1d5db',
 			'input_addon_style'         => 'icon',            // icon | ir_flag | none
 
+			// 4.4. OTP Boxes, Countdown Timer Styles & Micro-Animations (Category 4)
+			'digit_box_size'            => 48,                // 40..60 (px)
+			'digit_box_gap'             => 8,                 // 4..16 (px)
+			'timer_style'               => 'progress_bar',    // progress_bar | circular_ring | minimal_badge | simple_text
+			'form_animation'            => 'fade_up',         // fade_up | zoom_spring | slide_rtl | none
+			'otp_auto_submit'           => 1,
+			'error_shake_effect'        => 1,
+
 			// 5. WooCommerce & Integrations
 			'wc_replace_myaccount'      => 1,
 			'wc_checkout_otp_box'       => 1,

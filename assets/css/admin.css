@@ -2449,9 +2449,12 @@
 	background: var(--s-primary-soft);
 }
 
-/* Proportional Viewport Stage inside Live Preview so Split-Screen never squishes text */
+/* Proportional Viewport Stage inside Live Preview so Split-Screen never squishes or overflows */
 .signa-preview-viewport {
-	width: 100%;
+	width: 100% !important;
+	max-width: 100% !important;
+	box-sizing: border-box !important;
+	overflow: hidden !important;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -2461,21 +2464,26 @@
 	z-index: 2;
 }
 
-.signa-preview-viewport.is-scaled-split {
-	min-height: 250px;
+#signa-live-preview-shell {
+	width: 100% !important;
+	max-width: 340px !important;
+	box-sizing: border-box !important;
+	transform: none !important;
+	zoom: 1 !important;
+	margin: 0 !important;
 }
 
-.signa-preview-viewport.is-scaled-split #signa-live-preview-shell {
-	width: 720px !important;
-	max-width: 720px !important;
-	transform: scale(0.53);
-	transform-origin: center center;
-	margin: -95px 0;
+#signa-live-preview-shell.is-split {
+	width: 100% !important;
+	max-width: 100% !important;
 }
 
-.signa-studio-layout.is-wide-preview .signa-preview-viewport.is-scaled-split #signa-live-preview-shell {
-	transform: scale(0.71);
-	margin: -60px 0;
+#signa-live-preview-shell.is-split #signa-live-preview-card,
+#signa-live-preview-shell.is-split #signa-prev-split-banner {
+	flex: 1 1 50% !important;
+	min-width: 0 !important;
+	max-width: 50% !important;
+	box-sizing: border-box !important;
 }
 
 /* Simulated Website Backdrop for Modal / Drawer Mode inside Live Preview */
@@ -2489,13 +2497,14 @@
 	flex-direction: column;
 	gap: 12px;
 	opacity: 0.45;
+	box-sizing: border-box;
 }
 
 .signa-preview-canvas.is-modal-mode {
 	position: relative;
 	min-height: 410px;
 	padding: 0 !important;
-	overflow: hidden;
+	overflow: hidden !important;
 	justify-content: center;
 }
 
@@ -2519,20 +2528,18 @@
 .signa-preview-canvas.is-modal-mode .signa-preview-viewport {
 	position: relative;
 	z-index: 2;
-	width: 100%;
+	width: 100% !important;
+	max-width: 100% !important;
 	height: 410px;
-	padding: 16px;
-}
-
-.signa-preview-canvas.is-modal-mode #signa-live-preview-shell {
-	transform: scale(0.78);
-	transform-origin: center center;
+	padding: 14px !important;
+	box-sizing: border-box !important;
+	overflow: hidden !important;
 }
 
 /* Live Modal / Drawer Entrance Animations in Preview Stage */
 @keyframes signaSimModalCenter {
-	0% { opacity: 0; transform: scale(0.84) translateY(14px); }
-	100% { opacity: 1; transform: scale(1) translateY(0); }
+	0% { opacity: 0; }
+	100% { opacity: 1; }
 }
 @keyframes signaSimDrawerLeft {
 	0% { opacity: 0.4; transform: translateX(-100%); }

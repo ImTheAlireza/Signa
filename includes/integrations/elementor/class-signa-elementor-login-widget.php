@@ -315,9 +315,43 @@ class Signa_Elementor_Login_Widget extends \Elementor\Widget_Base {
 				'type'    => \Elementor\Controls_Manager::SELECT,
 				'default' => Signa_Helper::get_option( 'digit_box_style', 'box' ),
 				'options' => array(
-					'box'       => 'مربعی کلاسیک (Box)',
-					'underline' => 'خط زیرین مینیمال (Underline)',
-					'pill'      => 'کپسولی گرد (Pill)',
+					'box'            => 'مربعی مدرن (Box)',
+					'underline'      => 'خط زیرین مینیمال (Underline)',
+					'pill'           => 'کپسولی گرد (Pill)',
+					'separated_glow' => 'نئونی درخشان (Glow Box)',
+					'connected'      => 'پیوسته یکپارچه (Connected)',
+				),
+			)
+		);
+
+		$this->add_control(
+			'timer_style',
+			array(
+				'label'   => 'استایل تایمر شمارش معکوس',
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => array(
+					''              => 'پیش‌فرض تنظیمات افزونه',
+					'progress_bar'  => 'نوار پیشرفت افقی (Progress Bar)',
+					'circular_ring' => 'حلقه گرافیکی دایره‌ای (Circular Ring)',
+					'minimal_badge' => 'بج کپسولی مینیمال (Minimal Badge)',
+					'simple_text'   => 'متن ساده کلاسیک (Simple Text)',
+				),
+			)
+		);
+
+		$this->add_control(
+			'form_animation',
+			array(
+				'label'   => 'انیمیشن ورود فرم',
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => array(
+					''            => 'پیش‌فرض تنظیمات افزونه',
+					'fade_up'     => 'ظهور نرم از پایین (Fade Up)',
+					'zoom_spring' => 'بزرگ‌نمایی فنری (Spring Scale)',
+					'slide_rtl'   => 'حرکت کشویی افقی (Slide)',
+					'none'        => 'بدون انیمیشن',
 				),
 			)
 		);
@@ -414,6 +448,8 @@ class Signa_Elementor_Login_Widget extends \Elementor\Widget_Base {
 				'font_family'        => $settings['font_family'] ?? '',
 				'input_style'        => $settings['input_style'] ?? '',
 				'input_addon_style'  => $settings['input_addon_style'] ?? '',
+				'timer_style'        => $settings['timer_style'] ?? '',
+				'form_animation'     => $settings['form_animation'] ?? '',
 				'context'            => 'elementor',
 			)
 		);

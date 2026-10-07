@@ -36,6 +36,12 @@ $input_height     = isset( $args['input_height'] ) && null !== $args['input_heig
 $input_bg_color   = ! empty( $args['input_bg_color'] ) ? $args['input_bg_color'] : Signa_Helper::get_option( 'input_bg_color', '#f8fafc' );
 $input_border_col = ! empty( $args['input_border_color'] ) ? $args['input_border_color'] : Signa_Helper::get_option( 'input_border_color', '#d1d5db' );
 $input_addon      = ! empty( $args['input_addon_style'] ) ? $args['input_addon_style'] : Signa_Helper::get_option( 'input_addon_style', 'icon' );
+$digit_box_size   = isset( $args['digit_box_size'] ) && null !== $args['digit_box_size'] ? absint( $args['digit_box_size'] ) : absint( Signa_Helper::get_option( 'digit_box_size', 48 ) );
+$digit_box_gap    = isset( $args['digit_box_gap'] ) && null !== $args['digit_box_gap'] ? absint( $args['digit_box_gap'] ) : absint( Signa_Helper::get_option( 'digit_box_gap', 8 ) );
+$timer_style      = ! empty( $args['timer_style'] ) ? $args['timer_style'] : Signa_Helper::get_option( 'timer_style', 'progress_bar' );
+$form_animation   = ! empty( $args['form_animation'] ) ? $args['form_animation'] : Signa_Helper::get_option( 'form_animation', 'fade_up' );
+$otp_auto_submit  = isset( $args['otp_auto_submit'] ) && null !== $args['otp_auto_submit'] ? (bool) $args['otp_auto_submit'] : (bool) Signa_Helper::get_option( 'otp_auto_submit', 1 );
+$error_shake      = isset( $args['error_shake_effect'] ) && null !== $args['error_shake_effect'] ? (bool) $args['error_shake_effect'] : (bool) Signa_Helper::get_option( 'error_shake_effect', 1 );
 $logo_url         = trim( (string) Signa_Helper::get_option( 'logo_url', '' ) );
 $raw_max_width    = isset( $args['max_width'] ) && null !== $args['max_width'] ? absint( $args['max_width'] ) : absint( Signa_Helper::get_option( 'form_max_width', 420 ) );
 $max_width        = max( 320, min( 640, $raw_max_width ) );
@@ -145,7 +151,7 @@ $glow_border_rgba  = Signa_Helper::hex_to_rgba( $primary_color, 65 );
 $font_stack_css    = Signa_Helper::get_font_stack( $font_family );
 
 $inline_vars = sprintf(
-	'--signa-primary:%s;--signa-secondary:%s;--signa-btn-bg:%s;--signa-bg:%s;--signa-text:%s;--signa-radius:%dpx;--signa-split-bg:%s;--signa-blur:%dpx;--signa-card-pad:%dpx;--signa-glow-shadow:%s;--signa-glow-border:%s;--signa-font:%s;--signa-title-size:%dpx;--signa-subtitle-size:%dpx;--signa-btn-size:%dpx;--signa-input-h:%dpx;--signa-input-bg:%s;--signa-border:%s;max-width:%dpx;',
+	'--signa-primary:%s;--signa-secondary:%s;--signa-btn-bg:%s;--signa-bg:%s;--signa-text:%s;--signa-radius:%dpx;--signa-split-bg:%s;--signa-blur:%dpx;--signa-card-pad:%dpx;--signa-glow-shadow:%s;--signa-glow-border:%s;--signa-font:%s;--signa-title-size:%dpx;--signa-subtitle-size:%dpx;--signa-btn-size:%dpx;--signa-input-h:%dpx;--signa-input-bg:%s;--signa-border:%s;--signa-digit-size:%dpx;--signa-digit-gap:%dpx;max-width:%dpx;',
 	esc_attr( $primary_color ),
 	esc_attr( $secondary_color ),
 	esc_attr( $btn_bg_css ),
@@ -164,11 +170,13 @@ $inline_vars = sprintf(
 	$input_height,
 	esc_attr( $input_bg_color ),
 	esc_attr( $input_border_col ),
+	$digit_box_size,
+	$digit_box_gap,
 	$wrapper_max_w
 );
 
 $wrapper_classes = sprintf(
-	'signa-otp-wrapper signa-digit-style-%s signa-layout-%s signa-pos-%s signa-shadow-%s signa-border-%s signa-btn-mode-%s signa-input-style-%s signa-addon-%s %s%s',
+	'signa-otp-wrapper signa-digit-style-%s signa-layout-%s signa-pos-%s signa-shadow-%s signa-border-%s signa-btn-mode-%s signa-input-style-%s signa-addon-%s signa-timer-%s signa-anim-%s %s%s',
 	esc_attr( $digit_box_style ),
 	esc_attr( $effective_layout ),
 	esc_attr( $card_position ),
@@ -177,11 +185,13 @@ $wrapper_classes = sprintf(
 	esc_attr( $button_bg_mode ),
 	esc_attr( $input_style ),
 	esc_attr( $input_addon ),
+	esc_attr( $timer_style ),
+	esc_attr( $form_animation ),
 	$is_dark_surface ? 'signa-theme-dark' : 'signa-theme-light',
 	$glassmorphism ? ' signa-glassmorphism' : ''
 );
 ?>
-<div class="<?php echo esc_attr( $wrapper_classes ); ?>" dir="rtl" style="<?php echo esc_attr( $inline_vars ); ?>" data-otp-length="<?php echo esc_attr( (string) $otp_length ); ?>" data-redirect="<?php echo esc_url( $redirect_to ); ?>" data-context="<?php echo esc_attr( $context ); ?>" data-passkey-prompt="<?php echo $enable_passkey && $passkey_prompt ? '1' : '0'; ?>" data-canvas-img="<?php echo esc_url( $canvas_bg_img ); ?>" data-split-img="<?php echo esc_url( $split_image_url ); ?>">
+<div class="<?php echo esc_attr( $wrapper_classes ); ?>" dir="rtl" style="<?php echo esc_attr( $inline_vars ); ?>" data-otp-length="<?php echo esc_attr( (string) $otp_length ); ?>" data-redirect="<?php echo esc_url( $redirect_to ); ?>" data-context="<?php echo esc_attr( $context ); ?>" data-passkey-prompt="<?php echo $enable_passkey && $passkey_prompt ? '1' : '0'; ?>" data-auto-submit="<?php echo $otp_auto_submit ? '1' : '0'; ?>" data-error-shake="<?php echo $error_shake ? '1' : '0'; ?>" data-timer-style="<?php echo esc_attr( $timer_style ); ?>" data-canvas-img="<?php echo esc_url( $canvas_bg_img ); ?>" data-split-img="<?php echo esc_url( $split_image_url ); ?>">
 	<?php if ( $glassmorphism ) : ?>
 		<div class="signa-frontend-glass-orbs" aria-hidden="true">
 			<span class="signa-fe-orb is-1"></span>
@@ -340,9 +350,24 @@ $wrapper_classes = sprintf(
 
 			<div class="signa-resend-row">
 				<div class="signa-timer-wrap">
-					<span>ارسال مجدد کد تا </span>
-					<strong class="signa-timer-countdown" dir="ltr">01:00</strong>
-					<span> دیگر</span>
+					<div class="signa-timer-head">
+						<?php if ( 'circular_ring' === $timer_style ) : ?>
+							<svg class="signa-timer-ring-svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+								<circle class="signa-ring-bg" cx="12" cy="12" r="9" fill="none" stroke-width="2.5"></circle>
+								<circle class="signa-ring-fg" cx="12" cy="12" r="9" fill="none" stroke-width="2.5" stroke-dasharray="56.55" stroke-dashoffset="0" stroke-linecap="round"></circle>
+							</svg>
+						<?php elseif ( 'minimal_badge' === $timer_style ) : ?>
+							<svg class="signa-timer-badge-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+						<?php endif; ?>
+						<span>ارسال مجدد کد تا </span>
+						<strong class="signa-timer-countdown" dir="ltr">01:00</strong>
+						<span> دیگر</span>
+					</div>
+					<?php if ( 'progress_bar' === $timer_style ) : ?>
+						<div class="signa-timer-progress-track" aria-hidden="true">
+							<div class="signa-timer-progress-fill" style="width:100%;"></div>
+						</div>
+					<?php endif; ?>
 				</div>
 				<button type="button" class="signa-btn-link signa-resend-btn" style="display:none;">
 					↻ ارسال مجدد کد تایید
