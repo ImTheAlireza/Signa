@@ -116,6 +116,8 @@
 	color: var(--signa-text);
 	border: 1px solid rgba(156, 163, 175, 0.25);
 	border-radius: var(--signa-radius);
+	overflow: hidden;
+	background-clip: padding-box;
 	padding: var(--signa-card-pad, 32px) calc(var(--signa-card-pad, 32px) * 0.88);
 	box-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
 	transition: color 0.42s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.42s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
@@ -672,20 +674,39 @@
 }
 
 .signa-otp-digits.signa-shake {
-	animation: signaShake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+	animation: signaShake 0.64s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .signa-otp-digits.signa-shake .signa-digit-box {
-	border-color: #ef4444;
-	background-color: #fef2f2;
-	color: #b91c1c;
+	border-color: #ef4444 !important;
+	background-color: rgba(239, 68, 68, 0.14) !important;
+	color: #ef4444 !important;
+	box-shadow: 0 0 0 3.5px rgba(239, 68, 68, 0.22), 0 6px 16px -4px rgba(239, 68, 68, 0.35) !important;
+	animation: signaFeDigitErrorWave 0.56s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
+.signa-otp-digits.signa-shake .signa-digit-box:nth-child(2) { animation-delay: 30ms; }
+.signa-otp-digits.signa-shake .signa-digit-box:nth-child(3) { animation-delay: 60ms; }
+.signa-otp-digits.signa-shake .signa-digit-box:nth-child(4) { animation-delay: 90ms; }
+.signa-otp-digits.signa-shake .signa-digit-box:nth-child(5) { animation-delay: 120ms; }
+.signa-otp-digits.signa-shake .signa-digit-box:nth-child(6) { animation-delay: 150ms; }
 
 @keyframes signaShake {
-	10%, 90% { transform: translate3d(-2px, 0, 0); }
-	20%, 80% { transform: translate3d(4px, 0, 0); }
-	30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
-	40%, 60% { transform: translate3d(6px, 0, 0); }
+	0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+	12% { transform: translate3d(-11px, 0, 0) rotate(-0.8deg); }
+	24% { transform: translate3d(10px, 0, 0) rotate(0.8deg); }
+	36% { transform: translate3d(-8px, 0, 0) rotate(-0.5deg); }
+	48% { transform: translate3d(7px, 0, 0) rotate(0.5deg); }
+	60% { transform: translate3d(-5px, 0, 0) rotate(-0.3deg); }
+	72% { transform: translate3d(4px, 0, 0) rotate(0.2deg); }
+	84% { transform: translate3d(-2px, 0, 0) rotate(0deg); }
+	100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+
+@keyframes signaFeDigitErrorWave {
+	0% { transform: scale(1); }
+	35% { transform: scale(1.1) translateY(-3px); }
+	70% { transform: scale(0.96); }
+	100% { transform: scale(1); }
 }
 
 .signa-digit-style-underline .signa-digit-box:focus {
@@ -766,29 +787,44 @@
 	flex-shrink: 0;
 }
 
-/* Category 4 Form Entrance Animations */
+/* Category 4 Form Entrance Animations & Staggered Choreography */
 @keyframes signaFeFadeUp {
-	0% { opacity: 0; transform: translateY(16px); }
-	100% { opacity: 1; transform: translateY(0); }
+	0% { opacity: 0; transform: translate3d(0, 22px, 0) scale(0.98); }
+	100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 @keyframes signaFeZoomSpring {
-	0% { opacity: 0; transform: scale(0.92); }
-	70% { transform: scale(1.015); }
-	100% { opacity: 1; transform: scale(1); }
+	0% { opacity: 0; transform: scale(0.84) translate3d(0, 10px, 0); }
+	65% { opacity: 1; transform: scale(1.03) translate3d(0, -2px, 0); }
+	85% { transform: scale(0.99) translate3d(0, 0, 0); }
+	100% { opacity: 1; transform: scale(1) translate3d(0, 0, 0); }
 }
 @keyframes signaFeSlideRtl {
-	0% { opacity: 0; transform: translateX(24px); }
-	100% { opacity: 1; transform: translateX(0); }
+	0% { opacity: 0; transform: translate3d(32px, 0, 0); }
+	70% { opacity: 1; transform: translate3d(-4px, 0, 0); }
+	100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes signaFeChildStagger {
+	0% { opacity: 0; transform: translate3d(0, 12px, 0); }
+	100% { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 .signa-otp-wrapper.signa-anim-fade_up .signa-otp-card {
-	animation: signaFeFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+	animation: signaFeFadeUp 0.54s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .signa-otp-wrapper.signa-anim-zoom_spring .signa-otp-card {
-	animation: signaFeZoomSpring 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+	animation: signaFeZoomSpring 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 .signa-otp-wrapper.signa-anim-slide_rtl .signa-otp-card {
-	animation: signaFeSlideRtl 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+	animation: signaFeSlideRtl 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.signa-otp-wrapper:not(.signa-anim-none) .signa-otp-header {
+	animation: signaFeChildStagger 0.48s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+.signa-otp-wrapper:not(.signa-anim-none) .signa-field-group {
+	animation: signaFeChildStagger 0.48s cubic-bezier(0.22, 1, 0.36, 1) 0.11s both;
+}
+.signa-otp-wrapper:not(.signa-anim-none) .signa-btn {
+	animation: signaFeChildStagger 0.48s cubic-bezier(0.22, 1, 0.36, 1) 0.17s both;
 }
 
 /* Loading Spinner */

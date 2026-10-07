@@ -131,8 +131,8 @@ class Signa_Helper {
 			'modal_style'               => 'center',          // center | drawer_left | drawer_right | bottom_sheet
 			'modal_mobile_sheet'        => 1,
 			'standalone_page_id'        => 0,
-			'canvas_bg_style'           => 'mesh_light',      // mesh_light | mesh_dark | brand_gradient | custom_image | solid
-			'canvas_bg_color'           => '#f1f5f9',
+			'canvas_bg_style'           => 'mesh_dark',       // mesh_light | mesh_dark | brand_gradient | custom_image | solid
+			'canvas_bg_color'           => '#0f172a',
 			'canvas_bg_image'           => '',
 			'canvas_show_back_link'     => 1,
 

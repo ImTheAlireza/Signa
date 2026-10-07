@@ -130,17 +130,13 @@ if ( 'mesh_dark' === $canvas_bg_style ) {
 
 $alpha            = $glassmorphism ? max( 0.15, min( 1.0, $card_bg_opacity / 100 ) ) : 1.0;
 $effective_lum    = $glassmorphism ? ( ( $card_lum * $alpha ) + ( $canvas_lum * ( 1.0 - $alpha ) ) ) : $card_lum;
-$is_dark_surface  = ( $card_lum < 0.48 ) || ( $glassmorphism && ( $effective_lum < 0.52 || $canvas_lum < 0.42 ) );
+$is_dark_surface  = ( $card_lum < 0.48 ) || ( $glassmorphism && $effective_lum < 0.48 );
 $text_lum         = $hex_lum_fn( $text_color );
 
 if ( $is_dark_surface && $text_lum < 0.5 ) {
 	$text_color = '#f8fafc';
 } elseif ( ! $is_dark_surface && $text_lum > 0.85 ) {
 	$text_color = '#111827';
-}
-
-if ( $glassmorphism && $is_dark_surface && $card_lum > 0.7 ) {
-	$effective_card_bg = Signa_Helper::hex_to_rgba( '#0f172a', min( $card_bg_opacity, 86 ) );
 }
 
 $btn_bg_css        = ( 'gradient' === $button_bg_mode )

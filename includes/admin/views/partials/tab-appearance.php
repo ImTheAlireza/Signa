@@ -883,7 +883,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 												<div style="display:flex;gap:5px;direction:ltr;">
 													<span style="width:22px;height:26px;border-radius:6px;background:#f8fafc;border:1.5px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">5</span>
 													<span style="width:22px;height:26px;border-radius:6px;background:#f8fafc;border:1.5px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">8</span>
-													<span style="width:22px;height:26px;border-radius:6px;background:#ffffff;border:2px solid #38bdf8;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;transform:translateY(-2px);">2</span>
+													<span class="signa-mini-digit-active" style="width:22px;height:26px;border-radius:6px;background:#ffffff;border:2px solid #38bdf8;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
 													<span style="width:22px;height:26px;border-radius:6px;background:rgba(248,250,252,0.2);border:1.5px solid #64748b;"></span>
 												</div>
 											</div>
@@ -900,7 +900,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 												<div style="display:flex;gap:6px;direction:ltr;">
 													<span style="width:20px;height:26px;border-bottom:2.5px solid #38bdf8;color:#f8fafc;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">5</span>
 													<span style="width:20px;height:26px;border-bottom:2.5px solid #38bdf8;color:#f8fafc;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">8</span>
-													<span style="width:20px;height:26px;border-bottom:2.5px solid #10b981;color:#38bdf8;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
+													<span class="signa-mini-digit-active" style="width:20px;height:26px;border-bottom:2.5px solid #10b981;color:#38bdf8;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
 													<span style="width:20px;height:26px;border-bottom:2px solid #64748b;"></span>
 												</div>
 											</div>
@@ -917,7 +917,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 												<div style="display:flex;gap:5px;direction:ltr;">
 													<span style="width:22px;height:26px;border-radius:99px;background:#f8fafc;border:1.5px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">5</span>
 													<span style="width:22px;height:26px;border-radius:99px;background:#f8fafc;border:1.5px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">8</span>
-													<span style="width:22px;height:26px;border-radius:99px;background:#ffffff;border:2px solid #38bdf8;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
+													<span class="signa-mini-digit-active" style="width:22px;height:26px;border-radius:99px;background:#ffffff;border:2px solid #38bdf8;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
 													<span style="width:22px;height:26px;border-radius:99px;background:rgba(248,250,252,0.2);border:1.5px solid #64748b;"></span>
 												</div>
 											</div>
@@ -934,7 +934,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 												<div style="display:flex;gap:5px;direction:ltr;">
 													<span style="width:22px;height:26px;border-radius:7px;background:rgba(56,189,248,0.15);border:1.5px solid #38bdf8;box-shadow:0 0 10px rgba(56,189,248,0.45);color:#f8fafc;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">5</span>
 													<span style="width:22px;height:26px;border-radius:7px;background:rgba(56,189,248,0.15);border:1.5px solid #38bdf8;box-shadow:0 0 10px rgba(56,189,248,0.45);color:#f8fafc;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">8</span>
-													<span style="width:22px;height:26px;border-radius:7px;background:rgba(16,185,129,0.2);border:1.5px solid #10b981;box-shadow:0 0 12px rgba(16,185,129,0.6);color:#6ee7b7;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
+													<span class="signa-mini-digit-active" style="width:22px;height:26px;border-radius:7px;background:rgba(16,185,129,0.2);border:1.5px solid #10b981;box-shadow:0 0 12px rgba(16,185,129,0.6);color:#6ee7b7;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
 													<span style="width:22px;height:26px;border-radius:7px;background:rgba(15,23,42,0.5);border:1.5px solid #475569;"></span>
 												</div>
 											</div>
@@ -951,7 +951,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 												<div style="display:inline-flex;border-radius:8px;overflow:hidden;border:1.5px solid #94a3b8;background:#f8fafc;direction:ltr;">
 													<span style="width:22px;height:26px;border-right:1px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">5</span>
 													<span style="width:22px;height:26px;border-right:1px solid #cbd5e1;color:#0f172a;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">8</span>
-													<span style="width:22px;height:26px;border-right:1px solid #cbd5e1;background:#eff6ff;color:#2563eb;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
+													<span class="signa-mini-digit-active" style="width:22px;height:26px;border-right:1px solid #cbd5e1;background:#eff6ff;color:#2563eb;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;">2</span>
 													<span style="width:22px;height:26px;color:#94a3b8;font-size:11px;display:inline-flex;align-items:center;justify-content:center;">•</span>
 												</div>
 											</div>
@@ -985,7 +985,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 													<div style="width:120px;display:flex;flex-direction:column;gap:5px;align-items:center;">
 														<span style="font-size:10px;color:#e2e8f0;font-weight:700;">۰۱:۴۵ تا ارسال مجدد</span>
 														<div style="width:100%;height:5px;border-radius:99px;background:rgba(148,163,184,0.25);overflow:hidden;">
-															<div style="width:68%;height:100%;border-radius:99px;background:linear-gradient(90deg,#38bdf8,#2563eb);"></div>
+															<div class="signa-mini-progress-fill" style="width:68%;height:100%;border-radius:99px;background:linear-gradient(90deg,#38bdf8,#2563eb);"></div>
 														</div>
 													</div>
 												</div>
@@ -1002,14 +1002,14 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 													<div style="display:inline-flex;align-items:center;gap:8px;background:rgba(15,23,42,0.55);padding:5px 12px;border-radius:99px;border:1px solid rgba(56,189,248,0.3);">
 														<svg width="22" height="22" viewBox="0 0 24 24" style="transform:rotate(-90deg);">
 															<circle cx="12" cy="12" r="9" fill="none" stroke="rgba(148,163,184,0.25)" stroke-width="2.5"/>
-															<circle cx="12" cy="12" r="9" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="56.5" stroke-dashoffset="16" stroke-linecap="round"/>
+															<circle class="signa-mini-ring-circle" cx="12" cy="12" r="9" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="56.5" stroke-dashoffset="16" stroke-linecap="round"/>
 														</svg>
 														<span style="font-size:11px;color:#f8fafc;font-weight:800;" dir="ltr">01:45</span>
 													</div>
 												</div>
 												<div class="signa-choice-body">
 													<strong>حلقه گرافیکی دایره‌ای (Circular SVG Ring)</strong>
-													<small>حلقه прогреس دایره‌ای مدرن کنار ثانیه‌شمار</small>
+													<small>حلقه پروگرس دایره‌ای مدرن کنار ثانیه‌شمار</small>
 												</div>
 											</label>
 
@@ -1017,7 +1017,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 												<input type="radio" name="signa[timer_style]" class="signa-cat4-control" value="minimal_badge" <?php checked( $timer_style, 'minimal_badge' ); ?> />
 												<div class="signa-mini-video">
 													<span class="signa-mini-video-badge">پیشنمایش</span>
-													<div style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;background:rgba(59,130,246,0.18);border:1px solid rgba(59,130,246,0.4);color:#93c5fd;font-size:10.5px;font-weight:700;">
+													<div class="signa-mini-clock-tick" style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;background:rgba(59,130,246,0.18);border:1px solid rgba(59,130,246,0.4);color:#93c5fd;font-size:10.5px;font-weight:700;">
 														<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
 														<span>ارسال مجدد: ۰۱:۴۵</span>
 													</div>
@@ -1032,7 +1032,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 												<input type="radio" name="signa[timer_style]" class="signa-cat4-control" value="simple_text" <?php checked( $timer_style, 'simple_text' ); ?> />
 												<div class="signa-mini-video">
 													<span class="signa-mini-video-badge">پیشنمایش</span>
-													<span style="font-size:11px;color:#cbd5e1;font-weight:600;">ارسال مجدد کد تا <strong>۰۱:۴۵</strong> دیگر</span>
+													<span style="font-size:11px;color:#cbd5e1;font-weight:600;">ارسال مجدد کد تا <strong style="color:#38bdf8;">۰۱:۴۵</strong> دیگر</span>
 												</div>
 												<div class="signa-choice-body">
 													<strong>متن ساده کلاسیک (Simple Text)</strong>
@@ -1044,22 +1044,82 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 									<!-- 4. Form Entrance Animation & Interactive Micro-Interactions -->
 									<div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--s-border);">
-										<div class="signa-fields-grid signa-cols-2" style="margin-bottom:14px;">
-											<div class="signa-field">
-												<label for="form_animation">ج) انیمیشن ورود فرم و تغییر مراحل</label>
-												<select name="signa[form_animation]" id="form_animation">
-													<option value="fade_up" <?php selected( $form_animation, 'fade_up' ); ?>>ظهور نرم از پایین (Smooth Fade Up)</option>
-													<option value="zoom_spring" <?php selected( $form_animation, 'zoom_spring' ); ?>>بزرگ‌نمایی فنری مدرن (Spring Scale)</option>
-													<option value="slide_rtl" <?php selected( $form_animation, 'slide_rtl' ); ?>>حرکت کشویی افقی (Slide Horizontal)</option>
-													<option value="none" <?php selected( $form_animation, 'none' ); ?>>بدون انیمیشن (Instant)</option>
-												</select>
-											</div>
-											<div class="signa-field" style="display:flex;flex-direction:column;justify-content:flex-end;">
-												<button type="button" id="signa-test-shake-btn" class="signa-btn-secondary" style="height:42px;justify-content:center;gap:8px;">
-													<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-													<span>تست زنده افکت لرزش خطا در پیش‌نمایش</span>
-												</button>
-											</div>
+										<label class="signa-section-label">ج) انیمیشن ورود فرم و تغییر مراحل (Form Entrance & Step Choreography)</label>
+										<div class="signa-choice-grid signa-cols-2" style="margin-bottom:14px;">
+											<label class="signa-choice-card <?php echo 'fade_up' === $form_animation ? 'selected' : ''; ?>">
+												<input type="radio" name="signa[form_animation]" class="signa-anim-radio" value="fade_up" <?php checked( $form_animation, 'fade_up' ); ?> />
+												<div class="signa-mini-video">
+													<span class="signa-mini-video-badge">پیشنمایش</span>
+													<div class="signa-mv-card-anim is-fade-up">
+														<span class="signa-mv-line w-60"></span>
+														<span class="signa-mv-line w-90"></span>
+														<span class="signa-mv-btn"></span>
+													</div>
+												</div>
+												<div class="signa-choice-body">
+													<strong>ظهور نرم از پایین (Smooth Fade Up)</strong>
+													<small>ورود لایه‌به‌لایه و ابریشمی کارت از پایین به بالا</small>
+												</div>
+											</label>
+
+											<label class="signa-choice-card <?php echo 'zoom_spring' === $form_animation ? 'selected' : ''; ?>">
+												<input type="radio" name="signa[form_animation]" class="signa-anim-radio" value="zoom_spring" <?php checked( $form_animation, 'zoom_spring' ); ?> />
+												<div class="signa-mini-video">
+													<span class="signa-mini-video-badge">پیشنمایش</span>
+													<div class="signa-mv-card-anim is-zoom-spring">
+														<span class="signa-mv-line w-60"></span>
+														<span class="signa-mv-line w-90"></span>
+														<span class="signa-mv-btn"></span>
+													</div>
+												</div>
+												<div class="signa-choice-body">
+													<strong>بزرگ‌نمایی فنری مدرن (Spring Scale)</strong>
+													<small>بزرگ‌نمایی الاستیک با فیزیک فنری نرم به سبک iOS</small>
+												</div>
+											</label>
+
+											<label class="signa-choice-card <?php echo 'slide_rtl' === $form_animation ? 'selected' : ''; ?>">
+												<input type="radio" name="signa[form_animation]" class="signa-anim-radio" value="slide_rtl" <?php checked( $form_animation, 'slide_rtl' ); ?> />
+												<div class="signa-mini-video">
+													<span class="signa-mini-video-badge">پیشنمایش</span>
+													<div class="signa-mv-card-anim is-slide-rtl">
+														<span class="signa-mv-line w-60"></span>
+														<span class="signa-mv-line w-90"></span>
+														<span class="signa-mv-btn"></span>
+													</div>
+												</div>
+												<div class="signa-choice-body">
+													<strong>حرکت کشویی افقی (Slide Horizontal)</strong>
+													<small>ورود کشویی سریع در جهت راست‌به‌چپ همراه با محو شدن</small>
+												</div>
+											</label>
+
+											<label class="signa-choice-card <?php echo 'none' === $form_animation ? 'selected' : ''; ?>">
+												<input type="radio" name="signa[form_animation]" class="signa-anim-radio" value="none" <?php checked( $form_animation, 'none' ); ?> />
+												<div class="signa-mini-video">
+													<span class="signa-mini-video-badge">پیشنمایش</span>
+													<div class="signa-mv-card-anim">
+														<span class="signa-mv-line w-60"></span>
+														<span class="signa-mv-line w-90"></span>
+														<span class="signa-mv-btn"></span>
+													</div>
+												</div>
+												<div class="signa-choice-body">
+													<strong>بدون انیمیشن (Instant)</strong>
+													<small>نمایش فوری فرم بدون افکت حرکتی</small>
+												</div>
+											</label>
+										</div>
+
+										<div class="signa-fields-grid signa-cols-2" style="margin-bottom:16px;">
+											<button type="button" id="signa-replay-entrance-btn" class="signa-btn-secondary" style="height:42px;justify-content:center;gap:8px;width:100%;">
+												<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+												<span>پخش مجدد انیمیشن ورود فرم در پیش‌نمایش</span>
+											</button>
+											<button type="button" id="signa-test-shake-btn" class="signa-btn-secondary" style="height:42px;justify-content:center;gap:8px;width:100%;border-color:rgba(239,68,68,0.45);color:#ef4444;background:rgba(239,68,68,0.06);">
+												<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+												<span>تست زنده افکت لرزش و هشدار قرمز خطا</span>
+											</button>
 										</div>
 
 										<div class="signa-switch-row" style="margin-bottom:10px;">
@@ -1073,10 +1133,21 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											</label>
 										</div>
 
-										<div class="signa-switch-row">
-											<div class="signa-switch-text">
-												<strong>افکت لرزش و قرمز شدن کادرها هنگام کد اشتباه (Error Shake Effect)</strong>
-												<p>در صورت وارد کردن کد نادرست، خانه‌های کد با انیمیشن لرزش افقی و هایلایت قرمز به کاربر بازخورد بصری می‌دهند.</p>
+										<div class="signa-switch-row" style="align-items:center;gap:14px;">
+											<div class="signa-mini-video" style="width:155px;height:64px;flex-shrink:0;margin:0;">
+												<div class="signa-mv-error-shake-demo" style="display:flex;flex-direction:column;align-items:center;gap:5px;direction:ltr;">
+													<span class="signa-mv-err-pill">کد نادرست است!</span>
+													<div style="display:flex;gap:4px;">
+														<span class="signa-mv-err-box">5</span>
+														<span class="signa-mv-err-box">8</span>
+														<span class="signa-mv-err-box">2</span>
+														<span class="signa-mv-err-box">9</span>
+													</div>
+												</div>
+											</div>
+											<div class="signa-switch-text" style="flex:1;">
+												<strong>افکت لرزش الاستیک و نئون قرمز هنگام کد اشتباه (Error Shake & Crimson Glow)</strong>
+												<p>در صورت وارد کردن کد نادرست، خانه‌های کد با انیمیشن لرزش فنری، موج نوری قرمز و بنر هشدار متحرک به کاربر بازخورد بصری می‌دهند.</p>
 											</div>
 											<label class="signa-switch">
 												<input type="checkbox" name="signa[error_shake_effect]" id="error_shake_effect" value="1" <?php checked( $error_shake_effect, true ); ?> />
@@ -1266,8 +1337,8 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										<div id="signa-live-preview-shell" class="signa-prev-shell <?php echo $is_split ? 'is-split' : ''; ?> <?php echo 'split_left' === $form_layout ? 'is-split-left' : ''; ?>" style="width:100%;max-width:<?php echo $is_split ? '720px' : '360px'; ?>;border-radius:<?php echo esc_attr( (string) $settings['border_radius'] ); ?>px;overflow:hidden;box-shadow:0 16px 36px -8px rgba(15,23,42,0.16);display:flex;flex-direction:<?php echo 'split_left' === $form_layout ? 'row-reverse' : 'row'; ?>;transition:all 0.35s ease;">
 
 											<!-- Form Column -->
-											<div id="signa-live-preview-card" class="signa-prev-card" style="flex:1;min-width:0;margin:0;box-shadow:none;background:<?php echo esc_attr( $settings['card_bg_color'] ); ?>;color:<?php echo esc_attr( $settings['text_color'] ); ?>;border-radius:0;transition:color 0.42s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.42s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.2s ease, -webkit-backdrop-filter 0.2s ease;">
-												<div style="text-align:center;margin-bottom:20px;">
+											<div id="signa-live-preview-card" class="signa-prev-card" style="flex:1;min-width:0;margin:0;box-shadow:none;overflow:hidden;background-clip:padding-box;background:<?php echo esc_attr( $settings['card_bg_color'] ); ?>;color:<?php echo esc_attr( $settings['text_color'] ); ?>;border-radius:<?php echo esc_attr( (string) $settings['border_radius'] ); ?>px;transition:color 0.42s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.42s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.2s ease, -webkit-backdrop-filter 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;">
+												<div id="signa-prev-header-block" class="signa-stagger-el" style="text-align:center;margin-bottom:18px;">
 													<div id="signa-prev-logo-wrap" style="<?php echo empty( $settings['logo_url'] ) ? 'display:none;' : ''; ?>margin-bottom:12px;">
 														<img id="signa-prev-logo-img" src="<?php echo esc_url( $settings['logo_url'] ); ?>" alt="Logo" style="max-height:48px;" />
 													</div>
@@ -1281,40 +1352,48 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 													<p id="signa-prev-subtitle" style="margin:0;font-size:12.5px;opacity:0.82;line-height:1.6;color:inherit;transition:color 0.42s cubic-bezier(0.4, 0, 0.2, 1);"><?php echo esc_html( $settings['form_subtitle'] ); ?></p>
 												</div>
 
+												<!-- Animated Error Banner Toast inside Preview Card -->
+												<div id="signa-prev-error-toast" class="signa-prev-error-toast" style="display:none;">
+													<span class="signa-prev-error-icon">
+														<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+													</span>
+													<span>کد تایید وارد شده نادرست است. مجدداً بررسی کنید.</span>
+												</div>
+
 												<!-- Preview Step 1 -->
 												<div id="signa-prev-step-1">
-													<label id="signa-prev-field-label" style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:inherit;transition:color 0.42s cubic-bezier(0.4, 0, 0.2, 1);">شماره موبایل یا ایمیل</label>
-													<div id="signa-prev-input-wrap" style="position:relative;margin-bottom:16px;">
+													<label id="signa-prev-field-label" class="signa-stagger-el" style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:inherit;transition:color 0.42s cubic-bezier(0.4, 0, 0.2, 1);">شماره موبایل یا ایمیل</label>
+													<div id="signa-prev-input-wrap" class="signa-stagger-el" style="position:relative;margin-bottom:16px;">
 														<input type="text" class="signa-prev-input" placeholder="شماره موبایل (0912...) یا ایمیل" dir="rtl" readonly style="margin-bottom:0 !important;transition:background-color 0.38s ease, color 0.38s ease, border-color 0.38s ease;" />
 														<span id="signa-prev-input-addon" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:#64748b;pointer-events:none;transition:color 0.38s ease;" dir="ltr"></span>
 													</div>
-													<button type="button" id="signa-prev-btn-1" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:700;font-size:14px;cursor:default;transition:all 0.35s ease;">
+													<button type="button" id="signa-prev-btn-1" class="signa-stagger-el" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.35s cubic-bezier(0.22, 1, 0.36, 1);">
 														<?php echo esc_html( $settings['button_text'] ); ?>
 													</button>
 												</div>
 
 												<!-- Preview Step 2 -->
 												<div id="signa-prev-step-2" style="display:none;">
-													<div style="display:flex;justify-content:space-between;background:rgba(156,163,175,0.15);padding:8px 12px;border-radius:8px;margin-bottom:14px;font-size:12px;color:inherit;transition:color 0.42s ease;">
+													<div class="signa-stagger-el" style="display:flex;justify-content:space-between;background:rgba(156,163,175,0.15);padding:8px 12px;border-radius:8px;margin-bottom:14px;font-size:12px;color:inherit;transition:color 0.42s ease;">
 														<strong dir="ltr">0912***6789</strong>
-														<span style="color:<?php echo esc_attr( $settings['primary_color'] ); ?>;font-weight:600;">ویرایش</span>
+														<span id="signa-prev-edit-num" style="color:<?php echo esc_attr( $settings['primary_color'] ); ?>;font-weight:600;cursor:pointer;">ویرایش</span>
 													</div>
-													<div id="signa-prev-digits" style="display:flex;justify-content:center;gap:6px;margin-bottom:14px;" dir="ltr">
-														<span class="signa-prev-digit">5</span>
-														<span class="signa-prev-digit">8</span>
-														<span class="signa-prev-digit">2</span>
-														<span class="signa-prev-digit">9</span>
-														<span class="signa-prev-digit">1</span>
+													<div id="signa-prev-digits" class="signa-stagger-el" style="display:flex;justify-content:center;gap:6px;margin-bottom:14px;" dir="ltr">
+														<span class="signa-prev-digit" data-idx="0">5</span>
+														<span class="signa-prev-digit" data-idx="1">8</span>
+														<span class="signa-prev-digit is-focused-digit" data-idx="2">2</span>
+														<span class="signa-prev-digit" data-idx="3">9</span>
+														<span class="signa-prev-digit" data-idx="4">1</span>
 													</div>
-													<div id="signa-prev-timer-box" style="margin-bottom:14px;text-align:center;"></div>
-													<button type="button" id="signa-prev-btn-2" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:600;font-size:14px;cursor:default;transition:all 0.35s ease;">
+													<div id="signa-prev-timer-box" class="signa-stagger-el" style="margin-bottom:14px;text-align:center;"></div>
+													<button type="button" id="signa-prev-btn-2" class="signa-stagger-el" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:600;font-size:14px;cursor:pointer;transition:all 0.35s cubic-bezier(0.22, 1, 0.36, 1);">
 														<?php echo esc_html( $settings['verify_button_text'] ); ?>
 													</button>
 												</div>
 											</div>
 
 											<!-- Split-Screen Side Banner Preview Column -->
-											<div id="signa-prev-split-banner" style="<?php echo $is_split ? 'display:flex;' : 'display:none;'; ?>flex:1;min-width:0;padding:28px 24px;flex-direction:column;justify-content:space-between;color:#ffffff;background-color:<?php echo esc_attr( $settings['split_bg_color'] ); ?>;background-image:<?php echo ! empty( $settings['split_image_url'] ) ? 'linear-gradient(135deg, rgba(15,23,42,0.72), rgba(30,58,138,0.78)), url(' . esc_url( $settings['split_image_url'] ) . ')' : 'radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 65%)'; ?>;background-size:cover;background-position:center;transition:color 0.42s ease, background 0.42s ease;">
+											<div id="signa-prev-split-banner" style="<?php echo $is_split ? 'display:flex;' : 'display:none;'; ?>flex:1;min-width:0;padding:28px 24px;overflow:hidden;background-clip:padding-box;flex-direction:column;justify-content:space-between;color:#ffffff;background-color:<?php echo esc_attr( $settings['split_bg_color'] ); ?>;background-image:<?php echo ! empty( $settings['split_image_url'] ) ? 'linear-gradient(135deg, rgba(15,23,42,0.72), rgba(30,58,138,0.78)), url(' . esc_url( $settings['split_image_url'] ) . ')' : 'radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 65%)'; ?>;background-size:cover;background-position:center;transition:color 0.42s ease, background 0.42s ease;">
 												<div>
 													<span id="signa-prev-split-badge" style="display:inline-block;padding:4px 12px;border-radius:99px;font-size:11.5px;font-weight:700;background:rgba(255,255,255,0.18);backdrop-filter:blur(4px);margin-bottom:14px;transition:color 0.42s ease, background 0.42s ease;"><?php echo esc_html( $settings['split_badge_text'] ); ?></span>
 													<h4 id="signa-prev-split-title" style="margin:0 0 10px 0;font-size:18px;font-weight:800;color:inherit;line-height:1.45;transition:color 0.42s ease;"><?php echo esc_html( $settings['split_title'] ); ?></h4>
@@ -1518,7 +1597,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 							// 4. Smart Automatic Dark/Light Theme & Image Contrast Detection
 							var cardLum = hexLuminance(bg);
-							var canvasLum = 0.85;
+							var canvasLum = 0.14;
 							if (canvasBgStyle === 'mesh_dark') {
 								canvasLum = 0.08;
 							} else if (canvasBgStyle === 'solid') {
@@ -1530,15 +1609,18 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									canvasLum = 0.25;
 									sampleImageLuminance(canvasBgImg, function(){ syncStudioCat2(); });
 								}
+							} else if (canvasBgStyle === 'brand_gradient') {
+								canvasLum = 0.22;
 							} else {
-								canvasLum = (hexLuminance(canvasBgColor) * 0.65) + 0.30;
+								// Default rich dark slate studio backdrop in Page mode too (as requested)
+								canvasLum = 0.14;
 							}
 
 							var alpha = isGlass ? Math.max(0.15, Math.min(1, cardOpacity / 100)) : 1;
 							var effectiveFormLum = isGlass ? ((cardLum * alpha) + (canvasLum * (1 - alpha))) : cardLum;
 
-							// Also if Glassmorphism is active over a dark canvas/image (canvasLum < 0.42) or user uploaded a dark canvas image
-							var isDarkFormSurface = (cardLum < 0.48) || (isGlass && (effectiveFormLum < 0.52 || canvasLum < 0.42));
+							// Card surface is dark when card_bg_color itself is dark (cardLum < 0.48) OR when glass opacity is low enough that effectiveFormLum < 0.48
+							var isDarkFormSurface = (cardLum < 0.48) || (isGlass && effectiveFormLum < 0.48);
 
 							// Automatically transition text color between white (#f8fafc) and dark (#111827) unless user is manually dragging #text_color right now
 							if (triggeredById !== 'text_color') {
@@ -1653,29 +1735,30 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('#signa-prev-glass-orbs .orb-1').css('background', primary);
 							$('#signa-prev-glass-orbs .orb-2').css('background', secondary);
 
+							// Rich Dark Slate Backdrop in both Page View (نمای صفحه ورود) and Modal View so frosted/light cards pop with high contrast
 							var canvasBgCss = '';
 							if (canvasBgStyle === 'mesh_dark') {
 								canvasBgCss = 'radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 60%, #020617 100%)';
 							} else if (canvasBgStyle === 'brand_gradient') {
-								canvasBgCss = 'linear-gradient(135deg, ' + primary + '26 0%, #f8fafc 60%, ' + secondary + '1f 100%)';
+								canvasBgCss = 'linear-gradient(135deg, #0f172a 0%, #1e293b 55%, #090d16 100%)';
 							} else if (canvasBgStyle === 'custom_image' && canvasBgImg) {
-								canvasBgCss = 'linear-gradient(rgba(15,23,42,0.45), rgba(15,23,42,0.45)), url(' + canvasBgImg + ') center/cover no-repeat';
+								canvasBgCss = 'linear-gradient(rgba(15,23,42,0.58), rgba(15,23,42,0.68)), url(' + canvasBgImg + ') center/cover no-repeat';
 							} else if (canvasBgStyle === 'solid') {
-								canvasBgCss = canvasBgColor;
+								canvasBgCss = (canvasBgColor.toLowerCase() === '#f1f5f9') ? '#1e293b' : canvasBgColor;
 							} else {
-								canvasBgCss = 'radial-gradient(circle at top right, #e0e7ff 0%, ' + canvasBgColor + ' 65%)';
+								canvasBgCss = 'radial-gradient(circle at top right, #334155 0%, #1e293b 52%, #0f172a 100%)';
 							}
-							var patternLayer = '', patternSize = 'auto';
+							var patternLayer = 'radial-gradient(rgba(148, 163, 184, 0.22) 1px, transparent 1px), ', patternSize = '18px 18px, auto';
 							if (bgPattern === 'dots') {
-								patternLayer = 'radial-gradient(rgba(99, 102, 241, 0.22) 1.25px, transparent 1.25px), ';
+								patternLayer = 'radial-gradient(rgba(129, 140, 248, 0.32) 1.35px, transparent 1.35px), ';
 								patternSize = '18px 18px, auto';
 							} else if (bgPattern === 'grid') {
 								patternLayer = 'linear-gradient(to right, rgba(148, 163, 184, 0.16) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.16) 1px, transparent 1px), ';
 								patternSize = '22px 22px, 22px 22px, auto';
 							} else if (bgPattern === 'waves') {
-								patternLayer = 'repeating-radial-gradient(circle at 0 0, transparent 0, rgba(99, 102, 241, 0.07) 12px, transparent 24px), ';
+								patternLayer = 'repeating-radial-gradient(circle at 0 0, transparent 0, rgba(99, 102, 241, 0.12) 12px, transparent 24px), ';
 							} else if (bgPattern === 'geometric') {
-								patternLayer = 'linear-gradient(30deg, rgba(99, 102, 241, 0.08) 12%, transparent 12.5%, transparent 87%, rgba(99, 102, 241, 0.08) 87.5%), ';
+								patternLayer = 'linear-gradient(30deg, rgba(99, 102, 241, 0.12) 12%, transparent 12.5%, transparent 87%, rgba(99, 102, 241, 0.12) 87.5%), ';
 								patternSize = '28px 48px, auto';
 							}
 
@@ -1697,42 +1780,51 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$viewport.toggleClass('is-scaled-split', showSplitBanner);
 							$viewport.css('alignItems', alignFlex);
 
-							var shadowCss = '0 14px 32px -6px rgba(15, 23, 42, 0.12)';
+							var shadowCss = '0 20px 44px -10px rgba(2, 6, 23, 0.45)';
 							if (cardShadow === 'none') shadowCss = 'none';
-							else if (cardShadow === 'soft') shadowCss = '0 4px 16px -2px rgba(15, 23, 42, 0.06)';
-							else if (cardShadow === 'deep') shadowCss = '0 26px 58px -10px rgba(15, 23, 42, 0.28), 0 10px 24px -6px rgba(15, 23, 42, 0.14)';
-							else if (cardShadow === 'glow') shadowCss = '0 0 34px -2px ' + hexRgba(primary, 45) + ', 0 12px 28px -6px rgba(15, 23, 42, 0.16)';
+							else if (cardShadow === 'soft') shadowCss = '0 8px 24px -4px rgba(2, 6, 23, 0.25)';
+							else if (cardShadow === 'deep') shadowCss = '0 28px 64px -10px rgba(2, 6, 23, 0.65), 0 12px 28px -6px rgba(2, 6, 23, 0.35)';
+							else if (cardShadow === 'glow') shadowCss = '0 0 38px -2px ' + hexRgba(primary, 55) + ', 0 16px 36px -6px rgba(2, 6, 23, 0.45)';
 
-							var borderCss = '1px solid rgba(156, 163, 175, 0.25)', borderTopCss = borderCss;
+							var borderCss = '1px solid rgba(148, 163, 184, 0.28)', borderTopCss = borderCss;
 							if (cardBorder === 'none') { borderCss = 'none'; borderTopCss = 'none'; }
-							else if (cardBorder === 'glow') { borderCss = '1.5px solid ' + hexRgba(primary, 65); borderTopCss = borderCss; }
+							else if (cardBorder === 'glow') { borderCss = '1.5px solid ' + hexRgba(primary, 70); borderTopCss = borderCss; }
 							else if (cardBorder === 'top_accent') { borderTopCss = '4px solid ' + primary; }
 
-							// Compute exact corner border-radius for Shell, Card, and Split Banner so corners never poke out
+							// Compute exact corner border-radius & hardware clip-path so backdrop-filter blur NEVER bleeds into 90-degree corners
 							var radNum = Math.max(0, Math.round(radius));
-							var innerRad = Math.max(0, radNum - 1) + 'px';
-							var shellRadiusCss = radNum + 'px';
-							var cardRadiusCss = innerRad;
+							var radPx = radNum + 'px';
+							var shellRadiusCss = radPx;
+							var cardRadiusCss = radPx;
+							var cardClipCss = 'inset(0 round ' + radPx + ')';
 							var bannerRadiusCss = '0';
+							var bannerClipCss = 'none';
 
 							if (currentPreviewMode === 'modal' && modalStyle === 'bottom_sheet') {
 								shellRadiusCss = '22px 22px 0 0';
-								cardRadiusCss = '21px 21px 0 0';
+								cardRadiusCss = '22px 22px 0 0';
+								cardClipCss = 'inset(0 round 22px 22px 0 0)';
 							} else if (currentPreviewMode === 'modal' && modalStyle === 'drawer_left') {
 								shellRadiusCss = '0 16px 16px 0';
-								cardRadiusCss = '0 15px 15px 0';
+								cardRadiusCss = '0 16px 16px 0';
+								cardClipCss = 'inset(0 round 0 16px 16px 0)';
 							} else if (currentPreviewMode === 'modal' && modalStyle === 'drawer_right') {
 								shellRadiusCss = '16px 0 0 16px';
-								cardRadiusCss = '15px 0 0 15px';
+								cardRadiusCss = '16px 0 0 16px';
+								cardClipCss = 'inset(0 round 16px 0 0 16px)';
 							} else if (showSplitBanner) {
 								if (formLayout === 'split_left') {
 									// In RTL row-reverse: Form Card is on LEFT, Split Banner is on RIGHT
-									cardRadiusCss = innerRad + ' 0 0 ' + innerRad;
-									bannerRadiusCss = '0 ' + innerRad + ' ' + innerRad + ' 0';
+									cardRadiusCss = radPx + ' 0 0 ' + radPx;
+									cardClipCss = 'inset(0 round ' + radPx + ' 0 0 ' + radPx + ')';
+									bannerRadiusCss = '0 ' + radPx + ' ' + radPx + ' 0';
+									bannerClipCss = 'inset(0 round 0 ' + radPx + ' ' + radPx + ' 0)';
 								} else {
 									// In RTL row: Form Card is on RIGHT, Split Banner is on LEFT
-									cardRadiusCss = '0 ' + innerRad + ' ' + innerRad + ' 0';
-									bannerRadiusCss = innerRad + ' 0 0 ' + innerRad;
+									cardRadiusCss = '0 ' + radPx + ' ' + radPx + ' 0';
+									cardClipCss = 'inset(0 round 0 ' + radPx + ' ' + radPx + ' 0)';
+									bannerRadiusCss = radPx + ' 0 0 ' + radPx;
+									bannerClipCss = 'inset(0 round ' + radPx + ' 0 0 ' + radPx + ')';
 								}
 							}
 
@@ -1748,16 +1840,16 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								shellDom.style.setProperty('margin', '0', 'important');
 								shellDom.style.setProperty('border-radius', shellRadiusCss, 'important');
 								shellDom.style.setProperty('flex-direction', formLayout === 'split_left' ? 'row-reverse' : 'row', 'important');
-								shellDom.style.setProperty('box-shadow', shadowCss, 'important');
-								shellDom.style.setProperty('border', borderCss, 'important');
-								shellDom.style.setProperty('border-top', borderTopCss, 'important');
+								// In Single-Card mode, put border & shadow directly on cardEl so there is never a double-border mismatch at corners
+								shellDom.style.setProperty('box-shadow', showSplitBanner ? shadowCss : 'none', 'important');
+								shellDom.style.setProperty('border', showSplitBanner ? borderCss : 'none', 'important');
+								shellDom.style.setProperty('border-top', showSplitBanner ? borderTopCss : 'none', 'important');
 								shellDom.style.setProperty('background', 'transparent', 'important');
 							}
 
-							// 3. Apply Glassmorphism Backdrop Blur directly via native setProperty (with dark glass adaptation if background is dark)
-							var effectiveCardBgHex = (isGlass && isDarkFormSurface && cardLum > 0.7) ? '#0f172a' : bg;
+							// 3. Apply Glassmorphism Backdrop Blur directly via native setProperty + clip-path to eliminate corner bleed
 							var effectiveGlassOpacity = isGlass ? Math.min(cardOpacity, 88) : 100;
-							var cardBgValue = isGlass ? hexRgba(effectiveCardBgHex, effectiveGlassOpacity) : bg;
+							var cardBgValue = isGlass ? hexRgba(bg, effectiveGlassOpacity) : bg;
 							var blurValue = isGlass ? ('blur(' + blurPx + 'px) saturate(160%)') : 'none';
 							var previewScaleFactor = isWidePreview ? (showSplitBanner ? 0.88 : 1.0) : (showSplitBanner ? 0.62 : 0.85);
 
@@ -1770,16 +1862,27 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								cardEl.style.setProperty('color', text, 'important');
 								cardEl.style.setProperty('padding', Math.round(cardPadding * previewScaleFactor) + 'px', 'important');
 								cardEl.style.setProperty('border-radius', cardRadiusCss, 'important');
+								cardEl.style.setProperty('overflow', 'hidden', 'important');
+								cardEl.style.setProperty('background-clip', 'padding-box', 'important');
+								cardEl.style.setProperty('clip-path', cardClipCss, 'important');
+								cardEl.style.setProperty('-webkit-clip-path', cardClipCss, 'important');
+								cardEl.style.setProperty('box-shadow', showSplitBanner ? 'none' : shadowCss, 'important');
+								cardEl.style.setProperty('border', showSplitBanner ? 'none' : borderCss, 'important');
+								cardEl.style.setProperty('border-top', showSplitBanner ? 'none' : borderTopCss, 'important');
 							}
 
 							var splitBannerEl = document.getElementById('signa-prev-split-banner');
 							if (splitBannerEl && showSplitBanner) {
 								splitBannerEl.style.setProperty('padding', Math.round(cardPadding * previewScaleFactor) + 'px', 'important');
 								splitBannerEl.style.setProperty('border-radius', bannerRadiusCss, 'important');
+								splitBannerEl.style.setProperty('overflow', 'hidden', 'important');
+								splitBannerEl.style.setProperty('clip-path', bannerClipCss, 'important');
+								splitBannerEl.style.setProperty('-webkit-clip-path', bannerClipCss, 'important');
 							}
 
 							// Ensure title, subtitle, and labels smoothly fade to the detected text color
 							$('#signa-prev-title, #signa-prev-subtitle, #signa-prev-field-label').css('color', text);
+							$('#signa-prev-edit-num').css('color', primary);
 
 							// Category 3: Apply Typography & Input Field Style in Live Preview
 							var fontMap = {
@@ -1853,6 +1956,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var maxSingleDigitW = 'calc((100% - ' + (scaledDigitGap * 4) + 'px) / 5)';
 							var $digitsWrap = $('#signa-prev-digits');
 							var $digits = $('.signa-prev-digit');
+							var activeDigitIdx = parseInt($digitsWrap.attr('data-active-idx') || '2', 10);
 
 							if (digitStyle === 'connected') {
 								$digitsWrap.css({
@@ -1865,7 +1969,8 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									width: '100%'
 								});
 								$digits.each(function(idx){
-									$(this).css({
+									var isFocusIdx = (idx === activeDigitIdx);
+									$(this).toggleClass('is-focused-digit', isFocusIdx).css({
 										flex: '1',
 										width: 'auto',
 										maxWidth: '20%',
@@ -1875,9 +1980,11 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										border: 'none',
 										borderRight: idx < 4 ? ('1px solid ' + inputBorder) : 'none',
 										borderRadius: '0',
-										background: idx === 2 ? hexRgba(primary, 14) : 'transparent',
-										color: idx === 2 ? primary : text,
+										background: isFocusIdx ? hexRgba(primary, 16) : 'transparent',
+										color: isFocusIdx ? primary : text,
 										boxShadow: 'none',
+										cursor: 'pointer',
+										transition: 'all 0.28s cubic-bezier(0.22, 1, 0.36, 1)',
 										fontSize: Math.round(scaledDigitSize * 0.4) + 'px'
 									});
 								});
@@ -1892,7 +1999,8 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									width: '100%'
 								});
 								$digits.each(function(idx){
-									var isFocusIdx = (idx === 2);
+									var isFocusIdx = (idx === activeDigitIdx);
+									$(this).toggleClass('is-focused-digit', isFocusIdx);
 									if (digitStyle === 'underline') {
 										$(this).css({
 											flex: '1 1 0',
@@ -1902,11 +2010,13 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											height: scaledDigitSize + 'px',
 											lineHeight: scaledDigitSize + 'px',
 											border: 'none',
-											borderBottom: '2.5px solid ' + (isFocusIdx ? primary : inputBorder),
+											borderBottom: (isFocusIdx ? '3px solid ' : '2px solid ') + (isFocusIdx ? primary : inputBorder),
 											borderRadius: '0',
 											background: 'transparent',
-											color: text,
+											color: isFocusIdx ? primary : text,
 											boxShadow: 'none',
+											cursor: 'pointer',
+											transition: 'all 0.28s cubic-bezier(0.22, 1, 0.36, 1)',
 											fontSize: Math.round(scaledDigitSize * 0.42) + 'px'
 										});
 									} else if (digitStyle === 'pill') {
@@ -1917,11 +2027,13 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											boxSizing: 'border-box',
 											height: scaledDigitSize + 'px',
 											lineHeight: scaledDigitSize + 'px',
-											border: '1.5px solid ' + (isFocusIdx ? primary : inputBorder),
+											border: (isFocusIdx ? '2px solid ' : '1.5px solid ') + (isFocusIdx ? primary : inputBorder),
 											borderRadius: '99px',
 											background: inputBg,
 											color: text,
-											boxShadow: isFocusIdx ? ('0 0 0 3px ' + hexRgba(primary, 20)) : 'none',
+											boxShadow: isFocusIdx ? ('0 0 0 3.5px ' + hexRgba(primary, 22)) : 'none',
+											cursor: 'pointer',
+											transition: 'all 0.28s cubic-bezier(0.22, 1, 0.36, 1)',
 											fontSize: Math.round(scaledDigitSize * 0.4) + 'px'
 										});
 									} else if (digitStyle === 'separated_glow') {
@@ -1932,11 +2044,13 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											boxSizing: 'border-box',
 											height: scaledDigitSize + 'px',
 											lineHeight: scaledDigitSize + 'px',
-											border: '1.5px solid ' + primary,
+											border: (isFocusIdx ? '2px solid ' : '1.5px solid ') + primary,
 											borderRadius: Math.round(radius * 0.5) + 'px',
-											background: hexRgba(primary, isDarkFormSurface ? 18 : 10),
+											background: hexRgba(primary, isDarkFormSurface ? (isFocusIdx ? 26 : 16) : (isFocusIdx ? 16 : 9)),
 											color: text,
-											boxShadow: '0 0 12px ' + hexRgba(primary, isFocusIdx ? 55 : 28),
+											boxShadow: '0 0 ' + (isFocusIdx ? '16px ' : '10px ') + hexRgba(primary, isFocusIdx ? 60 : 28),
+											cursor: 'pointer',
+											transition: 'all 0.28s cubic-bezier(0.22, 1, 0.36, 1)',
 											fontSize: Math.round(scaledDigitSize * 0.4) + 'px'
 										});
 									} else {
@@ -1947,11 +2061,13 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											boxSizing: 'border-box',
 											height: scaledDigitSize + 'px',
 											lineHeight: scaledDigitSize + 'px',
-											border: '1.5px solid ' + (isFocusIdx ? primary : inputBorder),
+											border: (isFocusIdx ? '2px solid ' : '1.5px solid ') + (isFocusIdx ? primary : inputBorder),
 											borderRadius: Math.round(radius * 0.5) + 'px',
 											background: inputBg,
 											color: text,
-											boxShadow: isFocusIdx ? ('0 0 0 3px ' + hexRgba(primary, 18)) : 'none',
+											boxShadow: isFocusIdx ? ('0 0 0 3.5px ' + hexRgba(primary, 20)) : 'none',
+											cursor: 'pointer',
+											transition: 'all 0.28s cubic-bezier(0.22, 1, 0.36, 1)',
 											fontSize: Math.round(scaledDigitSize * 0.4) + 'px'
 										});
 									}
@@ -1963,13 +2079,13 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							if (timerStyle === 'circular_ring') {
 								$timerBox.html(
 									'<div style="display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:99px;background:' + hexRgba(primary, 12) + ';border:1px solid ' + hexRgba(primary, 30) + ';color:' + text + ';font-size:11.5px;font-weight:700;">' +
-									'<svg width="20" height="20" viewBox="0 0 24 24" style="transform:rotate(-90deg);flex-shrink:0;"><circle cx="12" cy="12" r="9" fill="none" stroke="rgba(148,163,184,0.28)" stroke-width="2.5"/><circle cx="12" cy="12" r="9" fill="none" stroke="' + primary + '" stroke-width="2.5" stroke-dasharray="56.5" stroke-dashoffset="16" stroke-linecap="round"/></svg>' +
+									'<svg width="20" height="20" viewBox="0 0 24 24" style="transform:rotate(-90deg);flex-shrink:0;"><circle cx="12" cy="12" r="9" fill="none" stroke="rgba(148,163,184,0.28)" stroke-width="2.5"/><circle class="signa-mini-ring-circle" cx="12" cy="12" r="9" fill="none" stroke="' + primary + '" stroke-width="2.5" stroke-dasharray="56.5" stroke-dashoffset="16" stroke-linecap="round"/></svg>' +
 									'<span>ارسال مجدد کد: <strong dir="ltr" style="color:' + primary + ';">01:45</strong></span>' +
 									'</div>'
 								);
 							} else if (timerStyle === 'minimal_badge') {
 								$timerBox.html(
-									'<div style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:99px;background:' + hexRgba(primary, 12) + ';color:' + primary + ';font-size:11.5px;font-weight:700;">' +
+									'<div class="signa-mini-clock-tick" style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:99px;background:' + hexRgba(primary, 12) + ';color:' + primary + ';font-size:11.5px;font-weight:700;">' +
 									'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
 									'<span>ارسال مجدد تا ۰۱:۴۵ دیگر</span>' +
 									'</div>'
@@ -1983,7 +2099,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									'<div style="display:flex;flex-direction:column;gap:5px;align-items:center;">' +
 									'<span style="font-size:11.5px;opacity:0.85;color:' + text + ';font-weight:600;">ارسال مجدد کد تا <strong style="color:' + primary + ';">۰۱:۴۵</strong> دیگر</span>' +
 									'<div style="width:100%;height:5px;border-radius:99px;background:rgba(148,163,184,0.22);overflow:hidden;">' +
-									'<div style="width:68%;height:100%;border-radius:99px;background:' + btnBg + ';"></div>' +
+									'<div class="signa-mini-progress-fill" style="width:68%;height:100%;border-radius:99px;background:' + btnBg + ';"></div>' +
 									'</div></div>'
 								);
 							}
@@ -1992,12 +2108,123 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 						// Expose unified authoritative Live Preview renderer so admin.js delegates to it without conflict
 						window.signaSyncLivePreview = syncStudioCat2;
 
+						// Choreographed Form Entrance & Staggered Elements Animation
+						function triggerFormEntranceChoreography(customAnim) {
+							var anim = customAnim || $('input[name="signa[form_animation]"]:checked').val() || $('#form_animation').val() || 'fade_up';
+							var $card = $('#signa-live-preview-card');
+							var $staggerEls = $card.find('.signa-stagger-el:visible');
+							$card.removeClass('signa-anim-fade_up signa-anim-zoom_spring signa-anim-slide_rtl');
+							$staggerEls.removeClass('signa-stagger-run');
+							if (anim !== 'none') {
+								void $card[0].offsetWidth;
+								$card.addClass('signa-anim-' + anim);
+								$staggerEls.each(function(i){
+									this.style.animationDelay = (i * 55) + 'ms';
+									$(this).addClass('signa-stagger-run');
+								});
+							}
+						}
+
+						// Staggered OTP Digit Pop-In Choreography when entering Step 2
+						function triggerStep2DigitPop() {
+							var $digits = $('.signa-prev-digit');
+							$digits.removeClass('signa-digit-pop-anim');
+							if ($digits.length) {
+								void $digits[0].offsetWidth;
+								$digits.each(function(idx){
+									this.style.animationDelay = (idx * 45) + 'ms';
+									$(this).addClass('signa-digit-pop-anim');
+								});
+							}
+						}
+
+						// Polished Error Shake & Crimson Neon Wave Choreography
+						var errorShakeTimer = null;
+						function triggerErrorShakeChoreography() {
+							if (errorShakeTimer) {
+								clearTimeout(errorShakeTimer);
+							}
+							$('.signa-prev-step-btn').removeClass('active');
+							$('.signa-prev-step-btn[data-step="2"]').addClass('active');
+							$('#signa-prev-step-1').hide();
+							$('#signa-prev-step-2').show();
+
+							var $card = $('#signa-live-preview-card');
+							var $digitsWrap = $('#signa-prev-digits');
+							var $digits = $('.signa-prev-digit');
+							var $toast = $('#signa-prev-error-toast');
+							var $btn2 = $('#signa-prev-btn-2');
+							var origBtnText = $('#verify_button_text').val() || 'تایید و ورود به حساب';
+
+							$digitsWrap.removeClass('signa-shake-anim');
+							$digits.removeClass('is-error-digit');
+							$toast.stop(true, true).slideDown(220).addClass('is-visible');
+							void $digitsWrap[0].offsetWidth;
+							$digitsWrap.addClass('signa-shake-anim');
+
+							$digits.each(function(idx){
+								this.style.animationDelay = (idx * 32) + 'ms';
+								$(this).addClass('is-error-digit');
+							});
+
+							$btn2.text('کد تایید نامعتبر است').css({
+								background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+								boxShadow: '0 8px 20px -4px rgba(239, 68, 68, 0.45)'
+							});
+
+							errorShakeTimer = setTimeout(function(){
+								$digitsWrap.removeClass('signa-shake-anim');
+								$digits.removeClass('is-error-digit');
+								$toast.removeClass('is-visible').slideUp(240);
+								$btn2.text(origBtnText).css('boxShadow', 'none');
+								syncStudioCat2();
+							}, 1950);
+						}
+
 						// Mode Tabs (Page vs Modal Simulation)
 						$('.signa-prev-mode-btn').on('click', function(){
 							currentPreviewMode = $(this).attr('data-mode') || 'page';
 							$('.signa-prev-mode-btn').removeClass('active');
 							$(this).addClass('active');
 							syncStudioCat2();
+							triggerFormEntranceChoreography();
+						});
+
+						// Interactive Step 1 <-> Step 2 buttons & preview buttons
+						$('.signa-prev-step-btn').off('click.signaStep').on('click.signaStep', function(){
+							var step = $(this).attr('data-step');
+							$('.signa-prev-step-btn').removeClass('active');
+							$(this).addClass('active');
+							if (step === '2') {
+								$('#signa-prev-step-1').hide();
+								$('#signa-prev-step-2').fadeIn(180);
+								triggerStep2DigitPop();
+							} else {
+								$('#signa-prev-error-toast').hide();
+								$('#signa-prev-step-2').hide();
+								$('#signa-prev-step-1').fadeIn(180);
+								triggerFormEntranceChoreography();
+							}
+						});
+
+						// Clicking Preview Primary Button 1 switches to Step 2 with micro-animation; clicking Edit switches back
+						$('#signa-prev-btn-1').on('click', function(){
+							$('.signa-prev-step-btn[data-step="2"]').trigger('click');
+						});
+						$('#signa-prev-edit-num').on('click', function(){
+							$('.signa-prev-step-btn[data-step="1"]').trigger('click');
+						});
+
+						// Clicking any OTP digit box in Live Preview focuses it with a spring bounce
+						$(document).on('click', '.signa-prev-digit', function(){
+							var idx = $(this).attr('data-idx') || '2';
+							$('#signa-prev-digits').attr('data-active-idx', idx);
+							syncStudioCat2();
+							var el = this;
+							$(el).removeClass('signa-digit-pop-anim');
+							void el.offsetWidth;
+							el.style.animationDelay = '0ms';
+							$(el).addClass('signa-digit-pop-anim');
 						});
 
 						// Auto-switch Live Preview to Modal mode when user selects a Modal/Drawer style
@@ -2014,6 +2241,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('.signa-prev-mode-btn').removeClass('active');
 							$('.signa-prev-mode-btn[data-mode="page"]').addClass('active');
 							syncStudioCat2();
+							triggerFormEntranceChoreography();
 						});
 
 						// Auto-switch Live Preview to Step 2 when user changes any Category 4 OTP/Timer control
@@ -2023,34 +2251,26 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('#signa-prev-step-1').hide();
 							$('#signa-prev-step-2').fadeIn(150);
 							syncStudioCat2();
+							triggerStep2DigitPop();
 						});
 
-						// Replay Form Entrance Animation in Live Preview when changed
-						$('#form_animation').on('change', function(){
+						// Replay Form Entrance Animation in Live Preview when changed or replay button clicked
+						$(document).on('change', 'input[name="signa[form_animation]"], #form_animation', function(){
 							var anim = $(this).val() || 'fade_up';
-							var $card = $('#signa-live-preview-card');
-							$card.removeClass('signa-anim-fade_up signa-anim-zoom_spring signa-anim-slide_rtl');
-							if (anim !== 'none') {
-								void $card[0].offsetWidth;
-								$card.addClass('signa-anim-' + anim);
-							}
+							triggerFormEntranceChoreography(anim);
+						});
+						$('#signa-replay-entrance-btn').on('click', function(){
+							triggerFormEntranceChoreography();
 						});
 
-						// Live Error Shake Effect Test Button in Preview
+						// Live Error Shake Effect Test Button & Switch in Preview
 						$('#signa-test-shake-btn').on('click', function(){
-							$('.signa-prev-step-btn').removeClass('active');
-							$('.signa-prev-step-btn[data-step="2"]').addClass('active');
-							$('#signa-prev-step-1').hide();
-							$('#signa-prev-step-2').show();
-							var $digits = $('#signa-prev-digits');
-							$digits.removeClass('signa-shake-anim');
-							void $digits[0].offsetWidth;
-							$digits.addClass('signa-shake-anim');
-							$('.signa-prev-digit').css({ borderColor: '#ef4444', color: '#ef4444' });
-							setTimeout(function(){
-								$digits.removeClass('signa-shake-anim');
-								syncStudioCat2();
-							}, 750);
+							triggerErrorShakeChoreography();
+						});
+						$('#error_shake_effect').on('change', function(){
+							if ($(this).is(':checked')) {
+								triggerErrorShakeChoreography();
+							}
 						});
 
 						// When user adjusts Glassmorphism blur or opacity slider, auto-Lower opacity slightly if it was 100% so blur is immediately visible
