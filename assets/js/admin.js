@@ -418,9 +418,18 @@
 			var $shell = $('#signa-live-preview-shell');
 			var $banner = $('#signa-prev-split-banner');
 			var $card = $('#signa-live-preview-card');
+			var $viewport = $('#signa-preview-viewport');
+			var modalStyle = $('input[name="signa[modal_style]"]:checked').val() || 'center';
+			var isModalMode = $canvas.hasClass('is-modal-mode');
+			var isDrawerOrSheet = isModalMode && (modalStyle === 'drawer_left' || modalStyle === 'drawer_right' || modalStyle === 'bottom_sheet');
+			var showSplitBanner = isSplit && !isDrawerOrSheet;
+
+			$viewport.toggleClass('is-scaled-split', showSplitBanner);
+			$viewport.css('alignItems', alignFlex);
 
 			$shell.css({
-				maxWidth: isSplit ? '100%' : '360px',
+				width: showSplitBanner ? '720px' : '100%',
+				maxWidth: showSplitBanner ? '720px' : '360px',
 				borderRadius: radius + 'px',
 				flexDirection: formLayout === 'split_left' ? 'row-reverse' : 'row',
 				boxShadow: shadowCss,
@@ -434,11 +443,11 @@
 				backdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
 				webkitBackdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
 				color: text,
-				padding: Math.round(cardPadding * 0.78) + 'px',
+				padding: Math.round(cardPadding * 0.85) + 'px',
 				borderRadius: '0'
 			});
 
-			if (isSplit) {
+			if (showSplitBanner) {
 				$banner.css({
 					display: 'flex',
 					backgroundColor: splitBg,
@@ -455,7 +464,7 @@
 					var line = $.trim(splitFeatures[f]);
 					if (line) {
 						featHtml +=
-							'<li style="display:flex;align-items:center;gap:6px;margin:0;"><span style="display:inline-flex;width:16px;height:16px;border-radius:50%;background:rgba(16,185,129,0.28);color:#6ee7b7;align-items:center;justify-content:center;flex-shrink:0;">✓</span><span>' +
+							'<li style="display:flex;align-items:center;gap:8px;margin:0;"><span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:rgba(16,185,129,0.28);color:#6ee7b7;align-items:center;justify-content:center;flex-shrink:0;">✓</span><span>' +
 							$('<div>').text(line).html() +
 							'</span></li>';
 					}

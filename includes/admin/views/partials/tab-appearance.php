@@ -50,6 +50,14 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									<!-- 1. Classic Single Card -->
 									<label class="signa-choice-card <?php echo 'card' === $form_layout ? 'selected' : ''; ?>">
 										<input type="radio" name="signa[form_layout]" value="card" <?php checked( $form_layout, 'card' ); ?> />
+										<div class="signa-mini-video">
+											<span class="signa-mini-video-badge">پیشنمایش</span>
+											<div class="signa-mv-card">
+												<span class="signa-mv-line"></span>
+												<span class="signa-mv-input"></span>
+												<span class="signa-mv-btn"></span>
+											</div>
+										</div>
 										<div class="signa-choice-card-top">
 											<div class="signa-flow-icons" title="کارت تکی کلاسیک">
 												<span class="signa-flow-node is-phone">
@@ -70,6 +78,21 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									<!-- 2. Split-Screen: Form Right + Banner Left -->
 									<label class="signa-choice-card <?php echo 'split_right' === $form_layout ? 'selected' : ''; ?>">
 										<input type="radio" name="signa[form_layout]" value="split_right" <?php checked( $form_layout, 'split_right' ); ?> />
+										<div class="signa-mini-video">
+											<span class="signa-mini-video-badge">پیشنمایش</span>
+											<div class="signa-mv-split">
+												<div class="signa-mv-card">
+													<span class="signa-mv-line"></span>
+													<span class="signa-mv-input"></span>
+													<span class="signa-mv-btn"></span>
+												</div>
+												<div class="signa-mv-banner">
+													<span style="width:85%;"></span>
+													<span style="width:65%;opacity:0.65;"></span>
+													<span style="width:75%;background:#6ee7b7;"></span>
+												</div>
+											</div>
+										</div>
 										<div class="signa-choice-card-top">
 											<div class="signa-flow-icons" title="فرم راست + بنر چپ">
 												<span class="signa-flow-node is-sms">
@@ -90,6 +113,21 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									<!-- 3. Split-Screen: Form Left + Banner Right -->
 									<label class="signa-choice-card <?php echo 'split_left' === $form_layout ? 'selected' : ''; ?>">
 										<input type="radio" name="signa[form_layout]" value="split_left" <?php checked( $form_layout, 'split_left' ); ?> />
+										<div class="signa-mini-video">
+											<span class="signa-mini-video-badge">پیشنمایش</span>
+											<div class="signa-mv-split is-reverse">
+												<div class="signa-mv-card">
+													<span class="signa-mv-line"></span>
+													<span class="signa-mv-input"></span>
+													<span class="signa-mv-btn"></span>
+												</div>
+												<div class="signa-mv-banner">
+													<span style="width:85%;"></span>
+													<span style="width:65%;opacity:0.65;"></span>
+													<span style="width:75%;background:#6ee7b7;"></span>
+												</div>
+											</div>
+										</div>
 										<div class="signa-choice-card-top">
 											<div class="signa-flow-icons" title="فرم چپ + بنر راست">
 												<span class="signa-flow-node is-passkey">
@@ -158,6 +196,16 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								<div class="signa-choice-grid signa-cols-3">
 									<label class="signa-choice-card <?php echo 'right' === $card_position ? 'selected' : ''; ?>">
 										<input type="radio" name="signa[card_position]" value="right" <?php checked( $card_position, 'right' ); ?> />
+										<div class="signa-mini-video">
+											<span class="signa-mini-video-badge">پیشنمایش</span>
+											<div class="signa-mv-pos-track is-right">
+												<div class="signa-mv-card" style="width:42px;height:44px;">
+													<span class="signa-mv-line"></span>
+													<span class="signa-mv-input"></span>
+													<span class="signa-mv-btn"></span>
+												</div>
+											</div>
+										</div>
 										<div class="signa-choice-card-top">
 											<span class="signa-flow-node is-phone">
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="13" y="6" width="6" height="12" rx="1" fill="currentColor" fill-opacity="0.25"/></svg>
@@ -172,6 +220,16 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 									<label class="signa-choice-card <?php echo 'center' === $card_position ? 'selected' : ''; ?>">
 										<input type="radio" name="signa[card_position]" value="center" <?php checked( $card_position, 'center' ); ?> />
+										<div class="signa-mini-video">
+											<span class="signa-mini-video-badge">پیشنمایش</span>
+											<div class="signa-mv-pos-track is-center">
+												<div class="signa-mv-card" style="width:42px;height:44px;">
+													<span class="signa-mv-line"></span>
+													<span class="signa-mv-input"></span>
+													<span class="signa-mv-btn"></span>
+												</div>
+											</div>
+										</div>
 										<div class="signa-choice-card-top">
 											<span class="signa-flow-node is-sms">
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="8.5" y="6" width="7" height="12" rx="1" fill="currentColor" fill-opacity="0.25"/></svg>
@@ -189,6 +247,16 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 									<label class="signa-choice-card <?php echo 'left' === $card_position ? 'selected' : ''; ?>">
 										<input type="radio" name="signa[card_position]" value="left" <?php checked( $card_position, 'left' ); ?> />
+										<div class="signa-mini-video">
+											<span class="signa-mini-video-badge">پیشنمایش</span>
+											<div class="signa-mv-pos-track is-left">
+												<div class="signa-mv-card" style="width:42px;height:44px;">
+													<span class="signa-mv-line"></span>
+													<span class="signa-mv-input"></span>
+													<span class="signa-mv-btn"></span>
+												</div>
+											</div>
+										</div>
 										<div class="signa-choice-card-top">
 											<span class="signa-flow-node is-passkey">
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="5" y="6" width="6" height="12" rx="1" fill="currentColor" fill-opacity="0.25"/></svg>
@@ -212,7 +280,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										</span>
 										<div>
 											<h2>۲. استایل پاپ‌آپ (Drawer / Modal) و قالب تمام‌صفحه اختصاصی</h2>
-											<p>تنظیم نحوه باز شدن مودال ورود و ساخت صفحه ورود مستقل بدون هدر و فوتر قالب</p>
+											<p>تنظیم نحوه باز شدن مودال ورود (با کلیک روی هر گزینه، انیمیشن آن در پیش‌نمایش زنده اجرا می‌شود)</p>
 										</div>
 									</div>
 								</div>
@@ -221,6 +289,17 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								<div class="signa-choice-grid signa-cols-2">
 									<label class="signa-choice-card <?php echo 'center' === $modal_style ? 'selected' : ''; ?>">
 										<input type="radio" name="signa[modal_style]" value="center" <?php checked( $modal_style, 'center' ); ?> />
+										<div class="signa-mini-video">
+											<span class="signa-mini-video-badge">پیشنمایش انیمیشن</span>
+											<div class="signa-mv-screen">
+												<div class="signa-mv-screen-bg"><i style="width:45%;"></i><i style="width:85%;"></i><i style="width:65%;"></i></div>
+												<div class="signa-mv-modal-center">
+													<span class="signa-mv-line"></span>
+													<span class="signa-mv-input"></span>
+													<span class="signa-mv-btn"></span>
+												</div>
+											</div>
+										</div>
 										<div class="signa-choice-card-top">
 											<span class="signa-flow-node is-phone">
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="18" rx="2"/><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg>
@@ -238,6 +317,17 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 									<label class="signa-choice-card <?php echo 'drawer_left' === $modal_style ? 'selected' : ''; ?>">
 										<input type="radio" name="signa[modal_style]" value="drawer_left" <?php checked( $modal_style, 'drawer_left' ); ?> />
+										<div class="signa-mini-video">
+											<span class="signa-mini-video-badge">پیشنمایش انیمیشن</span>
+											<div class="signa-mv-screen">
+												<div class="signa-mv-screen-bg"><i style="width:55%;"></i><i style="width:90%;"></i><i style="width:70%;"></i></div>
+												<div class="signa-mv-drawer-left">
+													<span class="signa-mv-line"></span>
+													<span class="signa-mv-input"></span>
+													<span class="signa-mv-btn"></span>
+												</div>
+											</div>
+										</div>
 										<div class="signa-choice-card-top">
 											<span class="signa-flow-node is-sms">
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="10" y1="3" x2="10" y2="21"/><path d="m15 10-3 2 3 2"/></svg>
@@ -255,6 +345,17 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 									<label class="signa-choice-card <?php echo 'drawer_right' === $modal_style ? 'selected' : ''; ?>">
 										<input type="radio" name="signa[modal_style]" value="drawer_right" <?php checked( $modal_style, 'drawer_right' ); ?> />
+										<div class="signa-mini-video">
+											<span class="signa-mini-video-badge">پیشنمایش انیمیشن</span>
+											<div class="signa-mv-screen">
+												<div class="signa-mv-screen-bg"><i style="width:55%;"></i><i style="width:90%;"></i><i style="width:70%;"></i></div>
+												<div class="signa-mv-drawer-right">
+													<span class="signa-mv-line"></span>
+													<span class="signa-mv-input"></span>
+													<span class="signa-mv-btn"></span>
+												</div>
+											</div>
+										</div>
 										<div class="signa-choice-card-top">
 											<span class="signa-flow-node is-passkey">
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="14" y1="3" x2="14" y2="21"/><path d="m9 10 3 2-3 2"/></svg>
@@ -269,6 +370,17 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 									<label class="signa-choice-card <?php echo 'bottom_sheet' === $modal_style ? 'selected' : ''; ?>">
 										<input type="radio" name="signa[modal_style]" value="bottom_sheet" <?php checked( $modal_style, 'bottom_sheet' ); ?> />
+										<div class="signa-mini-video">
+											<span class="signa-mini-video-badge">پیشنمایش انیمیشن</span>
+											<div class="signa-mv-screen">
+												<div class="signa-mv-screen-bg"><i style="width:55%;"></i><i style="width:90%;"></i></div>
+												<div class="signa-mv-bottom-sheet">
+													<span style="width:18px;height:2.5px;border-radius:99px;background:#cbd5e1;margin:0 auto 2px auto;display:block;"></span>
+													<span class="signa-mv-input"></span>
+													<span class="signa-mv-btn"></span>
+												</div>
+											</div>
+										</div>
 										<div class="signa-choice-card-top">
 											<span class="signa-flow-node is-email">
 												<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="14" x2="21" y2="14"/><line x1="10" y1="17" x2="14" y2="17"/></svg>
@@ -452,6 +564,9 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									<div class="signa-choice-grid signa-cols-3">
 										<label class="signa-choice-card <?php echo 'none' === $bg_pattern ? 'selected' : ''; ?>">
 											<input type="radio" name="signa[bg_pattern]" value="none" <?php checked( $bg_pattern, 'none' ); ?> />
+											<div class="signa-mini-video" style="height:56px;background:radial-gradient(circle at top right, #1e293b, #0f172a);">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+											</div>
 											<div class="signa-choice-card-top">
 												<span class="signa-flow-node is-phone">
 													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
@@ -466,6 +581,9 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 										<label class="signa-choice-card <?php echo 'dots' === $bg_pattern ? 'selected' : ''; ?>">
 											<input type="radio" name="signa[bg_pattern]" value="dots" <?php checked( $bg_pattern, 'dots' ); ?> />
+											<div class="signa-mini-video" style="height:56px;background:radial-gradient(rgba(96,165,250,0.45) 1.5px, transparent 1.5px), #0f172a;background-size:12px 12px, auto;">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+											</div>
 											<div class="signa-choice-card-top">
 												<span class="signa-flow-node is-sms">
 													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="6" cy="6" r="1"/><circle cx="12" cy="6" r="1"/><circle cx="18" cy="6" r="1"/><circle cx="6" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="18" cy="12" r="1"/><circle cx="6" cy="18" r="1"/><circle cx="12" cy="18" r="1"/><circle cx="18" cy="18" r="1"/></svg>
@@ -483,6 +601,9 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 										<label class="signa-choice-card <?php echo 'grid' === $bg_pattern ? 'selected' : ''; ?>">
 											<input type="radio" name="signa[bg_pattern]" value="grid" <?php checked( $bg_pattern, 'grid' ); ?> />
+											<div class="signa-mini-video" style="height:56px;background:linear-gradient(to right, rgba(148,163,184,0.25) 1px, transparent 1px), linear-gradient(to bottom, rgba(148,163,184,0.25) 1px, transparent 1px), #0f172a;background-size:14px 14px, 14px 14px, auto;">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+											</div>
 											<div class="signa-choice-card-top">
 												<span class="signa-flow-node is-passkey">
 													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
@@ -497,6 +618,9 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 										<label class="signa-choice-card <?php echo 'waves' === $bg_pattern ? 'selected' : ''; ?>">
 											<input type="radio" name="signa[bg_pattern]" value="waves" <?php checked( $bg_pattern, 'waves' ); ?> />
+											<div class="signa-mini-video" style="height:56px;background:repeating-radial-gradient(circle at 0 0, transparent 0, rgba(96,165,250,0.18) 10px, transparent 20px), #0f172a;">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+											</div>
 											<div class="signa-choice-card-top">
 												<span class="signa-flow-node is-email">
 													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
@@ -511,6 +635,9 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 										<label class="signa-choice-card <?php echo 'geometric' === $bg_pattern ? 'selected' : ''; ?>">
 											<input type="radio" name="signa[bg_pattern]" value="geometric" <?php checked( $bg_pattern, 'geometric' ); ?> />
+											<div class="signa-mini-video" style="height:56px;background:linear-gradient(30deg, rgba(96,165,250,0.22) 12%, transparent 12.5%, transparent 87%, rgba(96,165,250,0.22) 87.5%), #0f172a;background-size:20px 34px, auto;">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+											</div>
 											<div class="signa-choice-card-top">
 												<span class="signa-flow-node is-phone">
 													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
@@ -653,77 +780,108 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 						<div class="signa-studio-preview-col">
 							<div class="signa-preview-box">
 								<div class="signa-preview-toolbar">
-									<span style="display:inline-flex;align-items:center;gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> پیش‌نمایش زنده اسکلت و فرم</span>
+									<span style="display:inline-flex;align-items:center;gap:6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> پیش‌نمایش زنده پویا</span>
 									<div class="signa-preview-step-btns">
 										<button type="button" class="signa-prev-step-btn active" data-step="1">مرحله ۱: شماره</button>
 										<button type="button" class="signa-prev-step-btn" data-step="2">مرحله ۲: کد تایید</button>
 									</div>
 								</div>
 
+								<!-- Dynamic Preview Mode Sub-Bar (Page Layout vs Modal/Drawer Animation + Wide Zoom) -->
+								<div class="signa-preview-subbar">
+									<div class="signa-preview-mode-tabs">
+										<button type="button" class="signa-prev-mode-btn active" data-mode="page">نمای صفحه ورود</button>
+										<button type="button" class="signa-prev-mode-btn" data-mode="modal">تست پاپ‌آپ / کشویی</button>
+									</div>
+									<button type="button" class="signa-prev-expand-btn" id="signa-prev-expand-btn" title="بزرگ‌نمایی ستون پیش‌نمایش">
+										<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+										<span>بزرگ‌نمایی</span>
+									</button>
+								</div>
+
 								<div class="signa-preview-canvas" id="signa-preview-canvas" style="display:flex;flex-direction:column;align-items:<?php echo 'right' === $card_position ? 'flex-start' : ( 'left' === $card_position ? 'flex-end' : 'center' ); ?>;transition:all 0.25s ease;">
-									<div id="signa-live-preview-shell" class="signa-prev-shell <?php echo $is_split ? 'is-split' : ''; ?> <?php echo 'split_left' === $form_layout ? 'is-split-left' : ''; ?>" style="width:100%;max-width:<?php echo $is_split ? '100%' : '360px'; ?>;border-radius:<?php echo esc_attr( (string) $settings['border_radius'] ); ?>px;overflow:hidden;box-shadow:0 16px 36px -8px rgba(15,23,42,0.16);display:flex;flex-direction:<?php echo 'split_left' === $form_layout ? 'row-reverse' : 'row'; ?>;transition:all 0.25s ease;">
 
-										<!-- Form Column -->
-										<div id="signa-live-preview-card" class="signa-prev-card" style="flex:1;min-width:0;margin:0;box-shadow:none;background:<?php echo esc_attr( $settings['card_bg_color'] ); ?>;color:<?php echo esc_attr( $settings['text_color'] ); ?>;border-radius:0;">
-											<div style="text-align:center;margin-bottom:20px;">
-												<div id="signa-prev-logo-wrap" style="<?php echo empty( $settings['logo_url'] ) ? 'display:none;' : ''; ?>margin-bottom:12px;">
-													<img id="signa-prev-logo-img" src="<?php echo esc_url( $settings['logo_url'] ); ?>" alt="Logo" style="max-height:48px;" />
-												</div>
-												<div id="signa-prev-badge-icon" style="<?php echo ! empty( $settings['logo_url'] ) ? 'display:none;' : 'display:inline-flex;'; ?>width:48px;height:48px;border-radius:12px;align-items:center;justify-content:center;background:rgba(37,99,235,0.12);color:<?php echo esc_attr( $settings['primary_color'] ); ?>;margin-bottom:10px;">
-													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-														<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-														<path d="m9 12 2 2 4-4"></path>
-													</svg>
-												</div>
-												<h3 id="signa-prev-title" style="margin:0 0 6px 0;font-size:17px;color:inherit;"><?php echo esc_html( $settings['form_title'] ); ?></h3>
-												<p id="signa-prev-subtitle" style="margin:0;font-size:12px;opacity:0.75;"><?php echo esc_html( $settings['form_subtitle'] ); ?></p>
-											</div>
-
-											<!-- Preview Step 1 -->
-											<div id="signa-prev-step-1">
-												<label style="display:block;font-size:12px;font-weight:600;margin-bottom:6px;color:inherit;">شماره موبایل یا ایمیل</label>
-												<input type="text" class="signa-prev-input" placeholder="شماره موبایل (0912...) یا ایمیل" dir="rtl" readonly />
-												<button type="button" id="signa-prev-btn-1" style="width:100%;height:42px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:700;font-size:13.5px;cursor:default;">
-													<?php echo esc_html( $settings['button_text'] ); ?>
-												</button>
-											</div>
-
-											<!-- Preview Step 2 -->
-											<div id="signa-prev-step-2" style="display:none;">
-												<div style="display:flex;justify-content:space-between;background:rgba(156,163,175,0.15);padding:8px 12px;border-radius:8px;margin-bottom:14px;font-size:12px;">
-													<strong dir="ltr">0912***6789</strong>
-													<span style="color:<?php echo esc_attr( $settings['primary_color'] ); ?>;font-weight:600;">ویرایش</span>
-												</div>
-												<div id="signa-prev-digits" style="display:flex;justify-content:center;gap:6px;margin-bottom:16px;" dir="ltr">
-													<span class="signa-prev-digit">5</span>
-													<span class="signa-prev-digit">8</span>
-													<span class="signa-prev-digit">2</span>
-													<span class="signa-prev-digit">9</span>
-													<span class="signa-prev-digit">1</span>
-												</div>
-												<button type="button" id="signa-prev-btn-2" style="width:100%;height:42px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:600;font-size:13.5px;cursor:default;">
-													<?php echo esc_html( $settings['verify_button_text'] ); ?>
-												</button>
-											</div>
+									<!-- Simulated Website Skeleton & Backdrop (Shown in Modal/Drawer Preview Mode) -->
+									<div class="signa-prev-site-skeleton" aria-hidden="true">
+										<div style="height:28px;border-radius:8px;background:rgba(148,163,184,0.25);display:flex;align-items:center;justify-content:space-between;padding:0 12px;">
+											<span style="width:65px;height:10px;border-radius:4px;background:rgba(59,130,246,0.45);"></span>
+											<span style="width:120px;height:8px;border-radius:4px;background:rgba(148,163,184,0.35);"></span>
 										</div>
-
-										<!-- Split-Screen Side Banner Preview Column -->
-										<div id="signa-prev-split-banner" style="<?php echo $is_split ? 'display:flex;' : 'display:none;'; ?>flex:1;min-width:0;padding:22px 18px;flex-direction:column;justify-content:space-between;color:#ffffff;background-color:<?php echo esc_attr( $settings['split_bg_color'] ); ?>;background-image:<?php echo ! empty( $settings['split_image_url'] ) ? 'linear-gradient(135deg, rgba(15,23,42,0.72), rgba(30,58,138,0.78)), url(' . esc_url( $settings['split_image_url'] ) . ')' : 'radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 65%)'; ?>;background-size:cover;background-position:center;">
-											<div>
-												<span id="signa-prev-split-badge" style="display:inline-block;padding:3px 10px;border-radius:99px;font-size:10.5px;font-weight:700;background:rgba(255,255,255,0.18);backdrop-filter:blur(4px);margin-bottom:12px;"><?php echo esc_html( $settings['split_badge_text'] ); ?></span>
-												<h4 id="signa-prev-split-title" style="margin:0 0 8px 0;font-size:15px;font-weight:800;color:#ffffff;line-height:1.45;"><?php echo esc_html( $settings['split_title'] ); ?></h4>
-												<p id="signa-prev-split-subtitle" style="margin:0;font-size:11.5px;color:rgba(255,255,255,0.85);line-height:1.65;"><?php echo esc_html( $settings['split_subtitle'] ); ?></p>
-											</div>
-											<ul id="signa-prev-split-features" style="list-style:none;margin:16px 0 0 0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:11px;color:rgba(255,255,255,0.92);">
-												<?php foreach ( $split_features_list as $feat_line ) : ?>
-													<li style="display:flex;align-items:center;gap:6px;margin:0;">
-														<span style="display:inline-flex;width:16px;height:16px;border-radius:50%;background:rgba(16,185,129,0.28);color:#6ee7b7;align-items:center;justify-content:center;flex-shrink:0;">✓</span>
-														<span><?php echo esc_html( $feat_line ); ?></span>
-													</li>
-												<?php endforeach; ?>
-											</ul>
+										<div style="height:110px;border-radius:12px;background:rgba(148,163,184,0.18);"></div>
+										<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;flex:1;">
+											<div style="border-radius:10px;background:rgba(148,163,184,0.16);"></div>
+											<div style="border-radius:10px;background:rgba(148,163,184,0.16);"></div>
+											<div style="border-radius:10px;background:rgba(148,163,184,0.16);"></div>
 										</div>
+									</div>
+									<div class="signa-prev-modal-backdrop" aria-hidden="true"></div>
 
+									<!-- Proportional Viewport Wrapper (Scales 720px Split-Screen smoothly so text never squishes) -->
+									<div id="signa-preview-viewport" class="signa-preview-viewport <?php echo $is_split ? 'is-scaled-split' : ''; ?>" style="align-items:<?php echo 'right' === $card_position ? 'flex-start' : ( 'left' === $card_position ? 'flex-end' : 'center' ); ?>;">
+										<div id="signa-live-preview-shell" class="signa-prev-shell <?php echo $is_split ? 'is-split' : ''; ?> <?php echo 'split_left' === $form_layout ? 'is-split-left' : ''; ?>" style="width:100%;max-width:<?php echo $is_split ? '720px' : '360px'; ?>;border-radius:<?php echo esc_attr( (string) $settings['border_radius'] ); ?>px;overflow:hidden;box-shadow:0 16px 36px -8px rgba(15,23,42,0.16);display:flex;flex-direction:<?php echo 'split_left' === $form_layout ? 'row-reverse' : 'row'; ?>;transition:all 0.25s ease;">
+
+											<!-- Form Column -->
+											<div id="signa-live-preview-card" class="signa-prev-card" style="flex:1;min-width:0;margin:0;box-shadow:none;background:<?php echo esc_attr( $settings['card_bg_color'] ); ?>;color:<?php echo esc_attr( $settings['text_color'] ); ?>;border-radius:0;">
+												<div style="text-align:center;margin-bottom:20px;">
+													<div id="signa-prev-logo-wrap" style="<?php echo empty( $settings['logo_url'] ) ? 'display:none;' : ''; ?>margin-bottom:12px;">
+														<img id="signa-prev-logo-img" src="<?php echo esc_url( $settings['logo_url'] ); ?>" alt="Logo" style="max-height:48px;" />
+													</div>
+													<div id="signa-prev-badge-icon" style="<?php echo ! empty( $settings['logo_url'] ) ? 'display:none;' : 'display:inline-flex;'; ?>width:48px;height:48px;border-radius:12px;align-items:center;justify-content:center;background:rgba(37,99,235,0.12);color:<?php echo esc_attr( $settings['primary_color'] ); ?>;margin-bottom:10px;">
+														<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+															<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+															<path d="m9 12 2 2 4-4"></path>
+														</svg>
+													</div>
+													<h3 id="signa-prev-title" style="margin:0 0 6px 0;font-size:17px;color:inherit;"><?php echo esc_html( $settings['form_title'] ); ?></h3>
+													<p id="signa-prev-subtitle" style="margin:0;font-size:12.5px;opacity:0.78;line-height:1.6;"><?php echo esc_html( $settings['form_subtitle'] ); ?></p>
+												</div>
+
+												<!-- Preview Step 1 -->
+												<div id="signa-prev-step-1">
+													<label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:inherit;">شماره موبایل یا ایمیل</label>
+													<input type="text" class="signa-prev-input" placeholder="شماره موبایل (0912...) یا ایمیل" dir="rtl" readonly />
+													<button type="button" id="signa-prev-btn-1" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:700;font-size:14px;cursor:default;">
+														<?php echo esc_html( $settings['button_text'] ); ?>
+													</button>
+												</div>
+
+												<!-- Preview Step 2 -->
+												<div id="signa-prev-step-2" style="display:none;">
+													<div style="display:flex;justify-content:space-between;background:rgba(156,163,175,0.15);padding:8px 12px;border-radius:8px;margin-bottom:14px;font-size:12px;">
+														<strong dir="ltr">0912***6789</strong>
+														<span style="color:<?php echo esc_attr( $settings['primary_color'] ); ?>;font-weight:600;">ویرایش</span>
+													</div>
+													<div id="signa-prev-digits" style="display:flex;justify-content:center;gap:6px;margin-bottom:16px;" dir="ltr">
+														<span class="signa-prev-digit">5</span>
+														<span class="signa-prev-digit">8</span>
+														<span class="signa-prev-digit">2</span>
+														<span class="signa-prev-digit">9</span>
+														<span class="signa-prev-digit">1</span>
+													</div>
+													<button type="button" id="signa-prev-btn-2" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:600;font-size:14px;cursor:default;">
+														<?php echo esc_html( $settings['verify_button_text'] ); ?>
+													</button>
+												</div>
+											</div>
+
+											<!-- Split-Screen Side Banner Preview Column -->
+											<div id="signa-prev-split-banner" style="<?php echo $is_split ? 'display:flex;' : 'display:none;'; ?>flex:1;min-width:0;padding:28px 24px;flex-direction:column;justify-content:space-between;color:#ffffff;background-color:<?php echo esc_attr( $settings['split_bg_color'] ); ?>;background-image:<?php echo ! empty( $settings['split_image_url'] ) ? 'linear-gradient(135deg, rgba(15,23,42,0.72), rgba(30,58,138,0.78)), url(' . esc_url( $settings['split_image_url'] ) . ')' : 'radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 65%)'; ?>;background-size:cover;background-position:center;">
+												<div>
+													<span id="signa-prev-split-badge" style="display:inline-block;padding:4px 12px;border-radius:99px;font-size:11.5px;font-weight:700;background:rgba(255,255,255,0.18);backdrop-filter:blur(4px);margin-bottom:14px;"><?php echo esc_html( $settings['split_badge_text'] ); ?></span>
+													<h4 id="signa-prev-split-title" style="margin:0 0 10px 0;font-size:18px;font-weight:800;color:#ffffff;line-height:1.45;"><?php echo esc_html( $settings['split_title'] ); ?></h4>
+													<p id="signa-prev-split-subtitle" style="margin:0;font-size:13px;color:rgba(255,255,255,0.88);line-height:1.75;"><?php echo esc_html( $settings['split_subtitle'] ); ?></p>
+												</div>
+												<ul id="signa-prev-split-features" style="list-style:none;margin:20px 0 0 0;padding:16px 0 0 0;border-top:1px solid rgba(255,255,255,0.16);display:flex;flex-direction:column;gap:8px;font-size:12.5px;color:rgba(255,255,255,0.95);">
+													<?php foreach ( $split_features_list as $feat_line ) : ?>
+														<li style="display:flex;align-items:center;gap:8px;margin:0;">
+															<span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:rgba(16,185,129,0.28);color:#6ee7b7;align-items:center;justify-content:center;flex-shrink:0;">✓</span>
+															<span><?php echo esc_html( $feat_line ); ?></span>
+														</li>
+													<?php endforeach; ?>
+												</ul>
+											</div>
+
+										</div>
 									</div>
 								</div>
 							</div>
@@ -731,6 +889,8 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 					</div>
 					<script>
 					jQuery(function($){
+						var currentPreviewMode = 'page';
+
 						function hexRgba(hex, pct){
 							var c = String(hex || '#ffffff').replace('#','').trim();
 							if(c.length === 3){ c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2]; }
@@ -738,6 +898,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var a = Math.max(0.2, Math.min(1, (parseFloat(pct)||100)/100));
 							return 'rgba('+r+', '+g+', '+b+', '+a+')';
 						}
+
 						function syncStudioCat2(){
 							var primary = $('#primary_color').val() || '#2563eb';
 							var secondary = $('#secondary_color').val() || '#4f46e5';
@@ -755,7 +916,13 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var canvasBgStyle = $('#canvas_bg_style').val() || 'mesh_light';
 							var canvasBgColor = $('#canvas_bg_color').val() || '#f1f5f9';
 							var canvasBgImg = ($('#canvas_bg_image').val() || '').trim();
+							var formLayout = $('input[name="signa[form_layout]"]:checked').val() || 'card';
 							var cardPosition = $('input[name="signa[card_position]"]:checked').val() || 'center';
+							var modalStyle = $('input[name="signa[modal_style]"]:checked').val() || 'center';
+
+							var isSplit = (formLayout === 'split_right' || formLayout === 'split_left');
+							var isDrawerOrSheet = (currentPreviewMode === 'modal' && (modalStyle === 'drawer_left' || modalStyle === 'drawer_right' || modalStyle === 'bottom_sheet'));
+							var showSplitBanner = isSplit && !isDrawerOrSheet;
 
 							$('#secondary_color_hex').text(secondary);
 							$('#opacity_val_label').text(cardOpacity + '%');
@@ -790,11 +957,24 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								patternLayer = 'linear-gradient(30deg, rgba(99, 102, 241, 0.08) 12%, transparent 12.5%, transparent 87%, rgba(99, 102, 241, 0.08) 87.5%), ';
 								patternSize = '28px 48px, auto';
 							}
-							$('#signa-preview-canvas').css({
-								alignItems: cardPosition === 'right' ? 'flex-start' : cardPosition === 'left' ? 'flex-end' : 'center',
+
+							var alignFlex = cardPosition === 'right' ? 'flex-start' : cardPosition === 'left' ? 'flex-end' : 'center';
+							var $canvas = $('#signa-preview-canvas');
+							var $viewport = $('#signa-preview-viewport');
+
+							$canvas.removeClass('is-modal-mode sim-center sim-drawer_left sim-drawer_right sim-bottom_sheet');
+							if (currentPreviewMode === 'modal') {
+								$canvas.addClass('is-modal-mode sim-' + modalStyle);
+							}
+
+							$canvas.css({
+								alignItems: alignFlex,
 								background: patternLayer + canvasBgCss,
 								backgroundSize: patternSize
 							});
+
+							$viewport.toggleClass('is-scaled-split', showSplitBanner);
+							$viewport.css('alignItems', alignFlex);
 
 							var shadowCss = '0 14px 32px -6px rgba(15, 23, 42, 0.12)';
 							if (cardShadow === 'none') shadowCss = 'none';
@@ -808,16 +988,21 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							else if (cardBorder === 'top_accent') { borderTopCss = '4px solid ' + primary; }
 
 							$('#signa-live-preview-shell').css({
+								maxWidth: showSplitBanner ? '720px' : '360px',
+								width: showSplitBanner ? '720px' : '100%',
+								flexDirection: formLayout === 'split_left' ? 'row-reverse' : 'row',
 								boxShadow: shadowCss,
 								border: borderCss,
 								borderTop: borderTopCss
 							});
+							$('#signa-prev-split-banner').toggle(showSplitBanner);
+
 							$('#signa-live-preview-card').css({
 								background: isGlass ? hexRgba(bg, cardOpacity) : bg,
 								backdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
 								webkitBackdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
 								color: text,
-								padding: Math.round(cardPadding * 0.78) + 'px'
+								padding: Math.round(cardPadding * 0.85) + 'px'
 							});
 							var btnBg = btnBgMode === 'gradient' ? 'linear-gradient(135deg, ' + primary + ', ' + secondary + ')' : primary;
 							$('#signa-prev-btn-1, #signa-prev-btn-2').css({
@@ -825,7 +1010,38 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								borderRadius: Math.round(radius * 0.68) + 'px'
 							});
 						}
-						$('#tab-appearance').on('input change', 'input, select, textarea', syncStudioCat2);
+
+						// Mode Tabs (Page vs Modal Simulation)
+						$('.signa-prev-mode-btn').on('click', function(){
+							currentPreviewMode = $(this).attr('data-mode') || 'page';
+							$('.signa-prev-mode-btn').removeClass('active');
+							$(this).addClass('active');
+							syncStudioCat2();
+						});
+
+						// Auto-switch Live Preview to Modal mode when user selects a Modal/Drawer style
+						$('input[name="signa[modal_style]"]').on('change', function(){
+							currentPreviewMode = 'modal';
+							$('.signa-prev-mode-btn').removeClass('active');
+							$('.signa-prev-mode-btn[data-mode="modal"]').addClass('active');
+							syncStudioCat2();
+						});
+
+						// Auto-switch Live Preview to Page mode when user changes Form Layout or Card Position
+						$('input[name="signa[form_layout]"], input[name="signa[card_position]"], #canvas_bg_style, input[name="signa[bg_pattern]"]').on('change', function(){
+							currentPreviewMode = 'page';
+							$('.signa-prev-mode-btn').removeClass('active');
+							$('.signa-prev-mode-btn[data-mode="page"]').addClass('active');
+							syncStudioCat2();
+						});
+
+						// Toggle Wide Preview Column
+						$('#signa-prev-expand-btn').on('click', function(){
+							$(this).toggleClass('active');
+							$('.signa-studio-layout').toggleClass('is-wide-preview');
+						});
+
+						$('#signa-tab-appearance_studio').on('input change', 'input, select, textarea', syncStudioCat2);
 						syncStudioCat2();
 					});
 					</script>

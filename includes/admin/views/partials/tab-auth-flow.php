@@ -39,6 +39,14 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 							<div class="signa-choice-grid signa-cols-1">
 								<label class="signa-choice-card <?php echo 'phone_and_email' === $settings['login_mode'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[login_mode]" value="phone_and_email" <?php checked( $settings['login_mode'], 'phone_and_email' ); ?> />
+									<div class="signa-mini-video" style="height:64px;">
+										<span class="signa-mini-video-badge">پیشنمایش هوشمند</span>
+										<div class="signa-mv-flow-stage">
+											<span style="padding:3px 8px;border-radius:6px;background:rgba(59,130,246,0.2);color:#93c5fd;font-size:10.5px;font-weight:700;" dir="ltr">0912...</span>
+											<div class="signa-mv-track"><span class="signa-mv-packet"></span></div>
+											<span style="padding:3px 8px;border-radius:6px;background:rgba(16,185,129,0.2);color:#6ee7b7;font-size:10.5px;font-weight:700;" dir="ltr">info@site</span>
+										</div>
+									</div>
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="شماره موبایل یا ایمیل">
 											<span class="signa-flow-node is-phone"><?php echo $svg_phone; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -58,6 +66,14 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 
 								<label class="signa-choice-card <?php echo 'phone_only' === $settings['login_mode'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[login_mode]" value="phone_only" <?php checked( $settings['login_mode'], 'phone_only' ); ?> />
+									<div class="signa-mini-video" style="height:64px;">
+										<span class="signa-mini-video-badge">پیشنمایش</span>
+										<div class="signa-mv-flow-stage">
+											<span style="padding:3px 8px;border-radius:6px;background:rgba(59,130,246,0.22);color:#93c5fd;font-size:10.5px;font-weight:700;" dir="ltr">0912 345 6789</span>
+											<div class="signa-mv-track"><span class="signa-mv-packet"></span></div>
+											<span style="padding:3px 7px;border-radius:6px;background:rgba(16,185,129,0.25);color:#6ee7b7;font-size:10.5px;font-weight:800;">✓ OTP</span>
+										</div>
+									</div>
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="فقط شماره موبایل">
 											<span class="signa-flow-node is-phone"><?php echo $svg_phone; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -75,6 +91,14 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 
 								<label class="signa-choice-card <?php echo 'email_only' === $settings['login_mode'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[login_mode]" value="email_only" <?php checked( $settings['login_mode'], 'email_only' ); ?> />
+									<div class="signa-mini-video" style="height:64px;">
+										<span class="signa-mini-video-badge">پیشنمایش</span>
+										<div class="signa-mv-flow-stage">
+											<span style="padding:3px 8px;border-radius:6px;background:rgba(139,92,246,0.22);color:#c4b5fd;font-size:10.5px;font-weight:700;" dir="ltr">user@mail.com</span>
+											<div class="signa-mv-track"><span class="signa-mv-packet is-green"></span></div>
+											<span style="padding:3px 7px;border-radius:6px;background:rgba(16,185,129,0.25);color:#6ee7b7;font-size:10.5px;font-weight:800;">✓ Mail</span>
+										</div>
+									</div>
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="فقط آدرس ایمیل">
 											<span class="signa-flow-node is-email"><?php echo $svg_email; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -109,6 +133,14 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 								<!-- 1. SMS -> Fallback Bale (Visual: [SMS Icon] <- [Real Bale Logo with Glow]) -->
 								<label class="signa-choice-card <?php echo 'sms_fallback_bale' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[mobile_delivery_channel]" value="sms_fallback_bale" <?php checked( $settings['mobile_delivery_channel'], 'sms_fallback_bale' ); ?> />
+									<div class="signa-mini-video" style="height:64px;">
+										<span class="signa-mini-video-badge">پیشنمایش مسیر</span>
+										<div class="signa-mv-flow-stage">
+											<span style="font-size:10px;color:#93c5fd;font-weight:700;">۱. پیامک</span>
+											<div class="signa-mv-track"><span class="signa-mv-packet"></span></div>
+											<span style="font-size:10px;color:#6ee7b7;font-weight:700;">۲. بله ✓</span>
+										</div>
+									</div>
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="اول پیامک ← بعد بله">
 											<span class="signa-flow-node is-sms"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -129,6 +161,14 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 								<!-- 2. Bale -> Fallback SMS (Visual: [Real Bale Logo with Glow] <- [SMS Icon]) -->
 								<label class="signa-choice-card <?php echo 'bale_fallback_sms' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[mobile_delivery_channel]" value="bale_fallback_sms" <?php checked( $settings['mobile_delivery_channel'], 'bale_fallback_sms' ); ?> />
+									<div class="signa-mini-video" style="height:64px;">
+										<span class="signa-mini-video-badge">پیشنمایش مسیر</span>
+										<div class="signa-mv-flow-stage">
+											<span style="font-size:10px;color:#6ee7b7;font-weight:700;">۱. بله</span>
+											<div class="signa-mv-track"><span class="signa-mv-packet is-green"></span></div>
+											<span style="font-size:10px;color:#93c5fd;font-weight:700;">۲. پیامک ✓</span>
+										</div>
+									</div>
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="اول بله ← بعد پیامک">
 											<span class="signa-flow-node is-bale"><?php echo $svg_bale_real; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -149,6 +189,14 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 								<!-- 3. SMS Only -->
 								<label class="signa-choice-card <?php echo 'sms' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[mobile_delivery_channel]" value="sms" <?php checked( $settings['mobile_delivery_channel'], 'sms' ); ?> />
+									<div class="signa-mini-video" style="height:64px;">
+										<span class="signa-mini-video-badge">پیشنمایش</span>
+										<div class="signa-mv-flow-stage">
+											<span style="font-size:10px;color:#cbd5e1;">سرور</span>
+											<div class="signa-mv-track"><span class="signa-mv-packet"></span></div>
+											<span style="font-size:10px;color:#93c5fd;font-weight:700;">پیامک مستقیم ✓</span>
+										</div>
+									</div>
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="فقط پیامک">
 											<span class="signa-flow-node is-sms"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -166,6 +214,14 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 								<!-- 4. Bale Only -->
 								<label class="signa-choice-card <?php echo 'bale' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[mobile_delivery_channel]" value="bale" <?php checked( $settings['mobile_delivery_channel'], 'bale' ); ?> />
+									<div class="signa-mini-video" style="height:64px;">
+										<span class="signa-mini-video-badge">پیشنمایش</span>
+										<div class="signa-mv-flow-stage">
+											<span style="font-size:10px;color:#cbd5e1;">سرور</span>
+											<div class="signa-mv-track"><span class="signa-mv-packet is-green"></span></div>
+											<span style="font-size:10px;color:#6ee7b7;font-weight:700;">بله مستقیم ✓</span>
+										</div>
+									</div>
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="فقط پیام‌رسان بله">
 											<span class="signa-flow-node is-bale"><?php echo $svg_bale_real; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -183,6 +239,21 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 								<!-- 5. Simultaneous SMS + Bale (Full Width Span 2) -->
 								<label class="signa-choice-card signa-span-2 <?php echo 'both' === $settings['mobile_delivery_channel'] ? 'selected' : ''; ?>">
 									<input type="radio" name="signa[mobile_delivery_channel]" value="both" <?php checked( $settings['mobile_delivery_channel'], 'both' ); ?> />
+									<div class="signa-mini-video" style="height:64px;">
+										<span class="signa-mini-video-badge">پیشنمایش ارسال موازی همزمان</span>
+										<div style="display:flex;flex-direction:column;gap:6px;align-items:center;">
+											<div class="signa-mv-flow-stage">
+												<span style="font-size:10px;color:#93c5fd;font-weight:700;">پیامک</span>
+												<div class="signa-mv-track" style="width:90px;"><span class="signa-mv-packet"></span></div>
+												<span style="font-size:10px;color:#6ee7b7;font-weight:700;">تحویل همزمان ✓</span>
+											</div>
+											<div class="signa-mv-flow-stage">
+												<span style="font-size:10px;color:#6ee7b7;font-weight:700;">بله</span>
+												<div class="signa-mv-track" style="width:90px;"><span class="signa-mv-packet is-green"></span></div>
+												<span style="font-size:10px;color:#6ee7b7;font-weight:700;">تحویل همزمان ✓</span>
+											</div>
+										</div>
+									</div>
 									<div class="signa-choice-card-top">
 										<div class="signa-flow-icons" title="ارسال همزمان در پیامک و بله">
 											<span class="signa-flow-node is-sms"><?php echo $svg_sms; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
