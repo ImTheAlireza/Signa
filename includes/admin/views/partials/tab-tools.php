@@ -100,7 +100,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</div>
 							<div class="signa-field">
 								<label for="log_retention_days">مدت زمان نگهداری خودکار لاگ‌ها (روز — پاکسازی با WP-Cron)</label>
-								<input type="number" name="signa[log_retention_days]" id="log_retention_days" value="<?php echo esc_attr( (string) $settings['log_retention_days'] ); ?>" min="1" max="365" />
+								<input type="text" inputmode="numeric" name="signa[log_retention_days]" id="log_retention_days" value="<?php echo esc_attr( (string) $settings['log_retention_days'] ); ?>" dir="ltr" />
 							</div>
 							<div class="signa-switch-row" style="margin-top:14px;">
 								<div class="signa-switch-text">

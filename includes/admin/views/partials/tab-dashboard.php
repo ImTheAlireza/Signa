@@ -39,7 +39,7 @@ $step1_done = ( 'sandbox' !== $settings['active_sms_gateway'] ) || ! empty( $set
 $step2_done = ! empty( $settings['mobile_delivery_channel'] );
 $step3_done = ! empty( $settings['enable_passkey'] );
 $step4_done = 'none' !== $settings['captcha_type'];
-$step5_done = ! empty( $settings['wc_replace_myaccount'] ) || ! empty( $settings['enable_global_modal'] ) || ( isset( $settings['wp_login_integration'] ) && 'disabled' !== $settings['wp_login_integration'] );
+$step5_done = ! empty( $settings['wc_replace_myaccount'] ) || ! empty( $settings['enable_global_modal'] ) || ! empty( $settings['wp_login_integration'] );
 
 $checklist_steps = array(
 	array(
@@ -83,11 +83,11 @@ $checklist_steps = array(
 	array(
 		'done'        => $step5_done,
 		'title'       => '۵. نمایش فرم ورود در سایت (ووکامرس / المنتور / شورت‌کد)',
-		'desc'        => 'جایگزینی خودکار فرم حساب کاربری ووکامرس، ویجت اختصاصی المنتور یا شورت‌کد [signa_otp_form].',
+		'desc'        => 'جایگزینی خودکار فرم حساب کاربری ووکامرس، ویجت اختصاصی المنتور یا شورت‌کد [signa_otp_login].',
 		'status_text' => $step5_done ? 'متصل به سایت' : 'آماده جایگذاری',
 		'btn_text'    => 'ووکامرس و المنتور',
 		'target_tab'  => 'woocommerce',
-		'shortcode'   => '[signa_otp_form]',
+		'shortcode'   => '[signa_otp_login]',
 	),
 );
 

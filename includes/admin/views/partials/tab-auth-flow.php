@@ -302,12 +302,12 @@ $svg_faceid      = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 
 								<div class="signa-field">
 									<label for="otp_expiry">اعتبار کد (ثانیه)</label>
-									<input type="number" name="signa[otp_expiry]" id="otp_expiry" value="<?php echo esc_attr( (string) $settings['otp_expiry'] ); ?>" min="30" max="600" />
+									<input type="text" inputmode="numeric" name="signa[otp_expiry]" id="otp_expiry" value="<?php echo esc_attr( (string) $settings['otp_expiry'] ); ?>" dir="ltr" />
 								</div>
 
 								<div class="signa-field">
 									<label for="resend_cooldown">فاصله ارسال مجدد (ثانیه)</label>
-									<input type="number" name="signa[resend_cooldown]" id="resend_cooldown" value="<?php echo esc_attr( (string) $settings['resend_cooldown'] ); ?>" min="20" max="300" />
+									<input type="text" inputmode="numeric" name="signa[resend_cooldown]" id="resend_cooldown" value="<?php echo esc_attr( (string) $settings['resend_cooldown'] ); ?>" dir="ltr" />
 								</div>
 							</div>
 

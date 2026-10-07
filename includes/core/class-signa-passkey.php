@@ -498,7 +498,7 @@ class Signa_Passkey {
 		// Log successful Passkey login in Signa OTP Logs
 		$phone      = get_user_meta( $user->ID, 'signa_phone', true );
 		$identifier = $phone ? $phone : $user->user_email;
-		Signa_Logger::insert_log(
+		Signa_Logger::insert(
 			array(
 				'recipient'        => $identifier ? $identifier : $user->user_login,
 				'channel'          => 'passkey',

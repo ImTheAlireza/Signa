@@ -19,6 +19,13 @@ class Signa_Admin {
 	private static $instance = null;
 
 	/**
+	 * Track if settings were already saved during the current request
+	 *
+	 * @var bool
+	 */
+	private $settings_saved_in_request = false;
+
+	/**
 	 * Get instance
 	 *
 	 * @return Signa_Admin
@@ -34,6 +41,10 @@ class Signa_Admin {
 	 * Constructor
 	 */
 	private function __construct() {
+		if ( wp_doing_ajax() && isset( $_REQUEST['action'] ) && strpos( sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ), 'signa_admin_' ) === 0 ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			@ob_start();
+		}
+
 		add_action( 'admin_menu', array( $this, 'register_menus' ) );
 		add_action( 'admin_init', array( $this, 'handle_actions' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
@@ -85,11 +96,14 @@ class Signa_Admin {
 	 * @param string $hook Current admin page hook.
 	 */
 	public function enqueue_admin_assets( $hook ) {
-		if ( strpos( $hook, 'signa-otp' ) === false ) {
+		$current_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( strpos( (string) $hook, 'signa-otp' ) === false && strpos( $current_page, 'signa-otp' ) === false ) {
 			return;
 		}
 
-		wp_enqueue_media();
+		if ( function_exists( 'wp_enqueue_media' ) ) {
+			wp_enqueue_media();
+		}
 
 		wp_enqueue_style(
 			'signa-vazirmatn-font',
@@ -98,26 +112,20 @@ class Signa_Admin {
 			'33.003'
 		);
 
-		$css_ver = SIGNA_OTP_VERSION . '.' . ( file_exists( SIGNA_OTP_PATH . 'assets/css/admin.css' ) ? filemtime( SIGNA_OTP_PATH . 'assets/css/admin.css' ) : '1' );
-		$js_ver  = SIGNA_OTP_VERSION . '.' . ( file_exists( SIGNA_OTP_PATH . 'assets/js/admin.js' ) ? filemtime( SIGNA_OTP_PATH . 'assets/js/admin.js' ) : '1' );
+		$css_file = SIGNA_OTP_PATH . 'assets/css/admin.css';
+		$js_file  = SIGNA_OTP_PATH . 'assets/js/admin.js';
 
-		wp_enqueue_style(
-			'signa-otp-admin-v265',
-			SIGNA_OTP_URL . 'assets/css/admin.css',
-			array(),
-			$css_ver
-		);
+		// Inject CSS & JS directly from disk via WordPress inline APIs to bypass aggressive browser/CDN/LiteSpeed static file caches
+		wp_register_style( 'signa-otp-admin-core', false, array( 'signa-vazirmatn-font' ), SIGNA_OTP_VERSION );
+		wp_enqueue_style( 'signa-otp-admin-core' );
+		if ( file_exists( $css_file ) ) {
+			wp_add_inline_style( 'signa-otp-admin-core', (string) file_get_contents( $css_file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		}
 
-		wp_enqueue_script(
-			'signa-otp-admin-v265',
-			SIGNA_OTP_URL . 'assets/js/admin.js',
-			array( 'jquery' ),
-			$js_ver,
-			true
-		);
-
+		wp_register_script( 'signa-otp-admin-core', false, array( 'jquery' ), SIGNA_OTP_VERSION, true );
+		wp_enqueue_script( 'signa-otp-admin-core' );
 		wp_localize_script(
-			'signa-otp-admin-v265',
+			'signa-otp-admin-core',
 			'signaAdminParams',
 			array(
 				'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
@@ -125,6 +133,9 @@ class Signa_Admin {
 				'settings' => Signa_Helper::get_settings(),
 			)
 		);
+		if ( file_exists( $js_file ) ) {
+			wp_add_inline_script( 'signa-otp-admin-core', (string) file_get_contents( $js_file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		}
 	}
 
 	/**
@@ -200,7 +211,7 @@ class Signa_Admin {
 			}
 		}
 
-		if ( ! empty( $clean['custom_redirect_url'] ) && empty( $clean['redirect_url'] ) ) {
+		if ( isset( $raw['custom_redirect_url'] ) ) {
 			$clean['redirect_url'] = $clean['custom_redirect_url'];
 		} elseif ( ! empty( $clean['redirect_url'] ) && empty( $clean['custom_redirect_url'] ) ) {
 			$clean['custom_redirect_url'] = $clean['redirect_url'];
@@ -213,6 +224,30 @@ class Signa_Admin {
 	}
 
 	/**
+	 * Clean all active PHP output buffers before emitting JSON
+	 */
+	private function clean_output_buffers() {
+		while ( ob_get_level() > 0 ) {
+			@ob_end_clean();
+		}
+	}
+
+	/**
+	 * Verify admin settings request nonce (accepts either AJAX nonce or form nonce)
+	 *
+	 * @return bool
+	 */
+	private function verify_settings_nonce() {
+		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'signa_admin_nonce' ) ) {
+			return true;
+		}
+		if ( isset( $_POST['signa_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['signa_settings_nonce'] ) ), 'signa_save_settings_action' ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Handle form submissions (Fallback POST Save, Clear Logs, Export CSV)
 	 */
 	public function handle_actions() {
@@ -221,15 +256,19 @@ class Signa_Admin {
 		}
 
 		// 1. Classic Form POST Save Settings
-		if ( isset( $_POST['signa_save_settings'] ) && check_admin_referer( 'signa_save_settings_action', 'signa_settings_nonce' ) ) {
-			$raw   = isset( $_POST['signa'] ) && is_array( $_POST['signa'] ) ? wp_unslash( $_POST['signa'] ) : array();
+		if ( isset( $_POST['signa_save_settings'] ) && $this->verify_settings_nonce() ) {
+			$raw   = isset( $_POST['signa'] ) && is_array( $_POST['signa'] ) ? wp_unslash( $_POST['signa'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$clean = $this->sanitize_settings_payload( $raw );
 
 			Signa_Helper::save_settings( $clean );
 			delete_transient( 'signa_bale_safir_token' );
+			$this->settings_saved_in_request = true;
 
-			wp_safe_redirect( add_query_arg( 'settings-updated', 'true', admin_url( 'admin.php?page=signa-otp' ) ) );
-			exit;
+			if ( ! headers_sent() ) {
+				wp_safe_redirect( add_query_arg( 'settings-updated', 'true', admin_url( 'admin.php?page=signa-otp' ) ) );
+				exit;
+			}
+			$_GET['settings-updated'] = 'true';
 		}
 
 		// 2. Clear Logs
@@ -279,29 +318,18 @@ class Signa_Admin {
 	 * AJAX Handler: Live Save Settings without page reload
 	 */
 	public function ajax_save_settings() {
-		$nonce_ok = false;
-		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'signa_admin_nonce' ) ) {
-			$nonce_ok = true;
-		} elseif ( isset( $_POST['signa_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['signa_settings_nonce'] ) ), 'signa_save_settings_action' ) ) {
-			$nonce_ok = true;
-		}
-
-		if ( ! $nonce_ok || ! current_user_can( 'manage_options' ) ) {
-			if ( ob_get_length() ) {
-				ob_clean();
-			}
+		if ( ! current_user_can( 'manage_options' ) || ! $this->verify_settings_nonce() ) {
+			$this->clean_output_buffers();
 			wp_send_json_error( array( 'message' => 'نشست امنیتی منقضی شده است؛ لطفاً صفحه را رفرش کنید.' ) );
 		}
 
-		$raw   = isset( $_POST['signa'] ) && is_array( $_POST['signa'] ) ? wp_unslash( $_POST['signa'] ) : array();
+		$raw   = isset( $_POST['signa'] ) && is_array( $_POST['signa'] ) ? wp_unslash( $_POST['signa'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$clean = $this->sanitize_settings_payload( $raw );
 
 		Signa_Helper::save_settings( $clean );
 		delete_transient( 'signa_bale_safir_token' );
 
-		if ( ob_get_length() ) {
-			ob_clean();
-		}
+		$this->clean_output_buffers();
 
 		wp_send_json_success(
 			array(
@@ -318,6 +346,7 @@ class Signa_Admin {
 		check_ajax_referer( 'signa_admin_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
+			$this->clean_output_buffers();
 			wp_send_json_error( array( 'message' => 'دسترسی غیرمجاز.' ) );
 		}
 
@@ -326,15 +355,18 @@ class Signa_Admin {
 		$gateway_id = isset( $_POST['gateway_id'] ) ? sanitize_text_field( wp_unslash( $_POST['gateway_id'] ) ) : '';
 
 		if ( empty( $recipient ) ) {
+			$this->clean_output_buffers();
 			wp_send_json_error( array( 'message' => 'لطفاً شماره موبایل یا ایمیل تست را وارد کنید.' ) );
 		}
 
 		$parsed = Signa_Helper::parse_identifier( $recipient );
 		if ( 'invalid' === $parsed['type'] ) {
+			$this->clean_output_buffers();
 			wp_send_json_error( array( 'message' => 'شماره موبایل یا آدرس ایمیل وارد شده معتبر نیست.' ) );
 		}
 
 		$result = Signa_Gateway_Manager::dispatch_otp( $parsed['normalized'], $parsed['type'], $channel, $gateway_id );
+		$this->clean_output_buffers();
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error(
 				array(
@@ -362,15 +394,18 @@ class Signa_Admin {
 		check_ajax_referer( 'signa_admin_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
+			$this->clean_output_buffers();
 			wp_send_json_error( array( 'message' => 'دسترسی غیرمجاز.' ) );
 		}
 
 		$target = isset( $_POST['target'] ) ? sanitize_text_field( wp_unslash( $_POST['target'] ) ) : '';
 		if ( empty( $target ) ) {
+			$this->clean_output_buffers();
 			wp_send_json_error( array( 'message' => 'شناسه نامعتبر است.' ) );
 		}
 
 		Signa_Security::unlock_target( $target );
+		$this->clean_output_buffers();
 		wp_send_json_success( array( 'message' => 'رفع مسدودی با موفقیت انجام شد.' ) );
 	}
 
@@ -381,6 +416,7 @@ class Signa_Admin {
 		check_ajax_referer( 'signa_admin_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
+			$this->clean_output_buffers();
 			wp_send_json_error( array( 'message' => 'دسترسی غیرمجاز.' ) );
 		}
 
@@ -388,12 +424,14 @@ class Signa_Admin {
 		$decoded  = json_decode( $json_raw, true );
 
 		if ( ! is_array( $decoded ) ) {
+			$this->clean_output_buffers();
 			wp_send_json_error( array( 'message' => 'فرمت فایل یا متن JSON معتبر نیست.' ) );
 		}
 
 		$clean = $this->sanitize_settings_payload( $decoded );
 		Signa_Helper::save_settings( $clean );
 
+		$this->clean_output_buffers();
 		wp_send_json_success( array( 'message' => 'تنظیمات با موفقیت درون‌ریزی شد! در حال بارگذاری مجدد...' ) );
 	}
 
@@ -404,12 +442,14 @@ class Signa_Admin {
 		check_ajax_referer( 'signa_admin_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
+			$this->clean_output_buffers();
 			wp_send_json_error( array( 'message' => 'دسترسی غیرمجاز.' ) );
 		}
 
 		Signa_Helper::save_settings( Signa_Helper::default_settings() );
 		delete_transient( 'signa_bale_safir_token' );
 
+		$this->clean_output_buffers();
 		wp_send_json_success( array( 'message' => 'تمام تنظیمات به حالت پیش‌فرض بازنشانی شد!' ) );
 	}
 
@@ -417,6 +457,16 @@ class Signa_Admin {
 	 * Render Settings Page
 	 */
 	public function render_settings_page() {
+		if ( ! $this->settings_saved_in_request && isset( $_POST['signa_save_settings'] ) && current_user_can( 'manage_options' ) && $this->verify_settings_nonce() ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$raw   = isset( $_POST['signa'] ) && is_array( $_POST['signa'] ) ? wp_unslash( $_POST['signa'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$clean = $this->sanitize_settings_payload( $raw );
+
+			Signa_Helper::save_settings( $clean );
+			delete_transient( 'signa_bale_safir_token' );
+			$this->settings_saved_in_request = true;
+			$_GET['settings-updated']        = 'true';
+		}
+
 		$settings        = Signa_Helper::get_settings();
 		$sms_gateways    = Signa_Gateway_Manager::get_sms_gateways();
 		$stats           = Signa_Logger::get_stats();

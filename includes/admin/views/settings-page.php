@@ -80,7 +80,7 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 					<span>گزارش کدها (<?php echo esc_html( number_format_i18n( $stats['total'] ) ); ?>)</span>
 				</a>
 
-				<button type="submit" id="signa-ajax-save-btn" class="signa-btn-save">
+				<button type="button" id="signa-ajax-save-btn" class="signa-btn-save signa-save-trigger-btn" onclick="return window.signaSaveSettingsNow ? window.signaSaveSettingsNow(event, this) : true;">
 					<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px;flex-shrink:0;display:block;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
 					<span class="signa-save-label">ذخیره تغییرات</span>
 					<span id="signa-unsaved-dot" class="signa-unsaved-dot" style="display:none;" title="تغییرات ذخیره نشده"></span>
@@ -150,6 +150,15 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 
 			<!-- MAIN CONTENT PANELS (Modular Partials) -->
 			<main class="signa-main">
+				<?php $is_just_saved = isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+				<div id="signa-inline-save-banner" style="<?php echo $is_just_saved ? 'display:flex;' : 'display:none;'; ?>align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;margin-bottom:18px;border-radius:12px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.35);color:#059669;font-size:13.5px;font-weight:700;">
+					<div style="display:flex;align-items:center;gap:10px;">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+						<span id="signa-inline-save-banner-text">تنظیمات با موفقیت ذخیره و اعمال شد!</span>
+					</div>
+					<button type="button" onclick="this.parentElement.style.display='none';" style="background:transparent;border:none;color:inherit;cursor:pointer;font-size:18px;line-height:1;padding:0 4px;">&times;</button>
+				</div>
+
 				<?php
 				require $partials_dir . 'tab-dashboard.php';
 				require $partials_dir . 'tab-auth-flow.php';
@@ -160,7 +169,183 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 				require $partials_dir . 'tab-security.php';
 				require $partials_dir . 'tab-tools.php';
 				?>
+
+				<!-- Bottom Action Footer Bar -->
+				<div class="signa-bottom-save-bar" style="margin-top:22px;padding:16px 22px;border-radius:14px;background:var(--s-bg-surface);border:1px solid var(--s-border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+					<div style="display:flex;align-items:center;gap:10px;color:var(--s-text-muted);font-size:13px;">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:0.8;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+						<span>پس از تغییر هر بخش، دکمه تایید و ذخیره تنظیمات را بزنید (یا کلید میانبر <code>Ctrl + S</code>).</span>
+					</div>
+					<button type="button" id="signa-ajax-save-btn-bottom" class="signa-btn-save signa-save-trigger-btn" onclick="return window.signaSaveSettingsNow ? window.signaSaveSettingsNow(event, this) : true;">
+						<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px;flex-shrink:0;display:block;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+						<span class="signa-save-label">تایید و ذخیره تنظیمات</span>
+					</button>
+				</div>
 			</main>
 		</div>
 	</form>
+
+	<script>
+	(function() {
+		var isSaving = false;
+		var ajaxEndpoint = <?php echo wp_json_encode( admin_url( 'admin-ajax.php' ) ); ?>;
+		var adminNonce   = <?php echo wp_json_encode( wp_create_nonce( 'signa_admin_nonce' ) ); ?>;
+
+		function parseJsonResilient(rawText) {
+			if (!rawText || typeof rawText !== 'string') {
+				return null;
+			}
+			var trimmed = rawText.trim();
+			try {
+				return JSON.parse(trimmed);
+			} catch (e) {}
+			var idx = trimmed.indexOf('{"success":');
+			if (idx !== -1) {
+				var lastBrace = trimmed.lastIndexOf('}');
+				if (lastBrace > idx) {
+					try {
+						return JSON.parse(trimmed.substring(idx, lastBrace + 1));
+					} catch (e2) {}
+				}
+			}
+			return null;
+		}
+
+		function showFeedback(message, isError) {
+			var toast = document.getElementById('signa-toast');
+			if (toast) {
+				toast.className = 'signa-toast' + (isError ? ' is-error' : '');
+				var iconEl = toast.querySelector('.signa-toast-icon');
+				var textEl = toast.querySelector('.signa-toast-text');
+				if (iconEl) {
+					iconEl.innerHTML = isError
+						? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+						: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+				}
+				if (textEl) {
+					textEl.textContent = message;
+				}
+				toast.style.display = 'flex';
+				setTimeout(function() {
+					toast.style.display = 'none';
+				}, 3800);
+			}
+
+			var banner = document.getElementById('signa-inline-save-banner');
+			var bannerText = document.getElementById('signa-inline-save-banner-text');
+			if (banner && bannerText) {
+				bannerText.textContent = message;
+				banner.style.background = isError ? 'rgba(239,68,68,0.12)' : 'rgba(16,185,129,0.12)';
+				banner.style.borderColor = isError ? 'rgba(239,68,68,0.35)' : 'rgba(16,185,129,0.35)';
+				banner.style.color = isError ? '#dc2626' : '#059669';
+				banner.style.display = 'flex';
+			}
+		}
+
+		function setButtonsState(saving, doneSuccess) {
+			var btns = document.querySelectorAll('.signa-save-trigger-btn, #signa-ajax-save-btn');
+			for (var i = 0; i < btns.length; i++) {
+				btns[i].disabled = !!saving;
+				var lbl = btns[i].querySelector('.signa-save-label');
+				if (lbl) {
+					if (saving) {
+						lbl.textContent = 'در حال ذخیره...';
+					} else if (doneSuccess) {
+						lbl.textContent = 'ذخیره شد ✓';
+					} else {
+						lbl.textContent = btns[i].id === 'signa-ajax-save-btn-bottom' ? 'تایید و ذخیره تنظیمات' : 'ذخیره تغییرات';
+					}
+				}
+				if (doneSuccess) {
+					btns[i].classList.remove('has-unsaved');
+				}
+			}
+			if (doneSuccess) {
+				var dot = document.getElementById('signa-unsaved-dot');
+				if (dot) {
+					dot.style.display = 'none';
+				}
+				setTimeout(function() {
+					setButtonsState(false, false);
+				}, 1800);
+			}
+		}
+
+		function fallbackClassicSubmit(form) {
+			try {
+				HTMLFormElement.prototype.submit.call(form);
+			} catch (err) {
+				form.submit();
+			}
+		}
+
+		window.signaSaveSettingsNow = function(evt, btnEl) {
+			if (evt) {
+				if (typeof evt.preventDefault === 'function') {
+					evt.preventDefault();
+				}
+				if (typeof evt.stopImmediatePropagation === 'function') {
+					evt.stopImmediatePropagation();
+				}
+			}
+			if (isSaving) {
+				return false;
+			}
+			var form = document.getElementById('signa-settings-form');
+			if (!form) {
+				return false;
+			}
+
+			isSaving = true;
+			setButtonsState(true, false);
+
+			try {
+				var fd = new FormData(form);
+				fd.delete('signa_save_settings');
+				fd.append('action', 'signa_admin_save_settings');
+				fd.append('nonce', adminNonce);
+
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', ajaxEndpoint, true);
+				xhr.timeout = 20000;
+
+				xhr.onload = function() {
+					isSaving = false;
+					if (xhr.status >= 200 && xhr.status < 300) {
+						var parsed = parseJsonResilient(xhr.responseText);
+						if (parsed && parsed.success) {
+							setButtonsState(false, true);
+							var msg = (parsed.data && parsed.data.message) ? parsed.data.message : 'تنظیمات با موفقیت ذخیره شد!';
+							showFeedback(msg, false);
+							var expBox = document.getElementById('signa_export_json_box');
+							if (expBox && parsed.data && parsed.data.settings) {
+								expBox.value = JSON.stringify(parsed.data.settings);
+							}
+							return;
+						}
+					}
+					// Automatic fallback to native POST submission if AJAX failed or returned error
+					fallbackClassicSubmit(form);
+				};
+
+				xhr.onerror = function() {
+					isSaving = false;
+					fallbackClassicSubmit(form);
+				};
+
+				xhr.ontimeout = function() {
+					isSaving = false;
+					fallbackClassicSubmit(form);
+				};
+
+				xhr.send(fd);
+			} catch (ex) {
+				isSaving = false;
+				fallbackClassicSubmit(form);
+			}
+
+			return false;
+		};
+	})();
+	</script>
 </div>

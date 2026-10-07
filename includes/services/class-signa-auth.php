@@ -521,14 +521,19 @@ class Signa_Auth {
 		}
 
 		$behavior            = Signa_Helper::get_option( 'redirect_behavior', 'auto' );
-		$configured_redirect = trim( (string) Signa_Helper::get_option( 'redirect_url', '' ) );
+		$configured_redirect = trim( (string) Signa_Helper::get_option( 'custom_redirect_url', '' ) );
+		if ( empty( $configured_redirect ) ) {
+			$configured_redirect = trim( (string) Signa_Helper::get_option( 'redirect_url', '' ) );
+		}
 
 		if ( 'custom' === $behavior && ! empty( $configured_redirect ) ) {
 			$redirect = esc_url_raw( $configured_redirect );
-		} elseif ( 'referer' === $behavior && wp_get_referer() ) {
+		} elseif ( 'my_account' === $behavior || 'myaccount' === $behavior ) {
+			$redirect = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : admin_url( 'profile.php' );
+		} elseif ( 'home' === $behavior ) {
+			$redirect = home_url( '/' );
+		} elseif ( ( 'auto' === $behavior || 'referer' === $behavior ) && wp_get_referer() ) {
 			$redirect = wp_validate_redirect( wp_get_referer(), home_url( '/' ) );
-		} elseif ( ! empty( $configured_redirect ) ) {
-			$redirect = esc_url_raw( $configured_redirect );
 		} elseif ( function_exists( 'wc_get_page_permalink' ) ) {
 			$redirect = wc_get_page_permalink( 'myaccount' );
 		} else {

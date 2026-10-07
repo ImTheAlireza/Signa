@@ -30,22 +30,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<div class="signa-fields-grid signa-cols-2">
 								<div class="signa-field">
 									<label for="max_requests_per_hour">سقف پیامک هر شماره (در ساعت)</label>
-									<input type="number" name="signa[max_requests_per_hour]" id="max_requests_per_hour" value="<?php echo esc_attr( (string) $settings['max_requests_per_hour'] ); ?>" min="1" max="50" />
+									<input type="text" inputmode="numeric" name="signa[max_requests_per_hour]" id="max_requests_per_hour" value="<?php echo esc_attr( (string) $settings['max_requests_per_hour'] ); ?>" dir="ltr" />
 									<small>هر شماره موبایل چند بار در ساعت اجازه دریافت کد دارد؟</small>
 								</div>
 								<div class="signa-field">
 									<label for="max_ip_requests_per_hour">سقف درخواست هر آی‌پی (در ساعت)</label>
-									<input type="number" name="signa[max_ip_requests_per_hour]" id="max_ip_requests_per_hour" value="<?php echo esc_attr( (string) $settings['max_ip_requests_per_hour'] ); ?>" min="2" max="200" />
+									<input type="text" inputmode="numeric" name="signa[max_ip_requests_per_hour]" id="max_ip_requests_per_hour" value="<?php echo esc_attr( (string) $settings['max_ip_requests_per_hour'] ); ?>" dir="ltr" />
 									<small>جلوگیری از تست شماره‌های متعدد توسط یک دستگاه</small>
 								</div>
 								<div class="signa-field">
 									<label for="max_verify_attempts">تعداد مجاز خطا در وارد کردن کد</label>
-									<input type="number" name="signa[max_verify_attempts]" id="max_verify_attempts" value="<?php echo esc_attr( (string) $settings['max_verify_attempts'] ); ?>" min="2" max="15" />
+									<input type="text" inputmode="numeric" name="signa[max_verify_attempts]" id="max_verify_attempts" value="<?php echo esc_attr( (string) $settings['max_verify_attempts'] ); ?>" dir="ltr" />
 									<small>بعد از این تعداد اشتباه، شماره موقتاً قفل می‌شود</small>
 								</div>
 								<div class="signa-field">
 									<label for="lockout_duration">مدت زمان قفل موقت (ثانیه)</label>
-									<input type="number" name="signa[lockout_duration]" id="lockout_duration" value="<?php echo esc_attr( (string) $settings['lockout_duration'] ); ?>" min="60" max="86400" />
+									<input type="text" inputmode="numeric" name="signa[lockout_duration]" id="lockout_duration" value="<?php echo esc_attr( (string) $settings['lockout_duration'] ); ?>" dir="ltr" />
 									<small>پیش‌فرض: ۹۰۰ ثانیه (معادل ۱۵ دقیقه)</small>
 								</div>
 							</div>

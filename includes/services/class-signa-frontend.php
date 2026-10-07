@@ -42,6 +42,7 @@ class Signa_Frontend {
 	 */
 	private function __construct() {
 		add_shortcode( 'signa_otp_login', array( $this, 'shortcode_login_form' ) );
+		add_shortcode( 'signa_otp_form', array( $this, 'shortcode_login_form' ) );
 		add_shortcode( 'signa_otp_button', array( $this, 'shortcode_modal_button' ) );
 
 		add_filter( 'wp_resource_hints', array( $this, 'add_resource_hints' ), 10, 2 );

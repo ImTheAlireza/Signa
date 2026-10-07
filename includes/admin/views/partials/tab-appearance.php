@@ -84,7 +84,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									</div>
 									<div class="signa-field">
 										<label for="form_max_width">حداکثر عرض کارت (px)</label>
-										<input type="number" name="signa[form_max_width]" id="form_max_width" min="320" max="640" value="<?php echo esc_attr( (string) $settings['form_max_width'] ); ?>" />
+										<input type="text" inputmode="numeric" name="signa[form_max_width]" id="form_max_width" value="<?php echo esc_attr( (string) $settings['form_max_width'] ); ?>" dir="ltr" />
 									</div>
 								</div>
 

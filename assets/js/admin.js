@@ -423,7 +423,10 @@
 
 		var isSavingSettings = false;
 
-		function performAjaxSave() {
+		function performAjaxSave(evt) {
+			if (typeof window.signaSaveSettingsNow === 'function') {
+				return window.signaSaveSettingsNow(evt);
+			}
 			if (isSavingSettings || !$settingsForm.length) {
 				return;
 			}
@@ -454,10 +457,23 @@
 			$.ajax({
 				url: ajaxEndpoint,
 				type: 'POST',
-				dataType: 'json',
+				dataType: 'text',
 				data: $.param(formData)
 			})
-				.done(function (res) {
+				.done(function (rawRes) {
+					var res = null;
+					if (typeof rawRes === 'string') {
+						try {
+							res = JSON.parse(rawRes.trim());
+						} catch (e) {
+							var idx = rawRes.indexOf('{"success":');
+							if (idx !== -1) {
+								try {
+									res = JSON.parse(rawRes.substring(idx, rawRes.lastIndexOf('}') + 1));
+								} catch (e2) {}
+							}
+						}
+					}
 					if (res && res.success) {
 						clearFormDirty();
 						showToast((res.data && res.data.message) || 'تنظیمات با موفقیت ذخیره شد!', false);
@@ -465,12 +481,11 @@
 							$('#signa_export_json_box').val(JSON.stringify(res.data.settings));
 						}
 					} else {
-						var errMsg = res && res.data && res.data.message ? res.data.message : 'خطا در ذخیره تنظیمات';
-						showToast(errMsg, true);
+						HTMLFormElement.prototype.submit.call($settingsForm[0]);
 					}
 				})
 				.fail(function () {
-					showToast('خطا در ارتباط با سرور وردپرس', true);
+					HTMLFormElement.prototype.submit.call($settingsForm[0]);
 				})
 				.always(function () {
 					isSavingSettings = false;
@@ -481,19 +496,19 @@
 
 		$settingsForm.on('submit', function (e) {
 			e.preventDefault();
-			performAjaxSave();
+			performAjaxSave(e);
 		});
 
 		$saveBtn.on('click', function (e) {
 			e.preventDefault();
-			performAjaxSave();
+			performAjaxSave(e);
 		});
 
 		$(document).on('keydown', function (e) {
 			if ((e.ctrlKey || e.metaKey) && e.key && e.key.toLowerCase() === 's') {
 				if ($settingsForm.length) {
 					e.preventDefault();
-					performAjaxSave();
+					performAjaxSave(e);
 				}
 			}
 		});
