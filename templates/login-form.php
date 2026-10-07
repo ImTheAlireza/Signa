@@ -27,6 +27,15 @@ $backdrop_blur    = isset( $args['backdrop_blur'] ) && null !== $args['backdrop_
 $card_shadow      = ! empty( $args['card_shadow'] ) ? $args['card_shadow'] : Signa_Helper::get_option( 'card_shadow', 'medium' );
 $card_border      = ! empty( $args['card_border_style'] ) ? $args['card_border_style'] : Signa_Helper::get_option( 'card_border_style', 'subtle' );
 $card_padding     = isset( $args['card_padding'] ) && null !== $args['card_padding'] ? absint( $args['card_padding'] ) : absint( Signa_Helper::get_option( 'card_padding', 32 ) );
+$font_family      = ! empty( $args['font_family'] ) ? $args['font_family'] : Signa_Helper::get_option( 'font_family', 'vazirmatn' );
+$title_size       = isset( $args['title_font_size'] ) && null !== $args['title_font_size'] ? absint( $args['title_font_size'] ) : absint( Signa_Helper::get_option( 'title_font_size', 20 ) );
+$subtitle_size    = isset( $args['subtitle_font_size'] ) && null !== $args['subtitle_font_size'] ? absint( $args['subtitle_font_size'] ) : absint( Signa_Helper::get_option( 'subtitle_font_size', 14 ) );
+$btn_size         = isset( $args['btn_font_size'] ) && null !== $args['btn_font_size'] ? absint( $args['btn_font_size'] ) : absint( Signa_Helper::get_option( 'btn_font_size', 15 ) );
+$input_style      = ! empty( $args['input_style'] ) ? $args['input_style'] : Signa_Helper::get_option( 'input_style', 'filled' );
+$input_height     = isset( $args['input_height'] ) && null !== $args['input_height'] ? absint( $args['input_height'] ) : absint( Signa_Helper::get_option( 'input_height', 48 ) );
+$input_bg_color   = ! empty( $args['input_bg_color'] ) ? $args['input_bg_color'] : Signa_Helper::get_option( 'input_bg_color', '#f8fafc' );
+$input_border_col = ! empty( $args['input_border_color'] ) ? $args['input_border_color'] : Signa_Helper::get_option( 'input_border_color', '#d1d5db' );
+$input_addon      = ! empty( $args['input_addon_style'] ) ? $args['input_addon_style'] : Signa_Helper::get_option( 'input_addon_style', 'icon' );
 $logo_url         = trim( (string) Signa_Helper::get_option( 'logo_url', '' ) );
 $raw_max_width    = isset( $args['max_width'] ) && null !== $args['max_width'] ? absint( $args['max_width'] ) : absint( Signa_Helper::get_option( 'form_max_width', 420 ) );
 $max_width        = max( 320, min( 640, $raw_max_width ) );
@@ -87,9 +96,10 @@ $btn_bg_css        = ( 'gradient' === $button_bg_mode )
 	: $primary_color;
 $glow_shadow_rgba  = Signa_Helper::hex_to_rgba( $primary_color, 45 );
 $glow_border_rgba  = Signa_Helper::hex_to_rgba( $primary_color, 65 );
+$font_stack_css    = Signa_Helper::get_font_stack( $font_family );
 
 $inline_vars = sprintf(
-	'--signa-primary:%s;--signa-secondary:%s;--signa-btn-bg:%s;--signa-bg:%s;--signa-text:%s;--signa-radius:%dpx;--signa-split-bg:%s;--signa-blur:%dpx;--signa-card-pad:%dpx;--signa-glow-shadow:%s;--signa-glow-border:%s;max-width:%dpx;',
+	'--signa-primary:%s;--signa-secondary:%s;--signa-btn-bg:%s;--signa-bg:%s;--signa-text:%s;--signa-radius:%dpx;--signa-split-bg:%s;--signa-blur:%dpx;--signa-card-pad:%dpx;--signa-glow-shadow:%s;--signa-glow-border:%s;--signa-font:%s;--signa-title-size:%dpx;--signa-subtitle-size:%dpx;--signa-btn-size:%dpx;--signa-input-h:%dpx;--signa-input-bg:%s;--signa-border:%s;max-width:%dpx;',
 	esc_attr( $primary_color ),
 	esc_attr( $secondary_color ),
 	esc_attr( $btn_bg_css ),
@@ -101,17 +111,26 @@ $inline_vars = sprintf(
 	$card_padding,
 	esc_attr( $glow_shadow_rgba ),
 	esc_attr( $glow_border_rgba ),
+	esc_attr( $font_stack_css ),
+	$title_size,
+	$subtitle_size,
+	$btn_size,
+	$input_height,
+	esc_attr( $input_bg_color ),
+	esc_attr( $input_border_col ),
 	$wrapper_max_w
 );
 
 $wrapper_classes = sprintf(
-	'signa-otp-wrapper signa-digit-style-%s signa-layout-%s signa-pos-%s signa-shadow-%s signa-border-%s signa-btn-mode-%s%s',
+	'signa-otp-wrapper signa-digit-style-%s signa-layout-%s signa-pos-%s signa-shadow-%s signa-border-%s signa-btn-mode-%s signa-input-style-%s signa-addon-%s%s',
 	esc_attr( $digit_box_style ),
 	esc_attr( $effective_layout ),
 	esc_attr( $card_position ),
 	esc_attr( $card_shadow ),
 	esc_attr( $card_border ),
 	esc_attr( $button_bg_mode ),
+	esc_attr( $input_style ),
+	esc_attr( $input_addon ),
 	$glassmorphism ? ' signa-glassmorphism' : ''
 );
 ?>
@@ -153,6 +172,17 @@ $wrapper_classes = sprintf(
 						autocomplete="username webauthn"
 						required
 					/>
+					<?php if ( 'ir_flag' === $input_addon && 'email_only' !== $login_mode ) : ?>
+						<span class="signa-input-addon is-flag" dir="ltr" aria-hidden="true"><span>🇮🇷</span><strong>+98</strong></span>
+					<?php elseif ( 'icon' === $input_addon ) : ?>
+						<span class="signa-input-addon is-icon" aria-hidden="true">
+							<?php if ( 'email_only' === $login_mode ) : ?>
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+							<?php else : ?>
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+							<?php endif; ?>
+						</span>
+					<?php endif; ?>
 				</div>
 			</div>
 

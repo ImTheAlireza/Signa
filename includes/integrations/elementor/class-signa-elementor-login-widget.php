@@ -260,6 +260,55 @@ class Signa_Elementor_Login_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'font_family',
+			array(
+				'label'   => 'خانواده فونت فرم',
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => array(
+					''              => 'پیش‌فرض تنظیمات افزونه',
+					'vazirmatn'     => 'وزیرمتن (Vazirmatn)',
+					'iransans'      => 'ایران‌سنس (IRANSans)',
+					'yekanbakh'     => 'یکان‌بخ / ایران‌یکان',
+					'dana'          => 'دانا / انجمن (Dana)',
+					'estedad'       => 'استعداد / شبنم (Estedad)',
+					'theme_inherit' => 'ارث‌بری از فونت قالب (Inherit)',
+				),
+			)
+		);
+
+		$this->add_control(
+			'input_style',
+			array(
+				'label'   => 'استایل فیلدهای ورودی',
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => array(
+					''           => 'پیش‌فرض تنظیمات افزونه',
+					'filled'     => 'کادر توپر مدرن (Filled)',
+					'outlined'   => 'کادر خطی شفاف (Outlined)',
+					'underlined' => 'خط زیرین مینیمال (Underlined)',
+					'soft_pill'  => 'کپسولی گرد (Soft Pill)',
+				),
+			)
+		);
+
+		$this->add_control(
+			'input_addon_style',
+			array(
+				'label'   => 'آیکون یا پرچم کنار فیلد موبایل',
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => array(
+					''        => 'پیش‌فرض تنظیمات افزونه',
+					'icon'    => 'آیکون هوشمند موبایل / ایمیل',
+					'ir_flag' => 'پرچم ایران 🇮🇷 و پیش‌شماره (+98)',
+					'none'    => 'ساده و بدون آیکون',
+				),
+			)
+		);
+
+		$this->add_control(
 			'digit_box_style',
 			array(
 				'label'   => 'استایل باکس‌های کد تایید',
@@ -362,6 +411,9 @@ class Signa_Elementor_Login_Widget extends \Elementor\Widget_Base {
 				'card_position'      => $settings['card_position'] ?? '',
 				'card_shadow'        => $settings['card_shadow'] ?? '',
 				'card_border_style'  => $settings['card_border_style'] ?? '',
+				'font_family'        => $settings['font_family'] ?? '',
+				'input_style'        => $settings['input_style'] ?? '',
+				'input_addon_style'  => $settings['input_addon_style'] ?? '',
 				'context'            => 'elementor',
 			)
 		);

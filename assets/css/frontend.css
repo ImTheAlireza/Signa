@@ -10,15 +10,21 @@
 	--signa-text: #111827;
 	--signa-muted: #6b7280;
 	--signa-border: #d1d5db;
+	--signa-input-bg: #f8fafc;
 	--signa-radius: 16px;
 	--signa-split-bg: #1e3a8a;
 	--signa-blur: 16px;
 	--signa-card-pad: 32px;
 	--signa-glow-shadow: rgba(37, 99, 235, 0.45);
 	--signa-glow-border: rgba(37, 99, 235, 0.65);
+	--signa-font: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif;
+	--signa-title-size: 20px;
+	--signa-subtitle-size: 14px;
+	--signa-btn-size: 15px;
+	--signa-input-h: 48px;
 	direction: rtl;
 	text-align: right;
-	font-family: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif !important;
+	font-family: var(--signa-font) !important;
 	width: 100%;
 	max-width: 420px;
 	margin: 24px auto;
@@ -214,7 +220,7 @@
 .signa-otp-wrapper select,
 .signa-otp-wrapper textarea {
 	box-sizing: border-box;
-	font-family: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif !important;
+	font-family: var(--signa-font) !important;
 }
 
 .signa-otp-header {
@@ -262,14 +268,14 @@
 
 .signa-otp-title {
 	margin: 0 0 8px 0;
-	font-size: 20px;
+	font-size: var(--signa-title-size, 20px);
 	font-weight: 800;
 	color: var(--signa-text);
 }
 
 .signa-otp-subtitle {
 	margin: 0;
-	font-size: 13.5px;
+	font-size: var(--signa-subtitle-size, 14px);
 	line-height: 1.7;
 	color: var(--signa-muted);
 }
@@ -304,6 +310,33 @@
 	margin-bottom: 18px;
 }
 
+.signa-input-wrap {
+	position: relative;
+	width: 100%;
+}
+
+.signa-input-addon {
+	position: absolute;
+	left: 14px;
+	top: 50%;
+	transform: translateY(-50%);
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	color: var(--signa-muted);
+	font-size: 12.5px;
+	font-weight: 700;
+	pointer-events: none;
+	z-index: 2;
+}
+
+.signa-input-addon.is-flag {
+	padding: 3px 8px;
+	border-radius: 6px;
+	background: rgba(148, 163, 184, 0.14);
+	color: var(--signa-text);
+}
+
 .signa-label {
 	display: block;
 	font-size: 13.5px;
@@ -322,20 +355,54 @@
 
 .signa-otp-wrapper input.signa-input {
 	width: 100% !important;
-	height: 48px !important;
+	height: var(--signa-input-h, 48px) !important;
 	padding: 0 16px !important;
 	margin: 0 !important;
-	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-family: var(--signa-font) !important;
 	font-size: 14.5px !important;
-	line-height: 46px !important;
+	line-height: calc(var(--signa-input-h, 48px) - 2px) !important;
 	border: 1.5px solid var(--signa-border) !important;
 	border-radius: calc(var(--signa-radius) * 0.68) !important;
-	background-color: #f8fafc !important;
+	background-color: var(--signa-input-bg, #f8fafc) !important;
 	color: #0f172a !important;
 	transition: all 0.2s ease;
 	outline: none !important;
 	text-align: right !important;
 	box-shadow: none;
+}
+
+.signa-otp-wrapper.signa-addon-icon input.signa-identifier-input {
+	padding-left: 42px !important;
+}
+
+.signa-otp-wrapper.signa-addon-ir_flag input.signa-identifier-input {
+	padding-left: 68px !important;
+}
+
+/* Category 3: Input Field Styles (outlined, underlined, soft_pill) */
+.signa-otp-wrapper.signa-input-style-outlined input.signa-input {
+	background-color: transparent !important;
+	color: var(--signa-text) !important;
+}
+
+.signa-otp-wrapper.signa-input-style-underlined input.signa-input {
+	background-color: transparent !important;
+	border: none !important;
+	border-bottom: 2.5px solid var(--signa-border) !important;
+	border-radius: 0 !important;
+	padding-right: 4px !important;
+	color: var(--signa-text) !important;
+}
+
+.signa-otp-wrapper.signa-input-style-underlined input.signa-input:focus {
+	background-color: transparent !important;
+	border-bottom-color: var(--signa-primary) !important;
+	box-shadow: none !important;
+}
+
+.signa-otp-wrapper.signa-input-style-soft_pill input.signa-input,
+.signa-otp-wrapper.signa-input-style-soft_pill .signa-btn {
+	border-radius: 99px !important;
 }
 
 /* Right-aligned RTL placeholders so Persian text & punctuation render properly on the right */
@@ -345,7 +412,7 @@
 }
 
 .signa-otp-wrapper input.signa-input::placeholder {
-	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+	font-family: var(--signa-font) !important;
 	font-size: 13.5px !important;
 	color: #94a3b8 !important;
 	direction: rtl !important;
@@ -378,10 +445,10 @@
 	justify-content: center;
 	gap: 8px;
 	width: 100%;
-	height: 48px;
+	height: var(--signa-input-h, 48px);
 	padding: 0 20px;
-	font-family: 'Vazirmatn', Tahoma, sans-serif !important;
-	font-size: 15px;
+	font-family: var(--signa-font) !important;
+	font-size: var(--signa-btn-size, 15px);
 	font-weight: 700;
 	border-radius: calc(var(--signa-radius) * 0.68);
 	border: none;

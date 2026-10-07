@@ -18,6 +18,9 @@ $button_bg_mode = isset( $settings['button_bg_mode'] ) ? $settings['button_bg_mo
 $card_shadow    = isset( $settings['card_shadow'] ) ? $settings['card_shadow'] : 'medium';
 $card_border    = isset( $settings['card_border_style'] ) ? $settings['card_border_style'] : 'subtle';
 $bg_pattern     = isset( $settings['bg_pattern'] ) ? $settings['bg_pattern'] : 'none';
+$font_family    = isset( $settings['font_family'] ) ? $settings['font_family'] : 'vazirmatn';
+$input_style    = isset( $settings['input_style'] ) ? $settings['input_style'] : 'filled';
+$input_addon    = isset( $settings['input_addon_style'] ) ? $settings['input_addon_style'] : 'icon';
 $is_split       = in_array( $form_layout, array( 'split_right', 'split_left' ), true );
 $wp_pages       = get_pages( array( 'post_status' => 'publish' ) );
 $svg_check_mark = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
@@ -653,6 +656,175 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								</div>
 							</div>
 
+							<!-- CARD 2.8 (CATEGORY 3): Typography, Fonts & Input Field Styles -->
+							<div class="signa-card" style="margin-bottom:20px;">
+								<div class="signa-card-head">
+									<div class="signa-card-head-title">
+										<span class="signa-card-icon is-cyan">
+											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+										</span>
+										<div>
+											<h2>۴. تایپوگرافی، فونت فارسی و استایل فیلدهای ورودی</h2>
+											<p>انتخاب فونت، اندازه متون، طراحی کادر فیلدهای ورودی و پیش‌شماره/پرچم کشور</p>
+										</div>
+									</div>
+									<span class="signa-pill is-info">تایپوگرافی و فیلدها</span>
+								</div>
+
+								<!-- 1. Font Family & Text Size Sliders -->
+								<div class="signa-fields-grid signa-cols-2">
+									<div class="signa-field">
+										<label for="font_family">خانواده فونت فرم ورود (Font Family)</label>
+										<select name="signa[font_family]" id="font_family">
+											<option value="vazirmatn" <?php selected( $font_family, 'vazirmatn' ); ?>>وزیرمتن (Vazirmatn — پیش‌فرض استاندارد وب)</option>
+											<option value="iransans" <?php selected( $font_family, 'iransans' ); ?>>ایران‌سنس (IRANSans / IRANSansX)</option>
+											<option value="yekanbakh" <?php selected( $font_family, 'yekanbakh' ); ?>>یکان‌بخ / ایران‌یکان (YekanBakh / IRANYekan)</option>
+											<option value="dana" <?php selected( $font_family, 'dana' ); ?>>دانا / انجمن (Dana / Anjoman)</option>
+											<option value="estedad" <?php selected( $font_family, 'estedad' ); ?>>استعداد / شبنم (Estedad / Shabnam)</option>
+											<option value="theme_inherit" <?php selected( $font_family, 'theme_inherit' ); ?>>ارث‌بری خودکار از فونت قالب وردپرس (Inherit)</option>
+										</select>
+									</div>
+
+									<div class="signa-field">
+										<label for="input_addon_style">نمایش آیکون یا پیش‌شماره کنار فیلد موبایل</label>
+										<select name="signa[input_addon_style]" id="input_addon_style">
+											<option value="icon" <?php selected( $input_addon, 'icon' ); ?>>آیکون هوشمند موبایل / ایمیل (پیش‌فرض)</option>
+											<option value="ir_flag" <?php selected( $input_addon, 'ir_flag' ); ?>>پرچم ایران 🇮🇷 و پیش‌شماره (+98)</option>
+											<option value="none" <?php selected( $input_addon, 'none' ); ?>>ساده و بدون آیکون داخل فیلد</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="signa-fields-grid signa-cols-3" style="margin-top:16px;">
+									<div class="signa-field">
+										<label for="title_font_size">اندازه تیتر اصلی: <strong id="title_size_val_label"><?php echo esc_html( (string) $settings['title_font_size'] ); ?>px</strong></label>
+										<input type="range" name="signa[title_font_size]" id="title_font_size" min="16" max="28" value="<?php echo esc_attr( (string) $settings['title_font_size'] ); ?>" />
+									</div>
+
+									<div class="signa-field">
+										<label for="subtitle_font_size">اندازه زیرعنوان: <strong id="subtitle_size_val_label"><?php echo esc_html( (string) $settings['subtitle_font_size'] ); ?>px</strong></label>
+										<input type="range" name="signa[subtitle_font_size]" id="subtitle_font_size" min="12" max="17" value="<?php echo esc_attr( (string) $settings['subtitle_font_size'] ); ?>" />
+									</div>
+
+									<div class="signa-field">
+										<label for="btn_font_size">اندازه متن دکمه‌ها: <strong id="btn_size_val_label"><?php echo esc_html( (string) $settings['btn_font_size'] ); ?>px</strong></label>
+										<input type="range" name="signa[btn_font_size]" id="btn_font_size" min="13" max="18" value="<?php echo esc_attr( (string) $settings['btn_font_size'] ); ?>" />
+									</div>
+								</div>
+
+								<!-- 2. Input Field Visual Styles (with Mini-Video Previews) -->
+								<div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--s-border);">
+									<label class="signa-section-label">استایل ظاهری کادر فیلدهای ورودی (Input Field Style)</label>
+									<div class="signa-choice-grid signa-cols-2">
+										<label class="signa-choice-card <?php echo 'filled' === $input_style ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[input_style]" value="filled" <?php checked( $input_style, 'filled' ); ?> />
+											<div class="signa-mini-video" style="height:62px;">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+												<div style="width:130px;height:28px;border-radius:7px;background:#f8fafc;border:1.5px solid #3b82f6;display:flex;align-items:center;padding:0 8px;">
+													<span style="width:65%;height:5px;border-radius:3px;background:#64748b;"></span>
+												</div>
+											</div>
+											<div class="signa-choice-card-top">
+												<span class="signa-flow-node is-phone">
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="6" width="18" height="12" rx="3" fill="currentColor" fill-opacity="0.18"/></svg>
+												</span>
+												<div class="signa-choice-top-left">
+													<span class="signa-choice-tag is-blue">پیش‌فرض</span>
+													<span class="signa-choice-check"><?php echo $svg_check_mark; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+												</div>
+											</div>
+											<div class="signa-choice-body">
+												<strong>کادر توپر مدرن (Filled Box)</strong>
+												<small>پس‌زمینه ملایم به همراه کادر دور استاندارد</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'outlined' === $input_style ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[input_style]" value="outlined" <?php checked( $input_style, 'outlined' ); ?> />
+											<div class="signa-mini-video" style="height:62px;">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+												<div style="width:130px;height:28px;border-radius:7px;background:transparent;border:1.5px solid #60a5fa;display:flex;align-items:center;padding:0 8px;">
+													<span style="width:65%;height:5px;border-radius:3px;background:#93c5fd;"></span>
+												</div>
+											</div>
+											<div class="signa-choice-card-top">
+												<span class="signa-flow-node is-sms">
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="6" width="18" height="12" rx="3"/></svg>
+												</span>
+												<span class="signa-choice-check"><?php echo $svg_check_mark; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+											</div>
+											<div class="signa-choice-body">
+												<strong>کادر خطی شفاف (Outlined Clean)</strong>
+												<small>پس‌زمینه شفاف همرنگ کارت با حاشیه ظریف</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'underlined' === $input_style ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[input_style]" value="underlined" <?php checked( $input_style, 'underlined' ); ?> />
+											<div class="signa-mini-video" style="height:62px;">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+												<div style="width:130px;height:28px;border-bottom:2.5px solid #38bdf8;display:flex;align-items:center;padding:0 4px;">
+													<span style="width:65%;height:5px;border-radius:3px;background:#cbd5e1;"></span>
+												</div>
+											</div>
+											<div class="signa-choice-card-top">
+												<span class="signa-flow-node is-passkey">
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="18" x2="21" y2="18"/><line x1="6" y1="11" x2="14" y2="11"/></svg>
+												</span>
+												<span class="signa-choice-check"><?php echo $svg_check_mark; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+											</div>
+											<div class="signa-choice-body">
+												<strong>خط زیرین مینیمال (Underlined)</strong>
+												<small>فقط خط رنگی در پایین فیلد به سبک متریال</small>
+											</div>
+										</label>
+
+										<label class="signa-choice-card <?php echo 'soft_pill' === $input_style ? 'selected' : ''; ?>">
+											<input type="radio" name="signa[input_style]" value="soft_pill" <?php checked( $input_style, 'soft_pill' ); ?> />
+											<div class="signa-mini-video" style="height:62px;">
+												<span class="signa-mini-video-badge">پیشنمایش</span>
+												<div style="width:130px;height:28px;border-radius:99px;background:rgba(241,245,249,0.95);display:flex;align-items:center;padding:0 12px;">
+													<span style="width:65%;height:5px;border-radius:99px;background:#64748b;"></span>
+												</div>
+											</div>
+											<div class="signa-choice-card-top">
+												<span class="signa-flow-node is-email">
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+												</span>
+												<span class="signa-choice-check"><?php echo $svg_check_mark; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+											</div>
+											<div class="signa-choice-body">
+												<strong>کپسولی گرد (Soft Pill)</strong>
+												<small>فیلد و دکمه‌های کاملاً گرد و مدرن</small>
+											</div>
+										</label>
+									</div>
+
+									<div class="signa-fields-grid signa-cols-3" style="margin-top:16px;">
+										<div class="signa-field">
+											<label for="input_height">ارتفاع فیلدها و دکمه: <strong id="input_height_val_label"><?php echo esc_html( (string) $settings['input_height'] ); ?>px</strong></label>
+											<input type="range" name="signa[input_height]" id="input_height" min="42" max="58" value="<?php echo esc_attr( (string) $settings['input_height'] ); ?>" />
+										</div>
+
+										<div class="signa-field">
+											<label for="input_bg_color">رنگ پس‌زمینه فیلد ورودی</label>
+											<div class="signa-color-input-wrap">
+												<input type="color" name="signa[input_bg_color]" id="input_bg_color" value="<?php echo esc_attr( $settings['input_bg_color'] ); ?>" />
+												<span id="input_bg_color_hex"><?php echo esc_html( $settings['input_bg_color'] ); ?></span>
+											</div>
+										</div>
+
+										<div class="signa-field">
+											<label for="input_border_color">رنگ کادر دور فیلد ورودی</label>
+											<div class="signa-color-input-wrap">
+												<input type="color" name="signa[input_border_color]" id="input_border_color" value="<?php echo esc_attr( $settings['input_border_color'] ); ?>" />
+												<span id="input_border_color_hex"><?php echo esc_html( $settings['input_border_color'] ); ?></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
 							<!-- CARD 3: Color Presets, Card Colors & Dimensions -->
 							<div class="signa-card">
 								<div class="signa-card-head">
@@ -661,7 +833,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
 										</span>
 										<div>
-											<h2>۴. پالت‌های رنگی و تم‌های آماده (Presets)</h2>
+											<h2>۵. پالت‌های رنگی و تم‌های آماده (Presets)</h2>
 											<p>با یک کلیک استایل کلی فرم را تغییر دهید یا رنگ‌ها را سفارشی کنید</p>
 										</div>
 									</div>
@@ -839,7 +1011,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 												<!-- Preview Step 1 -->
 												<div id="signa-prev-step-1">
 													<label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:inherit;">شماره موبایل یا ایمیل</label>
-													<input type="text" class="signa-prev-input" placeholder="شماره موبایل (0912...) یا ایمیل" dir="rtl" readonly />
+													<div id="signa-prev-input-wrap" style="position:relative;margin-bottom:16px;">
+														<input type="text" class="signa-prev-input" placeholder="شماره موبایل (0912...) یا ایمیل" dir="rtl" readonly style="margin-bottom:0 !important;" />
+														<span id="signa-prev-input-addon" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:#64748b;pointer-events:none;" dir="ltr"></span>
+													</div>
 													<button type="button" id="signa-prev-btn-1" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:700;font-size:14px;cursor:default;">
 														<?php echo esc_html( $settings['button_text'] ); ?>
 													</button>
@@ -920,6 +1095,17 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var cardPosition = $('input[name="signa[card_position]"]:checked').val() || 'center';
 							var modalStyle = $('input[name="signa[modal_style]"]:checked').val() || 'center';
 
+							// Category 3 values
+							var fontKey = $('#font_family').val() || 'vazirmatn';
+							var titleSize = $('#title_font_size').val() || 20;
+							var subSize = $('#subtitle_font_size').val() || 14;
+							var btnSize = $('#btn_font_size').val() || 15;
+							var inputStyle = $('input[name="signa[input_style]"]:checked').val() || 'filled';
+							var inputHeight = $('#input_height').val() || 48;
+							var inputBg = $('#input_bg_color').val() || '#f8fafc';
+							var inputBorder = $('#input_border_color').val() || '#d1d5db';
+							var inputAddon = $('#input_addon_style').val() || 'icon';
+
 							var isSplit = (formLayout === 'split_right' || formLayout === 'split_left');
 							var isDrawerOrSheet = (currentPreviewMode === 'modal' && (modalStyle === 'drawer_left' || modalStyle === 'drawer_right' || modalStyle === 'bottom_sheet'));
 							var showSplitBanner = isSplit && !isDrawerOrSheet;
@@ -928,6 +1114,12 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('#opacity_val_label').text(cardOpacity + '%');
 							$('#blur_val_label').text(blurPx + 'px');
 							$('#padding_val_label').text(cardPadding + 'px');
+							$('#title_size_val_label').text(titleSize + 'px');
+							$('#subtitle_size_val_label').text(subSize + 'px');
+							$('#btn_size_val_label').text(btnSize + 'px');
+							$('#input_height_val_label').text(inputHeight + 'px');
+							$('#input_bg_color_hex').text(inputBg);
+							$('#input_border_color_hex').text(inputBorder);
 
 							if (isGlass) { $('#signa-glassmorphism-controls').slideDown(180); } else { $('#signa-glassmorphism-controls').slideUp(180); }
 							$('#signa-secondary-color-wrap').css('opacity', btnBgMode === 'gradient' ? '1' : '0.65');
@@ -1004,10 +1196,59 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								color: text,
 								padding: Math.round(cardPadding * 0.85) + 'px'
 							});
+
+							// Category 3: Apply Typography & Input Field Style in Live Preview
+							var fontMap = {
+								vazirmatn: "'Vazirmatn', Tahoma, sans-serif",
+								iransans: "'IRANSansX', 'IRANSans', 'Vazirmatn', Tahoma, sans-serif",
+								yekanbakh: "'YekanBakh', 'IRANYekan', 'Vazirmatn', Tahoma, sans-serif",
+								dana: "'Dana', 'Anjoman', 'Vazirmatn', Tahoma, sans-serif",
+								estedad: "'Estedad', 'Shabnam', 'Vazirmatn', Tahoma, sans-serif",
+								theme_inherit: "inherit"
+							};
+							var activeFont = fontMap[fontKey] || fontMap.vazirmatn;
+							$('#signa-live-preview-shell, #signa-live-preview-shell *').css('font-family', activeFont);
+							$('#signa-prev-title').css('font-size', titleSize + 'px');
+							$('#signa-prev-subtitle').css('font-size', subSize + 'px');
+
+							var $prevInput = $('#signa-live-preview-card input.signa-prev-input');
+							var inputRad = inputStyle === 'soft_pill' ? '99px' : inputStyle === 'underlined' ? '0' : Math.round(radius * 0.68) + 'px';
+							var btnRad = inputStyle === 'soft_pill' ? '99px' : Math.round(radius * 0.68) + 'px';
+
+							if (inputStyle === 'underlined') {
+								$prevInput[0].style.setProperty('background-color', 'transparent', 'important');
+								$prevInput[0].style.setProperty('border', 'none', 'important');
+								$prevInput[0].style.setProperty('border-bottom', '2.5px solid ' + primary, 'important');
+								$prevInput[0].style.setProperty('border-radius', '0', 'important');
+							} else if (inputStyle === 'outlined') {
+								$prevInput[0].style.setProperty('background-color', 'transparent', 'important');
+								$prevInput[0].style.setProperty('border', '1.5px solid ' + inputBorder, 'important');
+								$prevInput[0].style.setProperty('border-radius', inputRad, 'important');
+							} else {
+								$prevInput[0].style.setProperty('background-color', inputBg, 'important');
+								$prevInput[0].style.setProperty('border', '1.5px solid ' + inputBorder, 'important');
+								$prevInput[0].style.setProperty('border-radius', inputRad, 'important');
+							}
+							$prevInput[0].style.setProperty('height', inputHeight + 'px', 'important');
+
+							var $addon = $('#signa-prev-input-addon');
+							if (inputAddon === 'ir_flag') {
+								$addon.html('<span style="font-size:13px;">🇮🇷</span><span>+98</span>').show();
+								$prevInput[0].style.setProperty('padding-left', '56px', 'important');
+							} else if (inputAddon === 'icon') {
+								$addon.html('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>').show();
+								$prevInput[0].style.setProperty('padding-left', '38px', 'important');
+							} else {
+								$addon.hide();
+								$prevInput[0].style.setProperty('padding-left', '14px', 'important');
+							}
+
 							var btnBg = btnBgMode === 'gradient' ? 'linear-gradient(135deg, ' + primary + ', ' + secondary + ')' : primary;
 							$('#signa-prev-btn-1, #signa-prev-btn-2').css({
 								background: btnBg,
-								borderRadius: Math.round(radius * 0.68) + 'px'
+								borderRadius: btnRad,
+								height: inputHeight + 'px',
+								fontSize: btnSize + 'px'
 							});
 						}
 

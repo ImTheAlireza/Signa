@@ -147,6 +147,17 @@ class Signa_Helper {
 			'card_padding'              => 32,                // 20..48 (px)
 			'bg_pattern'                => 'none',            // none | dots | grid | waves | geometric
 
+			// 4.3. Typography, Fonts & Input Field Styles (Category 3)
+			'font_family'               => 'vazirmatn',       // vazirmatn | iransans | yekanbakh | dana | estedad | theme_inherit
+			'title_font_size'           => 20,                // 16..28 (px)
+			'subtitle_font_size'        => 14,                // 12..17 (px)
+			'btn_font_size'             => 15,                // 13..18 (px)
+			'input_style'               => 'filled',          // filled | outlined | underlined | soft_pill
+			'input_height'              => 48,                // 42..58 (px)
+			'input_bg_color'            => '#f8fafc',
+			'input_border_color'        => '#d1d5db',
+			'input_addon_style'         => 'icon',            // icon | ir_flag | none
+
 			// 5. WooCommerce & Integrations
 			'wc_replace_myaccount'      => 1,
 			'wc_checkout_otp_box'       => 1,
@@ -443,5 +454,29 @@ class Signa_Helper {
 		$b     = hexdec( substr( $hex, 4, 2 ) );
 		$alpha = max( 0, min( 100, (int) $opacity_pct ) ) / 100;
 		return sprintf( 'rgba(%d, %d, %d, %s)', $r, $g, $b, rtrim( rtrim( number_format( $alpha, 2, '.', '' ), '0' ), '.' ) ?: '0' );
+	}
+
+	/**
+	 * Return CSS font-family stack for the selected Persian font family
+	 *
+	 * @param string $font_key Font identifier.
+	 * @return string
+	 */
+	public static function get_font_stack( $font_key = 'vazirmatn' ) {
+		switch ( $font_key ) {
+			case 'iransans':
+				return "'IRANSansX', 'IRANSans', 'IRANSansWeb', 'Vazirmatn', Tahoma, sans-serif";
+			case 'yekanbakh':
+				return "'YekanBakh', 'Yekan Bakh', 'YekanBakhFaNum', 'IRANYekan', 'IRANYekanX', 'Vazirmatn', Tahoma, sans-serif";
+			case 'dana':
+				return "'Dana', 'DanaFaNum', 'Anjoman', 'Vazirmatn', Tahoma, sans-serif";
+			case 'estedad':
+				return "'Estedad', 'Shabnam', 'Vazirmatn', Tahoma, sans-serif";
+			case 'theme_inherit':
+				return 'inherit';
+			case 'vazirmatn':
+			default:
+				return "'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif";
+		}
 	}
 }
