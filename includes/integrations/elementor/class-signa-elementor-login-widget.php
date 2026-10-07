@@ -174,6 +174,36 @@ class Signa_Elementor_Login_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'form_layout',
+			array(
+				'label'   => 'چیدمان و اسکلت فرم',
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => array(
+					''            => 'پیش‌فرض تنظیمات افزونه',
+					'card'        => 'کارت تکی کلاسیک',
+					'split_right' => 'دوتایی (فرم راست + بنر چپ)',
+					'split_left'  => 'دوتایی (فرم چپ + بنر راست)',
+				),
+			)
+		);
+
+		$this->add_control(
+			'card_position',
+			array(
+				'label'   => 'موقعیت افقی کارت در صفحه',
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => array(
+					''       => 'پیش‌فرض تنظیمات افزونه',
+					'center' => 'وسط‌چین (مرکز)',
+					'right'  => 'شناور در سمت راست',
+					'left'   => 'شناور در سمت چپ',
+				),
+			)
+		);
+
+		$this->add_control(
 			'digit_box_style',
 			array(
 				'label'   => 'استایل باکس‌های کد تایید',
@@ -270,6 +300,8 @@ class Signa_Elementor_Login_Widget extends \Elementor\Widget_Base {
 				'digit_box_style'    => $settings['digit_box_style'] ?? '',
 				'border_radius'      => $radius,
 				'max_width'          => $max_width,
+				'form_layout'        => $settings['form_layout'] ?? '',
+				'card_position'      => $settings['card_position'] ?? '',
 				'context'            => 'elementor',
 			)
 		);

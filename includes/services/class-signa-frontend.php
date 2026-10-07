@@ -48,6 +48,7 @@ class Signa_Frontend {
 		add_filter( 'wp_resource_hints', array( $this, 'add_resource_hints' ), 10, 2 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_footer', array( $this, 'render_global_modal' ) );
+		add_action( 'template_redirect', array( $this, 'maybe_render_standalone_page' ), 1 );
 
 		if ( Signa_Helper::get_option( 'wp_login_integration', 0 ) ) {
 			add_action( 'login_init', array( $this, 'intercept_wp_login_page' ), 1 );
@@ -147,6 +148,30 @@ class Signa_Frontend {
 	}
 
 	/**
+	 * Render dedicated Standalone Full-Page Canvas when visiting the configured standalone_page_id
+	 */
+	public function maybe_render_standalone_page() {
+		$standalone_page_id = absint( Signa_Helper::get_option( 'standalone_page_id', 0 ) );
+		if ( $standalone_page_id <= 0 || ! is_page( $standalone_page_id ) ) {
+			return;
+		}
+
+		// Allow Elementor editor or page builders to edit if needed
+		if ( isset( $_GET['elementor-preview'] ) || is_customize_preview() ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return;
+		}
+
+		if ( is_user_logged_in() ) {
+			$account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/' );
+			wp_safe_redirect( $account_url );
+			exit;
+		}
+
+		$redirect_to = isset( $_REQUEST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_REQUEST['redirect_to'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$this->render_standalone_canvas( $redirect_to, 'standalone-page' );
+	}
+
+	/**
 	 * Completely replace default wp-login.php form when wp_login_integration is active
 	 */
 	public function intercept_wp_login_page() {
@@ -167,7 +192,48 @@ class Signa_Frontend {
 		$redirect_to = isset( $_REQUEST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_REQUEST['redirect_to'] ) ) : '';
 		// phpcs:enable
 
+		$this->render_standalone_canvas( $redirect_to, 'wp-login' );
+	}
+
+	/**
+	 * Output Full-Page Standalone Canvas HTML without theme header/footer
+	 *
+	 * @param string $redirect_to Redirect URL after login.
+	 * @param string $context     Context identifier.
+	 */
+	private function render_standalone_canvas( $redirect_to = '', $context = 'wp-login' ) {
 		$this->enqueue_assets( true );
+
+		$primary_color  = Signa_Helper::get_option( 'primary_color', '#2563eb' );
+		$card_position  = Signa_Helper::get_option( 'card_position', 'center' );
+		$bg_style       = Signa_Helper::get_option( 'canvas_bg_style', 'mesh_light' );
+		$bg_color       = Signa_Helper::get_option( 'canvas_bg_color', '#f1f5f9' );
+		$bg_image       = trim( (string) Signa_Helper::get_option( 'canvas_bg_image', '' ) );
+		$show_back_link = (bool) Signa_Helper::get_option( 'canvas_show_back_link', 1 );
+
+		if ( 'mesh_dark' === $bg_style ) {
+			$canvas_bg_css  = 'background: radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 58%, #020617 100%);';
+			$back_link_dark = true;
+		} elseif ( 'brand_gradient' === $bg_style ) {
+			$canvas_bg_css  = sprintf( 'background: radial-gradient(circle at top right, %1$s28 0%%, #f8fafc 58%%, %1$s14 100%%);', esc_attr( $primary_color ) );
+			$back_link_dark = false;
+		} elseif ( 'custom_image' === $bg_style && ! empty( $bg_image ) ) {
+			$canvas_bg_css  = sprintf( 'background: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.45)), url(%s) center/cover no-repeat fixed;', esc_url( $bg_image ) );
+			$back_link_dark = true;
+		} elseif ( 'solid' === $bg_style ) {
+			$canvas_bg_css  = sprintf( 'background: %s;', esc_attr( $bg_color ) );
+			$back_link_dark = false;
+		} else {
+			$canvas_bg_css  = sprintf( 'background: radial-gradient(circle at top right, #e0e7ff 0%%, #f8fafc 55%%, %s 100%%);', esc_attr( $bg_color ) );
+			$back_link_dark = false;
+		}
+
+		$align_items = 'center';
+		if ( 'right' === $card_position ) {
+			$align_items = 'flex-start';
+		} elseif ( 'left' === $card_position ) {
+			$align_items = 'flex-end';
+		}
 
 		status_header( 200 );
 		nocache_headers();
@@ -182,34 +248,43 @@ class Signa_Frontend {
 			<style>
 				body.signa-standalone-login {
 					margin: 0;
-					padding: 24px 16px;
+					padding: 32px 5vw;
 					min-height: 100vh;
 					display: flex;
 					flex-direction: column;
-					align-items: center;
+					align-items: <?php echo esc_attr( $align_items ); ?>;
 					justify-content: center;
-					background: radial-gradient(circle at top right, #eef2ff 0%, #f8fafc 55%, #f1f5f9 100%);
+					<?php echo $canvas_bg_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					font-family: 'Vazirmatn', Tahoma, sans-serif;
 					direction: rtl;
 					box-sizing: border-box;
 				}
 				.signa-standalone-login .signa-otp-wrapper {
 					width: 100%;
-					margin: 0 auto;
+					margin: 0;
 				}
 				.signa-back-to-site {
-					margin-top: 20px;
+					margin-top: 22px;
 					text-align: center;
 				}
 				.signa-back-to-site a {
-					color: #64748b;
+					display: inline-flex;
+					align-items: center;
+					gap: 6px;
+					padding: 8px 16px;
+					border-radius: 99px;
+					background: <?php echo $back_link_dark ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.75)'; ?>;
+					backdrop-filter: blur(8px);
+					color: <?php echo $back_link_dark ? '#f8fafc' : '#475569'; ?>;
 					text-decoration: none;
 					font-size: 13px;
-					font-weight: 500;
-					transition: color 0.15s ease;
+					font-weight: 600;
+					border: 1px solid <?php echo $back_link_dark ? 'rgba(255,255,255,0.18)' : 'rgba(148,163,184,0.28)'; ?>;
+					transition: all 0.2s ease;
 				}
 				.signa-back-to-site a:hover {
-					color: #0f172a;
+					transform: translateY(-1px);
+					background: <?php echo $back_link_dark ? 'rgba(255,255,255,0.2)' : '#ffffff'; ?>;
 				}
 			</style>
 		</head>
@@ -219,13 +294,15 @@ class Signa_Frontend {
 			echo self::get_login_form_html(
 				array(
 					'redirect' => $redirect_to,
-					'context'  => 'wp-login',
+					'context'  => $context,
 				)
 			);
 			?>
-			<div class="signa-back-to-site">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">&rarr; بازگشت به <?php echo esc_html( get_bloginfo( 'name' ) ); ?></a>
-			</div>
+			<?php if ( $show_back_link ) : ?>
+				<div class="signa-back-to-site">
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>">&rarr; بازگشت به <?php echo esc_html( get_bloginfo( 'name' ) ); ?></a>
+				</div>
+			<?php endif; ?>
 			<?php wp_print_scripts( array( 'jquery', 'signa-arcaptcha', 'signa-turnstile', 'signa-recaptcha', 'signa-otp-frontend' ) ); ?>
 		</body>
 		</html>
@@ -252,6 +329,8 @@ class Signa_Frontend {
 			'digit_box_style'    => '',
 			'border_radius'      => null,
 			'max_width'          => null,
+			'form_layout'        => '',
+			'card_position'      => '',
 			'context'            => 'shortcode',
 		);
 		$args     = wp_parse_args( $args, $defaults );
@@ -280,6 +359,8 @@ class Signa_Frontend {
 				'button_text'    => '',
 				'redirect'       => '',
 				'primary_color'  => '',
+				'layout'         => '',
+				'position'       => '',
 				'show_if_logged' => 'no',
 			),
 			$atts,
@@ -308,6 +389,8 @@ class Signa_Frontend {
 				'button_text'   => $atts['button_text'],
 				'redirect'      => $atts['redirect'],
 				'primary_color' => $atts['primary_color'],
+				'form_layout'   => $atts['layout'],
+				'card_position' => $atts['position'],
 				'context'       => 'shortcode',
 			)
 		);
@@ -354,15 +437,23 @@ class Signa_Frontend {
 	}
 
 	/**
-	 * Render global modal popup in footer for guests
+	 * Render global modal popup / slide-over drawer in footer for guests
 	 */
 	public function render_global_modal() {
 		if ( is_user_logged_in() || ! Signa_Helper::get_option( 'enable_global_modal', 1 ) ) {
 			return;
 		}
+
+		$modal_style  = Signa_Helper::get_option( 'modal_style', 'center' );
+		$mobile_sheet = (bool) Signa_Helper::get_option( 'modal_mobile_sheet', 1 );
+		$modal_cls    = 'signa-modal-overlay signa-modal-style-' . sanitize_html_class( $modal_style );
+		if ( $mobile_sheet ) {
+			$modal_cls .= ' signa-modal-mobile-sheet';
+		}
 		?>
-		<div id="signa-otp-modal" class="signa-modal-overlay" aria-hidden="true" style="display:none;">
+		<div id="signa-otp-modal" class="<?php echo esc_attr( $modal_cls ); ?>" aria-hidden="true" style="display:none;">
 			<div class="signa-modal-dialog" role="dialog" aria-modal="true">
+				<div class="signa-modal-sheet-handle" aria-hidden="true"></div>
 				<button type="button" class="signa-modal-close" aria-label="بستن">&times;</button>
 				<?php
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

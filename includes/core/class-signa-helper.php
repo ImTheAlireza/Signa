@@ -119,6 +119,23 @@ class Signa_Helper {
 			'verify_button_text'        => 'تایید و ورود به حساب',
 			'custom_css'                => '',
 
+			// 4.1. Layout, Split-Screen, Drawer Modal & Standalone Canvas (Category 1)
+			'form_layout'               => 'card',            // card | split_right | split_left
+			'card_position'             => 'center',          // center | right | left
+			'split_bg_color'            => '#1e3a8a',
+			'split_image_url'           => '',
+			'split_badge_text'          => 'احراز هویت سریع و امن',
+			'split_title'               => 'ورود آسان و بدون فراموشی رمز عبور',
+			'split_subtitle'            => 'با کد یکبارمصرف پیامکی، پیام‌رسان بله یا اثر انگشت در چند ثانیه وارد حساب کاربری خود شوید.',
+			'split_features'            => "ارسال فوری کد تایید از طریق پیامک و بله\nورود ۱ ثانیه‌ای با اثر انگشت و تشخیص چهره\nامنیت کامل اطلاعات و حساب کاربری شما",
+			'modal_style'               => 'center',          // center | drawer_left | drawer_right | bottom_sheet
+			'modal_mobile_sheet'        => 1,
+			'standalone_page_id'        => 0,
+			'canvas_bg_style'           => 'mesh_light',      // mesh_light | mesh_dark | brand_gradient | custom_image | solid
+			'canvas_bg_color'           => '#f1f5f9',
+			'canvas_bg_image'           => '',
+			'canvas_show_back_link'     => 1,
+
 			// 5. WooCommerce & Integrations
 			'wc_replace_myaccount'      => 1,
 			'wc_checkout_otp_box'       => 1,

@@ -50,23 +50,40 @@ if ( 'phone_only' === $login_mode ) {
 	$input_mode        = 'text';
 }
 
-$title       = ! empty( $args['title'] ) ? $args['title'] : Signa_Helper::get_option( 'form_title', 'ورود / ثبت‌نام' );
-$subtitle    = ! empty( $args['subtitle'] ) ? $args['subtitle'] : Signa_Helper::get_option( 'form_subtitle', 'برای ادامه، شماره موبایل یا ایمیل خود را وارد کنید.' );
-$btn_text    = ! empty( $args['button_text'] ) ? $args['button_text'] : Signa_Helper::get_option( 'button_text', 'دریافت کد تایید' );
-$verify_text = ! empty( $args['verify_button_text'] ) ? $args['verify_button_text'] : Signa_Helper::get_option( 'verify_button_text', 'تایید و ورود به حساب' );
-$redirect_to = ! empty( $args['redirect'] ) ? $args['redirect'] : '';
-$context     = ! empty( $args['context'] ) ? $args['context'] : 'shortcode';
+$title         = ! empty( $args['title'] ) ? $args['title'] : Signa_Helper::get_option( 'form_title', 'ورود / ثبت‌نام' );
+$subtitle      = ! empty( $args['subtitle'] ) ? $args['subtitle'] : Signa_Helper::get_option( 'form_subtitle', 'برای ادامه، شماره موبایل یا ایمیل خود را وارد کنید.' );
+$btn_text      = ! empty( $args['button_text'] ) ? $args['button_text'] : Signa_Helper::get_option( 'button_text', 'دریافت کد تایید' );
+$verify_text   = ! empty( $args['verify_button_text'] ) ? $args['verify_button_text'] : Signa_Helper::get_option( 'verify_button_text', 'تایید و ورود به حساب' );
+$redirect_to   = ! empty( $args['redirect'] ) ? $args['redirect'] : '';
+$context       = ! empty( $args['context'] ) ? $args['context'] : 'shortcode';
+$form_layout   = ! empty( $args['form_layout'] ) ? $args['form_layout'] : Signa_Helper::get_option( 'form_layout', 'card' );
+$card_position = ! empty( $args['card_position'] ) ? $args['card_position'] : Signa_Helper::get_option( 'card_position', 'center' );
+$modal_style   = Signa_Helper::get_option( 'modal_style', 'center' );
+
+// In narrow slide-over drawers or checkout banner, force compact single-card layout
+$is_narrow_ctx    = ( 'wc-checkout' === $context ) || ( 'modal' === $context && in_array( $modal_style, array( 'drawer_left', 'drawer_right', 'bottom_sheet' ), true ) );
+$effective_layout = $is_narrow_ctx ? 'card' : $form_layout;
+$is_split_layout  = in_array( $effective_layout, array( 'split_right', 'split_left' ), true );
+$wrapper_max_w    = $is_split_layout ? max( 820, $max_width * 2 ) : $max_width;
+
+$split_bg_color   = Signa_Helper::get_option( 'split_bg_color', '#1e3a8a' );
+$split_image_url  = trim( (string) Signa_Helper::get_option( 'split_image_url', '' ) );
+$split_badge_text = Signa_Helper::get_option( 'split_badge_text', 'احراز هویت سریع و امن' );
+$split_title      = Signa_Helper::get_option( 'split_title', 'ورود آسان و بدون فراموشی رمز عبور' );
+$split_subtitle   = Signa_Helper::get_option( 'split_subtitle', '' );
+$split_features   = array_filter( array_map( 'trim', explode( "\n", (string) Signa_Helper::get_option( 'split_features', '' ) ) ) );
 
 $inline_vars = sprintf(
-	'--signa-primary:%s;--signa-bg:%s;--signa-text:%s;--signa-radius:%dpx;max-width:%dpx;',
+	'--signa-primary:%s;--signa-bg:%s;--signa-text:%s;--signa-radius:%dpx;--signa-split-bg:%s;max-width:%dpx;',
 	esc_attr( $primary_color ),
 	esc_attr( $card_bg_color ),
 	esc_attr( $text_color ),
 	$border_radius,
-	$max_width
+	esc_attr( $split_bg_color ),
+	$wrapper_max_w
 );
 ?>
-<div class="signa-otp-wrapper signa-digit-style-<?php echo esc_attr( $digit_box_style ); ?>" dir="rtl" style="<?php echo esc_attr( $inline_vars ); ?>" data-otp-length="<?php echo esc_attr( (string) $otp_length ); ?>" data-redirect="<?php echo esc_url( $redirect_to ); ?>" data-context="<?php echo esc_attr( $context ); ?>" data-passkey-prompt="<?php echo $enable_passkey && $passkey_prompt ? '1' : '0'; ?>">
+<div class="signa-otp-wrapper signa-digit-style-<?php echo esc_attr( $digit_box_style ); ?> signa-layout-<?php echo esc_attr( $effective_layout ); ?> signa-pos-<?php echo esc_attr( $card_position ); ?>" dir="rtl" style="<?php echo esc_attr( $inline_vars ); ?>" data-otp-length="<?php echo esc_attr( (string) $otp_length ); ?>" data-redirect="<?php echo esc_url( $redirect_to ); ?>" data-context="<?php echo esc_attr( $context ); ?>" data-passkey-prompt="<?php echo $enable_passkey && $passkey_prompt ? '1' : '0'; ?>">
 	<div class="signa-otp-card">
 		<div class="signa-otp-header">
 			<?php if ( ! empty( $logo_url ) ) : ?>
@@ -263,4 +280,38 @@ $inline_vars = sprintf(
 			</div>
 		<?php endif; ?>
 	</div>
+
+	<?php if ( $is_split_layout ) : ?>
+		<?php
+		$banner_bg_style = ! empty( $split_image_url )
+			? sprintf( 'background-color:%1$s;background-image:linear-gradient(135deg, rgba(15,23,42,0.72), rgba(30,58,138,0.78)), url(%2$s);background-size:cover;background-position:center;', esc_attr( $split_bg_color ), esc_url( $split_image_url ) )
+			: sprintf( 'background-color:%1$s;background-image:radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 65%%);', esc_attr( $split_bg_color ) );
+		?>
+		<div class="signa-otp-side-banner" style="<?php echo esc_attr( $banner_bg_style ); ?>">
+			<div class="signa-side-banner-top">
+				<?php if ( ! empty( $split_badge_text ) ) : ?>
+					<span class="signa-side-banner-badge"><?php echo esc_html( $split_badge_text ); ?></span>
+				<?php endif; ?>
+				<?php if ( ! empty( $split_title ) ) : ?>
+					<h3 class="signa-side-banner-title"><?php echo esc_html( $split_title ); ?></h3>
+				<?php endif; ?>
+				<?php if ( ! empty( $split_subtitle ) ) : ?>
+					<p class="signa-side-banner-subtitle"><?php echo esc_html( $split_subtitle ); ?></p>
+				<?php endif; ?>
+			</div>
+
+			<?php if ( ! empty( $split_features ) ) : ?>
+				<ul class="signa-side-banner-features">
+					<?php foreach ( $split_features as $feature_item ) : ?>
+						<li>
+							<span class="signa-side-feature-icon" aria-hidden="true">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+							</span>
+							<span><?php echo esc_html( $feature_item ); ?></span>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
 </div>

@@ -274,7 +274,7 @@
 			});
 		});
 
-		// 5. Interactive Appearance Studio & Live Preview
+		// 5. Interactive Appearance Studio & Live Preview (Including Category 1: Split-Screen, Alignment & Canvas)
 		function refreshLivePreview() {
 			var primary = $('#primary_color').val() || '#2563eb';
 			var bg = $('#card_bg_color').val() || '#ffffff';
@@ -287,17 +287,99 @@
 			var btn1 = $('#button_text').val() || 'دریافت کد تایید';
 			var btn2 = $('#verify_button_text').val() || 'تایید و ورود به حساب';
 
+			var formLayout = $('input[name="signa[form_layout]"]:checked').val() || 'card';
+			var cardPosition = $('input[name="signa[card_position]"]:checked').val() || 'center';
+			var splitBg = $('#split_bg_color').val() || '#1e3a8a';
+			var splitImg = ($('#split_image_url').val() || '').trim();
+			var splitBadge = $('#split_badge_text').val() || '';
+			var splitTitle = $('#split_title').val() || '';
+			var splitSub = $('#split_subtitle').val() || '';
+			var splitFeatures = ($('#split_features').val() || '').split('\n');
+			var canvasBgStyle = $('#canvas_bg_style').val() || 'mesh_light';
+			var canvasBgColor = $('#canvas_bg_color').val() || '#f1f5f9';
+			var canvasBgImg = ($('#canvas_bg_image').val() || '').trim();
+
 			$('#primary_color_hex').text(primary);
 			$('#card_bg_color_hex').text(bg);
 			$('#text_color_hex').text(text);
+			$('#split_bg_color_hex').text(splitBg);
+			$('#canvas_bg_color_hex').text(canvasBgColor);
 			$('#radius_val_label').text(radius + 'px');
 
+			// Progressive disclosure for Split-Screen settings & Canvas background
+			var isSplit = formLayout === 'split_right' || formLayout === 'split_left';
+			if (isSplit) {
+				$('#signa-split-banner-settings').slideDown(180);
+			} else {
+				$('#signa-split-banner-settings').slideUp(180);
+			}
+
+			$('#signa-canvas-color-wrap').toggle(canvasBgStyle === 'solid' || canvasBgStyle === 'mesh_light');
+			$('#signa-canvas-image-wrap').toggle(canvasBgStyle === 'custom_image');
+
+			// Update Canvas Alignment & Background in Live Preview
+			var $canvas = $('#signa-preview-canvas');
+			var alignFlex = cardPosition === 'right' ? 'flex-start' : cardPosition === 'left' ? 'flex-end' : 'center';
+			var canvasBgCss = '';
+			if (canvasBgStyle === 'mesh_dark') {
+				canvasBgCss = 'radial-gradient(circle at top right, #1e1b4b 0%, #0f172a 60%, #020617 100%)';
+			} else if (canvasBgStyle === 'brand_gradient') {
+				canvasBgCss = 'linear-gradient(135deg, ' + primary + '26 0%, #f8fafc 60%, ' + primary + '14 100%)';
+			} else if (canvasBgStyle === 'custom_image' && canvasBgImg) {
+				canvasBgCss = 'linear-gradient(rgba(15,23,42,0.45), rgba(15,23,42,0.45)), url(' + canvasBgImg + ') center/cover no-repeat';
+			} else if (canvasBgStyle === 'solid') {
+				canvasBgCss = canvasBgColor;
+			} else {
+				canvasBgCss = 'radial-gradient(circle at top right, #e0e7ff 0%, ' + canvasBgColor + ' 65%)';
+			}
+			$canvas.css({
+				alignItems: alignFlex,
+				background: canvasBgCss
+			});
+
+			// Update Shell & Split Banner in Live Preview
+			var $shell = $('#signa-live-preview-shell');
+			var $banner = $('#signa-prev-split-banner');
 			var $card = $('#signa-live-preview-card');
+
+			$shell.css({
+				maxWidth: isSplit ? '100%' : '360px',
+				borderRadius: radius + 'px',
+				flexDirection: formLayout === 'split_left' ? 'row-reverse' : 'row'
+			});
+
 			$card.css({
 				background: bg,
 				color: text,
-				borderRadius: radius + 'px'
+				borderRadius: '0'
 			});
+
+			if (isSplit) {
+				$banner.css({
+					display: 'flex',
+					backgroundColor: splitBg,
+					backgroundImage: splitImg
+						? 'linear-gradient(135deg, rgba(15,23,42,0.72), rgba(30,58,138,0.78)), url(' + splitImg + ')'
+						: 'radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 65%)'
+				});
+				$('#signa-prev-split-badge').text(splitBadge).toggle(!!splitBadge);
+				$('#signa-prev-split-title').text(splitTitle);
+				$('#signa-prev-split-subtitle').text(splitSub);
+
+				var featHtml = '';
+				for (var f = 0; f < splitFeatures.length; f++) {
+					var line = $.trim(splitFeatures[f]);
+					if (line) {
+						featHtml +=
+							'<li style="display:flex;align-items:center;gap:6px;margin:0;"><span style="display:inline-flex;width:16px;height:16px;border-radius:50%;background:rgba(16,185,129,0.28);color:#6ee7b7;align-items:center;justify-content:center;flex-shrink:0;">✓</span><span>' +
+							$('<div>').text(line).html() +
+							'</span></li>';
+					}
+				}
+				$('#signa-prev-split-features').html(featHtml);
+			} else {
+				$banner.hide();
+			}
 
 			$('#signa-prev-badge-icon').css('color', primary);
 			$('#signa-prev-title').text(title);
@@ -346,10 +428,9 @@
 			}
 		}
 
-		$('#primary_color, #card_bg_color, #text_color, #border_radius, #digit_box_style, #logo_url, #form_title, #form_subtitle, #button_text, #verify_button_text').on(
-			'input change',
-			refreshLivePreview
-		);
+		$(
+			'#primary_color, #card_bg_color, #text_color, #border_radius, #digit_box_style, #logo_url, #form_title, #form_subtitle, #button_text, #verify_button_text, input[name="signa[form_layout]"], input[name="signa[card_position]"], #split_bg_color, #split_image_url, #split_badge_text, #split_title, #split_subtitle, #split_features, #canvas_bg_style, #canvas_bg_color, #canvas_bg_image'
+		).on('input change', refreshLivePreview);
 
 		$('.signa-preset-btn').on('click', function () {
 			var $btn = $(this);
@@ -374,26 +455,32 @@
 			}
 		});
 
-		// WordPress Media Uploader for Logo
-		$('#signa_upload_logo_btn').on('click', function (e) {
-			e.preventDefault();
-			if (typeof wp === 'undefined' || !wp.media) {
-				showToast('کتابخانه رسانه وردپرس در دسترس نیست.', true);
-				return;
-			}
-			var frame = wp.media({
-				title: 'انتخاب لوگوی فرم ورود',
-				button: { text: 'استفاده از این تصویر' },
-				multiple: false
-			});
-			frame.on('select', function () {
-				var attachment = frame.state().get('selection').first().toJSON();
-				if (attachment && attachment.url) {
-					$('#logo_url').val(attachment.url).trigger('change');
+		// WordPress Media Uploader Helper for Logo, Split Banner Image & Canvas Background
+		function bindMediaUploader(btnSelector, inputSelector, modalTitle) {
+			$(btnSelector).on('click', function (e) {
+				e.preventDefault();
+				if (typeof wp === 'undefined' || !wp.media) {
+					showToast('کتابخانه رسانه وردپرس در دسترس نیست.', true);
+					return;
 				}
+				var frame = wp.media({
+					title: modalTitle,
+					button: { text: 'استفاده از این تصویر' },
+					multiple: false
+				});
+				frame.on('select', function () {
+					var attachment = frame.state().get('selection').first().toJSON();
+					if (attachment && attachment.url) {
+						$(inputSelector).val(attachment.url).trigger('change');
+					}
+				});
+				frame.open();
 			});
-			frame.open();
-		});
+		}
+
+		bindMediaUploader('#signa_upload_logo_btn', '#logo_url', 'انتخاب لوگوی فرم ورود');
+		bindMediaUploader('#signa_upload_split_img_btn', '#split_image_url', 'انتخاب تصویر بنر کناری (Split-Screen)');
+		bindMediaUploader('#signa_upload_canvas_bg_btn', '#canvas_bg_image', 'انتخاب تصویر پس‌زمینه تمام‌صفحه');
 
 		// 6. AJAX Save Settings, Unsaved Changes Indicator & Ctrl+S Shortcut
 		var $settingsForm = $('#signa-settings-form');

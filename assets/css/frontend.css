@@ -9,12 +9,129 @@
 	--signa-muted: #6b7280;
 	--signa-border: #d1d5db;
 	--signa-radius: 16px;
+	--signa-split-bg: #1e3a8a;
 	direction: rtl;
 	text-align: right;
 	font-family: 'Vazirmatn', Tahoma, -apple-system, BlinkMacSystemFont, sans-serif !important;
+	width: 100%;
 	max-width: 420px;
 	margin: 24px auto;
 	box-sizing: border-box;
+}
+
+.signa-otp-wrapper.signa-pos-center {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.signa-otp-wrapper.signa-pos-right {
+	margin-right: 0;
+	margin-left: auto;
+}
+
+.signa-otp-wrapper.signa-pos-left {
+	margin-right: auto;
+	margin-left: 0;
+}
+
+/* Split-Screen Layout (Category 1) */
+.signa-otp-wrapper.signa-layout-split_right,
+.signa-otp-wrapper.signa-layout-split_left {
+	display: flex;
+	align-items: stretch;
+	border-radius: var(--signa-radius);
+	overflow: hidden;
+	box-shadow: 0 20px 48px -12px rgba(15, 23, 42, 0.14), 0 4px 16px -2px rgba(15, 23, 42, 0.06);
+	border: 1px solid rgba(156, 163, 175, 0.25);
+}
+
+.signa-otp-wrapper.signa-layout-split_left {
+	flex-direction: row-reverse;
+}
+
+.signa-otp-wrapper.signa-layout-split_right .signa-otp-card,
+.signa-otp-wrapper.signa-layout-split_left .signa-otp-card {
+	flex: 1 1 50%;
+	min-width: 0;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.signa-otp-side-banner {
+	flex: 1 1 50%;
+	min-width: 0;
+	padding: 38px 34px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	color: #ffffff;
+	background-color: var(--signa-split-bg, #1e3a8a);
+	position: relative;
+	overflow: hidden;
+}
+
+.signa-side-banner-badge {
+	display: inline-block;
+	padding: 5px 14px;
+	border-radius: 99px;
+	font-size: 12px;
+	font-weight: 700;
+	background: rgba(255, 255, 255, 0.16);
+	backdrop-filter: blur(6px);
+	color: #ffffff;
+	margin-bottom: 18px;
+	border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.signa-side-banner-title {
+	margin: 0 0 12px 0;
+	font-size: 22px;
+	font-weight: 800;
+	line-height: 1.45;
+	color: #ffffff !important;
+}
+
+.signa-side-banner-subtitle {
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.8;
+	color: rgba(255, 255, 255, 0.86);
+}
+
+.signa-side-banner-features {
+	list-style: none !important;
+	margin: 28px 0 0 0 !important;
+	padding: 20px 0 0 0 !important;
+	border-top: 1px solid rgba(255, 255, 255, 0.16);
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.signa-side-banner-features li {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0 !important;
+	font-size: 13.5px;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.95);
+}
+
+.signa-side-feature-icon {
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background: rgba(16, 185, 129, 0.26);
+	color: #6ee7b7;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
 }
 
 .signa-otp-wrapper *,
@@ -409,27 +526,102 @@
 	text-decoration: none;
 }
 
-/* Global Modal Overlay */
+/* Global Modal Overlay & Slide-Over Drawers (Category 1) */
 .signa-modal-overlay {
 	position: fixed;
 	inset: 0;
-	background: rgba(17, 24, 39, 0.6);
-	backdrop-filter: blur(3px);
+	background: rgba(15, 23, 42, 0.62);
+	backdrop-filter: blur(4px);
 	z-index: 999999;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 16px;
+	direction: rtl;
 }
 
 .signa-modal-dialog {
 	position: relative;
 	width: 100%;
 	max-width: 420px;
+	transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .signa-modal-dialog .signa-otp-wrapper {
-	margin: 0;
+	margin: 0 !important;
+	max-width: 100% !important;
+}
+
+.signa-modal-sheet-handle {
+	display: none;
+	width: 42px;
+	height: 5px;
+	border-radius: 99px;
+	background: rgba(148, 163, 184, 0.45);
+	margin: 10px auto 4px auto;
+}
+
+/* Slide-Over Drawer Left (in RTL: flex-end places dialog on the left edge) */
+.signa-modal-overlay.signa-modal-style-drawer_left {
+	padding: 0;
+	justify-content: flex-end;
+	align-items: stretch;
+}
+
+/* Slide-Over Drawer Right (in RTL: flex-start places dialog on the right edge) */
+.signa-modal-overlay.signa-modal-style-drawer_right {
+	padding: 0;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+
+.signa-modal-overlay.signa-modal-style-drawer_left .signa-modal-dialog,
+.signa-modal-overlay.signa-modal-style-drawer_right .signa-modal-dialog {
+	max-width: 430px;
+	height: 100vh;
+	background: var(--signa-bg, #ffffff);
+	box-shadow: 0 0 45px rgba(0, 0, 0, 0.28);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	overflow-y: auto;
+}
+
+.signa-modal-overlay.signa-modal-style-drawer_left .signa-otp-card,
+.signa-modal-overlay.signa-modal-style-drawer_right .signa-otp-card {
+	border: none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+/* Bottom Sheet Style */
+.signa-modal-overlay.signa-modal-style-bottom_sheet {
+	padding: 0;
+	align-items: flex-end;
+	justify-content: center;
+}
+
+.signa-modal-overlay.signa-modal-style-bottom_sheet .signa-modal-dialog {
+	max-width: 500px;
+	background: var(--signa-bg, #ffffff);
+	border-radius: 24px 24px 0 0;
+	overflow: hidden;
+	box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.22);
+}
+
+.signa-modal-overlay.signa-modal-style-bottom_sheet .signa-modal-sheet-handle {
+	display: block;
+}
+
+.signa-modal-overlay.signa-modal-style-bottom_sheet .signa-otp-card {
+	border: none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	padding-top: 20px;
 }
 
 .signa-modal-close {
@@ -454,6 +646,44 @@
 .signa-modal-close:hover {
 	background: #e5e7eb;
 	color: #111827;
+}
+
+@media (max-width: 768px) {
+	.signa-otp-wrapper.signa-layout-split_right,
+	.signa-otp-wrapper.signa-layout-split_left {
+		flex-direction: column-reverse !important;
+	}
+	.signa-otp-side-banner {
+		padding: 24px 20px;
+	}
+	.signa-side-banner-title {
+		font-size: 18px;
+	}
+}
+
+@media (max-width: 640px) {
+	.signa-modal-overlay.signa-modal-mobile-sheet {
+		padding: 0 !important;
+		align-items: flex-end !important;
+		justify-content: center !important;
+	}
+	.signa-modal-overlay.signa-modal-mobile-sheet .signa-modal-dialog {
+		max-width: 100% !important;
+		height: auto !important;
+		background: var(--signa-bg, #ffffff);
+		border-radius: 24px 24px 0 0 !important;
+		overflow: hidden;
+		box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.25);
+	}
+	.signa-modal-overlay.signa-modal-mobile-sheet .signa-modal-sheet-handle {
+		display: block !important;
+	}
+	.signa-modal-overlay.signa-modal-mobile-sheet .signa-otp-card {
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		padding-top: 18px !important;
+	}
 }
 
 /* WooCommerce Checkout Banner */

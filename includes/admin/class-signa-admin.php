@@ -161,6 +161,8 @@ class Signa_Admin {
 			'wc_checkout_otp_box',
 			'wp_login_integration',
 			'enable_global_modal',
+			'modal_mobile_sheet',
+			'canvas_show_back_link',
 			'trust_proxy_headers',
 			'delete_data_on_uninstall',
 		);
@@ -171,6 +173,7 @@ class Signa_Admin {
 			'resend_cooldown',
 			'border_radius',
 			'form_max_width',
+			'standalone_page_id',
 			'max_requests_per_hour',
 			'max_ip_requests_per_hour',
 			'max_verify_attempts',
@@ -182,6 +185,7 @@ class Signa_Admin {
 			'bale_message_template',
 			'email_body_text',
 			'welcome_message_text',
+			'split_features',
 			'custom_css',
 			'blocked_phones',
 			'blocked_ips',
@@ -194,14 +198,22 @@ class Signa_Admin {
 			'admin_redirect_url',
 			'terms_url',
 			'logo_url',
+			'split_image_url',
+			'canvas_bg_image',
 		);
 
 		foreach ( $defaults as $key => $default_val ) {
 			if ( in_array( $key, $checkbox_keys, true ) ) {
 				$clean[ $key ] = ! empty( $raw[ $key ] ) ? 1 : 0;
 			} elseif ( in_array( $key, $int_keys, true ) ) {
-				$val           = isset( $raw[ $key ] ) ? absint( Signa_Helper::convert_digits( $raw[ $key ] ) ) : $default_val;
-				$clean[ $key ] = ( 'border_radius' === $key ) ? min( 32, $val ) : ( $val > 0 ? $val : $default_val );
+				$val = isset( $raw[ $key ] ) ? absint( Signa_Helper::convert_digits( $raw[ $key ] ) ) : $default_val;
+				if ( 'border_radius' === $key ) {
+					$clean[ $key ] = min( 32, $val );
+				} elseif ( 'standalone_page_id' === $key ) {
+					$clean[ $key ] = $val;
+				} else {
+					$clean[ $key ] = $val > 0 ? $val : $default_val;
+				}
 			} elseif ( in_array( $key, $textarea_keys, true ) ) {
 				$clean[ $key ] = isset( $raw[ $key ] ) ? sanitize_textarea_field( $raw[ $key ] ) : $default_val;
 			} elseif ( in_array( $key, $url_keys, true ) ) {
