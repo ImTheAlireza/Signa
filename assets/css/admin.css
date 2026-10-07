@@ -1788,8 +1788,115 @@
 }
 
 .signa-studio-preview-col {
-	position: sticky;
-	top: 48px;
+	position: sticky !important;
+	top: 124px !important;
+	align-self: start !important;
+	z-index: 40;
+}
+
+/* Exclusive Collapsible Accordion Cards in Appearance Studio */
+#signa-app-shell .signa-accordion-card {
+	padding: 0 !important;
+	overflow: hidden;
+	transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+#signa-app-shell .signa-accordion-card.is-open {
+	border-color: var(--s-primary) !important;
+	box-shadow: 0 10px 28px -8px rgba(37, 99, 235, 0.14);
+}
+
+#signa-app-shell .signa-accordion-card > .signa-accordion-trigger {
+	margin: 0 !important;
+	padding: 20px 24px !important;
+	border-bottom: 1px solid transparent !important;
+	cursor: pointer !important;
+	user-select: none;
+	transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+#signa-app-shell .signa-accordion-card > .signa-accordion-trigger:hover {
+	background-color: var(--s-bg-subtle);
+}
+
+#signa-app-shell .signa-accordion-card.is-open > .signa-accordion-trigger {
+	border-bottom-color: var(--s-border) !important;
+	background-color: var(--s-bg-subtle);
+}
+
+#signa-app-shell .signa-accordion-chevron {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 8px;
+	background: var(--s-bg-surface);
+	border: 1px solid var(--s-border-input);
+	color: var(--s-text-muted);
+	transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease, border-color 0.2s ease;
+	flex-shrink: 0;
+}
+
+#signa-app-shell .signa-accordion-card.is-open .signa-accordion-chevron {
+	transform: rotate(180deg);
+	color: var(--s-primary);
+	border-color: var(--s-primary);
+	background: var(--s-primary-soft);
+}
+
+#signa-app-shell .signa-accordion-body {
+	padding: 22px 24px 24px 24px;
+}
+
+/* Ambient Glass Orbs Behind Live Preview Card */
+#signa-app-shell .signa-prev-glass-orbs {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	opacity: 0.22;
+	transition: opacity 0.35s ease;
+	overflow: hidden;
+}
+
+#signa-app-shell .signa-prev-glass-orbs.is-glass-active {
+	opacity: 0.92;
+}
+
+#signa-app-shell .signa-glass-orb {
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(2px);
+	transition: background 0.35s ease;
+}
+
+#signa-app-shell .signa-glass-orb.orb-1 {
+	width: 150px;
+	height: 150px;
+	background: #3b82f6;
+	top: 14%;
+	right: 12%;
+	box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.45);
+}
+
+#signa-app-shell .signa-glass-orb.orb-2 {
+	width: 135px;
+	height: 135px;
+	background: #ec4899;
+	bottom: 12%;
+	left: 12%;
+	box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.45);
+}
+
+#signa-app-shell .signa-glass-orb.orb-3 {
+	width: 95px;
+	height: 95px;
+	background: linear-gradient(135deg, #10b981, #f59e0b);
+	top: 48%;
+	left: 42%;
+	transform: translate(-50%, -50%) rotate(25deg);
+	border-radius: 24px;
 }
 
 .signa-preview-box {
@@ -2351,16 +2458,24 @@
 	justify-content: center;
 	transition: all 0.25s ease;
 	position: relative;
+	z-index: 2;
+}
+
+.signa-preview-viewport.is-scaled-split {
+	min-height: 250px;
 }
 
 .signa-preview-viewport.is-scaled-split #signa-live-preview-shell {
 	width: 720px !important;
 	max-width: 720px !important;
-	zoom: 0.53;
+	transform: scale(0.53);
+	transform-origin: center center;
+	margin: -95px 0;
 }
 
 .signa-studio-layout.is-wide-preview .signa-preview-viewport.is-scaled-split #signa-live-preview-shell {
-	zoom: 0.71;
+	transform: scale(0.71);
+	margin: -60px 0;
 }
 
 /* Simulated Website Backdrop for Modal / Drawer Mode inside Live Preview */
@@ -2410,7 +2525,8 @@
 }
 
 .signa-preview-canvas.is-modal-mode #signa-live-preview-shell {
-	zoom: 0.76;
+	transform: scale(0.78);
+	transform-origin: center center;
 }
 
 /* Live Modal / Drawer Entrance Animations in Preview Stage */
@@ -2447,9 +2563,10 @@
 .signa-preview-canvas.is-modal-mode.sim-drawer_left #signa-live-preview-shell {
 	height: 100% !important;
 	border-radius: 0 16px 16px 0 !important;
-	max-width: 310px !important;
-	width: 310px !important;
-	zoom: 0.82;
+	max-width: 280px !important;
+	width: 280px !important;
+	transform: none !important;
+	margin: 0 !important;
 	animation: signaSimDrawerLeft 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -2461,9 +2578,10 @@
 .signa-preview-canvas.is-modal-mode.sim-drawer_right #signa-live-preview-shell {
 	height: 100% !important;
 	border-radius: 16px 0 0 16px !important;
-	max-width: 310px !important;
-	width: 310px !important;
-	zoom: 0.82;
+	max-width: 280px !important;
+	width: 280px !important;
+	transform: none !important;
+	margin: 0 !important;
 	animation: signaSimDrawerRight 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -2476,7 +2594,8 @@
 	width: 100% !important;
 	max-width: 100% !important;
 	border-radius: 22px 22px 0 0 !important;
-	zoom: 0.82;
+	transform: none !important;
+	margin: 0 !important;
 	animation: signaSimBottomSheet 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 

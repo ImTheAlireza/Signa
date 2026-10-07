@@ -706,9 +706,70 @@
 			});
 	}
 
+	// Smart Automatic Dark/Light Surface & Image Luminance Contrast Detection on Frontend (v2.7.4)
+	function autoDetectFormContrast($wrapper) {
+		var $card = $wrapper.find('.signa-otp-card').first();
+		if (!$card.length) {
+			return;
+		}
+		var parseRgbLum = function (rgbStr) {
+			var m = String(rgbStr || '').match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)(?:\s*,\s*([\d.]+))?\s*\)/i);
+			if (!m) {
+				return null;
+			}
+			var r = parseInt(m[1], 10);
+			var g = parseInt(m[2], 10);
+			var b = parseInt(m[3], 10);
+			var a = m[4] !== undefined ? parseFloat(m[4]) : 1;
+			return {
+				lum: (0.299 * r + 0.587 * g + 0.114 * b) / 255,
+				alpha: a
+			};
+		};
+
+		var applyContrast = function (isDark) {
+			var targetText = isDark ? '#f8fafc' : '#111827';
+			$wrapper[0].style.setProperty('--signa-text', targetText);
+			$card.css('color', targetText);
+			$wrapper.toggleClass('signa-theme-dark', isDark).toggleClass('signa-theme-light', !isDark);
+		};
+
+		var cardBgParsed = parseRgbLum(window.getComputedStyle($card[0]).backgroundColor);
+		var isGlass = $wrapper.hasClass('signa-glassmorphism');
+		var canvasImgUrl = ($wrapper.attr('data-canvas-img') || '').trim();
+
+		if (canvasImgUrl && isGlass) {
+			var img = new Image();
+			img.crossOrigin = 'anonymous';
+			img.onload = function () {
+				try {
+					var cv = document.createElement('canvas');
+					cv.width = 20;
+					cv.height = 20;
+					var ctx = cv.getContext('2d');
+					ctx.drawImage(img, 0, 0, 20, 20);
+					var d = ctx.getImageData(0, 0, 20, 20).data;
+					var sum = 0;
+					for (var i = 0; i < d.length; i += 4) {
+						sum += (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) / 255;
+					}
+					var imgLum = (sum / (d.length / 4)) * 0.55;
+					applyContrast(imgLum < 0.48);
+				} catch (e) {
+					applyContrast(true);
+				}
+			};
+			img.src = canvasImgUrl;
+		} else if (cardBgParsed && cardBgParsed.alpha > 0.15) {
+			applyContrast(cardBgParsed.lum < 0.48);
+		}
+	}
+
 	$(function () {
 		$('.signa-otp-wrapper').each(function () {
-			initOtpWrapper($(this));
+			var $w = $(this);
+			initOtpWrapper($w);
+			autoDetectFormContrast($w);
 		});
 
 		var $modal = $('#signa-otp-modal');

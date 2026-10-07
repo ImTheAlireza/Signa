@@ -438,14 +438,15 @@
 			});
 
 			var effectiveCardBg = isGlass ? hexToRgbaJs(bg, cardOpacity) : bg;
-			$card.css({
-				background: effectiveCardBg,
-				backdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
-				webkitBackdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
-				color: text,
-				padding: Math.round(cardPadding * 0.85) + 'px',
-				borderRadius: '0'
-			});
+			var cardDom = document.getElementById('signa-live-preview-card');
+			if (cardDom) {
+				cardDom.style.setProperty('background', effectiveCardBg, 'important');
+				cardDom.style.setProperty('backdrop-filter', isGlass ? 'blur(' + blurPx + 'px) saturate(160%)' : 'none', 'important');
+				cardDom.style.setProperty('-webkit-backdrop-filter', isGlass ? 'blur(' + blurPx + 'px) saturate(160%)' : 'none', 'important');
+				cardDom.style.setProperty('color', text, 'important');
+				cardDom.style.setProperty('padding', Math.round(cardPadding * 0.85) + 'px', 'important');
+				cardDom.style.setProperty('border-radius', '0', 'important');
+			}
 
 			if (showSplitBanner) {
 				$banner.css({
@@ -535,6 +536,7 @@
 			$('#text_color').val($btn.attr('data-text'));
 			$('#border_radius').val($btn.attr('data-radius'));
 			refreshLivePreview();
+			$('#card_bg_color').trigger('change');
 			showToast('پالت رنگی روی پیش‌نمایش اعمال شد!');
 		});
 

@@ -91,6 +91,52 @@ $split_subtitle   = Signa_Helper::get_option( 'split_subtitle', '' );
 $split_features   = array_filter( array_map( 'trim', explode( "\n", (string) Signa_Helper::get_option( 'split_features', '' ) ) ) );
 
 $effective_card_bg = $glassmorphism ? Signa_Helper::hex_to_rgba( $card_bg_color, $card_bg_opacity ) : $card_bg_color;
+
+// Smart Automatic Dark/Light Surface & Image Luminance Detection (v2.7.4)
+$hex_lum_fn = static function ( $hex ) {
+	$clean = ltrim( trim( (string) $hex ), '#' );
+	if ( 3 === strlen( $clean ) ) {
+		$clean = $clean[0] . $clean[0] . $clean[1] . $clean[1] . $clean[2] . $clean[2];
+	}
+	if ( 6 !== strlen( $clean ) ) {
+		return 0.9;
+	}
+	$r = hexdec( substr( $clean, 0, 2 ) );
+	$g = hexdec( substr( $clean, 2, 2 ) );
+	$b = hexdec( substr( $clean, 4, 2 ) );
+	return ( 0.299 * $r + 0.587 * $g + 0.114 * $b ) / 255;
+};
+
+$card_lum        = $hex_lum_fn( $card_bg_color );
+$canvas_bg_style = Signa_Helper::get_option( 'canvas_bg_style', 'mesh_light' );
+$canvas_bg_col   = Signa_Helper::get_option( 'canvas_bg_color', '#f1f5f9' );
+$canvas_bg_img   = trim( (string) Signa_Helper::get_option( 'canvas_bg_image', '' ) );
+
+if ( 'mesh_dark' === $canvas_bg_style ) {
+	$canvas_lum = 0.08;
+} elseif ( 'custom_image' === $canvas_bg_style && ! empty( $canvas_bg_img ) ) {
+	$canvas_lum = 0.25;
+} elseif ( 'solid' === $canvas_bg_style ) {
+	$canvas_lum = $hex_lum_fn( $canvas_bg_col );
+} else {
+	$canvas_lum = ( $hex_lum_fn( $canvas_bg_col ) * 0.65 ) + 0.30;
+}
+
+$alpha            = $glassmorphism ? max( 0.15, min( 1.0, $card_bg_opacity / 100 ) ) : 1.0;
+$effective_lum    = $glassmorphism ? ( ( $card_lum * $alpha ) + ( $canvas_lum * ( 1.0 - $alpha ) ) ) : $card_lum;
+$is_dark_surface  = ( $card_lum < 0.48 ) || ( $glassmorphism && ( $effective_lum < 0.52 || $canvas_lum < 0.42 ) );
+$text_lum         = $hex_lum_fn( $text_color );
+
+if ( $is_dark_surface && $text_lum < 0.5 ) {
+	$text_color = '#f8fafc';
+} elseif ( ! $is_dark_surface && $text_lum > 0.85 ) {
+	$text_color = '#111827';
+}
+
+if ( $glassmorphism && $is_dark_surface && $card_lum > 0.7 ) {
+	$effective_card_bg = Signa_Helper::hex_to_rgba( '#0f172a', min( $card_bg_opacity, 86 ) );
+}
+
 $btn_bg_css        = ( 'gradient' === $button_bg_mode )
 	? sprintf( 'linear-gradient(135deg, %s, %s)', $primary_color, $secondary_color )
 	: $primary_color;
@@ -122,7 +168,7 @@ $inline_vars = sprintf(
 );
 
 $wrapper_classes = sprintf(
-	'signa-otp-wrapper signa-digit-style-%s signa-layout-%s signa-pos-%s signa-shadow-%s signa-border-%s signa-btn-mode-%s signa-input-style-%s signa-addon-%s%s',
+	'signa-otp-wrapper signa-digit-style-%s signa-layout-%s signa-pos-%s signa-shadow-%s signa-border-%s signa-btn-mode-%s signa-input-style-%s signa-addon-%s %s%s',
 	esc_attr( $digit_box_style ),
 	esc_attr( $effective_layout ),
 	esc_attr( $card_position ),
@@ -131,10 +177,17 @@ $wrapper_classes = sprintf(
 	esc_attr( $button_bg_mode ),
 	esc_attr( $input_style ),
 	esc_attr( $input_addon ),
+	$is_dark_surface ? 'signa-theme-dark' : 'signa-theme-light',
 	$glassmorphism ? ' signa-glassmorphism' : ''
 );
 ?>
-<div class="<?php echo esc_attr( $wrapper_classes ); ?>" dir="rtl" style="<?php echo esc_attr( $inline_vars ); ?>" data-otp-length="<?php echo esc_attr( (string) $otp_length ); ?>" data-redirect="<?php echo esc_url( $redirect_to ); ?>" data-context="<?php echo esc_attr( $context ); ?>" data-passkey-prompt="<?php echo $enable_passkey && $passkey_prompt ? '1' : '0'; ?>">
+<div class="<?php echo esc_attr( $wrapper_classes ); ?>" dir="rtl" style="<?php echo esc_attr( $inline_vars ); ?>" data-otp-length="<?php echo esc_attr( (string) $otp_length ); ?>" data-redirect="<?php echo esc_url( $redirect_to ); ?>" data-context="<?php echo esc_attr( $context ); ?>" data-passkey-prompt="<?php echo $enable_passkey && $passkey_prompt ? '1' : '0'; ?>" data-canvas-img="<?php echo esc_url( $canvas_bg_img ); ?>" data-split-img="<?php echo esc_url( $split_image_url ); ?>">
+	<?php if ( $glassmorphism ) : ?>
+		<div class="signa-frontend-glass-orbs" aria-hidden="true">
+			<span class="signa-fe-orb is-1"></span>
+			<span class="signa-fe-orb is-2"></span>
+		</div>
+	<?php endif; ?>
 	<div class="signa-otp-card">
 		<div class="signa-otp-header">
 			<?php if ( ! empty( $logo_url ) ) : ?>

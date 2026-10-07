@@ -39,33 +39,58 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 		#signa-app-shell.is-dark .signa-icon-moon { display: none !important; }
 		#signa-app-shell.is-dark .signa-icon-sun { display: block !important; }
 
-		/* Cache-Proof Dynamic Proportional Live Preview & Mini-Video Previews (v2.7.2) */
-		#signa-app-shell .signa-studio-layout { grid-template-columns: minmax(0, 1fr) 430px !important; transition: grid-template-columns 0.25s ease; }
+		/* Cache-Proof Dynamic Proportional Live Preview & Mini-Video Previews (v2.7.4) */
+		#signa-app-shell .signa-studio-layout { grid-template-columns: minmax(0, 1fr) 430px !important; transition: grid-template-columns 0.25s ease; align-items: start !important; }
 		#signa-app-shell .signa-studio-layout.is-wide-preview { grid-template-columns: minmax(0, 1fr) 560px !important; }
-		@media (max-width: 1024px) { #signa-app-shell .signa-studio-layout, #signa-app-shell .signa-studio-layout.is-wide-preview { grid-template-columns: 1fr !important; } }
+		#signa-app-shell .signa-studio-preview-col { position: sticky !important; top: 124px !important; align-self: start !important; z-index: 40; }
+		@media (max-width: 1024px) {
+			#signa-app-shell .signa-studio-layout, #signa-app-shell .signa-studio-layout.is-wide-preview { grid-template-columns: 1fr !important; }
+			#signa-app-shell .signa-studio-preview-col { position: static !important; top: auto !important; }
+		}
+
+		/* Exclusive Collapsible Accordion Cards in Appearance Studio */
+		#signa-app-shell .signa-accordion-card { padding: 0 !important; overflow: hidden; transition: border-color 0.25s ease, box-shadow 0.25s ease; }
+		#signa-app-shell .signa-accordion-card.is-open { border-color: var(--s-primary) !important; box-shadow: 0 10px 28px -8px rgba(37, 99, 235, 0.14); }
+		#signa-app-shell .signa-accordion-card > .signa-accordion-trigger { margin: 0 !important; padding: 20px 24px !important; border-bottom: 1px solid transparent !important; cursor: pointer !important; user-select: none; transition: background-color 0.2s ease, border-color 0.2s ease; }
+		#signa-app-shell .signa-accordion-card > .signa-accordion-trigger:hover { background-color: var(--s-bg-subtle); }
+		#signa-app-shell .signa-accordion-card.is-open > .signa-accordion-trigger { border-bottom-color: var(--s-border) !important; background-color: var(--s-bg-subtle); }
+		#signa-app-shell .signa-accordion-chevron { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: var(--s-bg-surface); border: 1px solid var(--s-border-input); color: var(--s-text-muted); transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease, border-color 0.2s ease; flex-shrink: 0; }
+		#signa-app-shell .signa-accordion-card.is-open .signa-accordion-chevron { transform: rotate(180deg); color: var(--s-primary); border-color: var(--s-primary); background: var(--s-primary-soft); }
+		#signa-app-shell .signa-accordion-body { padding: 22px 24px 24px 24px; }
+
+		/* Ambient Glass Orbs Behind Live Preview Card (Makes Backdrop-Filter Blur Visibly Crisp) */
+		#signa-app-shell .signa-preview-canvas { position: relative; overflow: hidden; }
+		#signa-app-shell .signa-prev-glass-orbs { position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.22; transition: opacity 0.35s ease; overflow: hidden; }
+		#signa-app-shell .signa-prev-glass-orbs.is-glass-active { opacity: 0.92; }
+		#signa-app-shell .signa-glass-orb { position: absolute; border-radius: 50%; filter: blur(2px); transition: background 0.35s ease; }
+		#signa-app-shell .signa-glass-orb.orb-1 { width: 150px; height: 150px; background: #3b82f6; top: 14%; right: 12%; box-shadow: inset 0 0 24px rgba(255,255,255,0.45); }
+		#signa-app-shell .signa-glass-orb.orb-2 { width: 135px; height: 135px; background: #ec4899; bottom: 12%; left: 12%; box-shadow: inset 0 0 24px rgba(255,255,255,0.45); }
+		#signa-app-shell .signa-glass-orb.orb-3 { width: 95px; height: 95px; background: linear-gradient(135deg, #10b981, #f59e0b); top: 48%; left: 42%; transform: translate(-50%, -50%) rotate(25deg); border-radius: 24px; }
+
 		#signa-app-shell .signa-preview-subbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 14px; background: var(--s-bg-surface); border-bottom: 1px solid var(--s-border-input); flex-wrap: wrap; }
 		#signa-app-shell .signa-preview-mode-tabs { display: inline-flex; background: var(--s-bg-subtle); padding: 3px; border-radius: 8px; border: 1px solid var(--s-border-input); gap: 3px; }
 		#signa-app-shell .signa-prev-mode-btn { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 6px; border: none; background: transparent; color: var(--s-text-muted); font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
 		#signa-app-shell .signa-prev-mode-btn.active { background: var(--s-primary); color: #ffffff; }
 		#signa-app-shell .signa-prev-expand-btn { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 7px; border: 1px solid var(--s-border-input); background: var(--s-bg-subtle); color: var(--s-text); font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
 		#signa-app-shell .signa-prev-expand-btn.active { border-color: var(--s-primary); color: var(--s-primary); background: var(--s-primary-soft); }
-		#signa-app-shell .signa-preview-viewport { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.25s ease; position: relative; }
-		#signa-app-shell .signa-preview-viewport.is-scaled-split #signa-live-preview-shell { width: 720px !important; max-width: 720px !important; zoom: 0.53; }
-		#signa-app-shell .signa-studio-layout.is-wide-preview .signa-preview-viewport.is-scaled-split #signa-live-preview-shell { zoom: 0.71; }
+		#signa-app-shell .signa-preview-viewport { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.25s ease; position: relative; z-index: 2; }
+		#signa-app-shell .signa-preview-viewport.is-scaled-split { min-height: 250px; }
+		#signa-app-shell .signa-preview-viewport.is-scaled-split #signa-live-preview-shell { width: 720px !important; max-width: 720px !important; transform: scale(0.53); transform-origin: center center; margin: -95px 0; }
+		#signa-app-shell .signa-studio-layout.is-wide-preview .signa-preview-viewport.is-scaled-split #signa-live-preview-shell { transform: scale(0.71); margin: -60px 0; }
 		#signa-app-shell .signa-prev-site-skeleton { display: none; width: 100%; position: absolute; inset: 0; padding: 16px; pointer-events: none; flex-direction: column; gap: 12px; opacity: 0.45; }
 		#signa-app-shell .signa-preview-canvas.is-modal-mode { position: relative; min-height: 410px; padding: 0 !important; overflow: hidden; justify-content: center; }
 		#signa-app-shell .signa-preview-canvas.is-modal-mode .signa-prev-site-skeleton { display: flex; }
 		#signa-app-shell .signa-prev-modal-backdrop { display: none; position: absolute; inset: 0; background: rgba(15, 23, 42, 0.56); backdrop-filter: blur(4px); z-index: 1; }
 		#signa-app-shell .signa-preview-canvas.is-modal-mode .signa-prev-modal-backdrop { display: block; }
 		#signa-app-shell .signa-preview-canvas.is-modal-mode .signa-preview-viewport { position: relative; z-index: 2; width: 100%; height: 410px; padding: 16px; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode #signa-live-preview-shell { zoom: 0.76; }
+		#signa-app-shell .signa-preview-canvas.is-modal-mode #signa-live-preview-shell { transform: scale(0.78); transform-origin: center center; }
 		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-center .signa-preview-viewport { align-items: center !important; justify-content: center !important; }
 		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_left .signa-preview-viewport { align-items: flex-end !important; justify-content: stretch !important; padding: 0 !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_left #signa-live-preview-shell { height: 100% !important; border-radius: 0 16px 16px 0 !important; max-width: 310px !important; width: 310px !important; zoom: 0.82; }
+		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_left #signa-live-preview-shell { height: 100% !important; border-radius: 0 16px 16px 0 !important; max-width: 280px !important; width: 280px !important; transform: none !important; margin: 0 !important; }
 		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_right .signa-preview-viewport { align-items: flex-start !important; justify-content: stretch !important; padding: 0 !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_right #signa-live-preview-shell { height: 100% !important; border-radius: 16px 0 0 16px !important; max-width: 310px !important; width: 310px !important; zoom: 0.82; }
+		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_right #signa-live-preview-shell { height: 100% !important; border-radius: 16px 0 0 16px !important; max-width: 280px !important; width: 280px !important; transform: none !important; margin: 0 !important; }
 		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-bottom_sheet .signa-preview-viewport { align-items: center !important; justify-content: flex-end !important; padding: 24px 0 0 0 !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-bottom_sheet #signa-live-preview-shell { width: 100% !important; max-width: 100% !important; border-radius: 22px 22px 0 0 !important; zoom: 0.82; }
+		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-bottom_sheet #signa-live-preview-shell { width: 100% !important; max-width: 100% !important; border-radius: 22px 22px 0 0 !important; transform: none !important; margin: 0 !important; }
 
 		/* Mini-Video Motion Previews */
 		#signa-app-shell .signa-mini-video { width: 100%; height: 78px; border-radius: 10px; background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%); border: 1px solid rgba(148, 163, 184, 0.22); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.35); }

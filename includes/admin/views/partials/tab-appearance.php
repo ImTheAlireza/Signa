@@ -34,8 +34,8 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 						<div class="signa-studio-controls">
 
 							<!-- CARD 1: Layout Skeleton (Single Card vs Split-Screen) & Card Position -->
-							<div class="signa-card" style="margin-bottom:20px;">
-								<div class="signa-card-head">
+							<div class="signa-card signa-accordion-card" style="margin-bottom:16px;">
+								<div class="signa-card-head signa-accordion-trigger">
 									<div class="signa-card-head-title">
 										<span class="signa-card-icon is-blue">
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
@@ -45,8 +45,12 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											<p>انتخاب حالت کارت تکی یا لی‌اوت دوتایی (Split-Screen) به همراه موقعیت قرارگیری در صفحه</p>
 										</div>
 									</div>
-									<span class="signa-pill is-info">پیش‌نمایش زنده</span>
+									<div style="display:flex;align-items:center;gap:10px;">
+										<span class="signa-pill is-info">پیش‌نمایش زنده</span>
+										<span class="signa-accordion-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+									</div>
 								</div>
+								<div class="signa-accordion-body" style="display:none;">
 
 								<label class="signa-section-label">الف) اسکلت و ساختار فرم ورود</label>
 								<div class="signa-choice-grid signa-cols-3">
@@ -272,11 +276,12 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										</div>
 									</label>
 								</div>
+								</div>
 							</div>
 
 							<!-- CARD 2: Slide-Over Drawer Modal & Standalone Full-Page Canvas -->
-							<div class="signa-card" style="margin-bottom:20px;">
-								<div class="signa-card-head">
+							<div class="signa-card signa-accordion-card" style="margin-bottom:16px;">
+								<div class="signa-card-head signa-accordion-trigger">
 									<div class="signa-card-head-title">
 										<span class="signa-card-icon is-green">
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
@@ -286,7 +291,11 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											<p>تنظیم نحوه باز شدن مودال ورود (با کلیک روی هر گزینه، انیمیشن آن در پیش‌نمایش زنده اجرا می‌شود)</p>
 										</div>
 									</div>
+									<div style="display:flex;align-items:center;gap:10px;">
+										<span class="signa-accordion-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+									</div>
 								</div>
+								<div class="signa-accordion-body" style="display:none;">
 
 								<label class="signa-section-label">الف) نحوه باز شدن پنجره پاپ‌آپ سراسری (Global Modal &amp; Slide-Over Drawer)</label>
 								<div class="signa-choice-grid signa-cols-2">
@@ -468,11 +477,12 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										</label>
 									</div>
 								</div>
+								</div>
 							</div>
 
 							<!-- CARD 2.5 (CATEGORY 2): Glassmorphism, Shadows, Borders, Gradients & SVG Background Patterns -->
-							<div class="signa-card" style="margin-bottom:20px;">
-								<div class="signa-card-head">
+							<div class="signa-card signa-accordion-card" style="margin-bottom:16px;">
+								<div class="signa-card-head signa-accordion-trigger">
 									<div class="signa-card-head-title">
 										<span class="signa-card-icon is-amber">
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -482,8 +492,12 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											<p>شخصی‌سازی افکت شیشه‌ای مات، عمق سایه، کادر دور کارت، گرادینت دکمه و پترن گرافیکی پس‌زمینه</p>
 										</div>
 									</div>
-									<span class="signa-pill is-ok">افکت‌های مدرن</span>
+									<div style="display:flex;align-items:center;gap:10px;">
+										<span class="signa-pill is-ok">افکت‌های مدرن</span>
+										<span class="signa-accordion-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+									</div>
 								</div>
+								<div class="signa-accordion-body" style="display:none;">
 
 								<!-- 1. Glassmorphism Switch & Sliders -->
 								<div class="signa-switch-row">
@@ -654,11 +668,12 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										</label>
 									</div>
 								</div>
+								</div>
 							</div>
 
 							<!-- CARD 2.8 (CATEGORY 3): Typography, Fonts & Input Field Styles -->
-							<div class="signa-card" style="margin-bottom:20px;">
-								<div class="signa-card-head">
+							<div class="signa-card signa-accordion-card" style="margin-bottom:16px;">
+								<div class="signa-card-head signa-accordion-trigger">
 									<div class="signa-card-head-title">
 										<span class="signa-card-icon is-cyan">
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
@@ -668,8 +683,12 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 											<p>انتخاب فونت، اندازه متون، طراحی کادر فیلدهای ورودی و پیش‌شماره/پرچم کشور</p>
 										</div>
 									</div>
-									<span class="signa-pill is-info">تایپوگرافی و فیلدها</span>
+									<div style="display:flex;align-items:center;gap:10px;">
+										<span class="signa-pill is-info">تایپوگرافی و فیلدها</span>
+										<span class="signa-accordion-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+									</div>
 								</div>
+								<div class="signa-accordion-body" style="display:none;">
 
 								<!-- 1. Font Family & Text Size Sliders -->
 								<div class="signa-fields-grid signa-cols-2">
@@ -823,21 +842,27 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										</div>
 									</div>
 								</div>
+								</div>
 							</div>
 
 							<!-- CARD 3: Color Presets, Card Colors & Dimensions -->
-							<div class="signa-card">
-								<div class="signa-card-head">
+							<div class="signa-card signa-accordion-card" style="margin-bottom:16px;">
+								<div class="signa-card-head signa-accordion-trigger">
 									<div class="signa-card-head-title">
 										<span class="signa-card-icon is-purple">
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
 										</span>
 										<div>
 											<h2>۵. پالت‌های رنگی و تم‌های آماده (Presets)</h2>
-											<p>با یک کلیک استایل کلی فرم را تغییر دهید یا رنگ‌ها را سفارشی کنید</p>
+											<p>با یک کلیک استایل کلی فرم را تغییر دهید یا رنگ‌ها را سفارشی کنید (با تشخیص خودکار کنتراست تیره/روشن)</p>
 										</div>
 									</div>
+									<div style="display:flex;align-items:center;gap:10px;">
+										<span class="signa-pill is-ok">کنتراست هوشمند</span>
+										<span class="signa-accordion-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+									</div>
 								</div>
+								<div class="signa-accordion-body" style="display:none;">
 
 								<div class="signa-preset-grid">
 									<button type="button" class="signa-preset-btn" data-primary="#2563eb" data-bg="#ffffff" data-text="#111827" data-radius="16">
@@ -874,7 +899,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										</div>
 									</div>
 									<div class="signa-field">
-										<label for="text_color">رنگ متون اصلی</label>
+										<label for="text_color">رنگ متون اصلی <span id="signa-auto-contrast-badge" style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:99px;background:rgba(37,99,235,0.12);color:#2563eb;margin-right:4px;">تشخیص خودکار</span></label>
 										<div class="signa-color-input-wrap">
 											<input type="color" name="signa[text_color]" id="text_color" value="<?php echo esc_attr( $settings['text_color'] ); ?>" />
 											<span id="text_color_hex"><?php echo esc_html( $settings['text_color'] ); ?></span>
@@ -908,21 +933,26 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 										<button type="button" id="signa_upload_logo_btn" class="signa-btn-secondary">انتخاب از رسانه</button>
 									</div>
 								</div>
+								</div>
 							</div>
 
 							<!-- CARD 4: Form Texts & Custom CSS -->
-							<div class="signa-card" style="margin-top:20px;">
-								<div class="signa-card-head">
+							<div class="signa-card signa-accordion-card" style="margin-bottom:16px;">
+								<div class="signa-card-head signa-accordion-trigger">
 									<div class="signa-card-head-title">
 										<span class="signa-card-icon is-blue">
 											<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
 										</span>
 										<div>
-											<h2>۵. متن‌ها و برچسب‌های فرم</h2>
+											<h2>۶. متن‌ها و برچسب‌های فرم</h2>
 											<p>عنوان‌ها و متن دکمه‌ها را متناسب با لحن برند خود تغییر دهید</p>
 										</div>
 									</div>
+									<div style="display:flex;align-items:center;gap:10px;">
+										<span class="signa-accordion-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+									</div>
 								</div>
+								<div class="signa-accordion-body" style="display:none;">
 								<div class="signa-fields-grid signa-cols-2">
 									<div class="signa-field">
 										<label for="form_title">عنوان اصلی فرم</label>
@@ -944,6 +974,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								<div class="signa-field" style="margin-top:14px;">
 									<label for="custom_css">کدهای CSS سفارشی (Custom CSS)</label>
 									<textarea name="signa[custom_css]" id="custom_css" rows="3" dir="ltr" placeholder=".signa-otp-card { ... }"><?php echo esc_textarea( $settings['custom_css'] ); ?></textarea>
+								</div>
 								</div>
 							</div>
 						</div>
@@ -971,7 +1002,14 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 									</button>
 								</div>
 
-								<div class="signa-preview-canvas" id="signa-preview-canvas" style="display:flex;flex-direction:column;align-items:<?php echo 'right' === $card_position ? 'flex-start' : ( 'left' === $card_position ? 'flex-end' : 'center' ); ?>;transition:all 0.25s ease;">
+								<div class="signa-preview-canvas" id="signa-preview-canvas" style="display:flex;flex-direction:column;align-items:<?php echo 'right' === $card_position ? 'flex-start' : ( 'left' === $card_position ? 'flex-end' : 'center' ); ?>;transition:background 0.4s ease, align-items 0.25s ease;">
+
+									<!-- Ambient Decorative Glass Orbs (Makes Backdrop-Filter Blur Slider Visibly Blur Background Shapes in Real Time) -->
+									<div id="signa-prev-glass-orbs" class="signa-prev-glass-orbs" aria-hidden="true">
+										<span class="signa-glass-orb orb-1"></span>
+										<span class="signa-glass-orb orb-2"></span>
+										<span class="signa-glass-orb orb-3"></span>
+									</div>
 
 									<!-- Simulated Website Skeleton & Backdrop (Shown in Modal/Drawer Preview Mode) -->
 									<div class="signa-prev-site-skeleton" aria-hidden="true">
@@ -990,10 +1028,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 									<!-- Proportional Viewport Wrapper (Scales 720px Split-Screen smoothly so text never squishes) -->
 									<div id="signa-preview-viewport" class="signa-preview-viewport <?php echo $is_split ? 'is-scaled-split' : ''; ?>" style="align-items:<?php echo 'right' === $card_position ? 'flex-start' : ( 'left' === $card_position ? 'flex-end' : 'center' ); ?>;">
-										<div id="signa-live-preview-shell" class="signa-prev-shell <?php echo $is_split ? 'is-split' : ''; ?> <?php echo 'split_left' === $form_layout ? 'is-split-left' : ''; ?>" style="width:100%;max-width:<?php echo $is_split ? '720px' : '360px'; ?>;border-radius:<?php echo esc_attr( (string) $settings['border_radius'] ); ?>px;overflow:hidden;box-shadow:0 16px 36px -8px rgba(15,23,42,0.16);display:flex;flex-direction:<?php echo 'split_left' === $form_layout ? 'row-reverse' : 'row'; ?>;transition:all 0.25s ease;">
+										<div id="signa-live-preview-shell" class="signa-prev-shell <?php echo $is_split ? 'is-split' : ''; ?> <?php echo 'split_left' === $form_layout ? 'is-split-left' : ''; ?>" style="width:100%;max-width:<?php echo $is_split ? '720px' : '360px'; ?>;border-radius:<?php echo esc_attr( (string) $settings['border_radius'] ); ?>px;overflow:hidden;box-shadow:0 16px 36px -8px rgba(15,23,42,0.16);display:flex;flex-direction:<?php echo 'split_left' === $form_layout ? 'row-reverse' : 'row'; ?>;transition:all 0.35s ease;">
 
 											<!-- Form Column -->
-											<div id="signa-live-preview-card" class="signa-prev-card" style="flex:1;min-width:0;margin:0;box-shadow:none;background:<?php echo esc_attr( $settings['card_bg_color'] ); ?>;color:<?php echo esc_attr( $settings['text_color'] ); ?>;border-radius:0;">
+											<div id="signa-live-preview-card" class="signa-prev-card" style="flex:1;min-width:0;margin:0;box-shadow:none;background:<?php echo esc_attr( $settings['card_bg_color'] ); ?>;color:<?php echo esc_attr( $settings['text_color'] ); ?>;border-radius:0;transition:color 0.42s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.42s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.2s ease, -webkit-backdrop-filter 0.2s ease;">
 												<div style="text-align:center;margin-bottom:20px;">
 													<div id="signa-prev-logo-wrap" style="<?php echo empty( $settings['logo_url'] ) ? 'display:none;' : ''; ?>margin-bottom:12px;">
 														<img id="signa-prev-logo-img" src="<?php echo esc_url( $settings['logo_url'] ); ?>" alt="Logo" style="max-height:48px;" />
@@ -1004,25 +1042,25 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 															<path d="m9 12 2 2 4-4"></path>
 														</svg>
 													</div>
-													<h3 id="signa-prev-title" style="margin:0 0 6px 0;font-size:17px;color:inherit;"><?php echo esc_html( $settings['form_title'] ); ?></h3>
-													<p id="signa-prev-subtitle" style="margin:0;font-size:12.5px;opacity:0.78;line-height:1.6;"><?php echo esc_html( $settings['form_subtitle'] ); ?></p>
+													<h3 id="signa-prev-title" style="margin:0 0 6px 0;font-size:17px;color:inherit;transition:color 0.42s cubic-bezier(0.4, 0, 0.2, 1);"><?php echo esc_html( $settings['form_title'] ); ?></h3>
+													<p id="signa-prev-subtitle" style="margin:0;font-size:12.5px;opacity:0.82;line-height:1.6;color:inherit;transition:color 0.42s cubic-bezier(0.4, 0, 0.2, 1);"><?php echo esc_html( $settings['form_subtitle'] ); ?></p>
 												</div>
 
 												<!-- Preview Step 1 -->
 												<div id="signa-prev-step-1">
-													<label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:inherit;">شماره موبایل یا ایمیل</label>
+													<label id="signa-prev-field-label" style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:inherit;transition:color 0.42s cubic-bezier(0.4, 0, 0.2, 1);">شماره موبایل یا ایمیل</label>
 													<div id="signa-prev-input-wrap" style="position:relative;margin-bottom:16px;">
-														<input type="text" class="signa-prev-input" placeholder="شماره موبایل (0912...) یا ایمیل" dir="rtl" readonly style="margin-bottom:0 !important;" />
-														<span id="signa-prev-input-addon" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:#64748b;pointer-events:none;" dir="ltr"></span>
+														<input type="text" class="signa-prev-input" placeholder="شماره موبایل (0912...) یا ایمیل" dir="rtl" readonly style="margin-bottom:0 !important;transition:background-color 0.38s ease, color 0.38s ease, border-color 0.38s ease;" />
+														<span id="signa-prev-input-addon" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:#64748b;pointer-events:none;transition:color 0.38s ease;" dir="ltr"></span>
 													</div>
-													<button type="button" id="signa-prev-btn-1" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:700;font-size:14px;cursor:default;">
+													<button type="button" id="signa-prev-btn-1" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:700;font-size:14px;cursor:default;transition:all 0.35s ease;">
 														<?php echo esc_html( $settings['button_text'] ); ?>
 													</button>
 												</div>
 
 												<!-- Preview Step 2 -->
 												<div id="signa-prev-step-2" style="display:none;">
-													<div style="display:flex;justify-content:space-between;background:rgba(156,163,175,0.15);padding:8px 12px;border-radius:8px;margin-bottom:14px;font-size:12px;">
+													<div style="display:flex;justify-content:space-between;background:rgba(156,163,175,0.15);padding:8px 12px;border-radius:8px;margin-bottom:14px;font-size:12px;color:inherit;transition:color 0.42s ease;">
 														<strong dir="ltr">0912***6789</strong>
 														<span style="color:<?php echo esc_attr( $settings['primary_color'] ); ?>;font-weight:600;">ویرایش</span>
 													</div>
@@ -1033,20 +1071,20 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 														<span class="signa-prev-digit">9</span>
 														<span class="signa-prev-digit">1</span>
 													</div>
-													<button type="button" id="signa-prev-btn-2" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:600;font-size:14px;cursor:default;">
+													<button type="button" id="signa-prev-btn-2" style="width:100%;height:44px;border:none;border-radius:10px;background:<?php echo esc_attr( $settings['primary_color'] ); ?>;color:#fff;font-weight:600;font-size:14px;cursor:default;transition:all 0.35s ease;">
 														<?php echo esc_html( $settings['verify_button_text'] ); ?>
 													</button>
 												</div>
 											</div>
 
 											<!-- Split-Screen Side Banner Preview Column -->
-											<div id="signa-prev-split-banner" style="<?php echo $is_split ? 'display:flex;' : 'display:none;'; ?>flex:1;min-width:0;padding:28px 24px;flex-direction:column;justify-content:space-between;color:#ffffff;background-color:<?php echo esc_attr( $settings['split_bg_color'] ); ?>;background-image:<?php echo ! empty( $settings['split_image_url'] ) ? 'linear-gradient(135deg, rgba(15,23,42,0.72), rgba(30,58,138,0.78)), url(' . esc_url( $settings['split_image_url'] ) . ')' : 'radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 65%)'; ?>;background-size:cover;background-position:center;">
+											<div id="signa-prev-split-banner" style="<?php echo $is_split ? 'display:flex;' : 'display:none;'; ?>flex:1;min-width:0;padding:28px 24px;flex-direction:column;justify-content:space-between;color:#ffffff;background-color:<?php echo esc_attr( $settings['split_bg_color'] ); ?>;background-image:<?php echo ! empty( $settings['split_image_url'] ) ? 'linear-gradient(135deg, rgba(15,23,42,0.72), rgba(30,58,138,0.78)), url(' . esc_url( $settings['split_image_url'] ) . ')' : 'radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 65%)'; ?>;background-size:cover;background-position:center;transition:color 0.42s ease, background 0.42s ease;">
 												<div>
-													<span id="signa-prev-split-badge" style="display:inline-block;padding:4px 12px;border-radius:99px;font-size:11.5px;font-weight:700;background:rgba(255,255,255,0.18);backdrop-filter:blur(4px);margin-bottom:14px;"><?php echo esc_html( $settings['split_badge_text'] ); ?></span>
-													<h4 id="signa-prev-split-title" style="margin:0 0 10px 0;font-size:18px;font-weight:800;color:#ffffff;line-height:1.45;"><?php echo esc_html( $settings['split_title'] ); ?></h4>
-													<p id="signa-prev-split-subtitle" style="margin:0;font-size:13px;color:rgba(255,255,255,0.88);line-height:1.75;"><?php echo esc_html( $settings['split_subtitle'] ); ?></p>
+													<span id="signa-prev-split-badge" style="display:inline-block;padding:4px 12px;border-radius:99px;font-size:11.5px;font-weight:700;background:rgba(255,255,255,0.18);backdrop-filter:blur(4px);margin-bottom:14px;transition:color 0.42s ease, background 0.42s ease;"><?php echo esc_html( $settings['split_badge_text'] ); ?></span>
+													<h4 id="signa-prev-split-title" style="margin:0 0 10px 0;font-size:18px;font-weight:800;color:inherit;line-height:1.45;transition:color 0.42s ease;"><?php echo esc_html( $settings['split_title'] ); ?></h4>
+													<p id="signa-prev-split-subtitle" style="margin:0;font-size:13px;color:inherit;opacity:0.9;line-height:1.75;transition:color 0.42s ease;"><?php echo esc_html( $settings['split_subtitle'] ); ?></p>
 												</div>
-												<ul id="signa-prev-split-features" style="list-style:none;margin:20px 0 0 0;padding:16px 0 0 0;border-top:1px solid rgba(255,255,255,0.16);display:flex;flex-direction:column;gap:8px;font-size:12.5px;color:rgba(255,255,255,0.95);">
+												<ul id="signa-prev-split-features" style="list-style:none;margin:20px 0 0 0;padding:16px 0 0 0;border-top:1px solid rgba(255,255,255,0.16);display:flex;flex-direction:column;gap:8px;font-size:12.5px;color:inherit;opacity:0.95;transition:color 0.42s ease;">
 													<?php foreach ( $split_features_list as $feat_line ) : ?>
 														<li style="display:flex;align-items:center;gap:8px;margin:0;">
 															<span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:rgba(16,185,129,0.28);color:#6ee7b7;align-items:center;justify-content:center;flex-shrink:0;">✓</span>
@@ -1065,16 +1103,118 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 					<script>
 					jQuery(function($){
 						var currentPreviewMode = 'page';
+						var imgLuminanceCache = {};
 
-						function hexRgba(hex, pct){
+						// 1. Keep Sticky Preview Box Completely Visible Below Sticky Topbar on Scroll/Resize
+						function syncStickyPreviewOffset() {
+							var wpBarH = ($('#wpadminbar').length && $('#wpadminbar').is(':visible')) ? ($('#wpadminbar').outerHeight() || 32) : 0;
+							var topbarH = $('.signa-topbar').length ? ($('.signa-topbar').outerHeight() || 76) : 76;
+							var safeTop = Math.max(118, Math.round(wpBarH + topbarH + 16));
+							$('.signa-studio-preview-col').each(function(){
+								this.style.setProperty('position', 'sticky', 'important');
+								this.style.setProperty('top', safeTop + 'px', 'important');
+							});
+						}
+						$(window).on('scroll resize', syncStickyPreviewOffset);
+						setTimeout(syncStickyPreviewOffset, 60);
+						syncStickyPreviewOffset();
+
+						// 2. Exclusive Collapsible Accordion Cards (Closed by default; clicking one opens it and closes others)
+						$(document).off('click.signaAccordion').on('click.signaAccordion', '.signa-accordion-trigger', function(e){
+							e.preventDefault();
+							var $card = $(this).closest('.signa-accordion-card');
+							var $body = $card.children('.signa-accordion-body');
+							var isAlreadyOpen = $card.hasClass('is-open');
+
+							// Close all other open accordion cards first
+							$('.signa-accordion-card.is-open').not($card).each(function(){
+								$(this).removeClass('is-open').children('.signa-accordion-body').stop(true, true).slideUp(220);
+							});
+
+							if (isAlreadyOpen) {
+								$card.removeClass('is-open');
+								$body.stop(true, true).slideUp(220);
+							} else {
+								$card.addClass('is-open');
+								$body.stop(true, true).slideDown(240, function(){
+									syncStickyPreviewOffset();
+									var wpBarH = ($('#wpadminbar').length && $('#wpadminbar').is(':visible')) ? ($('#wpadminbar').outerHeight() || 32) : 0;
+									var topbarH = $('.signa-topbar').length ? ($('.signa-topbar').outerHeight() || 76) : 76;
+									var minVisibleTop = wpBarH + topbarH + 14;
+									var cardRect = $card[0].getBoundingClientRect();
+									if (cardRect.top < minVisibleTop) {
+										window.scrollTo({
+											top: window.pageYOffset + cardRect.top - minVisibleTop,
+											behavior: 'smooth'
+										});
+									}
+								});
+							}
+						});
+
+						function parseHexRgb(hex){
 							var c = String(hex || '#ffffff').replace('#','').trim();
 							if(c.length === 3){ c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2]; }
-							var r = parseInt(c.substring(0,2),16)||255, g = parseInt(c.substring(2,4),16)||255, b = parseInt(c.substring(4,6),16)||255;
-							var a = Math.max(0.2, Math.min(1, (parseFloat(pct)||100)/100));
-							return 'rgba('+r+', '+g+', '+b+', '+a+')';
+							return {
+								r: isNaN(parseInt(c.substring(0,2),16)) ? 255 : parseInt(c.substring(0,2),16),
+								g: isNaN(parseInt(c.substring(2,4),16)) ? 255 : parseInt(c.substring(2,4),16),
+								b: isNaN(parseInt(c.substring(4,6),16)) ? 255 : parseInt(c.substring(4,6),16)
+							};
 						}
 
-						function syncStudioCat2(){
+						function hexRgba(hex, pct){
+							var rgb = parseHexRgb(hex);
+							var a = Math.max(0.12, Math.min(1, (parseFloat(pct)||100)/100));
+							return 'rgba('+rgb.r+', '+rgb.g+', '+rgb.b+', '+a+')';
+						}
+
+						// Relative perceived luminance (0.0 = pitch black, 1.0 = pure white)
+						function hexLuminance(hex){
+							var rgb = parseHexRgb(hex);
+							return (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+						}
+
+						// Sample average image luminance asynchronously (with CORS/fallback detection)
+						function sampleImageLuminance(url, cb){
+							var cleanUrl = String(url || '').trim();
+							if (!cleanUrl) { cb(null); return; }
+							if (typeof imgLuminanceCache[cleanUrl] === 'number') {
+								cb(imgLuminanceCache[cleanUrl]);
+								return;
+							}
+							var img = new Image();
+							img.crossOrigin = 'anonymous';
+							img.onload = function(){
+								try {
+									var cv = document.createElement('canvas');
+									cv.width = 24;
+									cv.height = 24;
+									var ctx = cv.getContext('2d');
+									ctx.drawImage(img, 0, 0, 24, 24);
+									var data = ctx.getImageData(0, 0, 24, 24).data;
+									var sum = 0, count = 0;
+									for (var i = 0; i < data.length; i += 4) {
+										sum += (0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2]) / 255;
+										count++;
+									}
+									var lum = count > 0 ? (sum / count) : 0.35;
+									imgLuminanceCache[cleanUrl] = lum;
+									cb(lum);
+								} catch (err) {
+									// External URL without CORS headers: treat custom image with dark overlay as dark (0.28)
+									imgLuminanceCache[cleanUrl] = 0.28;
+									cb(0.28);
+								}
+							};
+							img.onerror = function(){
+								imgLuminanceCache[cleanUrl] = 0.28;
+								cb(0.28);
+							};
+							img.src = cleanUrl;
+						}
+
+						function syncStudioCat2(e){
+							var triggeredById = (e && e.target && e.target.id) ? e.target.id : '';
 							var primary = $('#primary_color').val() || '#2563eb';
 							var secondary = $('#secondary_color').val() || '#4f46e5';
 							var btnBgMode = $('#button_bg_mode').val() || 'solid';
@@ -1082,8 +1222,8 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var text = $('#text_color').val() || '#111827';
 							var radius = $('#border_radius').val() || 16;
 							var isGlass = $('#glassmorphism').is(':checked');
-							var cardOpacity = $('#card_bg_opacity').val() || 85;
-							var blurPx = $('#backdrop_blur').val() || 16;
+							var cardOpacity = parseFloat($('#card_bg_opacity').val() || 85);
+							var blurPx = parseFloat($('#backdrop_blur').val() || 16);
 							var cardShadow = $('#card_shadow').val() || 'medium';
 							var cardBorder = $('#card_border_style').val() || 'subtle';
 							var cardPadding = $('#card_padding').val() || 32;
@@ -1091,6 +1231,8 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var canvasBgStyle = $('#canvas_bg_style').val() || 'mesh_light';
 							var canvasBgColor = $('#canvas_bg_color').val() || '#f1f5f9';
 							var canvasBgImg = ($('#canvas_bg_image').val() || '').trim();
+							var splitBgColor = $('#split_bg_color').val() || '#1e3a8a';
+							var splitImgUrl = ($('#split_image_url').val() || '').trim();
 							var formLayout = $('input[name="signa[form_layout]"]:checked').val() || 'card';
 							var cardPosition = $('input[name="signa[card_position]"]:checked').val() || 'center';
 							var modalStyle = $('input[name="signa[modal_style]"]:checked').val() || 'center';
@@ -1110,6 +1252,78 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var isDrawerOrSheet = (currentPreviewMode === 'modal' && (modalStyle === 'drawer_left' || modalStyle === 'drawer_right' || modalStyle === 'bottom_sheet'));
 							var showSplitBanner = isSplit && !isDrawerOrSheet;
 
+							// 4. Smart Automatic Dark/Light Theme & Image Contrast Detection
+							var cardLum = hexLuminance(bg);
+							var canvasLum = 0.85;
+							if (canvasBgStyle === 'mesh_dark') {
+								canvasLum = 0.08;
+							} else if (canvasBgStyle === 'solid') {
+								canvasLum = hexLuminance(canvasBgColor);
+							} else if (canvasBgStyle === 'custom_image' && canvasBgImg) {
+								if (typeof imgLuminanceCache[canvasBgImg] === 'number') {
+									canvasLum = imgLuminanceCache[canvasBgImg] * 0.55;
+								} else {
+									canvasLum = 0.25;
+									sampleImageLuminance(canvasBgImg, function(){ syncStudioCat2(); });
+								}
+							} else {
+								canvasLum = (hexLuminance(canvasBgColor) * 0.65) + 0.30;
+							}
+
+							var alpha = isGlass ? Math.max(0.15, Math.min(1, cardOpacity / 100)) : 1;
+							var effectiveFormLum = isGlass ? ((cardLum * alpha) + (canvasLum * (1 - alpha))) : cardLum;
+
+							// Also if Glassmorphism is active over a dark canvas/image (canvasLum < 0.42) or user uploaded a dark canvas image
+							var isDarkFormSurface = (cardLum < 0.48) || (isGlass && (effectiveFormLum < 0.52 || canvasLum < 0.42));
+
+							// Automatically transition text color between white (#f8fafc) and dark (#111827) unless user is manually dragging #text_color right now
+							if (triggeredById !== 'text_color') {
+								var targetTextColor = isDarkFormSurface ? '#f8fafc' : '#111827';
+								if (text.toLowerCase() !== targetTextColor) {
+									text = targetTextColor;
+									$('#text_color').val(targetTextColor);
+									$('#text_color_hex').text(targetTextColor);
+								}
+								// Also adapt input background/border for dark vs light surface if not manually editing input colors right now
+								if (triggeredById !== 'input_bg_color' && triggeredById !== 'input_border_color') {
+									if (isDarkFormSurface && hexLuminance(inputBg) > 0.7) {
+										inputBg = '#1e293b';
+										inputBorder = '#475569';
+										$('#input_bg_color').val(inputBg);
+										$('#input_border_color').val(inputBorder);
+									} else if (!isDarkFormSurface && inputBg.toLowerCase() === '#1e293b') {
+										inputBg = '#f8fafc';
+										inputBorder = '#d1d5db';
+										$('#input_bg_color').val(inputBg);
+										$('#input_border_color').val(inputBorder);
+									}
+								}
+							}
+
+							// Update Smart Contrast Status Badge
+							var $contrastBadge = $('#signa-auto-contrast-badge');
+							if ($contrastBadge.length) {
+								if (isDarkFormSurface) {
+									$contrastBadge.text('تم تیره • متن سفید خودکار').css({ background: 'rgba(15, 23, 42, 0.88)', color: '#f8fafc' });
+								} else {
+									$contrastBadge.text('تم روشن • متن تیره خودکار').css({ background: 'rgba(37, 99, 235, 0.12)', color: '#2563eb' });
+								}
+							}
+
+							// Also check Split-Screen Banner Image/Background Luminance for automatic text contrast
+							var splitLum = hexLuminance(splitBgColor);
+							if (splitImgUrl) {
+								if (typeof imgLuminanceCache[splitImgUrl] === 'number') {
+									splitLum = imgLuminanceCache[splitImgUrl] * 0.55;
+								} else {
+									splitLum = 0.25;
+									sampleImageLuminance(splitImgUrl, function(){ syncStudioCat2(); });
+								}
+							}
+							var splitTextColor = splitLum < 0.52 ? '#ffffff' : '#0f172a';
+							$('#signa-prev-split-banner').css('color', splitTextColor);
+							$('#signa-prev-split-title, #signa-prev-split-subtitle, #signa-prev-split-features').css('color', splitTextColor);
+
 							$('#secondary_color_hex').text(secondary);
 							$('#opacity_val_label').text(cardOpacity + '%');
 							$('#blur_val_label').text(blurPx + 'px');
@@ -1123,6 +1337,11 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 
 							if (isGlass) { $('#signa-glassmorphism-controls').slideDown(180); } else { $('#signa-glassmorphism-controls').slideUp(180); }
 							$('#signa-secondary-color-wrap').css('opacity', btnBgMode === 'gradient' ? '1' : '0.65');
+
+							// Show vibrant ambient orbs behind card so Glassmorphism backdrop-filter blur is unmistakably visible
+							$('#signa-prev-glass-orbs').toggleClass('is-glass-active', isGlass);
+							$('#signa-prev-glass-orbs .orb-1').css('background', primary);
+							$('#signa-prev-glass-orbs .orb-2').css('background', secondary);
 
 							var canvasBgCss = '';
 							if (canvasBgStyle === 'mesh_dark') {
@@ -1179,23 +1398,35 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							else if (cardBorder === 'glow') { borderCss = '1.5px solid ' + hexRgba(primary, 65); borderTopCss = borderCss; }
 							else if (cardBorder === 'top_accent') { borderTopCss = '4px solid ' + primary; }
 
-							$('#signa-live-preview-shell').css({
+							var $shell = $('#signa-live-preview-shell');
+							$shell.css({
 								maxWidth: showSplitBanner ? '720px' : '360px',
 								width: showSplitBanner ? '720px' : '100%',
 								flexDirection: formLayout === 'split_left' ? 'row-reverse' : 'row',
 								boxShadow: shadowCss,
 								border: borderCss,
-								borderTop: borderTopCss
+								borderTop: borderTopCss,
+								background: 'transparent'
 							});
 							$('#signa-prev-split-banner').toggle(showSplitBanner);
 
-							$('#signa-live-preview-card').css({
-								background: isGlass ? hexRgba(bg, cardOpacity) : bg,
-								backdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
-								webkitBackdropFilter: isGlass ? 'blur(' + blurPx + 'px)' : 'none',
-								color: text,
-								padding: Math.round(cardPadding * 0.85) + 'px'
-							});
+							// 3. Apply Glassmorphism Backdrop Blur directly via native setProperty (with dark glass adaptation if background is dark)
+							var effectiveCardBgHex = (isGlass && isDarkFormSurface && cardLum > 0.7) ? '#0f172a' : bg;
+							var effectiveGlassOpacity = isGlass ? Math.min(cardOpacity, 88) : 100;
+							var cardBgValue = isGlass ? hexRgba(effectiveCardBgHex, effectiveGlassOpacity) : bg;
+							var blurValue = isGlass ? ('blur(' + blurPx + 'px) saturate(160%)') : 'none';
+
+							var cardEl = document.getElementById('signa-live-preview-card');
+							if (cardEl) {
+								cardEl.style.setProperty('background', cardBgValue, 'important');
+								cardEl.style.setProperty('backdrop-filter', blurValue, 'important');
+								cardEl.style.setProperty('-webkit-backdrop-filter', blurValue, 'important');
+								cardEl.style.setProperty('color', text, 'important');
+								cardEl.style.setProperty('padding', Math.round(cardPadding * 0.85) + 'px', 'important');
+							}
+
+							// Ensure title, subtitle, and labels smoothly fade to the detected text color
+							$('#signa-prev-title, #signa-prev-subtitle, #signa-prev-field-label').css('color', text);
 
 							// Category 3: Apply Typography & Input Field Style in Live Preview
 							var fontMap = {
@@ -1215,33 +1446,37 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var inputRad = inputStyle === 'soft_pill' ? '99px' : inputStyle === 'underlined' ? '0' : Math.round(radius * 0.68) + 'px';
 							var btnRad = inputStyle === 'soft_pill' ? '99px' : Math.round(radius * 0.68) + 'px';
 
-							if (inputStyle === 'underlined') {
-								$prevInput[0].style.setProperty('background-color', 'transparent', 'important');
-								$prevInput[0].style.setProperty('border', 'none', 'important');
-								$prevInput[0].style.setProperty('border-bottom', '2.5px solid ' + primary, 'important');
-								$prevInput[0].style.setProperty('border-radius', '0', 'important');
-							} else if (inputStyle === 'outlined') {
-								$prevInput[0].style.setProperty('background-color', 'transparent', 'important');
-								$prevInput[0].style.setProperty('border', '1.5px solid ' + inputBorder, 'important');
-								$prevInput[0].style.setProperty('border-radius', inputRad, 'important');
-							} else {
-								$prevInput[0].style.setProperty('background-color', inputBg, 'important');
-								$prevInput[0].style.setProperty('border', '1.5px solid ' + inputBorder, 'important');
-								$prevInput[0].style.setProperty('border-radius', inputRad, 'important');
+							if ($prevInput.length) {
+								if (inputStyle === 'underlined') {
+									$prevInput[0].style.setProperty('background-color', 'transparent', 'important');
+									$prevInput[0].style.setProperty('border', 'none', 'important');
+									$prevInput[0].style.setProperty('border-bottom', '2.5px solid ' + primary, 'important');
+									$prevInput[0].style.setProperty('border-radius', '0', 'important');
+								} else if (inputStyle === 'outlined') {
+									$prevInput[0].style.setProperty('background-color', 'transparent', 'important');
+									$prevInput[0].style.setProperty('border', '1.5px solid ' + inputBorder, 'important');
+									$prevInput[0].style.setProperty('border-radius', inputRad, 'important');
+								} else {
+									$prevInput[0].style.setProperty('background-color', inputBg, 'important');
+									$prevInput[0].style.setProperty('border', '1.5px solid ' + inputBorder, 'important');
+									$prevInput[0].style.setProperty('border-radius', inputRad, 'important');
+								}
+								$prevInput[0].style.setProperty('color', text, 'important');
+								$prevInput[0].style.setProperty('height', inputHeight + 'px', 'important');
 							}
-							$prevInput[0].style.setProperty('height', inputHeight + 'px', 'important');
 
 							var $addon = $('#signa-prev-input-addon');
 							if (inputAddon === 'ir_flag') {
 								$addon.html('<span style="font-size:13px;">🇮🇷</span><span>+98</span>').show();
-								$prevInput[0].style.setProperty('padding-left', '56px', 'important');
+								if ($prevInput.length) $prevInput[0].style.setProperty('padding-left', '56px', 'important');
 							} else if (inputAddon === 'icon') {
 								$addon.html('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>').show();
-								$prevInput[0].style.setProperty('padding-left', '38px', 'important');
+								if ($prevInput.length) $prevInput[0].style.setProperty('padding-left', '38px', 'important');
 							} else {
 								$addon.hide();
-								$prevInput[0].style.setProperty('padding-left', '14px', 'important');
+								if ($prevInput.length) $prevInput[0].style.setProperty('padding-left', '14px', 'important');
 							}
+							$addon.css('color', isDarkFormSurface ? '#cbd5e1' : '#64748b');
 
 							var btnBg = btnBgMode === 'gradient' ? 'linear-gradient(135deg, ' + primary + ', ' + secondary + ')' : primary;
 							$('#signa-prev-btn-1, #signa-prev-btn-2').css({
@@ -1273,6 +1508,18 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							currentPreviewMode = 'page';
 							$('.signa-prev-mode-btn').removeClass('active');
 							$('.signa-prev-mode-btn[data-mode="page"]').addClass('active');
+							syncStudioCat2();
+						});
+
+						// When user adjusts Glassmorphism blur or opacity slider, auto-Lower opacity slightly if it was 100% so blur is immediately visible
+						$('#backdrop_blur').on('input change', function(){
+							if (!$('#glassmorphism').is(':checked')) {
+								$('#glassmorphism').prop('checked', true);
+							}
+							var curOp = parseFloat($('#card_bg_opacity').val() || 85);
+							if (curOp > 82) {
+								$('#card_bg_opacity').val(68);
+							}
 							syncStudioCat2();
 						});
 

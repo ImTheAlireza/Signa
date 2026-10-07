@@ -74,19 +74,63 @@
 }
 
 /* Category 2: Card Elevation (Shadows), Borders, Padding & Glassmorphism */
+.signa-otp-wrapper {
+	position: relative;
+}
+
+.signa-frontend-glass-orbs {
+	position: absolute;
+	inset: -18px;
+	pointer-events: none;
+	z-index: 0;
+	overflow: visible;
+}
+
+.signa-fe-orb {
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(8px);
+	opacity: 0.72;
+}
+
+.signa-fe-orb.is-1 {
+	width: 140px;
+	height: 140px;
+	background: var(--signa-primary);
+	top: -12px;
+	right: -12px;
+}
+
+.signa-fe-orb.is-2 {
+	width: 125px;
+	height: 125px;
+	background: var(--signa-secondary);
+	bottom: -12px;
+	left: -12px;
+}
+
 .signa-otp-card {
+	position: relative;
+	z-index: 1;
 	background: var(--signa-bg);
 	color: var(--signa-text);
 	border: 1px solid rgba(156, 163, 175, 0.25);
 	border-radius: var(--signa-radius);
 	padding: var(--signa-card-pad, 32px) calc(var(--signa-card-pad, 32px) * 0.88);
 	box-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
-	transition: box-shadow 0.25s ease, border-color 0.25s ease;
+	transition: color 0.42s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.42s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.signa-otp-title,
+.signa-otp-subtitle,
+.signa-label,
+.signa-input {
+	transition: color 0.42s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.38s ease, border-color 0.38s ease;
 }
 
 .signa-otp-wrapper.signa-glassmorphism .signa-otp-card {
-	backdrop-filter: blur(var(--signa-blur, 16px));
-	-webkit-backdrop-filter: blur(var(--signa-blur, 16px));
+	backdrop-filter: blur(var(--signa-blur, 16px)) saturate(160%) !important;
+	-webkit-backdrop-filter: blur(var(--signa-blur, 16px)) saturate(160%) !important;
 }
 
 /* Elevation Presets (apply to card in standard mode, or wrapper in split-screen mode) */
