@@ -1546,12 +1546,16 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								syncStudioCat2();
 								return;
 							}
+							// Apply the new stage in one step. Modal/drawer/sheet entrances (CSS) play once from their start position;
+							// page mode gets a short fade. No hidden gap, no second animation.
+							syncStudioCat2();
 							clearTimeout(previewSwitchTimer);
-							$shellEl.addClass('is-switching');
+							$shellEl.removeClass('is-switch-in');
+							void $shellEl[0].offsetWidth;
+							$shellEl.addClass('is-switch-in');
 							previewSwitchTimer = setTimeout(function(){
-								syncStudioCat2();
-								$shellEl.removeClass('is-switching');
-							}, 180);
+								$shellEl.removeClass('is-switch-in');
+							}, 450);
 						}
 
 						function syncStudioCat2(e){

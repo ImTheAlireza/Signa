@@ -2702,12 +2702,13 @@
 	animation: signaSimBottomSheet 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Out-in while the stage type changes: fade the card out, skip the entrance */
-#signa-app-shell #signa-live-preview-shell.is-switching {
-	opacity: 0 !important;
-	transform: translate3d(0, 6px, 0) scale(0.985) !important;
-	animation: none !important;
-	transition: opacity 0.18s ease, transform 0.18s ease !important;
+/* Stage type changed: page mode fades in; modal/drawer/sheet keep their own entrance (higher specificity) */
+#signa-app-shell #signa-live-preview-shell.is-switch-in {
+	animation: signaSwitchFadeIn 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes signaSwitchFadeIn {
+	0% { opacity: 0; transform: translate3d(0, 8px, 0) scale(0.985); }
+	100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 /* ==========================================
