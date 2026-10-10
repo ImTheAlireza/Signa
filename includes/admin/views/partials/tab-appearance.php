@@ -1528,6 +1528,32 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							img.src = cleanUrl;
 						}
 
+						// Smooth stage switching: when the stage type changes, fade the card out,
+						// swap the layout while it is hidden, then let the entrance play.
+						var lastPreviewKey = null;
+						var previewSwitchTimer = null;
+						function previewStateKey(){
+							return currentPreviewMode === 'modal'
+								? 'modal:' + ($('input[name=\"signa[modal_style]\"]:checked').val() || 'center')
+								: 'page';
+						}
+						function requestPreviewSwitch(){
+							var key = previewStateKey();
+							var $shellEl = $('#signa-live-preview-shell');
+							var changed = lastPreviewKey !== null && key !== lastPreviewKey && $shellEl.length;
+							lastPreviewKey = key;
+							if (!changed) {
+								syncStudioCat2();
+								return;
+							}
+							clearTimeout(previewSwitchTimer);
+							$shellEl.addClass('is-switching');
+							previewSwitchTimer = setTimeout(function(){
+								syncStudioCat2();
+								$shellEl.removeClass('is-switching');
+							}, 180);
+						}
+
 						function syncStudioCat2(e){
 							var triggeredById = (e && e.target && e.target.id) ? e.target.id : '';
 							var isWidePreview = $('.signa-studio-layout').hasClass('is-wide-preview');
@@ -1829,14 +1855,21 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							}
 
 							var singleCardMaxW = isWidePreview ? '470px' : '350px';
+							var isOverlayPreview = currentPreviewMode === 'modal' && modalStyle !== 'center';
 							var $shell = $('#signa-live-preview-shell');
 							$shell.toggleClass('is-split', showSplitBanner);
 							var shellDom = document.getElementById('signa-live-preview-shell');
 							if (shellDom) {
-								shellDom.style.setProperty('width', '100%', 'important');
-								shellDom.style.setProperty('max-width', showSplitBanner ? '100%' : singleCardMaxW, 'important');
+								// Drawers & bottom sheet are sized/positioned by CSS (full stage height, slide transforms).
+								if (isOverlayPreview) {
+									shellDom.style.removeProperty('width');
+									shellDom.style.removeProperty('max-width');
+									shellDom.style.removeProperty('transform');
+								} else {
+									shellDom.style.setProperty('width', '100%', 'important');
+									shellDom.style.setProperty('max-width', showSplitBanner ? '100%' : singleCardMaxW, 'important');
+								}
 								shellDom.style.setProperty('box-sizing', 'border-box', 'important');
-								shellDom.style.setProperty('transform', 'none', 'important');
 								shellDom.style.setProperty('margin', '0', 'important');
 								shellDom.style.setProperty('border-radius', shellRadiusCss, 'important');
 								shellDom.style.setProperty('flex-direction', formLayout === 'split_left' ? 'row-reverse' : 'row', 'important');
@@ -2173,7 +2206,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							currentPreviewMode = $(this).attr('data-mode') || 'page';
 							$('.signa-prev-mode-btn').removeClass('active');
 							$(this).addClass('active');
-							syncStudioCat2();
+							requestPreviewSwitch();
 						});
 
 						// Interactive Step 1 <-> Step 2 buttons & preview buttons
@@ -2211,7 +2244,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							currentPreviewMode = 'modal';
 							$('.signa-prev-mode-btn').removeClass('active');
 							$('.signa-prev-mode-btn[data-mode="modal"]').addClass('active');
-							syncStudioCat2();
+							requestPreviewSwitch();
 						});
 
 						// Auto-switch Live Preview to Page mode when user changes Form Layout or Card Position
@@ -2219,7 +2252,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							currentPreviewMode = 'page';
 							$('.signa-prev-mode-btn').removeClass('active');
 							$('.signa-prev-mode-btn[data-mode="page"]').addClass('active');
-							syncStudioCat2();
+							requestPreviewSwitch();
 						});
 
 						// Auto-switch Live Preview to Step 2 when user changes any Category 4 OTP/Timer control

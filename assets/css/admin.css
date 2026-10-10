@@ -2489,7 +2489,6 @@
 	width: 100% !important;
 	max-width: 350px !important;
 	box-sizing: border-box !important;
-	transform: none !important;
 	zoom: 1 !important;
 	margin: 0 !important;
 	overflow: visible !important;
@@ -2525,123 +2524,158 @@
 
 /* Simulated Website Backdrop for Modal / Drawer Mode inside Live Preview */
 .signa-prev-site-skeleton {
-	display: none;
-	width: 100%;
+	display: flex;
 	position: absolute;
 	inset: 0;
+	width: 100%;
 	padding: 16px;
-	pointer-events: none;
+	box-sizing: border-box;
 	flex-direction: column;
 	gap: 12px;
-	opacity: 0.45;
-	box-sizing: border-box;
+	pointer-events: none;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
-.signa-preview-canvas.is-modal-mode {
-	position: relative;
-	min-height: 430px;
-	padding: 0 !important;
-	overflow: hidden !important;
-	justify-content: center;
+/* ==========================================================
+   LIVE PREVIEW STAGE · MODAL / DRAWER / BOTTOM SHEET
+   One stage element is reused; the backdrop and the fake site
+   fade in/out instead of popping, and the shell slides in with a
+   single smooth ease-out curve (no overshoot).
+   ========================================================== */
+#signa-app-shell #signa-preview-canvas {
+	transition: background 0.4s ease, padding 0.45s cubic-bezier(0.22, 1, 0.36, 1), min-height 0.45s ease !important;
 }
 
-.signa-preview-canvas.is-modal-mode .signa-prev-site-skeleton {
-	display: flex;
-}
-
-.signa-prev-modal-backdrop {
-	display: none;
+#signa-app-shell .signa-prev-modal-backdrop {
+	display: block;
 	position: absolute;
 	inset: 0;
+	z-index: 1;
 	background: rgba(15, 23, 42, 0.56);
 	backdrop-filter: blur(4px);
-	z-index: 1;
+	-webkit-backdrop-filter: blur(4px);
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
-.signa-preview-canvas.is-modal-mode .signa-prev-modal-backdrop {
-	display: block;
+#signa-app-shell #signa-preview-canvas.is-modal-mode {
+	position: relative;
+	min-height: 460px !important;
+	padding: 0 !important;
+	overflow: hidden !important;
 }
 
-.signa-preview-canvas.is-modal-mode .signa-preview-viewport {
+#signa-app-shell #signa-preview-canvas.is-modal-mode .signa-prev-site-skeleton {
+	opacity: 0.45;
+	visibility: visible;
+}
+
+#signa-app-shell #signa-preview-canvas.is-modal-mode .signa-prev-modal-backdrop {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* Center modal: stays in normal flow, grows with the card */
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-center #signa-preview-viewport {
 	position: relative;
 	z-index: 2;
 	width: 100% !important;
 	max-width: 100% !important;
-	min-height: 430px;
+	min-height: 460px !important;
 	height: auto !important;
-	padding: 18px !important;
+	padding: 32px 20px !important;
 	box-sizing: border-box !important;
-	overflow: visible !important;
-}
-
-/* Live Modal / Drawer Entrance Animations in Preview Stage */
-@keyframes signaSimModalCenter {
-	0% { opacity: 0; }
-	100% { opacity: 1; }
-}
-@keyframes signaSimDrawerLeft {
-	0% { opacity: 0.4; transform: translateX(-100%); }
-	100% { opacity: 1; transform: translateX(0); }
-}
-@keyframes signaSimDrawerRight {
-	0% { opacity: 0.4; transform: translateX(100%); }
-	100% { opacity: 1; transform: translateX(0); }
-}
-@keyframes signaSimBottomSheet {
-	0% { opacity: 0.4; transform: translateY(100%); }
-	100% { opacity: 1; transform: translateY(0); }
-}
-
-.signa-preview-canvas.is-modal-mode.sim-center .signa-preview-viewport {
-	align-items: center !important;
 	justify-content: center !important;
-}
-.signa-preview-canvas.is-modal-mode.sim-center #signa-live-preview-shell {
-	animation: signaSimModalCenter 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.signa-preview-canvas.is-modal-mode.sim-drawer_left .signa-preview-viewport {
-	align-items: flex-end !important;
-	justify-content: stretch !important;
-	padding: 0 !important;
-}
-.signa-preview-canvas.is-modal-mode.sim-drawer_left #signa-live-preview-shell {
-	height: 100% !important;
-	border-radius: 0 16px 16px 0 !important;
-	max-width: 280px !important;
-	width: 280px !important;
-	transform: none !important;
-	margin: 0 !important;
-	animation: signaSimDrawerLeft 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.signa-preview-canvas.is-modal-mode.sim-drawer_right .signa-preview-viewport {
-	align-items: flex-start !important;
-	justify-content: stretch !important;
-	padding: 0 !important;
-}
-.signa-preview-canvas.is-modal-mode.sim-drawer_right #signa-live-preview-shell {
-	height: 100% !important;
-	border-radius: 16px 0 0 16px !important;
-	max-width: 280px !important;
-	width: 280px !important;
-	transform: none !important;
-	margin: 0 !important;
-	animation: signaSimDrawerRight 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.signa-preview-canvas.is-modal-mode.sim-bottom_sheet .signa-preview-viewport {
 	align-items: center !important;
-	justify-content: flex-end !important;
-	padding: 24px 0 0 0 !important;
 }
-.signa-preview-canvas.is-modal-mode.sim-bottom_sheet #signa-live-preview-shell {
+
+/* Drawers & bottom sheet: the viewport covers the whole stage so the panel runs top to bottom */
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-drawer_left #signa-preview-viewport,
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-drawer_right #signa-preview-viewport,
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-bottom_sheet #signa-preview-viewport {
+	position: absolute !important;
+	inset: 0 !important;
+	z-index: 2;
 	width: 100% !important;
 	max-width: 100% !important;
-	border-radius: 22px 22px 0 0 !important;
-	transform: none !important;
+	height: 100% !important;
+	min-height: 0 !important;
 	margin: 0 !important;
-	animation: signaSimBottomSheet 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+}
+
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-drawer_left #signa-preview-viewport {
+	align-items: flex-end !important;
+	justify-content: stretch !important;
+}
+
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-drawer_right #signa-preview-viewport {
+	align-items: flex-start !important;
+	justify-content: stretch !important;
+}
+
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-bottom_sheet #signa-preview-viewport {
+	align-items: stretch !important;
+	justify-content: flex-end !important;
+}
+
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-drawer_left #signa-live-preview-shell,
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-drawer_right #signa-live-preview-shell {
+	width: 280px !important;
+	max-width: 280px !important;
+	height: 100% !important;
+	margin: 0 !important;
+}
+
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-bottom_sheet #signa-live-preview-shell {
+	width: 100% !important;
+	max-width: 100% !important;
+	height: auto !important;
+	margin: 0 !important;
+}
+
+/* Entrance curves: one ease-out, no bounce */
+@keyframes signaSimModalCenter {
+	0% { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.97); }
+	100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes signaSimDrawerLeft {
+	0% { transform: translate3d(-100%, 0, 0); }
+	100% { transform: translate3d(0, 0, 0); }
+}
+@keyframes signaSimDrawerRight {
+	0% { transform: translate3d(100%, 0, 0); }
+	100% { transform: translate3d(0, 0, 0); }
+}
+@keyframes signaSimBottomSheet {
+	0% { transform: translate3d(0, 100%, 0); }
+	100% { transform: translate3d(0, 0, 0); }
+}
+
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-center #signa-live-preview-shell {
+	animation: signaSimModalCenter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-drawer_left #signa-live-preview-shell {
+	animation: signaSimDrawerLeft 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-drawer_right #signa-live-preview-shell {
+	animation: signaSimDrawerRight 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+#signa-app-shell #signa-preview-canvas.is-modal-mode.sim-bottom_sheet #signa-live-preview-shell {
+	animation: signaSimBottomSheet 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Out-in while the stage type changes: fade the card out, skip the entrance */
+#signa-app-shell #signa-live-preview-shell.is-switching {
+	opacity: 0 !important;
+	transform: translate3d(0, 6px, 0) scale(0.985) !important;
+	animation: none !important;
+	transition: opacity 0.18s ease, transform 0.18s ease !important;
 }
 
 /* ==========================================

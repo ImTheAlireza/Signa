@@ -85,7 +85,7 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 		#signa-app-shell .signa-prev-expand-btn { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 7px; border: 1px solid var(--s-border-input); background: var(--s-bg-subtle); color: var(--s-text); font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
 		#signa-app-shell .signa-prev-expand-btn.active { border-color: var(--s-primary); color: var(--s-primary); background: var(--s-primary-soft); }
 		#signa-app-shell .signa-preview-viewport { width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; overflow: visible !important; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.25s ease; position: relative; z-index: 2; }
-		#signa-app-shell #signa-live-preview-shell { width: 100% !important; max-width: 350px !important; box-sizing: border-box !important; transform: none !important; zoom: 1 !important; margin: 0 !important; overflow: visible !important; }
+		#signa-app-shell #signa-live-preview-shell { width: 100% !important; max-width: 350px !important; box-sizing: border-box !important; zoom: 1 !important; margin: 0 !important; overflow: visible !important; }
 		#signa-app-shell .signa-studio-layout.is-wide-preview #signa-live-preview-shell:not(.is-split) { max-width: 470px !important; }
 		#signa-app-shell #signa-live-preview-shell.is-split { width: 100% !important; max-width: 100% !important; }
 		#signa-app-shell #signa-live-preview-shell.is-split #signa-live-preview-card { flex: 0 0 55% !important; min-width: 0 !important; max-width: 55% !important; box-sizing: border-box !important; }
@@ -98,19 +98,6 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 		#signa-app-shell .signa-studio-layout.is-wide-preview #signa-live-preview-shell.is-split #signa-prev-split-subtitle { font-size: 12.5px !important; line-height: 1.7 !important; }
 		#signa-app-shell .signa-studio-layout.is-wide-preview #signa-live-preview-shell.is-split #signa-prev-split-badge { font-size: 11.5px !important; padding: 4px 12px !important; margin-bottom: 12px !important; }
 		#signa-app-shell .signa-studio-layout.is-wide-preview #signa-live-preview-shell.is-split #signa-prev-split-features { font-size: 12px !important; gap: 7px !important; margin-top: 18px !important; padding-top: 14px !important; }
-		#signa-app-shell .signa-prev-site-skeleton { display: none; width: 100%; position: absolute; inset: 0; padding: 16px; pointer-events: none; flex-direction: column; gap: 12px; opacity: 0.45; box-sizing: border-box; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode { position: relative; min-height: 460px !important; padding: 0 !important; overflow: hidden !important; justify-content: center; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode .signa-prev-site-skeleton { display: flex; }
-		#signa-app-shell .signa-prev-modal-backdrop { display: none; position: absolute; inset: 0; background: rgba(15, 23, 42, 0.56); backdrop-filter: blur(4px); z-index: 1; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode .signa-prev-modal-backdrop { display: block; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode .signa-preview-viewport { position: relative; z-index: 2; width: 100% !important; max-width: 100% !important; min-height: 460px !important; height: auto !important; padding: 32px 24px !important; box-sizing: border-box !important; overflow: visible !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-center .signa-preview-viewport { align-items: center !important; justify-content: center !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_left .signa-preview-viewport { align-items: flex-end !important; justify-content: stretch !important; padding: 0 !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_left #signa-live-preview-shell { height: 100% !important; border-radius: 0 16px 16px 0 !important; max-width: 280px !important; width: 280px !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_right .signa-preview-viewport { align-items: flex-start !important; justify-content: stretch !important; padding: 0 !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_right #signa-live-preview-shell { height: 100% !important; border-radius: 16px 0 0 16px !important; max-width: 280px !important; width: 280px !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-bottom_sheet .signa-preview-viewport { align-items: center !important; justify-content: flex-end !important; padding: 28px 0 0 0 !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-bottom_sheet #signa-live-preview-shell { width: 100% !important; max-width: 100% !important; border-radius: 22px 22px 0 0 !important; }
 
 		/* Polished Category 4 Micro-Animations: Choreographed Entrance, Staggered Elements, Digit Pop & Elastic Error Shake */
 		@keyframes signaAnimFadeUp {
