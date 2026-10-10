@@ -1,28 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Signa OTP – دمو تعاملی | پارسنا</title>
-<meta name="description" content="دمو تعاملی Signa OTP: ورود و ثبت‌نام وردپرس با کد یکبارمصرف از طریق پیامک، بله و ایمیل.">
+<meta name="description" content="دمو تعاملی Signa OTP: ورود وردپرس با کد یکبارمصرف.">
 <link rel="stylesheet" href="assets/css/demo.css">
 </head>
 <body>
 
 <header class="topbar">
-  <div class="wrap">
+  <div class="wrap topbar-in">
     <a class="brand" href="#top">
-      <span class="brand-badge" aria-hidden="true">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-      </span>
+      <span class="brand-badge" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>
       <span>Signa OTP <span class="tag">v2.7.7</span><small>تیم پارسنا · parsena.ir</small></span>
     </a>
-    <nav class="topnav" aria-label="بخش‌ها">
-      <a href="#top">دمو</a>
-      <a href="#features">امکانات</a>
-      <a href="#install">نصب و راه‌اندازی</a>
-      <a href="#contact">ارتباط</a>
-    </nav>
   </div>
 </header>
 
@@ -36,7 +28,6 @@
 
     <div class="scene-wrap">
       <div class="scene" id="scene" data-step="login">
-
         <svg class="wave" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
           <path class="wave-guide" d="M 60 42 C 66 12, 70 12, 74 46" pathLength="100"/>
           <path class="wave-run" d="M 60 42 C 66 12, 70 12, 74 46" pathLength="100"/>
@@ -44,17 +35,14 @@
           <path class="wave-run w3" d="M 60 42 C 66 12, 70 12, 74 46" pathLength="100"/>
         </svg>
 
-        <!-- Laptop with the login form open on screen -->
+        <!-- Laptop: vector body, login form on the screen -->
         <div class="laptop" id="laptop">
           <div class="lp-lid">
-            <div class="lp-screen">
-              <div class="lp-chrome" aria-hidden="true">
-                <span></span><span></span><span></span>
-                <em dir="ltr">parsena.ir/signa</em>
-              </div>
-              <div class="lp-page">
-
-                <div class="sc-scr sc-login is-on">
+            <span class="lp-cam" aria-hidden="true"></span>
+            <div class="lp-inner">
+              <div class="lp-screen">
+                <div class="lp-page">
+                  <div class="sc-scr sc-login is-on">
                   <div class="sc-card">
                     <div class="sc-brand">
                       <span class="sc-brand-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>
@@ -73,8 +61,7 @@
                     </form>
                   </div>
                 </div>
-
-                <div class="sc-scr sc-verify">
+                  <div class="sc-scr sc-verify">
                   <div class="sc-card">
                     <div class="sc-top">
                       <button type="button" class="sc-back" aria-label="بازگشت به شماره"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></button>
@@ -94,62 +81,75 @@
                     <div class="sc-resend">
                       <span class="sc-resend-txt"></span>
                       <button type="button" class="sc-link sc-resend-btn" hidden>ارسال مجدد کد</button>
-                    </div>
-                  </div>
-                </div>
+                    
+                  
+                
 
               </div>
             </div>
           </div>
-          <div class="lp-base" aria-hidden="true"><span></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="lp-base" aria-hidden="true"><span class="lp-notch"></span></div>
         </div>
 
-        <!-- Phone on its home screen -->
+        <!-- Phone: iPhone with home screen -->
         <div class="phone" id="phone">
           <svg class="phone-body" viewBox="0 0 300 620" aria-hidden="true" focusable="false">
             <defs>
               <linearGradient id="ti" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0" stop-color="#5b6372"/><stop offset="0.5" stop-color="#2a303b"/><stop offset="1" stop-color="#4a5260"/>
+                <stop offset="0" stop-color="#6b7280"/><stop offset="0.5" stop-color="#2a2f38"/><stop offset="1" stop-color="#5a6170"/>
               </linearGradient>
             </defs>
-            <rect x="-3" y="130" width="4" height="34" rx="2" fill="#2a303b"/>
-            <rect x="-3" y="182" width="4" height="62" rx="2" fill="#2a303b"/>
-            <rect x="-3" y="254" width="4" height="62" rx="2" fill="#2a303b"/>
-            <rect x="299" y="206" width="4" height="92" rx="2" fill="#2a303b"/>
+            <rect x="-3" y="130" width="4" height="34" rx="2" fill="#2a2f38"/>
+            <rect x="-3" y="182" width="4" height="62" rx="2" fill="#2a2f38"/>
+            <rect x="-3" y="254" width="4" height="62" rx="2" fill="#2a2f38"/>
+            <rect x="299" y="206" width="4" height="92" rx="2" fill="#2a2f38"/>
             <rect x="0" y="0" width="300" height="620" rx="62" fill="url(#ti)"/>
             <rect x="4" y="4" width="292" height="612" rx="58" fill="#06080c"/>
-            <rect x="9" y="9" width="282" height="602" rx="53" fill="none" stroke="#1a1f29" stroke-width="2"/>
           </svg>
           <div class="phone-screen">
             <div class="island" aria-hidden="true"></div>
             <div class="sb" aria-hidden="true">
               <span>۹:۴۱</span>
               <span class="sb-ico">
-                <svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx="1" fill="currentColor"/><rect x="4.5" y="4" width="3" height="6" rx="1" fill="currentColor"/><rect x="9" y="2" width="3" height="8" rx="1" fill="currentColor"/><rect x="13.5" y="0" width="2.5" height="10" rx="1" fill="currentColor"/></svg>
-                <svg width="24" height="11" viewBox="0 0 24 11"><rect x=".5" y=".5" width="20" height="10" rx="3" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="15" height="7" rx="1.6" fill="currentColor"/><rect x="22" y="3.5" width="1.6" height="4" rx=".8" fill="currentColor" opacity=".5"/></svg>
+                <svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="currentColor"/><rect x="4.7" y="5" width="3" height="6" rx="1" fill="currentColor"/><rect x="9.4" y="2.5" width="3" height="8.5" rx="1" fill="currentColor"/><rect x="14" y="0" width="3" height="11" rx="1" fill="currentColor"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 10.2l1.6-1.8a2.3 2.3 0 0 0-3.2 0zM3.6 6.4a5.6 5.6 0 0 1 7.8 0l-1.3 1.4a3.7 3.7 0 0 0-5.2 0zM.6 3.3a9.5 9.5 0 0 1 13.8 0l-1.3 1.4a7.6 7.6 0 0 0-11.2 0z" fill="currentColor"/></svg>
+                <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="16.5" height="8" rx="1.8" fill="currentColor"/><rect x="23" y="4" width="1.6" height="4" rx=".8" fill="currentColor" opacity=".45"/></svg>
               </span>
             </div>
 
             <div class="home" aria-hidden="true">
-              <div class="clock">
-                <span class="clk-time">۹:۴۱</span>
-                <span class="clk-date">شنبه ۱۹ مهر</span>
+              <div class="grid">
+                  <div class="app"><span class="ico" style="--c1:#4ea8ff;--c2:#1b6fe0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5.5" width="18" height="13" rx="2.2"/><polyline points="3.5 7 12 13.2 20.5 7"/></svg></span><span class="lbl">ایمیل</span></div>
+                  <div class="app"><span class="ico" style="--c1:#9a9aa0;--c2:#5c5c63"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8h3.2l1.8-2.6h6l1.8 2.6H20v11H4z"/><circle cx="12" cy="13" r="3.4"/></svg></span><span class="lbl">دوربین</span></div>
+                  <div class="app"><span class="ico" style="--c1:#ffffff;--c2:#e6e6ec"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="7.6" r="3.9" fill="#ff9f0a"/><circle cx="16.4" cy="12" r="3.9" fill="#ffd60a"/><circle cx="12" cy="16.4" r="3.9" fill="#34c759"/><circle cx="7.6" cy="12" r="3.9" fill="#0a84ff"/><circle cx="12" cy="12" r="2.6" fill="#f2f2f7"/></svg></span><span class="lbl">عکس‌ها</span></div>
+                  <div class="app"><span class="ico" style="--c1:#2a2a2e;--c2:#000000"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.6" fill="none" stroke="#fff" stroke-width="1.4"/><line x1="12" y1="12" x2="12" y2="6.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><line x1="12" y1="12" x2="15.6" y2="13.8" stroke="#ff9f0a" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="12" r="0.9" fill="#ff9f0a"/></svg></span><span class="lbl">ساعت</span></div>
+                  <div class="app"><span class="ico" style="--c1:#f2f7ee;--c2:#d9ead0"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6.5l5.5-2 7 2 5.5-2v13l-5.5 2-7-2-5.5 2z" fill="#bfe3a8" stroke="#8fcf6a" stroke-width="0.8" stroke-linejoin="round"/><path d="M8.5 4.5v13M15.5 6.5v13" stroke="#8fb8e0" stroke-width="0.9"/><path d="M12 5.2a3.3 3.3 0 0 0-3.3 3.3c0 2.5 3.3 5.6 3.3 5.6s3.3-3.1 3.3-5.6A3.3 3.3 0 0 0 12 5.2z" fill="#ff3b30"/><circle cx="12" cy="8.5" r="1.2" fill="#fff"/></svg></span><span class="lbl">نقشه‌ها</span></div>
+                  <div class="app"><span class="ico cal"><span class="cal-bar">شنبه</span><span class="cal-num">۱۹</span></span><span class="lbl">تقویم</span></div>
+                  <div class="app"><span class="ico" style="--c1:#ffe066;--c2:#f5c400"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="4" width="14" height="16" rx="2" fill="#fff"/><line x1="8" y1="9" x2="16" y2="9" stroke="#d1d1d6" stroke-width="1.2"/><line x1="8" y1="12.5" x2="16" y2="12.5" stroke="#d1d1d6" stroke-width="1.2"/><line x1="8" y1="16" x2="13" y2="16" stroke="#d1d1d6" stroke-width="1.2"/></svg></span><span class="lbl">یادداشت</span></div>
+                  <div class="app"><span class="ico" style="--c1:#a5a5ab;--c2:#5a5a61"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="7.4" fill="none" stroke="#fff" stroke-width="2.6" stroke-dasharray="2.4 2.2"/><circle cx="12" cy="12" r="6.3" fill="#8e8e93"/><circle cx="12" cy="12" r="2.6" fill="#fff"/></svg></span><span class="lbl">تنظیمات</span></div>
+                  <div class="app"><span class="ico" style="--c1:#2b2b30;--c2:#000000"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="6" width="16" height="11" rx="2.5" fill="#ff453a"/><rect x="4" y="8.5" width="16" height="11" rx="2.5" fill="#30d158" opacity="0.92"/><rect x="4" y="11" width="16" height="9" rx="2.5" fill="#0a84ff"/></svg></span><span class="lbl">کیف پول</span></div>
+                  <div class="app"><span class="ico" style="--c1:#4aa3ff;--c2:#0a70e0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="8" width="14" height="12" rx="2.2"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></span><span class="lbl">فروشگاه</span></div>
+                  <div class="app"><span class="ico" style="--c1:#6ec6ff;--c2:#1e88e5"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2" fill="#ffd60a"/><g stroke="#ffd60a" stroke-width="1.7" stroke-linecap="round"><line x1="12" y1="3.5" x2="12" y2="5.3"/><line x1="12" y1="18.7" x2="12" y2="20.5"/><line x1="3.5" y1="12" x2="5.3" y2="12"/><line x1="18.7" y1="12" x2="20.5" y2="12"/><line x1="6" y1="6" x2="7.3" y2="7.3"/><line x1="16.7" y1="16.7" x2="18" y2="18"/><line x1="6" y1="18" x2="7.3" y2="16.7"/><line x1="16.7" y1="7.3" x2="18" y2="6"/></g></svg></span><span class="lbl">آب‌وهوا</span></div>
+                  <div class="app"><span class="ico" style="--c1:#ffffff;--c2:#f2f2f7"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="6.5" cy="8" r="1.5" fill="#ff3b30"/><circle cx="6.5" cy="12" r="1.5" fill="#ff9f0a"/><circle cx="6.5" cy="16" r="1.5" fill="#0a84ff"/><g stroke="#3c3c43" stroke-width="1.6" stroke-linecap="round"><line x1="10" y1="8" x2="18" y2="8"/><line x1="10" y1="12" x2="18" y2="12"/><line x1="10" y1="16" x2="15" y2="16"/></g></svg></span><span class="lbl">یادآور</span></div>
+                  <div class="app"><span class="ico" style="--c1:#ffffff;--c2:#f2f2f7"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19s-6.8-4.2-6.8-9.1A3.7 3.7 0 0 1 12 7.8a3.7 3.7 0 0 1 6.8 2.1C18.8 14.8 12 19 12 19z" fill="#ff2d55"/></svg></span><span class="lbl">سلامت</span></div>
+                  <div class="app"><span class="ico" style="--c1:#4aa3ff;--c2:#0a70e0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.2h7a2 2 0 0 1 2 2v7.8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" fill="#fff" fill-opacity="0.25"/></svg></span><span class="lbl">فایل‌ها</span></div>
+                  <div class="app"><span class="ico" style="--c1:#ffb84d;--c2:#f08a00"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="#fff"><circle cx="8" cy="8" r="1.4"/><circle cx="12" cy="8" r="1.4"/><circle cx="16" cy="8" r="1.4"/><circle cx="8" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="16" cy="12" r="1.4"/><circle cx="8" cy="16" r="1.4"/><circle cx="12" cy="16" r="1.4"/></g><rect x="14.6" y="14.6" width="2.8" height="2.8" rx="0.6" fill="#fff"/></svg></span><span class="lbl">ماشین‌حساب</span></div>
+                  <div class="app"><span class="ico" style="--c1:#c7c7cc;--c2:#8e8e93"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="9" r="3.4" fill="#fff"/><path d="M5.8 19c.9-3.3 3.3-5 6.2-5s5.3 1.7 6.2 5z" fill="#fff"/></svg></span><span class="lbl">مخاطبین</span></div>
+                  <div class="app"><span class="ico" style="--c1:#ffb84d;--c2:#f08a00"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 11.5L12 5l7.5 6.5V19a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1z" fill="#fff"/><rect x="10" y="14" width="4" height="6" rx="1" fill="#f08a00"/></svg></span><span class="lbl">خانه</span></div>
+                  <div class="app"><span class="ico" style="--c1:#1c1c1e;--c2:#000000"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="7.6" fill="none" stroke="#fa114f" stroke-width="2.4"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="#92e82a" stroke-width="2.4"/><circle cx="12" cy="12" r="1.2" fill="#00e4ff"/></svg></span><span class="lbl">تمرین</span></div>
+                  <div class="app"><span class="ico" style="--c1:#2b2b30;--c2:#000000"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="4 16 9 11 13 14 20 7" fill="none" stroke="#30d158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="15.5 7 20 7 20 11.5" fill="none" stroke="#30d158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl">بورس</span></div>
+                  <div class="app"><span class="ico" style="--c1:#c77dff;--c2:#7b2ff7"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="10" r="3.2" fill="#fff"/><path d="M7.4 10a4.6 4.6 0 0 1 9.2 0" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><line x1="12" y1="13.2" x2="12" y2="18" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="lbl">پادکست</span></div>
               </div>
-              <div class="apps">
-                <div class="app"><span class="app-ico" style="--c:#34c759;--c2:#1fa64a"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4.5 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></span><span class="app-lbl">پیام‌ها</span></div>
-                <div class="app"><span class="app-ico" style="--c:#3b82f6;--c2:#1d5fd1"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg></span><span class="app-lbl">ایمیل</span></div>
-                <div class="app"><span class="app-ico" style="--c:#8e8e93;--c2:#5b5b61"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span><span class="app-lbl">دوربین</span></div>
-                <div class="app"><span class="app-ico" style="--c:#34d399;--c2:#15a673"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="9 4 3 6 3 20 9 18 15 20 21 18 21 4 15 6 9 4"/><line x1="9" y1="4" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="20"/></svg></span><span class="app-lbl">نقشه‌ها</span></div>
-                <div class="app"><span class="app-ico" style="--c:#38bdf8;--c2:#0c8fd0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5"/></svg></span><span class="app-lbl">مرورگر</span></div>
-                <div class="app"><span class="app-ico" style="--c:#8b8e98;--c2:#5d606b"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="7.5" stroke-dasharray="3 2.6"/><circle cx="12" cy="12" r="3"/></svg></span><span class="app-lbl">تنظیمات</span></div>
-                <div class="app"><span class="app-ico" style="--c:#ff453a;--c2:#d62f26"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg></span><span class="app-lbl">تقویم</span></div>
-                <div class="app"><span class="app-ico" style="--c:#ffb020;--c2:#e08a00"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span><span class="app-lbl">یادداشت</span></div>
-              </div>
+              <div class="pagedots"><i class="on"></i><i></i></div>
               <div class="dock">
-                <span class="dock-ico" style="--c:#34c759;--c2:#1fa64a"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
-                <span class="dock-ico" style="--c:#38bdf8;--c2:#0c8fd0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5"/></svg></span>
-                <span class="dock-ico" style="--c:#3b82f6;--c2:#1d5fd1"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4.5 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></span>
-                <span class="dock-ico" style="--c:#ff2d75;--c2:#d0185a"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18V6l11-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></span>
+                  <span class="ico" style="--c1:#5bd97a;--c2:#1fa64a"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+                  <span class="ico" style="--c1:#ffffff;--c2:#e6e6ec"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.6" fill="none" stroke="#0a84ff" stroke-width="1.6"/><polygon points="15.6 8.4 13.4 13.4 8.4 15.6 10.6 10.6" fill="#ff3b30"/></svg></span>
+                  <span class="ico" style="--c1:#5bd97a;--c2:#1fa64a"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5.5h16a1.2 1.2 0 0 1 1.2 1.2v9.6a1.2 1.2 0 0 1-1.2 1.2H10l-4.8 3.2v-3.2H4a1.2 1.2 0 0 1-1.2-1.2V6.7A1.2 1.2 0 0 1 4 5.5z"/></svg></span>
+                  <span class="ico" style="--c1:#ffffff;--c2:#e6e6ec"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 17.5V6.2l10-2v11.3" fill="none" stroke="#ff2d55" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="17.5" r="2.6" fill="#ff2d55"/><circle cx="16.5" cy="15.3" r="2.6" fill="#ff2d55"/></svg></span>
               </div>
             </div>
 
@@ -164,7 +164,7 @@
           </div>
         </div>
 
-        <!-- Success state replaces the laptop and phone -->
+        
         <div class="success" id="sceneSuccess" role="status">
           <div class="ok-ring" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           <h3>ورود موفق بود</h3>
@@ -177,188 +177,6 @@
     <p class="scene-hint">شماره‌ی موبایل را وارد کنید. کد را از نوتیفیکیشن گوشی بردارید یا تایپ کنید.</p>
   </div>
 </section>
-
-<section class="block" id="features">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>امکانات Signa</h2>
-      <p>روی هر بخش کلیک کنید تا جزئیات را ببینید.</p>
-    </div>
-
-    <div class="features">
-      <details class="feature" open>
-        <summary>
-          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
-          ارسال کد از چند کانال
-          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="body">
-          <ul>
-            <li><b>پیامک با ۵ درگاه ایرانی:</b> SMS.ir، فراز اس‌ام‌اس، ملی‌پیامک، کاوه‌نگار و آی‌پی‌پنل.</li>
-            <li><b>پیام‌رسان بله:</b> از وب‌سرویس سفیر و ربات بله. در صورت عضو نبودن کاربر، ارسال خودکار با پیامک.</li>
-            <li><b>ایمیل:</b> ارسال کد با قالب HTML فارسی و واکنش‌گرا.</li>
-            <li><b>زنجیره‌ی پشتیبان:</b> تا ۳ درگاه پشتیبان به ترتیب اولویت برای ارسال مطمئن.</li>
-            <li><b>حالت آزمایشی (Sandbox):</b> تست کامل جریان ورود بدون پنل پیامک.</li>
-          </ul>
-          <div class="tags"><span>SMS.ir</span><span>فراز اس‌ام‌اس</span><span>ملی‌پیامک</span><span>کاوه‌نگار</span><span>آی‌پی‌پنل</span><span>بله</span><span>ایمیل</span></div>
-        </div>
-      </details>
-
-      <details class="feature">
-        <summary>
-          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-          امنیت و فایروال
-          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="body">
-          <ul>
-            <li>محافظت در برابر حملات Brute-Force روی کد یکبارمصرف و رمز عبور ثابت.</li>
-            <li>جدول قفل‌های امنیتی فعال با قابلیت رفع قفل فوری.</li>
-            <li>لیست سیاه و لیست سفید IP با پشتیبانی از الگوی <span dir="ltr">*</span>.</li>
-            <li>تشخیص IP واقعی پشت Cloudflare و ابرآروان.</li>
-            <li>پاک‌سازی خودکار لاگ‌های قدیمی با WP-Cron.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="feature">
-        <summary>
-          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
-          کپچا
-          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="body">
-          <ul>
-            <li><b>کپچای ریاضی داخلی:</b> بدون وابستگی به سرویس بیرونی.</li>
-            <li><b>آرکپچا (ArCaptcha):</b> کپچای بومی.</li>
-            <li><b>Cloudflare Turnstile</b> و <b>Google reCAPTCHA v3</b>.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="feature">
-        <summary>
-          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M12 15h10l-2-2"/></svg></span>
-          ورود بدون رمز (Passkey)
-          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="body">
-          <ul>
-            <li>ورود با احراز هویت بیومتریک مرورگر (WebAuthn).</li>
-            <li>پیشنهاد ثبت یک‌کلیکی Passkey بلافاصله بعد از تأیید کد.</li>
-            <li>مدیریت Passkey در حساب کاربری (شورت‌کد <span dir="ltr">[signa_passkey_manager]</span>).</li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="feature">
-        <summary>
-          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg></span>
-          ووکامرس و المنتور
-          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="body">
-          <ul>
-            <li>یکپارچگی کامل با ورود و ثبت‌نام ووکامرس.</li>
-            <li>بخش Passkey در صفحه‌ی حساب کاربری ووکامرس.</li>
-            <li>ویجت اختصاصی المنتور برای قرار دادن فرم ورود در هر صفحه.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="feature">
-        <summary>
-          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><path d="M17 2a10 10 0 1 0 5 13"/></svg></span>
-          طراحی ظاهر و پیش‌نمایش زنده
-          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="body">
-          <ul>
-            <li>پیش‌نمایش زنده‌ی ایزوله، بدون نیاز به ذخیره‌ی تنظیمات.</li>
-            <li>حالت‌های نمایش: صفحه، مودال وسط، کشوی چپ و راست، شیت پایین.</li>
-            <li>چیدمان کارت یا تقسیم‌شده با بنر کناری، و ۴ قالب آماده.</li>
-            <li>انتخاب رنگ، گردی گوشه‌ها، فونت و CSS سفارشی.</li>
-            <li>قابل بازنویسی در قالب سایت با <span dir="ltr">yourtheme/signa/login-form.php</span>.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="feature">
-        <summary>
-          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
-          داشبورد، گزارش و ابزارها
-          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="body">
-          <ul>
-            <li>نمودار ۷ روزه‌ی ورود، نرخ تبدیل و بررسی سلامت سیستم.</li>
-            <li>گزارش کدها با خروجی CSV.</li>
-            <li>ارسال پیام آزمایشی برای بررسی درگاه پیامک.</li>
-            <li>خروجی و درون‌ریزی JSON تنظیمات، و گزینه‌ی حذف داده‌ها هنگام حذف افزونه.</li>
-            <li>پیشخوان با حالت تاریک و ذخیره‌ی سریع با <span dir="ltr">Ctrl+S</span>.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="feature">
-        <summary>
-          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
-          توسعه‌پذیری
-          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </summary>
-        <div class="body">
-          <ul>
-            <li>افزودن درگاه پیامک سفارشی با کلاس پایه و بدون تغییر هسته‌ی افزونه.</li>
-            <li>شورت‌کدهای <span dir="ltr">[signa_otp_login]</span>، <span dir="ltr">[signa_otp_form]</span> و <span dir="ltr">[signa_otp_button]</span>.</li>
-          </ul>
-        </div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<section class="block block-alt" id="install">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>نصب در ۳ مرحله</h2>
-      <p>فایل نصب را از پکیج دریافت کنید، در وردپرس نصب و فعال کنید، سپس روش ورود را تنظیم کنید.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <h3>آپلود افزونه</h3>
-        <p>در پیشخوان به «افزونه‌ها ← افزودن ← بارگذاری افزونه» بروید و فایل <b>signa-otp.zip</b> را انتخاب کنید.</p>
-      </div>
-      <div class="step">
-        <h3>فعال‌سازی و درگاه پیامک</h3>
-        <p>افزونه را فعال کنید و در منوی «ورود پیامکی (Signa)» کلید API درگاه پیامک یا بله را وارد کنید.</p>
-      </div>
-      <div class="step">
-        <h3>قرار دادن فرم</h3>
-        <p>شورت‌کد <b>[signa_otp_login]</b> را در هر صفحه بگذارید یا ویجت المنتور را استفاده کنید.</p>
-        <pre class="code">[signa_otp_login]</pre>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="contact" style="padding-top:0;">
-  <div class="wrap">
-    <div class="cta-band">
-      <div>
-        <h2>دریافت Signa و لایسنس</h2>
-        <p>برای خرید، دریافت لایسنس و پشتیبانی با تیم پارسنا در <b>parsena.ir</b> در ارتباط باشید.</p>
-      </div>
-      <a class="btn btn-primary" href="https://parsena.ir" target="_blank" rel="noopener">ورود به وب‌سایت پارسنا</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <span>Signa OTP · نسخه ۲.۷.۷ · تیم پارسنا</span>
-    <span><a href="https://parsena.ir">parsena.ir</a> · <a href="https://parsena.ir/signa">parsena.ir/signa</a></span>
-  </div>
-</footer>
 
 <script src="assets/js/scene.js"></script>
 </body>
