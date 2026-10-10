@@ -1,34 +1,36 @@
-/* Hero phone simulation (static, no server calls).
- * Flow: enter an Iranian mobile number -> "sending" -> a random 5-digit code is generated
- * and shown in an iPhone-style notification -> user types it (or taps the notification)
- * -> phone fades out and a success card appears with a restart button.
+/* Hero scene simulation (static, no server calls).
+ * Enter an Iranian mobile number on the laptop -> "sending" -> a wave travels from the laptop
+ * to the phone -> the phone pulses -> a notification shows a random 5-digit code.
+ * The user types the code on the laptop (or taps the notification to fill it) -> the laptop
+ * and phone fade out and a success card appears with a restart button.
  * Nothing is sent anywhere. */
 (function () {
 	'use strict';
 
-	var root = document.getElementById('heroPhone');
-	if (!root) { return; }
+	var scene = document.getElementById('scene');
+	if (!scene) { return; }
 
-	var success = document.getElementById('heroSuccess');
-	var form = root.querySelector('.hp-form');
-	var input = document.getElementById('heroNumber');
-	var sendBtn = root.querySelector('.hp-form .hp-send');
-	var sendTxt = root.querySelector('.hp-send-txt');
-	var loginErr = root.querySelector('.hp-err-login');
-	var scrLogin = root.querySelector('.scr-login');
-	var scrVerify = root.querySelector('.scr-verify');
-	var verifyBtn = root.querySelector('.hp-verify');
-	var digitsWrap = root.querySelector('.hp-digits');
-	var boxes = root.querySelectorAll('.hp-box');
-	var maskEl = root.querySelector('.hp-mask');
-	var verifyErr = root.querySelector('.hp-err-verify');
-	var resendTxt = root.querySelector('.hp-resend-txt');
-	var resendBtn = root.querySelector('.hp-resend-btn');
-	var backBtn = root.querySelector('.hp-back');
-	var notif = root.querySelector('.notif');
-	var notifCode = root.querySelector('.notif-code');
-	var successMask = document.getElementById('heroSuccessMask');
-	var restartBtn = success.querySelector('.hero-restart');
+	var phone = document.getElementById('phone');
+	var success = document.getElementById('sceneSuccess');
+	var form = scene.querySelector('.sc-form');
+	var input = document.getElementById('sceneNumber');
+	var sendBtn = scene.querySelector('.sc-form .sc-send');
+	var sendTxt = scene.querySelector('.sc-send-txt');
+	var loginErr = scene.querySelector('.sc-err-login');
+	var scrLogin = scene.querySelector('.sc-login');
+	var scrVerify = scene.querySelector('.sc-verify');
+	var verifyBtn = scene.querySelector('.sc-verify-btn');
+	var digitsWrap = scene.querySelector('.sc-digits');
+	var boxes = scene.querySelectorAll('.sc-box');
+	var maskEl = scene.querySelector('.sc-mask');
+	var verifyErr = scene.querySelector('.sc-err-verify');
+	var resendTxt = scene.querySelector('.sc-resend-txt');
+	var resendBtn = scene.querySelector('.sc-resend-btn');
+	var backBtn = scene.querySelector('.sc-back');
+	var notif = phone.querySelector('.notif');
+	var notifCode = phone.querySelector('.notif-code');
+	var successMask = document.getElementById('sceneSuccessMask');
+	var restartBtn = success.querySelector('.sc-restart');
 
 	var RESEND = 60;
 	var MAX_TRIES = 3;
@@ -54,7 +56,7 @@
 		return String(10000 + (a[0] % 90000));
 	}
 
-	// Digits only; strips +98 / 0098 / 98 prefixes so the national number starts with 9.
+	// Digits only; strips +98 / 0098 / 98 so the national number starts with 9.
 	function normalize(v) {
 		var s = toEn(v).replace(/[\s\-()]/g, '');
 		if (s.charAt(0) === '+') { s = s.slice(1); }
@@ -78,11 +80,6 @@
 		notif.tabIndex = on ? 0 : -1;
 	}
 
-	function showNotif() {
-		notifCode.textContent = st.code;
-		setNotif(true);
-	}
-
 	function getCode() {
 		var s = '';
 		for (var i = 0; i < boxes.length; i++) { s += boxes[i].value; }
@@ -104,12 +101,22 @@
 
 	function focusBox(i) { if (boxes[i]) { boxes[i].focus(); } }
 
+	/* ---------- sending animation: wave laptop -> phone, then notification ---------- */
+	function sendWave() {
+		scene.classList.remove('is-sending');
+		void scene.offsetWidth;
+		scene.classList.add('is-sending');
+		later(function () { phone.classList.remove('is-pulse'); void phone.offsetWidth; phone.classList.add('is-pulse'); }, 1050);
+		later(function () { notifCode.textContent = st.code; setNotif(true); }, 1400);
+		later(function () { scene.classList.remove('is-sending'); }, 2200);
+	}
+
 	/* ---------- login step ---------- */
 	function refreshLogin() {
 		var n = normalize(input.value);
 		if (input.value !== n) { input.value = n; }
 		var err = '';
-		if (n.charAt(0) === '0') { err = 'شماره را بدون صفر اول وارد کنید؛ مثلاً 9123456789.'; }
+		if (n.charAt(0) === '0') { err = 'بدون صفر اول وارد کنید؛ مثلاً 9123456789.'; }
 		else if (n.length > 10) { err = 'شماره موبایل ۱۰ رقم است؛ بدون صفر اول.'; }
 		loginErr.textContent = err;
 		sendBtn.disabled = !isValid(n) || st.busy;
@@ -132,11 +139,13 @@
 			sendTxt.textContent = 'دریافت کد';
 			st.code = makeCode();
 			showVerify();
-		}, 900);
+			sendWave();
+		}, 700);
 	});
 
 	/* ---------- verify step ---------- */
 	function showVerify() {
+		scene.dataset.step = 'verify';
 		scrLogin.classList.remove('is-on');
 		scrVerify.classList.add('is-on');
 		maskEl.textContent = mask(st.number);
@@ -146,9 +155,6 @@
 		setLockedUI(false);
 		verifyErr.textContent = '';
 		startTimer();
-		later(function () {
-			if (scrVerify.classList.contains('is-on')) { showNotif(); }
-		}, 500);
 	}
 
 	function renderTimer() {
@@ -194,9 +200,9 @@
 
 		st.tries += 1;
 		for (var i = 0; i < boxes.length; i++) { boxes[i].classList.add('is-wrong'); }
-		digitsWrap.classList.remove('hp-shake');
+		digitsWrap.classList.remove('sc-shake');
 		void digitsWrap.offsetWidth;
-		digitsWrap.classList.add('hp-shake');
+		digitsWrap.classList.add('sc-shake');
 
 		var remain = MAX_TRIES - st.tries;
 		if (remain <= 0) {
@@ -239,6 +245,7 @@
 	});
 
 	verifyBtn.addEventListener('click', verify);
+
 	resendBtn.addEventListener('click', function () {
 		st.code = makeCode();
 		st.tries = 0;
@@ -247,13 +254,13 @@
 		setBoxes('');
 		verifyErr.textContent = 'کد جدید ارسال شد.';
 		setNotif(false);
-		later(showNotif, 350);
 		startTimer();
+		sendWave();
 	});
 
-	// Tapping the notification fills the code in (like iOS OTP autofill).
+	// Tapping the notification fills the code in on the laptop (like iOS OTP autofill).
 	notif.addEventListener('click', function () {
-		if (!scrVerify.classList.contains('is-on') || st.locked) { return; }
+		if (scene.dataset.step !== 'verify' || st.locked) { return; }
 		setBoxes(st.code);
 		later(verify, 300);
 	});
@@ -262,6 +269,8 @@
 		clearLater();
 		stopTimer();
 		setNotif(false);
+		scene.classList.remove('is-sending');
+		scene.dataset.step = 'login';
 		scrVerify.classList.remove('is-on');
 		scrLogin.classList.add('is-on');
 		st.busy = false;
@@ -275,10 +284,8 @@
 		clearLater();
 		stopTimer();
 		setNotif(false);
-		scrVerify.classList.remove('is-on');
-		successMask.innerHTML = 'شماره <span dir="ltr" class="hp-mask-ltr">' + mask(st.number) + '</span> با کد درست تأیید شد.';
-		root.classList.add('is-off');
-		success.classList.add('is-on');
+		scene.dataset.step = 'done';
+		successMask.innerHTML = 'شماره <span dir="ltr" class="sc-mask-ltr">' + mask(st.number) + '</span> با کد درست تأیید شد.';
 	}
 
 	function restart() {
@@ -289,8 +296,8 @@
 		st.tries = 0;
 		st.locked = false;
 		st.busy = false;
-		success.classList.remove('is-on');
-		root.classList.remove('is-off');
+		scene.classList.remove('is-sending');
+		scene.dataset.step = 'login';
 		scrVerify.classList.remove('is-on');
 		scrLogin.classList.add('is-on');
 		setNotif(false);
@@ -300,6 +307,7 @@
 		sendTxt.textContent = 'دریافت کد';
 		input.value = '';
 		verifyErr.textContent = '';
+		resendBtn.hidden = true;
 		refreshLogin();
 	}
 
