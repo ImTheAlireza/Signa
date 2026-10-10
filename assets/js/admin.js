@@ -25,7 +25,7 @@
 			$toast.fadeIn(180);
 			toastTimer = setTimeout(function () {
 				$toast.fadeOut(220);
-			}, 3400);
+			}, 3000);
 		}
 
 		// 1. Dark Mode Toggle with localStorage persistence (Linear Stroke SVG Icons controlled by .is-dark)
@@ -38,6 +38,13 @@
 			applyDarkMode(savedDark);
 			if (window.location.search && window.location.search.indexOf('settings-updated=true') !== -1) {
 				showToast('تنظیمات با موفقیت ذخیره شد!', false);
+				// Drop the flag from the URL so a reload does not show the toast again.
+				if (window.history && window.history.replaceState) {
+					var cleanUrl = window.location.href.replace(/([?&])settings-updated=true(&|$)/, function (m, sep, end) {
+						return end ? sep : '';
+					}).replace(/[?&]$/, '');
+					window.history.replaceState(null, '', cleanUrl);
+				}
 			}
 		} catch (e) {}
 

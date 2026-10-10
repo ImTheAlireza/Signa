@@ -388,14 +388,6 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 
 			<!-- MAIN CONTENT PANELS (Modular Partials) -->
 			<main class="signa-main">
-				<?php $is_just_saved = isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-				<div id="signa-inline-save-banner" style="<?php echo $is_just_saved ? 'display:flex;' : 'display:none;'; ?>align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;margin-bottom:18px;border-radius:12px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.35);color:#059669;font-size:13.5px;font-weight:700;">
-					<div style="display:flex;align-items:center;gap:10px;">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-						<span id="signa-inline-save-banner-text">تنظیمات با موفقیت ذخیره و اعمال شد!</span>
-					</div>
-					<button type="button" onclick="this.parentElement.style.display='none';" style="background:transparent;border:none;color:inherit;cursor:pointer;font-size:18px;line-height:1;padding:0 4px;">&times;</button>
-				</div>
 
 				<?php
 				require $partials_dir . 'tab-dashboard.php';
@@ -466,17 +458,7 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 				toast.style.display = 'flex';
 				setTimeout(function() {
 					toast.style.display = 'none';
-				}, 3800);
-			}
-
-			var banner = document.getElementById('signa-inline-save-banner');
-			var bannerText = document.getElementById('signa-inline-save-banner-text');
-			if (banner && bannerText) {
-				bannerText.textContent = message;
-				banner.style.background = isError ? 'rgba(239,68,68,0.12)' : 'rgba(16,185,129,0.12)';
-				banner.style.borderColor = isError ? 'rgba(239,68,68,0.35)' : 'rgba(16,185,129,0.35)';
-				banner.style.color = isError ? '#dc2626' : '#059669';
-				banner.style.display = 'flex';
+				}, 3000);
 			}
 		}
 
