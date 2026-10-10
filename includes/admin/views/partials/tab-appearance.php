@@ -2125,19 +2125,6 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							}
 						}
 
-						// Staggered OTP Digit Pop-In Choreography when entering Step 2
-						function triggerStep2DigitPop() {
-							var $digits = $('.signa-prev-digit');
-							$digits.removeClass('signa-digit-pop-anim');
-							if ($digits.length) {
-								void $digits[0].offsetWidth;
-								$digits.each(function(idx){
-									this.style.animationDelay = (idx * 45) + 'ms';
-									$(this).addClass('signa-digit-pop-anim');
-								});
-							}
-						}
-
 						// Polished Error Shake & Crimson Neon Wave Choreography
 						var errorShakeTimer = null;
 						function triggerErrorShakeChoreography() {
@@ -2187,7 +2174,6 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('.signa-prev-mode-btn').removeClass('active');
 							$(this).addClass('active');
 							syncStudioCat2();
-							triggerFormEntranceChoreography();
 						});
 
 						// Interactive Step 1 <-> Step 2 buttons & preview buttons
@@ -2198,12 +2184,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							if (step === '2') {
 								$('#signa-prev-step-1').hide();
 								$('#signa-prev-step-2').fadeIn(180);
-								triggerStep2DigitPop();
 							} else {
 								$('#signa-prev-error-toast').hide();
 								$('#signa-prev-step-2').hide();
 								$('#signa-prev-step-1').fadeIn(180);
-								triggerFormEntranceChoreography();
 							}
 						});
 
@@ -2220,11 +2204,6 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var idx = $(this).attr('data-idx') || '2';
 							$('#signa-prev-digits').attr('data-active-idx', idx);
 							syncStudioCat2();
-							var el = this;
-							$(el).removeClass('signa-digit-pop-anim');
-							void el.offsetWidth;
-							el.style.animationDelay = '0ms';
-							$(el).addClass('signa-digit-pop-anim');
 						});
 
 						// Auto-switch Live Preview to Modal mode when user selects a Modal/Drawer style
@@ -2241,7 +2220,6 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('.signa-prev-mode-btn').removeClass('active');
 							$('.signa-prev-mode-btn[data-mode="page"]').addClass('active');
 							syncStudioCat2();
-							triggerFormEntranceChoreography();
 						});
 
 						// Auto-switch Live Preview to Step 2 when user changes any Category 4 OTP/Timer control
@@ -2251,7 +2229,6 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('#signa-prev-step-1').hide();
 							$('#signa-prev-step-2').fadeIn(150);
 							syncStudioCat2();
-							triggerStep2DigitPop();
 						});
 
 						// Replay Form Entrance Animation in Live Preview when changed or replay button clicked

@@ -74,11 +74,9 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 		#signa-app-shell .signa-prev-glass-orbs { position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.48; transition: opacity 0.35s ease; overflow: hidden; }
 		#signa-app-shell .signa-prev-glass-orbs.is-glass-active { opacity: 0.92; }
 		#signa-app-shell .signa-glass-orb { position: absolute; border-radius: 50%; filter: blur(8px); transition: background 0.35s ease; }
-		#signa-app-shell .signa-glass-orb.orb-1 { width: 155px; height: 155px; background: #3b82f6; top: 14%; right: 10%; box-shadow: inset 0 0 24px rgba(255,255,255,0.45); animation: signaOrbFloat1 7s ease-in-out infinite alternate; }
-		#signa-app-shell .signa-glass-orb.orb-2 { width: 140px; height: 140px; background: #ef4444; bottom: 12%; left: 10%; box-shadow: inset 0 0 24px rgba(255,255,255,0.45); animation: signaOrbFloat2 8s ease-in-out infinite alternate; }
+		#signa-app-shell .signa-glass-orb.orb-1 { width: 155px; height: 155px; background: #3b82f6; top: 14%; right: 10%; box-shadow: inset 0 0 24px rgba(255,255,255,0.45); }
+		#signa-app-shell .signa-glass-orb.orb-2 { width: 140px; height: 140px; background: #ef4444; bottom: 12%; left: 10%; box-shadow: inset 0 0 24px rgba(255,255,255,0.45); }
 		#signa-app-shell .signa-glass-orb.orb-3 { width: 95px; height: 95px; background: linear-gradient(135deg, #10b981, #f59e0b); top: 48%; left: 42%; transform: translate(-50%, -50%) rotate(25deg); border-radius: 24px; }
-		@keyframes signaOrbFloat1 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-10px, 12px) scale(1.06); } }
-		@keyframes signaOrbFloat2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(12px, -10px) scale(1.05); } }
 
 		#signa-app-shell .signa-preview-subbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 14px; background: var(--s-bg-surface); border-bottom: 1px solid var(--s-border-input); flex-wrap: wrap; }
 		#signa-app-shell .signa-preview-mode-tabs { display: inline-flex; background: var(--s-bg-subtle); padding: 3px; border-radius: 8px; border: 1px solid var(--s-border-input); gap: 3px; }
@@ -134,11 +132,6 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 			0% { opacity: 0; transform: translate3d(0, 12px, 0); }
 			100% { opacity: 1; transform: translate3d(0, 0, 0); }
 		}
-		@keyframes signaDigitPopIn {
-			0% { opacity: 0; transform: scale(0.65) translateY(8px); }
-			70% { opacity: 1; transform: scale(1.08) translateY(-2px); }
-			100% { opacity: 1; transform: scale(1) translateY(0); }
-		}
 		@keyframes signaShakeKeyframes {
 			0% { transform: translate3d(0, 0, 0) rotate(0deg); }
 			12% { transform: translate3d(-11px, 0, 0) rotate(-0.8deg); }
@@ -150,24 +143,17 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 			84% { transform: translate3d(-2px, 0, 0) rotate(0deg); }
 			100% { transform: translate3d(0, 0, 0) rotate(0deg); }
 		}
-		@keyframes signaDigitErrorWave {
-			0% { transform: scale(1); }
-			35% { transform: scale(1.1) translateY(-3px); background-color: rgba(239, 68, 68, 0.22); border-color: #ef4444; color: #ef4444; box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.28), 0 8px 18px -4px rgba(239, 68, 68, 0.45); }
-			70% { transform: scale(0.96); }
-			100% { transform: scale(1); background-color: rgba(239, 68, 68, 0.14); border-color: #ef4444; color: #ef4444; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2); }
-		}
 		#signa-app-shell .signa-anim-fade_up { animation: signaAnimFadeUp 0.54s cubic-bezier(0.22, 1, 0.36, 1) both; }
 		#signa-app-shell .signa-anim-zoom_spring { animation: signaAnimZoomSpring 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 		#signa-app-shell .signa-anim-slide_rtl { animation: signaAnimSlideRtl 0.52s cubic-bezier(0.22, 1, 0.36, 1) both; }
 		#signa-app-shell .signa-stagger-run { animation: signaStaggerChildIn 0.46s cubic-bezier(0.22, 1, 0.36, 1) both; }
-		#signa-app-shell .signa-digit-pop-anim { animation: signaDigitPopIn 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 		#signa-app-shell .signa-shake-anim { animation: signaShakeKeyframes 0.64s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
 		#signa-app-shell .signa-prev-digit.is-error-digit {
 			border-color: #ef4444 !important;
 			color: #ef4444 !important;
 			background-color: rgba(239, 68, 68, 0.14) !important;
 			box-shadow: 0 0 0 3.5px rgba(239, 68, 68, 0.22), 0 6px 16px -4px rgba(239, 68, 68, 0.35) !important;
-			animation: signaDigitErrorWave 0.56s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+			transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 		}
 		#signa-app-shell .signa-prev-error-toast {
 			display: flex;
@@ -195,7 +181,6 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 			justify-content: center;
 			color: #ef4444;
 			flex-shrink: 0;
-			animation: signaDigitPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 		}
 		#signa-app-shell #signa-prev-btn-1:hover,
 		#signa-app-shell #signa-prev-btn-2:hover {
