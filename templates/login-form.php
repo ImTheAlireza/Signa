@@ -58,7 +58,7 @@ $math_captcha     = 'math' === $captcha_type ? Signa_Security::generate_math_cap
 
 if ( 'phone_only' === $login_mode ) {
 	$input_label       = 'شماره موبایل';
-	$input_placeholder = 'مثلاً: 09123456789';
+	$input_placeholder = 'ir_flag' === $input_addon ? 'مثلاً: 9123456789' : 'مثلاً: 09123456789';
 	$input_type        = 'tel';
 	$input_mode        = 'tel';
 } elseif ( 'email_only' === $login_mode ) {
@@ -68,7 +68,7 @@ if ( 'phone_only' === $login_mode ) {
 	$input_mode        = 'email';
 } else {
 	$input_label       = 'شماره موبایل یا ایمیل';
-	$input_placeholder = 'شماره موبایل (0912...) یا ایمیل';
+	$input_placeholder = 'ir_flag' === $input_addon ? 'شماره موبایل (912...) یا ایمیل' : 'شماره موبایل (0912...) یا ایمیل';
 	$input_type        = 'text';
 	$input_mode        = 'text';
 }

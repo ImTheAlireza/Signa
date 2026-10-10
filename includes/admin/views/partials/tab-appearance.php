@@ -1827,9 +1827,9 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var bannerClipCss = 'none';
 
 							if (currentPreviewMode === 'modal' && modalStyle === 'bottom_sheet') {
-								shellRadiusCss = '22px 22px 0 0';
-								cardRadiusCss = '22px 22px 0 0';
-								cardClipCss = 'inset(0 round 22px 22px 0 0)';
+								shellRadiusCss = '20px';
+								cardRadiusCss = '20px';
+								cardClipCss = 'inset(0 round 20px)';
 							} else if (currentPreviewMode === 'modal' && modalStyle === 'drawer_left') {
 								shellRadiusCss = '0 16px 16px 0';
 								cardRadiusCss = '0 16px 16px 0';
@@ -1928,6 +1928,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							};
 							var activeFont = fontMap[fontKey] || fontMap.vazirmatn;
 							$('#signa-live-preview-shell, #signa-live-preview-shell *').css('font-family', activeFont);
+							// Form controls (input/button/select/textarea) carry !important font rules in admin.css, so force the chosen font inline.
+							$('#signa-live-preview-shell input, #signa-live-preview-shell button, #signa-live-preview-shell select, #signa-live-preview-shell textarea').each(function () {
+								this.style.setProperty('font-family', activeFont, 'important');
+							});
 							var previewTitleSize = isWidePreview ? (showSplitBanner ? titleSize : Math.round(titleSize * 1.08)) : (showSplitBanner ? Math.max(13, Math.round(titleSize * 0.78)) : titleSize);
 							var previewSubSize = isWidePreview ? (showSplitBanner ? subSize : Math.round(subSize * 1.04)) : (showSplitBanner ? Math.max(11, Math.round(subSize * 0.82)) : subSize);
 							var previewBtnSize = isWidePreview ? (showSplitBanner ? btnSize : Math.round(btnSize * 1.05)) : (showSplitBanner ? Math.max(12.5, Math.round(btnSize * 0.84)) : btnSize);
@@ -1959,6 +1963,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								$prevInput[0].style.setProperty('color', text, 'important');
 								$prevInput[0].style.setProperty('height', previewInputH + 'px', 'important');
 								$prevInput[0].style.setProperty('font-size', inputFontSize, 'important');
+								$prevInput.attr('placeholder', inputAddon === 'ir_flag' ? 'شماره موبایل (912...) یا ایمیل' : 'شماره موبایل (0912...) یا ایمیل');
 								$prevInput[0].style.setProperty('padding-right', '14px', 'important');
 							}
 

@@ -1,0 +1,76 @@
+/*
+ * Signa OTP – web font declarations (shared by admin preview and frontend).
+ *
+ * Estedad is bundled (SIL Open Font License 1.1, see assets/fonts/estedad/LICENSE.txt).
+ *
+ * IRANSans, YekanBakh and Dana are commercial fonts and are NOT bundled.
+ * Place a licensed .woff2 file at the path below to activate them; until then the
+ * browser falls back to the next family in the stack (Vazirmatn).
+ */
+
+@font-face {
+	font-family: 'Estedad';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 300;
+	src: url('../fonts/estedad/estedad-300.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Estedad';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 400;
+	src: url('../fonts/estedad/estedad-400.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Estedad';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 500;
+	src: url('../fonts/estedad/estedad-500.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Estedad';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 700;
+	src: url('../fonts/estedad/estedad-700.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Estedad';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 900;
+	src: url('../fonts/estedad/estedad-900.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'IRANSans';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url('../fonts/iransans/iransans.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'IRANSansX';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url('../fonts/iransans/iransans.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'YekanBakh';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url('../fonts/yekanbakh/yekanbakh.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Dana';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url('../fonts/dana/dana.woff2') format('woff2');
+}

@@ -112,11 +112,18 @@ class Signa_Admin {
 			'33.003'
 		);
 
+		wp_enqueue_style(
+			'signa-fonts',
+			SIGNA_OTP_URL . 'assets/css/fonts.css',
+			array( 'signa-vazirmatn-font' ),
+			SIGNA_OTP_VERSION
+		);
+
 		$css_file = SIGNA_OTP_PATH . 'assets/css/admin.css';
 		$js_file  = SIGNA_OTP_PATH . 'assets/js/admin.js';
 
 		// Inject CSS & JS directly from disk via WordPress inline APIs to bypass aggressive browser/CDN/LiteSpeed static file caches
-		wp_register_style( 'signa-otp-admin-core', false, array( 'signa-vazirmatn-font' ), SIGNA_OTP_VERSION );
+		wp_register_style( 'signa-otp-admin-core', false, array( 'signa-vazirmatn-font', 'signa-fonts' ), SIGNA_OTP_VERSION );
 		wp_enqueue_style( 'signa-otp-admin-core' );
 		if ( file_exists( $css_file ) ) {
 			wp_add_inline_style( 'signa-otp-admin-core', (string) file_get_contents( $css_file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
