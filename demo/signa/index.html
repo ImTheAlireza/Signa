@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signa OTP – دمو تعاملی | پارسنا</title>
+<meta name="description" content="دمو تعاملی Signa OTP: ورود و ثبت‌نام وردپرس با کد یکبارمصرف از طریق پیامک، بله و ایمیل، با پیش‌نمایش زنده‌ی فرم ورود.">
+<link rel="stylesheet" href="assets/css/frontend.css">
+<link rel="stylesheet" href="assets/css/demo.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" id="top">
+      <span class="brand-badge" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      </span>
+      <span>Signa OTP <span class="tag">v2.7.7</span><small>تیم پارسنا · parsena.ir</small></span>
+    </a>
+    <nav class="topnav" aria-label="بخش‌ها">
+      <a href="#demo">دمو زنده</a>
+      <a href="#features">امکانات</a>
+      <a href="#install">نصب و راه‌اندازی</a>
+      <a href="#contact">ارتباط</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">افزونه‌ی وردپرس · ورود بدون رمز عبور</span>
+    <h1>ورود و ثبت‌نام با کد یکبارمصرف، با تجربه‌ای روان برای کاربران فارسی‌زبان</h1>
+    <p class="lead">Signa کد ورود را از طریق پیامک، پیام‌رسان بله یا ایمیل می‌فرستد، با ووکامرس و المنتور یکپارچه است و فرم ورود آن را می‌توانید همین‌جا، پیش از نصب، امتحان کنید.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#demo">شروع دمو تعاملی</a>
+      <a class="btn btn-ghost" href="#features">مشاهده‌ی امکانات</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>۵</strong><span>درگاه پیامکی ایرانی</span></div>
+      <div class="stat"><strong>۳</strong><span>کانال ارسال: پیامک، بله، ایمیل</span></div>
+      <div class="stat"><strong>۴</strong><span>نوع کپچا از جمله کپچای ریاضی</span></div>
+      <div class="stat"><strong>Passkey</strong><span>ورود بیومتریک بدون رمز</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="demo">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>دمو زنده‌ی فرم ورود</h2>
+      <p>حالت نمایش، چیدمان، روش ورود، رنگ، گردی گوشه‌ها و فونت را تغییر دهید و فرم را واقعاً امتحان کنید. کد دمو <b>123456</b> است.</p>
+    </div>
+
+    <div class="demo-grid">
+      <div>
+        <div class="stage" id="stage" data-mode="page">
+          <div class="stage-backdrop" aria-hidden="true"></div>
+          <div class="stage-panel" id="stagePanel"></div>
+          <div class="stage-bar">
+            <span id="modeLabel">حالت: صفحه ورود</span>
+            <span>دمو · پیامک واقعی ارسال نمی‌شود</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel-box" aria-label="تنظیمات دمو">
+        <div class="note-demo">این دمو با همان استایل افزونه ساخته شده است. پیامک یا ایمیل واقعی ارسال نمی‌شود.</div>
+
+        <div class="ctl-group">
+          <span class="ctl-label">حالت نمایش</span>
+          <div class="seg" id="segMode">
+            <button type="button" data-mode="page" aria-pressed="true">صفحه</button>
+            <button type="button" data-mode="modal" aria-pressed="false">مودال وسط</button>
+            <button type="button" data-mode="drawer_left" aria-pressed="false">کشوی چپ</button>
+            <button type="button" data-mode="drawer_right" aria-pressed="false">کشوی راست</button>
+            <button type="button" data-mode="sheet" aria-pressed="false">شیت پایین</button>
+          </div>
+        </div>
+
+        <div class="ctl-group">
+          <span class="ctl-label">چیدمان فرم</span>
+          <div class="seg" id="segLayout">
+            <button type="button" data-layout="card" aria-pressed="true">کارت</button>
+            <button type="button" data-layout="split_right" aria-pressed="false">تقسیم‌شده (بنر راست)</button>
+            <button type="button" data-layout="split_left" aria-pressed="false">تقسیم‌شده (بنر چپ)</button>
+          </div>
+        </div>
+
+        <div class="ctl-group">
+          <span class="ctl-label">روش ورود</span>
+          <div class="seg" id="segLogin">
+            <button type="button" data-login="both" aria-pressed="true">موبایل یا ایمیل</button>
+            <button type="button" data-login="phone" aria-pressed="false">فقط موبایل</button>
+            <button type="button" data-login="email" aria-pressed="false">فقط ایمیل</button>
+          </div>
+        </div>
+
+        <div class="ctl-group">
+          <span class="ctl-label">نشانگر داخل فیلد</span>
+          <div class="seg" id="segAddon">
+            <button type="button" data-addon="icon" aria-pressed="true">آیکون</button>
+            <button type="button" data-addon="ir_flag" aria-pressed="false">پرچم +98</button>
+            <button type="button" data-addon="none" aria-pressed="false">ساده</button>
+          </div>
+        </div>
+
+        <div class="ctl-group">
+          <span class="ctl-label">تعداد ارقام کد</span>
+          <div class="seg" id="segDigits">
+            <button type="button" data-digits="4" aria-pressed="false">۴ رقمی</button>
+            <button type="button" data-digits="5" aria-pressed="false">۵ رقمی</button>
+            <button type="button" data-digits="6" aria-pressed="true">۶ رقمی</button>
+          </div>
+        </div>
+
+        <div class="ctl-group">
+          <span class="ctl-label">رنگ اصلی</span>
+          <div class="swatches" id="swatches">
+            <button type="button" data-color="#2563eb" style="background:#2563eb" aria-label="آبی"></button>
+            <button type="button" data-color="#7c3aed" style="background:#7c3aed" aria-label="بنفش"></button>
+            <button type="button" data-color="#059669" style="background:#059669" aria-label="سبز"></button>
+            <button type="button" data-color="#dc2626" style="background:#dc2626" aria-label="قرمز"></button>
+            <button type="button" data-color="#0f172a" style="background:#0f172a" aria-label="مشکی"></button>
+            <input type="color" id="colorInput" value="#2563eb" aria-label="انتخاب رنگ دلخواه">
+          </div>
+        </div>
+
+        <div class="ctl-group">
+          <span class="ctl-label">گردی گوشه‌ها</span>
+          <div class="row-inline">
+            <input type="range" id="radiusRange" min="0" max="28" value="16" aria-label="گردی گوشه‌ها">
+            <output id="radiusOut">16px</output>
+          </div>
+        </div>
+
+        <div class="ctl-group">
+          <span class="ctl-label">فونت</span>
+          <select class="ctl-select" id="fontSelect" aria-label="فونت">
+            <option value="vazirmatn">وزیرمتن (پیش‌فرض)</option>
+            <option value="estedad">استعداد (Estedad)</option>
+          </select>
+        </div>
+
+        <div class="ctl-foot">
+          <button type="button" class="btn btn-primary btn-sm" id="resetFlow">شروع دوباره‌ی فرم</button>
+          <button type="button" class="btn btn-sm btn-line" id="resetAll">بازگشت به تنظیمات پیش‌فرض</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="features" style="background:#eef2f9;">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>امکانات Signa</h2>
+      <p>روی هر بخش کلیک کنید تا جزئیات را ببینید.</p>
+    </div>
+
+    <div class="features">
+      <details class="feature" open>
+        <summary>
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
+          ارسال کد از چند کانال
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="body">
+          <ul>
+            <li><b>پیامک با ۵ درگاه ایرانی:</b> SMS.ir، فراز اس‌ام‌اس، ملی‌پیامک، کاوه‌نگار و آی‌پی‌پنل.</li>
+            <li><b>پیام‌رسان بله:</b> از وب‌سرویس سفیر و ربات بله. در صورت عضو نبودن کاربر، ارسال خودکار با پیامک.</li>
+            <li><b>ایمیل:</b> ارسال کد با قالب HTML فارسی و واکنش‌گرا.</li>
+            <li><b>زنجیره‌ی پشتیبان:</b> تا ۳ درگاه پشتیبان به ترتیب اولویت برای ارسال مطمئن.</li>
+            <li><b>حالت آزمایشی (Sandbox):</b> تست کامل جریان ورود بدون پنل پیامک.</li>
+          </ul>
+          <div class="tags"><span>SMS.ir</span><span>فراز اس‌ام‌اس</span><span>ملی‌پیامک</span><span>کاوه‌نگار</span><span>آی‌پی‌پنل</span><span>بله</span><span>ایمیل</span></div>
+        </div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          امنیت و فایروال
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="body">
+          <ul>
+            <li>محافظت در برابر حملات Brute-Force روی کد یکبارمصرف و رمز عبور ثابت.</li>
+            <li>جدول قفل‌های امنیتی فعال با قابلیت رفع قفل فوری.</li>
+            <li>لیست سیاه و لیست سفید IP با پشتیبانی از الگوی <span dir="ltr">*</span>.</li>
+            <li>تشخیص IP واقعی پشت Cloudflare و ابرآروان.</li>
+            <li>پاک‌سازی خودکار لاگ‌های قدیمی با WP-Cron.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          کپچا
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="body">
+          <ul>
+            <li><b>کپچای ریاضی داخلی:</b> بدون وابستگی به سرویس بیرونی.</li>
+            <li><b>آرکپچا (ArCaptcha):</b> کپچای بومی.</li>
+            <li><b>Cloudflare Turnstile</b> و <b>Google reCAPTCHA v3</b>.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M12 15h10l-2-2"/></svg></span>
+          ورود بدون رمز (Passkey)
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="body">
+          <ul>
+            <li>ورود با احراز هویت بیومتریک مرورگر (WebAuthn).</li>
+            <li>پیشنهاد ثبت یک‌کلیکی Passkey بلافاصله بعد از تأیید کد.</li>
+            <li>مدیریت Passkey در حساب کاربری (شورت‌کد <span dir="ltr">[signa_passkey_manager]</span>).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg></span>
+          ووکامرس و المنتور
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="body">
+          <ul>
+            <li>یکپارچگی کامل با ورود و ثبت‌نام ووکامرس.</li>
+            <li>بخش Passkey در صفحه‌ی حساب کاربری ووکامرس.</li>
+            <li>ویجت اختصاصی المنتور برای قرار دادن فرم ورود در هر صفحه.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><path d="M17 2a10 10 0 1 0 5 13"/></svg></span>
+          طراحی ظاهر و پیش‌نمایش زنده
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="body">
+          <ul>
+            <li>پیش‌نمایش زنده‌ی ایزوله، بدون نیاز به ذخیره‌ی تنظیمات.</li>
+            <li>حالت‌های نمایش: صفحه، مودال وسط، کشوی چپ و راست، شیت پایین.</li>
+            <li>چیدمان کارت یا تقسیم‌شده با بنر کناری، و ۴ قالب آماده.</li>
+            <li>انتخاب رنگ، گردی گوشه‌ها، فونت و CSS سفارشی.</li>
+            <li>قابل بازنویسی در قالب سایت با <span dir="ltr">yourtheme/signa/login-form.php</span>.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+          داشبورد، گزارش و ابزارها
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="body">
+          <ul>
+            <li>نمودار ۷ روزه‌ی ورود، نرخ تبدیل و بررسی سلامت سیستم.</li>
+            <li>گزارش کدها با خروجی CSV.</li>
+            <li>ارسال پیام آزمایشی برای بررسی درگاه پیامک.</li>
+            <li>خروجی و درون‌ریزی JSON تنظیمات، و گزینه‌ی حذف داده‌ها هنگام حذف افزونه.</li>
+            <li>پیشخوان با حالت تاریک و ذخیره‌ی سریع با <span dir="ltr">Ctrl+S</span>.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+          توسعه‌پذیری
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="body">
+          <ul>
+            <li>افزودن درگاه پیامک سفارشی با کلاس پایه و بدون تغییر هسته‌ی افزونه.</li>
+            <li>شورت‌کدهای <span dir="ltr">[signa_otp_login]</span>، <span dir="ltr">[signa_otp_form]</span> و <span dir="ltr">[signa_otp_button]</span>.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="install">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>نصب در ۳ مرحله</h2>
+      <p>فایل نصب را از پکیج دریافت کنید، در وردپرس نصب و فعال کنید، سپس روش ورود را تنظیم کنید.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>آپلود افزونه</h3>
+        <p>در پیشخوان به «افزونه‌ها ← افزودن ← بارگذاری افزونه» بروید و فایل <b>signa-otp.zip</b> را انتخاب کنید.</p>
+      </div>
+      <div class="step">
+        <h3>فعال‌سازی و درگاه پیامک</h3>
+        <p>افزونه را فعال کنید و در منوی «ورود پیامکی (Signa)» کلید API درگاه پیامک یا بله را وارد کنید.</p>
+      </div>
+      <div class="step">
+        <h3>قرار دادن فرم</h3>
+        <p>شورت‌کد <b>[signa_otp_login]</b> را در هر صفحه بگذارید یا ویجت المنتور را استفاده کنید.</p>
+        <pre class="code">[signa_otp_login]</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="contact" style="padding-top:0;">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h2>دریافت Signa و لایسنس</h2>
+        <p>برای خرید، دریافت لایسنس و پشتیبانی با تیم پارسنا در <b>parsena.ir</b> در ارتباط باشید.</p>
+      </div>
+      <a class="btn btn-primary" href="https://parsena.ir" target="_blank" rel="noopener">ورود به وب‌سایت پارسنا</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Signa OTP · نسخه ۲.۷.۷ · تیم پارسنا</span>
+    <span><a href="https://parsena.ir">parsena.ir</a> · <a href="https://parsena.ir/signa">parsena.ir/signa</a></span>
+  </div>
+</footer>
+
+<script src="assets/js/demo.js"></script>
+</body>
+</html>
