@@ -85,13 +85,20 @@ class Signa_Frontend {
 			'33.003'
 		);
 
+		wp_enqueue_style(
+			'signa-fonts',
+			SIGNA_OTP_URL . 'assets/css/fonts.css',
+			array( 'signa-vazirmatn-font' ),
+			SIGNA_OTP_VERSION
+		);
+
 		$css_ver = SIGNA_OTP_VERSION . '.' . ( file_exists( SIGNA_OTP_PATH . 'assets/css/frontend.css' ) ? filemtime( SIGNA_OTP_PATH . 'assets/css/frontend.css' ) : '1' );
 		$js_ver  = SIGNA_OTP_VERSION . '.' . ( file_exists( SIGNA_OTP_PATH . 'assets/js/frontend.js' ) ? filemtime( SIGNA_OTP_PATH . 'assets/js/frontend.js' ) : '1' );
 
 		wp_enqueue_style(
 			'signa-otp-frontend',
 			SIGNA_OTP_URL . 'assets/css/frontend.css',
-			array( 'signa-vazirmatn-font' ),
+			array( 'signa-vazirmatn-font', 'signa-fonts' ),
 			$css_ver
 		);
 
@@ -263,7 +270,7 @@ class Signa_Frontend {
 			<meta charset="<?php bloginfo( 'charset' ); ?>">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<title><?php echo esc_html( get_bloginfo( 'name' ) . ' — ورود / ثبت‌نام' ); ?></title>
-			<?php wp_print_styles( array( 'signa-vazirmatn-font', 'signa-otp-frontend' ) ); ?>
+			<?php wp_print_styles( array( 'signa-vazirmatn-font', 'signa-fonts', 'signa-otp-frontend' ) ); ?>
 			<style>
 				body.signa-standalone-login {
 					margin: 0;

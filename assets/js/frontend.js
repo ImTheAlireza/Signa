@@ -17,6 +17,23 @@
 		return result;
 	}
 
+	/**
+	 * +98 (Iran flag) mode: the national number is entered without its leading 0.
+	 * Strips a pasted/typed +98, 0098 or 98 country prefix and any leading zeros.
+	 * Emails (anything containing @ or letters) are returned untouched.
+	 */
+	function normalizeIrFlagInput(str) {
+		var s = String(str || '').trim();
+		if (s.indexOf('@') !== -1 || !/^[0-9+\s\-]*$/.test(s)) {
+			return s;
+		}
+		var d = s.replace(/[\s\-]/g, '');
+		if (/^(\+98|0098|98)\d{10}$/.test(d)) {
+			d = d.replace(/^(\+98|0098|98)/, '');
+		}
+		return d.replace(/\D/g, '').replace(/^0+/, '');
+	}
+
 	function formatCountdown(seconds) {
 		var s = Math.max(0, parseInt(seconds, 10) || 0);
 		var mins = Math.floor(s / 60);
@@ -154,6 +171,9 @@
 
 		$identifierInput.on('input', function () {
 			var converted = toEnglishDigits($(this).val());
+			if ($wrapper.hasClass('signa-addon-ir_flag')) {
+				converted = normalizeIrFlagInput(converted);
+			}
 			if (converted !== $(this).val()) {
 				$(this).val(converted);
 			}
@@ -369,6 +389,9 @@
 		$stepRequest.on('submit', function (e) {
 			e.preventDefault();
 			var val = toEnglishDigits($identifierInput.val()).trim();
+			if ($wrapper.hasClass('signa-addon-ir_flag')) {
+				val = normalizeIrFlagInput(val);
+			}
 			if (!val) {
 				showAlert('لطفاً شماره موبایل یا ایمیل خود را وارد کنید.', 'error');
 				$identifierInput.trigger('focus');

@@ -74,11 +74,9 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 		#signa-app-shell .signa-prev-glass-orbs { position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.48; transition: opacity 0.35s ease; overflow: hidden; }
 		#signa-app-shell .signa-prev-glass-orbs.is-glass-active { opacity: 0.92; }
 		#signa-app-shell .signa-glass-orb { position: absolute; border-radius: 50%; filter: blur(8px); transition: background 0.35s ease; }
-		#signa-app-shell .signa-glass-orb.orb-1 { width: 155px; height: 155px; background: #3b82f6; top: 14%; right: 10%; box-shadow: inset 0 0 24px rgba(255,255,255,0.45); animation: signaOrbFloat1 7s ease-in-out infinite alternate; }
-		#signa-app-shell .signa-glass-orb.orb-2 { width: 140px; height: 140px; background: #ef4444; bottom: 12%; left: 10%; box-shadow: inset 0 0 24px rgba(255,255,255,0.45); animation: signaOrbFloat2 8s ease-in-out infinite alternate; }
+		#signa-app-shell .signa-glass-orb.orb-1 { width: 155px; height: 155px; background: #3b82f6; top: 14%; right: 10%; box-shadow: inset 0 0 24px rgba(255,255,255,0.45); }
+		#signa-app-shell .signa-glass-orb.orb-2 { width: 140px; height: 140px; background: #ef4444; bottom: 12%; left: 10%; box-shadow: inset 0 0 24px rgba(255,255,255,0.45); }
 		#signa-app-shell .signa-glass-orb.orb-3 { width: 95px; height: 95px; background: linear-gradient(135deg, #10b981, #f59e0b); top: 48%; left: 42%; transform: translate(-50%, -50%) rotate(25deg); border-radius: 24px; }
-		@keyframes signaOrbFloat1 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-10px, 12px) scale(1.06); } }
-		@keyframes signaOrbFloat2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(12px, -10px) scale(1.05); } }
 
 		#signa-app-shell .signa-preview-subbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 14px; background: var(--s-bg-surface); border-bottom: 1px solid var(--s-border-input); flex-wrap: wrap; }
 		#signa-app-shell .signa-preview-mode-tabs { display: inline-flex; background: var(--s-bg-subtle); padding: 3px; border-radius: 8px; border: 1px solid var(--s-border-input); gap: 3px; }
@@ -87,7 +85,7 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 		#signa-app-shell .signa-prev-expand-btn { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 7px; border: 1px solid var(--s-border-input); background: var(--s-bg-subtle); color: var(--s-text); font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
 		#signa-app-shell .signa-prev-expand-btn.active { border-color: var(--s-primary); color: var(--s-primary); background: var(--s-primary-soft); }
 		#signa-app-shell .signa-preview-viewport { width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; overflow: visible !important; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.25s ease; position: relative; z-index: 2; }
-		#signa-app-shell #signa-live-preview-shell { width: 100% !important; max-width: 350px !important; box-sizing: border-box !important; transform: none !important; zoom: 1 !important; margin: 0 !important; overflow: visible !important; }
+		#signa-app-shell #signa-live-preview-shell { width: 100% !important; max-width: 350px !important; box-sizing: border-box !important; zoom: 1 !important; margin: 0 !important; overflow: visible !important; }
 		#signa-app-shell .signa-studio-layout.is-wide-preview #signa-live-preview-shell:not(.is-split) { max-width: 470px !important; }
 		#signa-app-shell #signa-live-preview-shell.is-split { width: 100% !important; max-width: 100% !important; }
 		#signa-app-shell #signa-live-preview-shell.is-split #signa-live-preview-card { flex: 0 0 55% !important; min-width: 0 !important; max-width: 55% !important; box-sizing: border-box !important; }
@@ -100,19 +98,6 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 		#signa-app-shell .signa-studio-layout.is-wide-preview #signa-live-preview-shell.is-split #signa-prev-split-subtitle { font-size: 12.5px !important; line-height: 1.7 !important; }
 		#signa-app-shell .signa-studio-layout.is-wide-preview #signa-live-preview-shell.is-split #signa-prev-split-badge { font-size: 11.5px !important; padding: 4px 12px !important; margin-bottom: 12px !important; }
 		#signa-app-shell .signa-studio-layout.is-wide-preview #signa-live-preview-shell.is-split #signa-prev-split-features { font-size: 12px !important; gap: 7px !important; margin-top: 18px !important; padding-top: 14px !important; }
-		#signa-app-shell .signa-prev-site-skeleton { display: none; width: 100%; position: absolute; inset: 0; padding: 16px; pointer-events: none; flex-direction: column; gap: 12px; opacity: 0.45; box-sizing: border-box; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode { position: relative; min-height: 460px !important; padding: 0 !important; overflow: hidden !important; justify-content: center; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode .signa-prev-site-skeleton { display: flex; }
-		#signa-app-shell .signa-prev-modal-backdrop { display: none; position: absolute; inset: 0; background: rgba(15, 23, 42, 0.56); backdrop-filter: blur(4px); z-index: 1; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode .signa-prev-modal-backdrop { display: block; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode .signa-preview-viewport { position: relative; z-index: 2; width: 100% !important; max-width: 100% !important; min-height: 460px !important; height: auto !important; padding: 32px 24px !important; box-sizing: border-box !important; overflow: visible !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-center .signa-preview-viewport { align-items: center !important; justify-content: center !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_left .signa-preview-viewport { align-items: flex-end !important; justify-content: stretch !important; padding: 0 !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_left #signa-live-preview-shell { height: 100% !important; border-radius: 0 16px 16px 0 !important; max-width: 280px !important; width: 280px !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_right .signa-preview-viewport { align-items: flex-start !important; justify-content: stretch !important; padding: 0 !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-drawer_right #signa-live-preview-shell { height: 100% !important; border-radius: 16px 0 0 16px !important; max-width: 280px !important; width: 280px !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-bottom_sheet .signa-preview-viewport { align-items: center !important; justify-content: flex-end !important; padding: 28px 0 0 0 !important; }
-		#signa-app-shell .signa-preview-canvas.is-modal-mode.sim-bottom_sheet #signa-live-preview-shell { width: 100% !important; max-width: 100% !important; border-radius: 22px 22px 0 0 !important; }
 
 		/* Polished Category 4 Micro-Animations: Choreographed Entrance, Staggered Elements, Digit Pop & Elastic Error Shake */
 		@keyframes signaAnimFadeUp {
@@ -134,11 +119,6 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 			0% { opacity: 0; transform: translate3d(0, 12px, 0); }
 			100% { opacity: 1; transform: translate3d(0, 0, 0); }
 		}
-		@keyframes signaDigitPopIn {
-			0% { opacity: 0; transform: scale(0.65) translateY(8px); }
-			70% { opacity: 1; transform: scale(1.08) translateY(-2px); }
-			100% { opacity: 1; transform: scale(1) translateY(0); }
-		}
 		@keyframes signaShakeKeyframes {
 			0% { transform: translate3d(0, 0, 0) rotate(0deg); }
 			12% { transform: translate3d(-11px, 0, 0) rotate(-0.8deg); }
@@ -150,24 +130,17 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 			84% { transform: translate3d(-2px, 0, 0) rotate(0deg); }
 			100% { transform: translate3d(0, 0, 0) rotate(0deg); }
 		}
-		@keyframes signaDigitErrorWave {
-			0% { transform: scale(1); }
-			35% { transform: scale(1.1) translateY(-3px); background-color: rgba(239, 68, 68, 0.22); border-color: #ef4444; color: #ef4444; box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.28), 0 8px 18px -4px rgba(239, 68, 68, 0.45); }
-			70% { transform: scale(0.96); }
-			100% { transform: scale(1); background-color: rgba(239, 68, 68, 0.14); border-color: #ef4444; color: #ef4444; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2); }
-		}
 		#signa-app-shell .signa-anim-fade_up { animation: signaAnimFadeUp 0.54s cubic-bezier(0.22, 1, 0.36, 1) both; }
 		#signa-app-shell .signa-anim-zoom_spring { animation: signaAnimZoomSpring 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 		#signa-app-shell .signa-anim-slide_rtl { animation: signaAnimSlideRtl 0.52s cubic-bezier(0.22, 1, 0.36, 1) both; }
 		#signa-app-shell .signa-stagger-run { animation: signaStaggerChildIn 0.46s cubic-bezier(0.22, 1, 0.36, 1) both; }
-		#signa-app-shell .signa-digit-pop-anim { animation: signaDigitPopIn 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 		#signa-app-shell .signa-shake-anim { animation: signaShakeKeyframes 0.64s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
 		#signa-app-shell .signa-prev-digit.is-error-digit {
 			border-color: #ef4444 !important;
 			color: #ef4444 !important;
 			background-color: rgba(239, 68, 68, 0.14) !important;
 			box-shadow: 0 0 0 3.5px rgba(239, 68, 68, 0.22), 0 6px 16px -4px rgba(239, 68, 68, 0.35) !important;
-			animation: signaDigitErrorWave 0.56s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+			transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 		}
 		#signa-app-shell .signa-prev-error-toast {
 			display: flex;
@@ -195,7 +168,6 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 			justify-content: center;
 			color: #ef4444;
 			flex-shrink: 0;
-			animation: signaDigitPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 		}
 		#signa-app-shell #signa-prev-btn-1:hover,
 		#signa-app-shell #signa-prev-btn-2:hover {
@@ -416,14 +388,6 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 
 			<!-- MAIN CONTENT PANELS (Modular Partials) -->
 			<main class="signa-main">
-				<?php $is_just_saved = isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-				<div id="signa-inline-save-banner" style="<?php echo $is_just_saved ? 'display:flex;' : 'display:none;'; ?>align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;margin-bottom:18px;border-radius:12px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.35);color:#059669;font-size:13.5px;font-weight:700;">
-					<div style="display:flex;align-items:center;gap:10px;">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-						<span id="signa-inline-save-banner-text">تنظیمات با موفقیت ذخیره و اعمال شد!</span>
-					</div>
-					<button type="button" onclick="this.parentElement.style.display='none';" style="background:transparent;border:none;color:inherit;cursor:pointer;font-size:18px;line-height:1;padding:0 4px;">&times;</button>
-				</div>
 
 				<?php
 				require $partials_dir . 'tab-dashboard.php';
@@ -494,17 +458,7 @@ $partials_dir     = SIGNA_OTP_PATH . 'includes/admin/views/partials/';
 				toast.style.display = 'flex';
 				setTimeout(function() {
 					toast.style.display = 'none';
-				}, 3800);
-			}
-
-			var banner = document.getElementById('signa-inline-save-banner');
-			var bannerText = document.getElementById('signa-inline-save-banner-text');
-			if (banner && bannerText) {
-				bannerText.textContent = message;
-				banner.style.background = isError ? 'rgba(239,68,68,0.12)' : 'rgba(16,185,129,0.12)';
-				banner.style.borderColor = isError ? 'rgba(239,68,68,0.35)' : 'rgba(16,185,129,0.35)';
-				banner.style.color = isError ? '#dc2626' : '#059669';
-				banner.style.display = 'flex';
+				}, 3000);
 			}
 		}
 

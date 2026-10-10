@@ -1528,6 +1528,36 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							img.src = cleanUrl;
 						}
 
+						// Smooth stage switching: when the stage type changes, fade the card out,
+						// swap the layout while it is hidden, then let the entrance play.
+						var lastPreviewKey = null;
+						var previewSwitchTimer = null;
+						function previewStateKey(){
+							return currentPreviewMode === 'modal'
+								? 'modal:' + ($('input[name=\"signa[modal_style]\"]:checked').val() || 'center')
+								: 'page';
+						}
+						function requestPreviewSwitch(){
+							var key = previewStateKey();
+							var $shellEl = $('#signa-live-preview-shell');
+							var changed = lastPreviewKey !== null && key !== lastPreviewKey && $shellEl.length;
+							lastPreviewKey = key;
+							if (!changed) {
+								syncStudioCat2();
+								return;
+							}
+							// Apply the new stage in one step. Modal/drawer/sheet entrances (CSS) play once from their start position;
+							// page mode gets a short fade. No hidden gap, no second animation.
+							syncStudioCat2();
+							clearTimeout(previewSwitchTimer);
+							$shellEl.removeClass('is-switch-in');
+							void $shellEl[0].offsetWidth;
+							$shellEl.addClass('is-switch-in');
+							previewSwitchTimer = setTimeout(function(){
+								$shellEl.removeClass('is-switch-in');
+							}, 450);
+						}
+
 						function syncStudioCat2(e){
 							var triggeredById = (e && e.target && e.target.id) ? e.target.id : '';
 							var isWidePreview = $('.signa-studio-layout').hasClass('is-wide-preview');
@@ -1801,9 +1831,9 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var bannerClipCss = 'none';
 
 							if (currentPreviewMode === 'modal' && modalStyle === 'bottom_sheet') {
-								shellRadiusCss = '22px 22px 0 0';
-								cardRadiusCss = '22px 22px 0 0';
-								cardClipCss = 'inset(0 round 22px 22px 0 0)';
+								shellRadiusCss = '20px';
+								cardRadiusCss = '20px';
+								cardClipCss = 'inset(0 round 20px)';
 							} else if (currentPreviewMode === 'modal' && modalStyle === 'drawer_left') {
 								shellRadiusCss = '0 16px 16px 0';
 								cardRadiusCss = '0 16px 16px 0';
@@ -1829,14 +1859,21 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							}
 
 							var singleCardMaxW = isWidePreview ? '470px' : '350px';
+							var isOverlayPreview = currentPreviewMode === 'modal' && modalStyle !== 'center';
 							var $shell = $('#signa-live-preview-shell');
 							$shell.toggleClass('is-split', showSplitBanner);
 							var shellDom = document.getElementById('signa-live-preview-shell');
 							if (shellDom) {
-								shellDom.style.setProperty('width', '100%', 'important');
-								shellDom.style.setProperty('max-width', showSplitBanner ? '100%' : singleCardMaxW, 'important');
+								// Drawers & bottom sheet are sized/positioned by CSS (full stage height, slide transforms).
+								if (isOverlayPreview) {
+									shellDom.style.removeProperty('width');
+									shellDom.style.removeProperty('max-width');
+									shellDom.style.removeProperty('transform');
+								} else {
+									shellDom.style.setProperty('width', '100%', 'important');
+									shellDom.style.setProperty('max-width', showSplitBanner ? '100%' : singleCardMaxW, 'important');
+								}
 								shellDom.style.setProperty('box-sizing', 'border-box', 'important');
-								shellDom.style.setProperty('transform', 'none', 'important');
 								shellDom.style.setProperty('margin', '0', 'important');
 								shellDom.style.setProperty('border-radius', shellRadiusCss, 'important');
 								shellDom.style.setProperty('flex-direction', formLayout === 'split_left' ? 'row-reverse' : 'row', 'important');
@@ -1895,6 +1932,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							};
 							var activeFont = fontMap[fontKey] || fontMap.vazirmatn;
 							$('#signa-live-preview-shell, #signa-live-preview-shell *').css('font-family', activeFont);
+							// Form controls (input/button/select/textarea) carry !important font rules in admin.css, so force the chosen font inline.
+							$('#signa-live-preview-shell input, #signa-live-preview-shell button, #signa-live-preview-shell select, #signa-live-preview-shell textarea').each(function () {
+								this.style.setProperty('font-family', activeFont, 'important');
+							});
 							var previewTitleSize = isWidePreview ? (showSplitBanner ? titleSize : Math.round(titleSize * 1.08)) : (showSplitBanner ? Math.max(13, Math.round(titleSize * 0.78)) : titleSize);
 							var previewSubSize = isWidePreview ? (showSplitBanner ? subSize : Math.round(subSize * 1.04)) : (showSplitBanner ? Math.max(11, Math.round(subSize * 0.82)) : subSize);
 							var previewBtnSize = isWidePreview ? (showSplitBanner ? btnSize : Math.round(btnSize * 1.05)) : (showSplitBanner ? Math.max(12.5, Math.round(btnSize * 0.84)) : btnSize);
@@ -1926,6 +1967,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 								$prevInput[0].style.setProperty('color', text, 'important');
 								$prevInput[0].style.setProperty('height', previewInputH + 'px', 'important');
 								$prevInput[0].style.setProperty('font-size', inputFontSize, 'important');
+								$prevInput.attr('placeholder', inputAddon === 'ir_flag' ? 'شماره موبایل (912...) یا ایمیل' : 'شماره موبایل (0912...) یا ایمیل');
 								$prevInput[0].style.setProperty('padding-right', '14px', 'important');
 							}
 
@@ -2125,19 +2167,6 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							}
 						}
 
-						// Staggered OTP Digit Pop-In Choreography when entering Step 2
-						function triggerStep2DigitPop() {
-							var $digits = $('.signa-prev-digit');
-							$digits.removeClass('signa-digit-pop-anim');
-							if ($digits.length) {
-								void $digits[0].offsetWidth;
-								$digits.each(function(idx){
-									this.style.animationDelay = (idx * 45) + 'ms';
-									$(this).addClass('signa-digit-pop-anim');
-								});
-							}
-						}
-
 						// Polished Error Shake & Crimson Neon Wave Choreography
 						var errorShakeTimer = null;
 						function triggerErrorShakeChoreography() {
@@ -2186,8 +2215,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							currentPreviewMode = $(this).attr('data-mode') || 'page';
 							$('.signa-prev-mode-btn').removeClass('active');
 							$(this).addClass('active');
-							syncStudioCat2();
-							triggerFormEntranceChoreography();
+							requestPreviewSwitch();
 						});
 
 						// Interactive Step 1 <-> Step 2 buttons & preview buttons
@@ -2198,12 +2226,10 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							if (step === '2') {
 								$('#signa-prev-step-1').hide();
 								$('#signa-prev-step-2').fadeIn(180);
-								triggerStep2DigitPop();
 							} else {
 								$('#signa-prev-error-toast').hide();
 								$('#signa-prev-step-2').hide();
 								$('#signa-prev-step-1').fadeIn(180);
-								triggerFormEntranceChoreography();
 							}
 						});
 
@@ -2220,11 +2246,6 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							var idx = $(this).attr('data-idx') || '2';
 							$('#signa-prev-digits').attr('data-active-idx', idx);
 							syncStudioCat2();
-							var el = this;
-							$(el).removeClass('signa-digit-pop-anim');
-							void el.offsetWidth;
-							el.style.animationDelay = '0ms';
-							$(el).addClass('signa-digit-pop-anim');
 						});
 
 						// Auto-switch Live Preview to Modal mode when user selects a Modal/Drawer style
@@ -2232,7 +2253,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							currentPreviewMode = 'modal';
 							$('.signa-prev-mode-btn').removeClass('active');
 							$('.signa-prev-mode-btn[data-mode="modal"]').addClass('active');
-							syncStudioCat2();
+							requestPreviewSwitch();
 						});
 
 						// Auto-switch Live Preview to Page mode when user changes Form Layout or Card Position
@@ -2240,8 +2261,7 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							currentPreviewMode = 'page';
 							$('.signa-prev-mode-btn').removeClass('active');
 							$('.signa-prev-mode-btn[data-mode="page"]').addClass('active');
-							syncStudioCat2();
-							triggerFormEntranceChoreography();
+							requestPreviewSwitch();
 						});
 
 						// Auto-switch Live Preview to Step 2 when user changes any Category 4 OTP/Timer control
@@ -2251,7 +2271,6 @@ $split_features_list = array_filter( array_map( 'trim', explode( "\n", (string) 
 							$('#signa-prev-step-1').hide();
 							$('#signa-prev-step-2').fadeIn(150);
 							syncStudioCat2();
-							triggerStep2DigitPop();
 						});
 
 						// Replay Form Entrance Animation in Live Preview when changed or replay button clicked
