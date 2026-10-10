@@ -1,15 +1,14 @@
 /* Signa OTP – interactive demo (static, no server calls).
  * Mirrors the plugin's login form markup/classes so assets/css/frontend.css styles it exactly.
- * Nothing is sent anywhere: the demo code is 123456. */
+ * Nothing is sent anywhere: each request gets a random 5-digit code. */
 (function () {
 	'use strict';
 
-	var DEMO_CODE = '123456';
 	var MAX_ATTEMPTS = 3;
 	var RESEND_SECONDS = 60;
 	var RING_CIRC = 56.55; // 2 * pi * 9 (matches the plugin's ring markup)
 
-	var DEFAULTS = { mode: 'page', layout: 'card', login: 'both', addon: 'icon', digits: 6, color: '#2563eb', radius: 16, font: 'vazirmatn' };
+	var DEFAULTS = { mode: 'page', layout: 'card', login: 'both', addon: 'icon', digits: 5, color: '#2563eb', radius: 16, font: 'vazirmatn' };
 	var state = {};
 	var flow = {};
 
@@ -37,6 +36,12 @@
 			d = d.replace(/^(\+98|0098|98)/, '');
 		}
 		return d.replace(/\D/g, '').replace(/^0+/, '');
+	}
+
+	function makeCode() {
+		var a = new Uint32Array(1);
+		window.crypto.getRandomValues(a);
+		return String(10000 + (a[0] % 90000));
 	}
 
 	function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
@@ -167,7 +172,7 @@
 							'</div>' +
 						'</div>' +
 						'<button type="submit" class="signa-btn signa-btn-primary signa-submit-request"><span class="signa-btn-text">دریافت کد تایید</span></button>' +
-						'<div class="signa-alt-action"><span style="font-size:12px;color:var(--signa-muted,#6b7280);">کد آزمایشی دمو: <b dir="ltr">' + DEMO_CODE.slice(0, state.digits) + '</b></span></div>' +
+						'<div class="signa-alt-action"><span style="font-size:12px;color:var(--signa-muted,#6b7280);">کد ۵ رقمی تصادفی بعد از ارسال نمایش داده می‌شود.</span></div>' +
 					'</form>' +
 
 					'<form class="signa-otp-form signa-step-verify" style="display:none;" novalidate>' +
@@ -238,9 +243,9 @@
 		return s;
 	}
 
-	// The demo code is always 123456; with fewer digits it is the first N digits.
+	// Random 5-digit code per request, shared with the hero phone simulation's rule.
 	function demoCode() {
-		return DEMO_CODE.slice(0, flow.digits);
+		return flow.code;
 	}
 
 	function setLocked(locked) {
@@ -283,6 +288,7 @@
 	}
 
 	function goToVerify() {
+		flow.code = makeCode();
 		showStep('verify');
 		setRecipient();
 		setDigits('');
@@ -347,7 +353,7 @@
 			}
 			return;
 		}
-		if (code === demoCode()) {
+		if (code === flow.code) {
 			stopTimer();
 			showAlert('', 'info');
 			showStep('done');
@@ -380,6 +386,7 @@
 	}
 
 	function resendCode() {
+		flow.code = makeCode();
 		flow.locked = false;
 		flow.attempts = 0;
 		setLocked(false);
@@ -494,7 +501,6 @@
 	bindSeg('segLayout', 'layout', null, restartFlow);
 	bindSeg('segLogin', 'login', null, restartFlow);
 	bindSeg('segAddon', 'addon', null, restartFlow);
-	bindSeg('segDigits', 'digits', function (v) { return parseInt(v, 10); }, restartFlow);
 
 	document.querySelectorAll('#swatches button[data-color]').forEach(function (b) {
 		b.addEventListener('click', function () { setColor(b.getAttribute('data-color')); });
@@ -512,13 +518,12 @@
 		syncSeg('segLayout', 'layout', state.layout);
 		syncSeg('segLogin', 'login', state.login);
 		syncSeg('segAddon', 'addon', state.addon);
-		syncSeg('segDigits', 'digits', state.digits);
 		setMode(state.mode);
 	});
 
 	/* ---------- boot ---------- */
 	state = JSON.parse(JSON.stringify(DEFAULTS));
-	flow = { step: 'request', identifier: '', attempts: 0, locked: false, left: RESEND_SECONDS, timerId: null, digits: state.digits };
+	flow = { step: 'request', identifier: '', attempts: 0, locked: false, left: RESEND_SECONDS, timerId: null, digits: state.digits, code: '' };
 	setColor(state.color);
 	setRadius(state.radius);
 	setMode(state.mode);

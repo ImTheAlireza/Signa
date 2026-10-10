@@ -27,20 +27,98 @@
   </div>
 </header>
 
-<section class="hero">
-  <div class="wrap">
-    <span class="eyebrow">افزونه‌ی وردپرس · ورود بدون رمز عبور</span>
-    <h1>ورود و ثبت‌نام با کد یکبارمصرف، با تجربه‌ای روان برای کاربران فارسی‌زبان</h1>
-    <p class="lead">Signa کد ورود را از طریق پیامک، پیام‌رسان بله یا ایمیل می‌فرستد، با ووکامرس و المنتور یکپارچه است و فرم ورود آن را می‌توانید همین‌جا، پیش از نصب، امتحان کنید.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="#demo">شروع دمو تعاملی</a>
-      <a class="btn btn-ghost" href="#features">مشاهده‌ی امکانات</a>
+<section class="hero hero-phone" aria-labelledby="heroTitle">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">افزونه‌ی وردپرس · ورود بدون رمز عبور</span>
+      <h1 id="heroTitle">ورود با کد یکبارمصرف، فقط با شماره موبایل</h1>
+      <p class="lead">شماره‌ی خود را وارد کنید. کد ۵ رقمی روی گوشی نمایش داده می‌شود و با وارد کردن آن ورود کامل می‌شود. این یک شبیه‌سازی است و پیامک واقعی ارسال نمی‌شود.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#demo">شروع دمو کامل</a>
+        <a class="btn btn-ghost" href="#features">مشاهده‌ی امکانات</a>
+      </div>
     </div>
-    <div class="stats">
-      <div class="stat"><strong>۵</strong><span>درگاه پیامکی ایرانی</span></div>
-      <div class="stat"><strong>۳</strong><span>کانال ارسال: پیامک، بله، ایمیل</span></div>
-      <div class="stat"><strong>۴</strong><span>نوع کپچا از جمله کپچای ریاضی</span></div>
-      <div class="stat"><strong>Passkey</strong><span>ورود بیومتریک بدون رمز</span></div>
+
+    <div class="hero-visual">
+      <div class="phone-wrap" id="heroPhone">
+        <div class="phone">
+          <svg class="phone-body" viewBox="0 0 300 620" aria-hidden="true" focusable="false">
+            <rect x="0" y="150" width="4" height="40" rx="2" fill="#1e293b"/>
+            <rect x="0" y="210" width="4" height="66" rx="2" fill="#1e293b"/>
+            <rect x="0" y="290" width="4" height="66" rx="2" fill="#1e293b"/>
+            <rect x="296" y="230" width="4" height="96" rx="2" fill="#1e293b"/>
+            <rect x="2" y="2" width="296" height="616" rx="58" fill="#0f172a"/>
+            <rect x="9" y="9" width="282" height="602" rx="51" fill="none" stroke="#334155" stroke-width="2"/>
+          </svg>
+          <div class="phone-screen">
+            <div class="island" aria-hidden="true"></div>
+            <div class="sb" aria-hidden="true">
+              <span>۹:۴۱</span>
+              <span class="sb-ico">
+                <svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx="1" fill="currentColor"/><rect x="4.5" y="4" width="3" height="6" rx="1" fill="currentColor"/><rect x="9" y="2" width="3" height="8" rx="1" fill="currentColor"/><rect x="13.5" y="0" width="2.5" height="10" rx="1" fill="currentColor"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11"><rect x=".5" y=".5" width="20" height="10" rx="3" fill="none" stroke="currentColor" opacity=".45"/><rect x="2" y="2" width="15" height="7" rx="1.6" fill="currentColor"/><rect x="22" y="3.5" width="1.6" height="4" rx=".8" fill="currentColor" opacity=".45"/></svg>
+              </span>
+            </div>
+
+            <div class="scr scr-login is-on">
+              <div class="brand-row">
+                <span class="brand-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>
+                <span class="brand-name">Signa<small>ورود به حساب کاربری</small></span>
+              </div>
+              <form class="hp-form" novalidate>
+                <h2 class="scr-title">ورود با شماره موبایل</h2>
+                <p class="scr-desc">کد ۵ رقمی به این شماره ارسال می‌شود.</p>
+                <label class="hp-label" for="heroNumber">شماره موبایل</label>
+                <div class="hp-field">
+                  <span class="hp-flag">🇮🇷 +98</span>
+                  <input id="heroNumber" class="hp-input" type="text" inputmode="numeric" autocomplete="tel-national" placeholder="912 123 4567" aria-describedby="heroLoginErr"/>
+                </div>
+                <div class="hp-err hp-err-login" id="heroLoginErr" role="alert"></div>
+                <button type="submit" class="hp-send" disabled><span class="hp-send-txt">دریافت کد</span><span class="hp-dots" aria-hidden="true"><i></i><i></i><i></i></span></button>
+                <p class="hp-note">شبیه‌سازی · پیامک واقعی ارسال نمی‌شود</p>
+              </form>
+            </div>
+
+            <div class="scr scr-verify">
+              <div class="hp-top">
+                <button type="button" class="hp-back" aria-label="بازگشت به شماره"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></button>
+                <span class="hp-top-title">کد تایید</span>
+                <span class="hp-spacer" aria-hidden="true"></span>
+              </div>
+              <p class="scr-desc">کد ۵ رقمی به <span class="hp-mask" dir="ltr"></span> ارسال شد.</p>
+              <div class="hp-digits" dir="ltr" role="group" aria-label="کد ۵ رقمی">
+                <input class="hp-box" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="رقم ۱"/>
+                <input class="hp-box" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="رقم ۲"/>
+                <input class="hp-box" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="رقم ۳"/>
+                <input class="hp-box" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="رقم ۴"/>
+                <input class="hp-box" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="رقم ۵"/>
+              </div>
+              <div class="hp-err hp-err-verify" role="alert"></div>
+              <button type="button" class="hp-send hp-verify">تایید کد</button>
+              <div class="hp-resend">
+                <span class="hp-resend-txt"></span>
+                <button type="button" class="hp-link hp-resend-btn" hidden>ارسال مجدد کد</button>
+              </div>
+            </div>
+
+            <button type="button" class="notif" tabindex="-1" aria-label="کد ورود را پر کن">
+              <span class="notif-ico" aria-hidden="true">S</span>
+              <span class="notif-main">
+                <span class="notif-head"><b>Signa</b><small>هم‌اکنون</small></span>
+                <span class="notif-body">کد ورود شما: <strong class="notif-code" dir="ltr"></strong></span>
+                <span class="notif-foot">برای پر کردن خودکار لمس کنید</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-success" id="heroSuccess" role="status">
+        <div class="ok-ring" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <h3>ورود موفق بود</h3>
+        <p id="heroSuccessMask"></p>
+        <button type="button" class="btn btn-primary hero-restart">شروع مجدد</button>
+      </div>
     </div>
   </div>
 </section>
@@ -49,7 +127,7 @@
   <div class="wrap">
     <div class="section-head">
       <h2>دمو زنده‌ی فرم ورود</h2>
-      <p>حالت نمایش، چیدمان، روش ورود، رنگ، گردی گوشه‌ها و فونت را تغییر دهید و فرم را واقعاً امتحان کنید. کد دمو <b>123456</b> است.</p>
+      <p>حالت نمایش، چیدمان، روش ورود، رنگ، گردی گوشه‌ها و فونت را تغییر دهید و فرم را واقعاً امتحان کنید. کد دمو ۵ رقمی و تصادفی است و با هر درخواست تغییر می‌کند.</p>
     </div>
 
     <div class="demo-grid">
@@ -105,14 +183,6 @@
           </div>
         </div>
 
-        <div class="ctl-group">
-          <span class="ctl-label">تعداد ارقام کد</span>
-          <div class="seg" id="segDigits">
-            <button type="button" data-digits="4" aria-pressed="false">۴ رقمی</button>
-            <button type="button" data-digits="5" aria-pressed="false">۵ رقمی</button>
-            <button type="button" data-digits="6" aria-pressed="true">۶ رقمی</button>
-          </div>
-        </div>
 
         <div class="ctl-group">
           <span class="ctl-label">رنگ اصلی</span>
@@ -333,6 +403,7 @@
   </div>
 </footer>
 
+<script src="assets/js/hero.js"></script>
 <script src="assets/js/demo.js"></script>
 </body>
 </html>
