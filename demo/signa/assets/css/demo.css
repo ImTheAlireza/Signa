@@ -98,11 +98,15 @@ button, input { font-family: inherit; }
 }
 .lp-lid {
 	position: relative; aspect-ratio: 16 / 10; padding: 1.2em;
-	background: linear-gradient(180deg, #273449, #0f172a);
-	border-radius: 2em 2em 0.5em 0.5em;
-	box-shadow: 0 2em 3em -1.4em rgba(15, 23, 42, 0.4);
+	background: linear-gradient(170deg, #2b3546 0%, #141b27 55%, #0d121b 100%);
+	border-radius: 2.1em 2.1em 0.6em 0.6em;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 2.4em 3em -1.6em rgba(15, 23, 42, 0.45);
 }
-.lp-screen { position: absolute; inset: 1.2em; border-radius: 0.7em; background: #fff; overflow: hidden; }
+.lp-lid::before {
+	content: ''; position: absolute; top: 0.5em; left: 50%; transform: translateX(-50%);
+	width: 0.42em; height: 0.42em; border-radius: 50%; background: #0a0e15; box-shadow: inset 0 0 0 1px #1f2937; z-index: 2;
+}
+.lp-screen { position: absolute; inset: 1.2em; border-radius: 0.45em; background: #fff; overflow: hidden; box-shadow: 0 0 0 1px #05080d; }
 .lp-chrome {
 	height: 2.1em; display: flex; align-items: center; gap: 0.45em; padding: 0 0.9em;
 	background: #f1f5f9; border-bottom: 1px solid #e2e8f0;
@@ -117,14 +121,17 @@ button, input { font-family: inherit; }
 }
 .lp-page { position: absolute; top: 2.1em; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, #f8fbff, #eef4ff); }
 .lp-base {
-	position: relative; width: 112%; margin-inline: -6%; height: 1.1em;
-	background: linear-gradient(180deg, #d6dde8, #b8c2d1);
-	border-radius: 0 0 1.1em 1.1em;
-	box-shadow: 0 0.3em 0.8em rgba(15, 23, 42, 0.18);
+	position: relative; width: 110%; margin-inline: -5%; height: 0.8em;
+	background: linear-gradient(180deg, #eef2f7 0%, #c9d2de 45%, #9aa6b8 100%);
+	border-radius: 0 0 1.1em 1.1em / 0 0 0.9em 0.9em;
+	box-shadow: 0 0.35em 0.9em rgba(15, 23, 42, 0.2);
+}
+.lp-base::before {
+	content: ''; position: absolute; left: 0; right: 0; top: 0; height: 0.12em; background: rgba(255, 255, 255, 0.7);
 }
 .lp-base span {
 	position: absolute; left: 50%; top: 0; transform: translateX(-50%);
-	width: 12%; height: 0.42em; background: #94a3b8; border-radius: 0 0 0.5em 0.5em;
+	width: 13%; height: 0.36em; background: linear-gradient(#7c8799, #a7b0c0); border-radius: 0 0 0.5em 0.5em;
 }
 
 /* login / verify screens drawn on the laptop */
@@ -208,7 +215,7 @@ button, input { font-family: inherit; }
 	filter: drop-shadow(0 2.4em 2.6em rgba(15, 23, 42, 0.22));
 	transition: opacity 0.5s ease, visibility 0.5s ease;
 }
-.phone-body { position: absolute; inset: 0; width: 100%; height: 100%; }
+.phone-body { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .phone.is-pulse .phone-body { animation: phonePulse 0.9s ease-out; }
 @keyframes phonePulse {
 	0% { filter: drop-shadow(0 0 0 rgba(37, 99, 235, 0)); }
@@ -232,9 +239,10 @@ button, input { font-family: inherit; }
 .apps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25em 0.6em; padding: 0 1.2em; margin-top: 2.4em; }
 .app { display: flex; flex-direction: column; align-items: center; gap: 0.35em; }
 .app-ico {
-	width: 2.2em; height: 2.2em; border-radius: 0.6em; background: var(--c); display: grid; place-items: center;
-	font-size: 1.6em; line-height: 1; box-shadow: 0 0.25em 0.6em rgba(15, 23, 42, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+	width: 3.5em; height: 3.5em; border-radius: 0.95em; background: linear-gradient(180deg, var(--c), var(--c2)); display: grid; place-items: center;
+	box-shadow: 0 0.25em 0.6em rgba(15, 23, 42, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
+.app-ico svg, .dock-ico svg { width: 56%; height: 56%; }
 .app-lbl { font-size: 0.72em; white-space: nowrap; text-shadow: 0 0.1em 0.4em rgba(15, 23, 42, 0.3); }
 .dock {
 	position: absolute; left: 0.9em; right: 0.9em; bottom: 1.2em; height: 4.6em; border-radius: 1.6em;
@@ -242,8 +250,8 @@ button, input { font-family: inherit; }
 	display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; justify-items: center;
 }
 .dock-ico {
-	width: 2.2em; height: 2.2em; border-radius: 0.6em; background: var(--c); display: grid; place-items: center; font-size: 1.5em; line-height: 1;
-	box-shadow: 0 0.25em 0.6em rgba(15, 23, 42, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+	width: 3.3em; height: 3.3em; border-radius: 0.9em; background: linear-gradient(180deg, var(--c), var(--c2)); display: grid; place-items: center;
+	box-shadow: 0 0.25em 0.6em rgba(15, 23, 42, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
 /* notification on the phone */

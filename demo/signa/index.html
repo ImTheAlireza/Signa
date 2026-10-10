@@ -107,12 +107,18 @@
         <!-- Phone on its home screen -->
         <div class="phone" id="phone">
           <svg class="phone-body" viewBox="0 0 300 620" aria-hidden="true" focusable="false">
-            <rect x="0" y="150" width="4" height="40" rx="2" fill="#1e293b"/>
-            <rect x="0" y="210" width="4" height="66" rx="2" fill="#1e293b"/>
-            <rect x="0" y="290" width="4" height="66" rx="2" fill="#1e293b"/>
-            <rect x="296" y="230" width="4" height="96" rx="2" fill="#1e293b"/>
-            <rect x="2" y="2" width="296" height="616" rx="58" fill="#0f172a"/>
-            <rect x="9" y="9" width="282" height="602" rx="51" fill="none" stroke="#334155" stroke-width="2"/>
+            <defs>
+              <linearGradient id="ti" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#5b6372"/><stop offset="0.5" stop-color="#2a303b"/><stop offset="1" stop-color="#4a5260"/>
+              </linearGradient>
+            </defs>
+            <rect x="-3" y="130" width="4" height="34" rx="2" fill="#2a303b"/>
+            <rect x="-3" y="182" width="4" height="62" rx="2" fill="#2a303b"/>
+            <rect x="-3" y="254" width="4" height="62" rx="2" fill="#2a303b"/>
+            <rect x="299" y="206" width="4" height="92" rx="2" fill="#2a303b"/>
+            <rect x="0" y="0" width="300" height="620" rx="62" fill="url(#ti)"/>
+            <rect x="4" y="4" width="292" height="612" rx="58" fill="#06080c"/>
+            <rect x="9" y="9" width="282" height="602" rx="53" fill="none" stroke="#1a1f29" stroke-width="2"/>
           </svg>
           <div class="phone-screen">
             <div class="island" aria-hidden="true"></div>
@@ -130,20 +136,20 @@
                 <span class="clk-date">شنبه ۱۹ مهر</span>
               </div>
               <div class="apps">
-                <div class="app"><span class="app-ico" style="--c:#22c55e">💬</span><span class="app-lbl">پیام‌ها</span></div>
-                <div class="app"><span class="app-ico" style="--c:#3b82f6">✉️</span><span class="app-lbl">ایمیل</span></div>
-                <div class="app"><span class="app-ico" style="--c:#64748b">📷</span><span class="app-lbl">دوربین</span></div>
-                <div class="app"><span class="app-ico" style="--c:#10b981">🗺️</span><span class="app-lbl">نقشه‌ها</span></div>
-                <div class="app"><span class="app-ico" style="--c:#f59e0b">📝</span><span class="app-lbl">یادداشت</span></div>
-                <div class="app"><span class="app-ico" style="--c:#ef4444">📅</span><span class="app-lbl">تقویم</span></div>
-                <div class="app"><span class="app-ico" style="--c:#6366f1">⚙️</span><span class="app-lbl">تنظیمات</span></div>
-                <div class="app"><span class="app-ico" style="--c:#0ea5e9">🌐</span><span class="app-lbl">مرورگر</span></div>
+                <div class="app"><span class="app-ico" style="--c:#34c759;--c2:#1fa64a"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4.5 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></span><span class="app-lbl">پیام‌ها</span></div>
+                <div class="app"><span class="app-ico" style="--c:#3b82f6;--c2:#1d5fd1"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg></span><span class="app-lbl">ایمیل</span></div>
+                <div class="app"><span class="app-ico" style="--c:#8e8e93;--c2:#5b5b61"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span><span class="app-lbl">دوربین</span></div>
+                <div class="app"><span class="app-ico" style="--c:#34d399;--c2:#15a673"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="9 4 3 6 3 20 9 18 15 20 21 18 21 4 15 6 9 4"/><line x1="9" y1="4" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="20"/></svg></span><span class="app-lbl">نقشه‌ها</span></div>
+                <div class="app"><span class="app-ico" style="--c:#38bdf8;--c2:#0c8fd0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5"/></svg></span><span class="app-lbl">مرورگر</span></div>
+                <div class="app"><span class="app-ico" style="--c:#8b8e98;--c2:#5d606b"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="7.5" stroke-dasharray="3 2.6"/><circle cx="12" cy="12" r="3"/></svg></span><span class="app-lbl">تنظیمات</span></div>
+                <div class="app"><span class="app-ico" style="--c:#ff453a;--c2:#d62f26"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg></span><span class="app-lbl">تقویم</span></div>
+                <div class="app"><span class="app-ico" style="--c:#ffb020;--c2:#e08a00"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span><span class="app-lbl">یادداشت</span></div>
               </div>
               <div class="dock">
-                <span class="dock-ico" style="--c:#22c55e">📞</span>
-                <span class="dock-ico" style="--c:#0ea5e9">🧭</span>
-                <span class="dock-ico" style="--c:#3b82f6">💬</span>
-                <span class="dock-ico" style="--c:#ec4899">🎵</span>
+                <span class="dock-ico" style="--c:#34c759;--c2:#1fa64a"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+                <span class="dock-ico" style="--c:#38bdf8;--c2:#0c8fd0"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5"/></svg></span>
+                <span class="dock-ico" style="--c:#3b82f6;--c2:#1d5fd1"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4.5 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></span>
+                <span class="dock-ico" style="--c:#ff2d75;--c2:#d0185a"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18V6l11-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></span>
               </div>
             </div>
 
